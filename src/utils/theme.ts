@@ -1,0 +1,63 @@
+import { MD3LightTheme } from "react-native-paper";
+
+const defaultTheme = {
+    ...MD3LightTheme,
+
+    activeOpacity: 0.75,
+
+    colors: {
+        ...MD3LightTheme.colors,
+
+        white: "#ffffff",
+        black: "#1a1a1a",
+        grey: "#7f7f7f",
+        blue: "#0a58d1",
+        lightBlue: "#586eb2",
+        lightGrey: "#bababa",
+        darkGrey: "#2d2d2d",
+        danger: "#e83635",
+        tomato: "#f5593d",
+        succes: "#00b16a",
+        gold: "#f5a623",
+    },
+};
+
+export const lightTheme = {
+    ...defaultTheme,
+    colors: {
+        ...defaultTheme.colors,
+        primary: "#6e67ff",
+        primaryVariant: "#c7d6fc",
+        secondary: "#CCE490",
+
+        background: "#f2f2f2",
+        paper: "#ffffff",
+        text: "#1a1a1a",
+        textInverted: "#f2f2f2",
+    },
+};
+
+export const darkTheme = {
+    ...defaultTheme,
+    colors: {
+        ...defaultTheme.colors,
+        primary: "#38a3a5",
+        primaryVariant: "#98C1C1",
+        secondary: "#CCE490",
+
+        background: "#253334",
+        paper: "#354443",
+        text: "#f2f2f2",
+        textInverted: "#1a1a1a",
+    },
+};
+
+const theme = lightTheme;
+
+export const getThemeType = () => {
+    return theme === lightTheme ? "light" : "dark";
+};
+
+export const getTheme = () => {
+    return theme;
+};

@@ -1,0 +1,25 @@
+import { NavigationContainer } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { PaperProvider } from "react-native-paper";
+import { HistoryProvider } from "./src/context/history";
+import { RecentProvider } from "./src/context/recent";
+import Tabs from "./src/navigation/tabs";
+import { darkTheme } from "./src/utils/theme";
+
+export default function App() {
+    return (
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <PaperProvider theme={darkTheme}>
+                <HistoryProvider>
+                    <RecentProvider>
+                        <NavigationContainer>
+                            <Tabs />
+                            <StatusBar style="auto" />
+                        </NavigationContainer>
+                    </RecentProvider>
+                </HistoryProvider>
+            </PaperProvider>
+        </GestureHandlerRootView>
+    );
+}
