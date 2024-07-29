@@ -4,7 +4,8 @@ import SongCover from "../components/items/songCover";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
-import { getSongById } from "../utils/data";
+import { AlbumType } from "../context/data";
+import { getById } from "../utils/data";
 
 interface AlbumProps {
     route: any;
@@ -13,9 +14,9 @@ interface AlbumProps {
 
 const Album = ({ route, navigation }: AlbumProps) => {
     const { id } = route.params;
-    const album = getSongById(id);
+    const album = getById(id);
 
-    if (!album || album.songs === undefined)
+    if (!album || !(album as AlbumType))
         return (
             <StackPage navigation={navigation} title="Album">
                 <Text>Not found</Text>
@@ -23,11 +24,11 @@ const Album = ({ route, navigation }: AlbumProps) => {
         );
 
     return (
-        <StackPage navigation={navigation} title={album.name}>
+        <StackPage navigation={navigation} title={album.title}>
             <View style={styles.container}>
                 <ScrollView bottom={10}>
                     {album.songs.map((id: string, index: any) => {
-                        const song = getSongById(id);
+                        const song = getById(id);
 
                         if (!song) return null;
 

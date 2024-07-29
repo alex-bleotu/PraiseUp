@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
+import { AlbumType, DataContext } from "../../context/data";
 import { HistoryContext } from "../../context/history";
 import { RecentContext } from "../../context/recent";
-import { getSongById } from "../../utils/data";
 import { getTheme } from "../../utils/theme";
 import AnimatedTouchable from "../wrapers/animatedTouchable";
 import Text from "../wrapers/text";
@@ -22,15 +22,26 @@ const AlbumCover = ({
 }: AlbumCoverProps) => {
     const { addSongToHistory } = useContext(HistoryContext);
     const { addSongToRecent } = useContext(RecentContext);
+    const { getById } = useContext(DataContext);
 
-    const album = getSongById(id);
+    const [album, setAlbum] = useState<AlbumType | null>(null);
 
     const theme = getTheme();
     const width: any = fullWidth
         ? "100%"
         : Dimensions.get("screen").width / 2 - 25;
 
-    if (!album) return null;
+    useEffect(() => {
+        const load = async () => {
+            const song = await getById(id);
+
+            setAlbum(song);
+        };
+
+        load();
+    }, []);
+
+    if (album === null) return null;
 
     return (
         <AnimatedTouchable
@@ -55,7 +66,7 @@ const AlbumCover = ({
                         { width: !fullWidth ? width - 80 : "auto" },
                     ]}>
                     <Text bold size={14}>
-                        {album.name}
+                        {album.title}
                     </Text>
                 </View>
             </View>

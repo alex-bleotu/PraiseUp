@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
+import { DataContext, SongType } from "../../context/data";
 import { HistoryContext } from "../../context/history";
 import { RecentContext } from "../../context/recent";
-import { getSongById } from "../../utils/data";
 import { getTheme } from "../../utils/theme";
 import AnimatedTouchable from "../wrapers/animatedTouchable";
 import Text from "../wrapers/text";
@@ -26,13 +26,24 @@ const SongCover = ({
 }: SongCoverProps) => {
     const { addSongToHistory } = useContext(HistoryContext);
     const { addSongToRecent } = useContext(RecentContext);
+    const { getById } = useContext(DataContext);
 
-    const song = getSongById(id);
+    const [song, setSong] = useState<SongType | null>(null);
 
     const theme = getTheme();
     const width = fullWidth ? "100%" : Dimensions.get("screen").width / 2 - 25;
 
-    if (!song) return null;
+    useEffect(() => {
+        const load = async () => {
+            const song = await getById(id);
+
+            setSong(song);
+        };
+
+        load();
+    }, []);
+
+    if (song === null) return null;
 
     return (
         <AnimatedTouchable
@@ -56,7 +67,7 @@ const SongCover = ({
                 />
                 <View style={styles.textContainer}>
                     <Text bold size={14} center={vertical}>
-                        {song.name}
+                        {song.title}
                     </Text>
                     {artist && (
                         <Text size={12} center={vertical}>

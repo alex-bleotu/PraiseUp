@@ -4,19 +4,18 @@ import React, { createContext, ReactNode, useEffect, useState } from "react";
 
 export const DataContext = createContext<any>(null);
 
-export interface Album {
+export interface AlbumType {
     id: string;
-    type: string;
     title: string;
     songs: string[];
 }
 
-export interface Song {
+export interface SongType {
     id: string;
-    type: string;
     title: string;
     artist: string;
-    cover: string;
+    cover: string | null;
+    lyrics: string;
 }
 
 export const DataProvider = ({
@@ -42,18 +41,51 @@ export const DataProvider = ({
         readLists();
     }, []);
 
-    const writeSong = async (song: Song) => {
-        const path =
-            FileSystem.documentDirectory + "songs/" + song.id + ".json";
+    useEffect(() => {
+        const writeLists = async () => {
+            await AsyncStorage.setItem("songIds", JSON.stringify(songIds));
+            await AsyncStorage.setItem("albumIds", JSON.stringify(albumIds));
+        };
 
-        await FileSystem.writeAsStringAsync(path, JSON.stringify(song));
+        writeLists();
+    }, [songIds, albumIds]);
+
+    const writeSong = async (song: SongType) => {
+        const directory = FileSystem.documentDirectory + "songs/";
+        const path = directory + song.id + ".json";
+
+        try {
+            await FileSystem.makeDirectoryAsync(directory, {
+                intermediates: true,
+            });
+            await FileSystem.writeAsStringAsync(path, JSON.stringify(song));
+
+            if (!songIds.includes(song.id))
+                setSongIds((prevArray) => [...prevArray, song.id]);
+
+            console.log("Wrote song file", song.id);
+        } catch (error) {
+            console.error("Error writing song file:", error);
+        }
     };
 
-    const writeAlbum = async (album: Album) => {
-        const path =
-            FileSystem.documentDirectory + "albums/" + album.id + ".json";
+    const writeAlbum = async (album: AlbumType) => {
+        const directory = FileSystem.documentDirectory + "albums/";
+        const path = directory + album.id + ".json";
 
-        await FileSystem.writeAsStringAsync(path, JSON.stringify(album));
+        try {
+            await FileSystem.makeDirectoryAsync(directory, {
+                intermediates: true,
+            });
+            await FileSystem.writeAsStringAsync(path, JSON.stringify(album));
+
+            if (!albumIds.includes(album.id))
+                setAlbumIds((prevArray) => [...prevArray, album.id]);
+
+            console.log("Wrote album file", album.id);
+        } catch (error) {
+            console.error("Error writing album file:", error);
+        }
     };
 
     const readSong = async (id: string) => {
@@ -81,11 +113,8 @@ export const DataProvider = ({
     };
 
     const getById = async (id: string) => {
-        const song = await readSong(id);
-        const album = await readAlbum(id);
-
-        if (song) return song;
-        if (album) return album;
+        if (id.includes("S")) return getSongById(id);
+        if (id.includes("A")) return getAlbumById(id);
 
         return null;
     };
@@ -102,18 +131,31 @@ export const DataProvider = ({
         return album;
     };
 
-    const filter = (searchQuery: string) => {
-        let filtered: any = [];
+    const removeId = async (id: string) => {
+        const path =
+            FileSystem.documentDirectory +
+            (id.includes("A") ? "albums/" : "songs/") +
+            id +
+            ".json";
+
+        try {
+            await FileSystem.deleteAsync(path);
+        } catch (error) {
+            console.error("Error deleting song file:", error);
+        }
+    };
+
+    const filter = async (searchQuery: string) => {
+        let filtered: any[] = [];
         const query = searchQuery.toLowerCase();
 
-        songIds.forEach(async (id) => {
+        const stripChords = (lyrics: string) => {
+            return lyrics.replace(/\[[^\]]+\]/g, "").toLowerCase();
+        };
+
+        const songPromises = songIds.map(async (id) => {
             const song = await readSong(id);
-
-            if (!song) return;
-
-            const stripChords = (lyrics: string) => {
-                return lyrics.replace(/\[[^\]]+\]/g, "").toLowerCase();
-            };
+            if (!song) return null;
 
             const songNameMatches = song.title.toLowerCase().includes(query);
             const artistMatches = song.artist
@@ -123,19 +165,26 @@ export const DataProvider = ({
                 ? stripChords(song.lyrics).includes(query)
                 : false;
 
-            if (songNameMatches || artistMatches || lyricsMatches)
-                filtered.push(song);
+            if (songNameMatches || artistMatches || lyricsMatches) {
+                return song;
+            }
+            return null;
         });
 
-        albumIds.forEach(async (id) => {
+        const albumPromises = albumIds.map(async (id) => {
             const album = await readAlbum(id);
-
-            if (!album) return;
+            if (!album) return null;
 
             const albumNameMatches = album.title.toLowerCase().includes(query);
-
-            if (albumNameMatches) filtered.push(album);
+            if (albumNameMatches) {
+                return album;
+            }
+            return null;
         });
+
+        const results = await Promise.all([...songPromises, ...albumPromises]);
+
+        filtered = results.filter((result) => result !== null);
 
         return filtered;
     };
@@ -166,6 +215,7 @@ export const DataProvider = ({
                 getRandomSongs,
                 getSongById,
                 getAlbumById,
+                removeId,
             }}>
             {children}
         </DataContext.Provider>

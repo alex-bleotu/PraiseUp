@@ -9,8 +9,8 @@ import Background from "../components/wrapers/background";
 import Button from "../components/wrapers/button";
 import ScrollView from "../components/wrapers/scrollView";
 import Text from "../components/wrapers/text";
+import { DataContext, SongType } from "../context/data";
 import { HistoryContext } from "../context/history";
-import { Data, filterSongs, getSongById } from "../utils/data";
 import { getTheme } from "../utils/theme";
 
 const Discover = ({ navigation }: { navigation: any }) => {
@@ -18,11 +18,12 @@ const Discover = ({ navigation }: { navigation: any }) => {
 
     const [searchQuery, setSearchQuery] = useState("");
     const [loading, setLoading] = useState(true);
-    const [filteredSongs, setFilteredSongs] = useState<Data[] | null>(null);
+    const [filteredSongs, setFilteredSongs] = useState<any | null>(null);
     const searchRef = useRef(0);
 
-    const { history, deleteHistory, removeSongFromHistory } =
+    const { history, deleteHistory, removeSongFromHistory, addSongToHistory } =
         useContext(HistoryContext);
+    const { getById, filter } = useContext(DataContext);
 
     useEffect(() => {
         const currentSearch = ++searchRef.current;
@@ -37,12 +38,11 @@ const Discover = ({ navigation }: { navigation: any }) => {
             setLoading(true);
 
             // Simulate delay
-            // await new Promise((resolve) => setTimeout(resolve, 50));
+            // await new Promise((resolve) => setTimeout(resolve, 500));
 
             if (currentSearch !== searchRef.current) return;
 
-            const filtered = filterSongs(searchQuery);
-            setFilteredSongs(filtered);
+            setFilteredSongs(await filter(searchQuery));
 
             setLoading(false);
         };
@@ -80,22 +80,18 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                     </Text>
                                 </View>
                                 {history.map((id: string, index: any) => {
-                                    const song = getSongById(id);
-
-                                    if (!song) return null;
-
                                     return (
                                         <View key={index} style={styles.songs}>
-                                            {song.type === "song" ? (
+                                            {id.includes("S") ? (
                                                 <SongCover
                                                     key={index}
-                                                    id={song.id}
+                                                    id={id}
                                                     navigation={navigation}
                                                     fullWidth
                                                 />
                                             ) : (
                                                 <AlbumCover
-                                                    id={song.id}
+                                                    id={id}
                                                     key={index}
                                                     navigation={navigation}
                                                     fullWidth
@@ -134,7 +130,7 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                         fontSize={14}
                                         mode="outlined"
                                         bold
-                                        onPress={() => {
+                                        onPress={async () => {
                                             deleteHistory();
                                         }}
                                     />
@@ -154,7 +150,7 @@ const Discover = ({ navigation }: { navigation: any }) => {
                 </>
             ) : (
                 <>
-                    {filterSongs === null || loading ? (
+                    {filter === null || loading ? (
                         <View style={styles.indicator}>
                             <ActivityIndicator
                                 animating={true}
@@ -169,11 +165,11 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                 <View style={styles.container}>
                                     <ScrollView>
                                         {filteredSongs?.map(
-                                            (song: Data, index: number) => (
+                                            (song: any, index: number) => (
                                                 <View
                                                     key={index}
                                                     style={styles.songs}>
-                                                    {song.type === "song" ? (
+                                                    {(song as SongType) ? (
                                                         <SongCover
                                                             key={index}
                                                             id={song.id}

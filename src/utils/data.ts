@@ -1,18 +1,11 @@
-export interface Data {
-    id: string;
-    name: string;
-    type: "song" | "album";
-    artist?: string;
-    lyrics?: string;
-    songs?: string[];
-}
+import { AlbumType, SongType } from "../context/data";
 
-export const songs: Data[] = [
+export const songs: SongType[] = [
     {
-        id: "1",
-        type: "song",
-        name: "Song 1",
+        id: "S1",
+        title: "Song 1",
         artist: "Artist Name",
+        cover: null,
         lyrics: `[Am]I took a step into the [G]night,  
 With [C]dreams that glimmered in the [F]light,  
 A [Am]path unknown, a heart so [G]bold,  
@@ -48,10 +41,10 @@ With [Am]hope and love, and [G]dreams so wide,
 We'll [C]find our place, and there a[F]bide.`,
     },
     {
-        id: "2",
-        type: "song",
-        name: "Song 2",
+        id: "S2",
+        title: "Song 2",
         artist: "Artist Name",
+        cover: null,
         lyrics: `I took a step into the night,  
 With dreams that glimmered in the light,  
 A path unknown, a heart so bold,  
@@ -88,121 +81,123 @@ We'll find our place, and there abide.
 `,
     },
     {
-        id: "3",
-        type: "song",
-        name: "Song 3",
+        id: "S3",
+        title: "Song 3",
         artist: "Artist Name",
+        cover: null,
+        lyrics: "",
     },
     {
-        id: "4",
-        type: "song",
-        name: "Song 4",
+        id: "S4",
+        title: "Song 4",
         artist: "Artist Name",
+        cover: null,
+        lyrics: "",
     },
     {
-        id: "5",
-        type: "song",
-        name: "Song 5",
+        id: "S5",
+        title: "Song 5",
         artist: "Artist Name",
+        cover: null,
+        lyrics: "",
     },
     {
-        id: "6",
-        type: "song",
-        name: "Song 6",
+        id: "S6",
+        title: "Song 6",
         artist: "Artist Name",
+        cover: null,
+        lyrics: "",
     },
     {
-        id: "7",
-        type: "song",
-        name: "Song 7",
+        id: "S7",
+        title: "Song 7",
         artist: "Artist Name",
+        cover: null,
+        lyrics: "",
     },
     {
-        id: "8",
-        type: "song",
-        name: "Song 8",
+        id: "S8",
+        title: "Song 8",
         artist: "Artist Name",
+        cover: null,
+        lyrics: "",
     },
     {
-        id: "9",
-        type: "song",
-        name: "Song 9",
+        id: "S9",
+        title: "Song 9",
         artist: "Artist Name",
+        cover: null,
+        lyrics: "",
     },
     {
-        id: "10",
-        type: "song",
-        name: "Song 10",
+        id: "S10",
+        title: "Song 10",
         artist: "Artist Name",
+        cover: null,
+        lyrics: "",
     },
+];
+
+export const albums: AlbumType[] = [
     {
-        id: "11",
-        type: "album",
-        name: "Album 1",
+        id: "A1",
+        title: "Album 1",
         songs: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
     },
     {
-        id: "12",
-        type: "album",
-        name: "Album 2",
+        id: "A2",
+        title: "Album 2",
         songs: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
     },
     {
-        id: "13",
-        type: "album",
-        name: "Album 3",
+        id: "A3",
+        title: "Album 3",
         songs: ["1"],
     },
     {
-        id: "14",
-        type: "album",
-        name: "Album 4",
+        id: "A4",
+        title: "Album 4",
         songs: ["1"],
     },
     {
-        id: "15",
-        type: "album",
-        name: "Album 5",
+        id: "A5",
+        title: "Album 5",
         songs: ["1"],
     },
     {
-        id: "16",
-        type: "album",
-        name: "Album 6",
+        id: "A6",
+        title: "Album 6",
         songs: ["1"],
     },
     {
-        id: "17",
-        type: "album",
-        name: "Album 7",
+        id: "A7",
+        title: "Album 7",
         songs: ["1"],
     },
     {
-        id: "18",
-        type: "album",
-        name: "Album 8",
+        id: "A8",
+        title: "Album 8",
         songs: ["1"],
     },
     {
-        id: "19",
-        type: "album",
-        name: "Album 9",
+        id: "A9",
+        title: "Album 9",
         songs: ["1"],
     },
     {
-        id: "20",
-        type: "album",
-        name: "Album 10",
+        id: "A10",
+        title: "Album 10",
         songs: ["1"],
     },
 ];
 
-export const getSongById = (id: string) => {
-    return songs.find((song) => song.id === id);
+export const getById = (id: string) => {
+    if (id.includes("S")) return songs.find((song) => song.id === id);
+    else return albums.find((album) => album.id === id);
 };
 
 export const filterSongs = (searchQuery: string) => {
-    return songs.filter((song: Data) => {
+    return songs.filter((song: any) => {
         const query = searchQuery.toLowerCase();
 
         const stripChords = (lyrics: string) => {
@@ -227,7 +222,7 @@ export const getRandomSongs = (number: number) => {
     while (randomSongs.length < number) {
         const song = songs[Math.floor(Math.random() * songs.length)];
 
-        if (!randomSongs.includes(song.id) || song.type === "song")
+        if (!randomSongs.includes(song.id) || (song as SongType))
             randomSongs.push(song.id);
     }
 

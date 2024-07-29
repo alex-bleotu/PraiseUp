@@ -4,8 +4,9 @@ import AlbumCover from "../components/items/albumCover";
 import SongCover from "../components/items/songCover";
 import Background from "../components/wrapers/background";
 import Text from "../components/wrapers/text";
+import { SongType } from "../context/data";
 import { RecentContext } from "../context/recent";
-import { getRandomSongs, getSongById } from "../utils/data";
+import { getById, getRandomSongs } from "../utils/data";
 
 const Home = ({ navigation }: { navigation: any }) => {
     const { recent } = useContext(RecentContext);
@@ -16,13 +17,13 @@ const Home = ({ navigation }: { navigation: any }) => {
         <Background>
             {recent.length > 1 && (
                 <View style={styles.row}>
-                    {getSongById(recent[0])?.type === "song" ? (
+                    {(getById(recent[0]) as SongType) ? (
                         <SongCover id={recent[0]} navigation={navigation} />
                     ) : (
                         <AlbumCover id={recent[0]} navigation={navigation} />
                     )}
                     <View style={{ width: 10 }} />
-                    {getSongById(recent[1])?.type === "song" ? (
+                    {(getById(recent[1]) as SongType) ? (
                         <SongCover id={recent[1]} navigation={navigation} />
                     ) : (
                         <AlbumCover id={recent[1]} navigation={navigation} />
@@ -31,13 +32,13 @@ const Home = ({ navigation }: { navigation: any }) => {
             )}
             {recent.length > 3 && (
                 <View style={styles.row}>
-                    {getSongById(recent[2])?.type === "song" ? (
+                    {(getById(recent[2]) as SongType) ? (
                         <SongCover id={recent[2]} navigation={navigation} />
                     ) : (
                         <AlbumCover id={recent[2]} navigation={navigation} />
                     )}
                     <View style={{ width: 10 }} />
-                    {getSongById(recent[3])?.type === "song" ? (
+                    {(getById(recent[3]) as SongType) ? (
                         <SongCover id={recent[3]} navigation={navigation} />
                     ) : (
                         <AlbumCover id={recent[3]} navigation={navigation} />
@@ -46,13 +47,13 @@ const Home = ({ navigation }: { navigation: any }) => {
             )}
             {recent.length > 5 && (
                 <View style={styles.row}>
-                    {getSongById(recent[4])?.type === "song" ? (
+                    {(getById(recent[4]) as SongType) ? (
                         <SongCover id={recent[4]} navigation={navigation} />
                     ) : (
                         <AlbumCover id={recent[4]} navigation={navigation} />
                     )}
                     <View style={{ width: 10 }} />
-                    {getSongById(recent[5])?.type === "song" ? (
+                    {(getById(recent[5]) as SongType) ? (
                         <SongCover id={recent[5]} navigation={navigation} />
                     ) : (
                         <AlbumCover id={recent[5]} navigation={navigation} />
