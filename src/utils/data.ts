@@ -4,6 +4,7 @@ export interface Data {
     type: "song" | "album";
     artist?: string;
     lyrics?: string;
+    songs?: string[];
 }
 
 export const songs: Data[] = [
@@ -138,51 +139,61 @@ We'll find our place, and there abide.
         id: "11",
         type: "album",
         name: "Album 1",
+        songs: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
     },
     {
         id: "12",
         type: "album",
         name: "Album 2",
+        songs: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
     },
     {
         id: "13",
         type: "album",
         name: "Album 3",
+        songs: ["1"],
     },
     {
         id: "14",
         type: "album",
         name: "Album 4",
+        songs: ["1"],
     },
     {
         id: "15",
         type: "album",
         name: "Album 5",
+        songs: ["1"],
     },
     {
         id: "16",
         type: "album",
         name: "Album 6",
+        songs: ["1"],
     },
     {
         id: "17",
         type: "album",
         name: "Album 7",
+        songs: ["1"],
     },
     {
         id: "18",
         type: "album",
         name: "Album 8",
+        songs: ["1"],
     },
     {
         id: "19",
         type: "album",
         name: "Album 9",
+        songs: ["1"],
     },
     {
         id: "20",
         type: "album",
         name: "Album 10",
+        songs: ["1"],
     },
 ];
 
@@ -208,4 +219,17 @@ export const filterSongs = (searchQuery: string) => {
 
         return songNameMatches || artistMatches || lyricsMatches;
     });
+};
+
+export const getRandomSongs = (number: number) => {
+    const randomSongs: string[] = [];
+
+    while (randomSongs.length < number) {
+        const song = songs[Math.floor(Math.random() * songs.length)];
+
+        if (!randomSongs.includes(song.id) || song.type === "song")
+            randomSongs.push(song.id);
+    }
+
+    return randomSongs;
 };

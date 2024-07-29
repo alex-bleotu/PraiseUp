@@ -12,6 +12,8 @@ interface SongCoverProps {
     navigation: any;
     fullWidth?: boolean;
     wasSearched?: boolean;
+    artist?: boolean;
+    vertical?: boolean;
 }
 
 const SongCover = ({
@@ -19,6 +21,8 @@ const SongCover = ({
     navigation,
     fullWidth,
     wasSearched,
+    artist = true,
+    vertical = false,
 }: SongCoverProps) => {
     const { addSongToHistory } = useContext(HistoryContext);
     const { addSongToRecent } = useContext(RecentContext);
@@ -40,18 +44,25 @@ const SongCover = ({
             }}>
             <View
                 style={[
-                    styles.container,
-                    { width, backgroundColor: theme.colors.paper },
+                    vertical ? styles.containerVertical : styles.container,
+                    {
+                        width: vertical ? "100%" : width,
+                        backgroundColor: theme.colors.paper,
+                    },
                 ]}>
                 <Image
                     source={require("../../../assets/images/songCover.png")}
                     style={{ width: 70, height: 70, borderRadius: 15 }}
                 />
                 <View style={styles.textContainer}>
-                    <Text bold size={14}>
+                    <Text bold size={14} center={vertical}>
                         {song.name}
                     </Text>
-                    <Text size={12}>{song.artist}</Text>
+                    {artist && (
+                        <Text size={12} center={vertical}>
+                            {song.artist}
+                        </Text>
+                    )}
                 </View>
             </View>
         </AnimatedTouchable>
@@ -65,6 +76,13 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         display: "flex",
         flexDirection: "row",
+    },
+    containerVertical: {
+        borderRadius: 15,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        padding: 5,
     },
     textContainer: {
         display: "flex",

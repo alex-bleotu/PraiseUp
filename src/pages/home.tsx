@@ -3,16 +3,19 @@ import { StyleSheet, View } from "react-native";
 import AlbumCover from "../components/items/albumCover";
 import SongCover from "../components/items/songCover";
 import Background from "../components/wrapers/background";
+import Text from "../components/wrapers/text";
 import { RecentContext } from "../context/recent";
-import { getSongById } from "../utils/data";
+import { getRandomSongs, getSongById } from "../utils/data";
 
 const Home = ({ navigation }: { navigation: any }) => {
     const { recent } = useContext(RecentContext);
 
+    const randomSongs = getRandomSongs(4);
+
     return (
         <Background>
             {recent.length > 1 && (
-                <View style={styles.songRow}>
+                <View style={styles.row}>
                     {getSongById(recent[0])?.type === "song" ? (
                         <SongCover id={recent[0]} navigation={navigation} />
                     ) : (
@@ -27,7 +30,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                 </View>
             )}
             {recent.length > 3 && (
-                <View style={styles.songRow}>
+                <View style={styles.row}>
                     {getSongById(recent[2])?.type === "song" ? (
                         <SongCover id={recent[2]} navigation={navigation} />
                     ) : (
@@ -42,7 +45,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                 </View>
             )}
             {recent.length > 5 && (
-                <View style={styles.songRow}>
+                <View style={styles.row}>
                     {getSongById(recent[4])?.type === "song" ? (
                         <SongCover id={recent[4]} navigation={navigation} />
                     ) : (
@@ -56,6 +59,21 @@ const Home = ({ navigation }: { navigation: any }) => {
                     )}
                 </View>
             )}
+            <View style={styles.container}>
+                <Text size={20} bold>
+                    Suggested for you
+                </Text>
+                <View style={styles.songsContainer}>
+                    {randomSongs.map((id, index) => (
+                        <SongCover
+                            key={index}
+                            id={id}
+                            navigation={navigation}
+                            vertical
+                        />
+                    ))}
+                </View>
+            </View>
         </Background>
     );
 };
@@ -63,12 +81,22 @@ const Home = ({ navigation }: { navigation: any }) => {
 export default Home;
 
 const styles = StyleSheet.create({
-    songRow: {
+    row: {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
         marginTop: 5,
         marginBottom: 5,
         width: "100%",
+    },
+    songsContainer: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginTop: 15,
+    },
+    container: {
+        marginTop: 20,
+        // marginHorizontal: 5,
     },
 });

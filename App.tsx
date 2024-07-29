@@ -2,6 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { PaperProvider } from "react-native-paper";
+import { DataProvider } from "./src/context/data";
 import { HistoryProvider } from "./src/context/history";
 import { RecentProvider } from "./src/context/recent";
 import Tabs from "./src/navigation/tabs";
@@ -13,10 +14,12 @@ export default function App() {
             <PaperProvider theme={darkTheme}>
                 <HistoryProvider>
                     <RecentProvider>
-                        <NavigationContainer>
-                            <Tabs />
-                            <StatusBar style="auto" />
-                        </NavigationContainer>
+                        <DataProvider>
+                            <NavigationContainer>
+                                <Tabs />
+                                <StatusBar style="auto" />
+                            </NavigationContainer>
+                        </DataProvider>
                     </RecentProvider>
                 </HistoryProvider>
             </PaperProvider>

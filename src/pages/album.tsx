@@ -1,6 +1,9 @@
 import React from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
+import SongCover from "../components/items/songCover";
+import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
+import Text from "../components/wrapers/text";
 import { getSongById } from "../utils/data";
 
 interface AlbumProps {
@@ -10,10 +13,9 @@ interface AlbumProps {
 
 const Album = ({ route, navigation }: AlbumProps) => {
     const { id } = route.params;
+    const album = getSongById(id);
 
-    const song = getSongById(id);
-
-    if (!song)
+    if (!album || album.songs === undefined)
         return (
             <StackPage navigation={navigation} title="Album">
                 <Text>Not found</Text>
@@ -21,12 +23,40 @@ const Album = ({ route, navigation }: AlbumProps) => {
         );
 
     return (
-        <StackPage navigation={navigation} title={song.name}>
-            <Text>Album</Text>
+        <StackPage navigation={navigation} title={album.name}>
+            <View style={styles.container}>
+                <ScrollView bottom={10}>
+                    {album.songs.map((id: string, index: any) => {
+                        const song = getSongById(id);
+
+                        if (!song) return null;
+
+                        return (
+                            <View key={index} style={styles.songs}>
+                                <SongCover
+                                    key={index}
+                                    id={song.id}
+                                    navigation={navigation}
+                                    fullWidth
+                                    artist={false}
+                                />
+                            </View>
+                        );
+                    })}
+                </ScrollView>
+            </View>
         </StackPage>
     );
 };
 
 export default Album;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    container: {
+        width: "100%",
+        display: "flex",
+        flex: 1,
+        paddingLeft: 35,
+    },
+    songs: { marginTop: 15, paddingRight: 35 },
+});
