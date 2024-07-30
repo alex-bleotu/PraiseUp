@@ -13,6 +13,7 @@ interface AlbumCoverProps {
     navigation: any;
     fullWidth?: boolean;
     wasSearched?: boolean;
+    vertical?: boolean;
     icon?: keyof typeof MCIcons.glyphMap;
     action?: () => void;
 }
@@ -22,6 +23,7 @@ const AlbumCover = ({
     navigation,
     fullWidth,
     wasSearched,
+    vertical = false,
     icon,
     action,
 }: AlbumCoverProps) => {
@@ -45,19 +47,22 @@ const AlbumCover = ({
             }}>
             <View
                 style={[
-                    styles.container,
-                    { width, backgroundColor: theme.colors.paper },
+                    vertical ? styles.containerVertical : styles.container,
+                    {
+                        width: vertical ? "100%" : width,
+                        backgroundColor: theme.colors.paper,
+                    },
                 ]}>
                 <Image
                     source={require("../../../assets/images/songCover.png")}
-                    style={{ width: 70, height: 70, borderRadius: 15 }}
+                    style={vertical ? styles.imageVertical : styles.image}
                 />
                 <View
                     style={[
                         styles.textContainer,
                         { width: !fullWidth ? width - 80 : "auto" },
                     ]}>
-                    <Text bold size={14}>
+                    <Text bold size={vertical ? 16 : 14} center={vertical}>
                         {album.title}
                     </Text>
                 </View>
@@ -81,10 +86,24 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
     },
+    containerVertical: {
+        borderRadius: 15,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        padding: 5,
+        paddingBottom: 8,
+    },
     textContainer: {
         display: "flex",
         flexDirection: "column",
         marginHorizontal: 8,
         justifyContent: "center",
     },
+    imageVertical: {
+        width: 110,
+        height: 110,
+        borderRadius: 15,
+    },
+    image: { width: 70, height: 70, borderRadius: 15 },
 });

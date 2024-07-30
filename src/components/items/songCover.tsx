@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         padding: 5,
-        paddingBottom: 10,
+        paddingBottom: 8,
     },
     textContainer: {
         display: "flex",
@@ -104,8 +104,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     imageVertical: {
-        width: 100,
-        height: 100,
+        width: 110,
+        height: 110,
         borderRadius: 15,
     },
     image: { width: 70, height: 70, borderRadius: 15 },

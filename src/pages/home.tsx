@@ -1,79 +1,88 @@
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 import AlbumCover from "../components/items/albumCover";
 import SongCover from "../components/items/songCover";
 import Background from "../components/wrapers/background";
+import ScrollView from "../components/wrapers/scrollView";
 import Text from "../components/wrapers/text";
 import { AlbumType, DataContext, isSong, SongType } from "../context/data";
 import { RecentContext } from "../context/recent";
 
 const Home = ({ navigation }: { navigation: any }) => {
     const { recent } = useContext(RecentContext);
-    const { getRandomSongs } = useContext(DataContext);
+    const { getRandomSongs, getRandomAlbums } = useContext(DataContext);
 
     const [randomSongs, setRandomSongs] = useState<SongType[]>([]);
+    const [createdAlbums, setCreatedAlbums] = useState<AlbumType[]>([]);
 
     useEffect(() => {
         const load = async () => {
             const songs = await getRandomSongs(6);
             setRandomSongs(songs);
+
+            const albums = await getRandomAlbums(6);
+            setCreatedAlbums(albums);
         };
 
         load();
     }, []);
 
     return (
-        <Background>
-            {recent.map((data: SongType | AlbumType, index: number) => {
-                if (index % 2 !== 0) return null;
+        <Background noPadding>
+            <View style={styles.recent}>
+                {recent.map((data: SongType | AlbumType, index: number) => {
+                    if (index % 2 !== 0) return null;
 
-                const data2 = recent[index + 1];
+                    const data2 = recent[index + 1];
 
-                return (
-                    <View key={index} style={styles.row}>
-                        <View>
-                            {isSong(data) ? (
-                                <SongCover
-                                    song={data}
-                                    navigation={navigation}
-                                />
-                            ) : (
-                                <AlbumCover
-                                    album={data}
-                                    navigation={navigation}
-                                />
-                            )}
-                        </View>
-                        <View style={{ width: 10 }} />
-                        {data2 && (
-                            <View key={index + 1}>
-                                {isSong(data2) ? (
+                    return (
+                        <View key={index} style={styles.row}>
+                            <View>
+                                {isSong(data) ? (
                                     <SongCover
-                                        song={data2}
+                                        song={data}
                                         navigation={navigation}
                                     />
                                 ) : (
                                     <AlbumCover
-                                        album={data2}
+                                        album={data}
                                         navigation={navigation}
                                     />
                                 )}
                             </View>
-                        )}
-                    </View>
-                );
-            })}
+                            <View style={{ width: 10 }} />
+                            {data2 && (
+                                <View key={index + 1}>
+                                    {isSong(data2) ? (
+                                        <SongCover
+                                            song={data2}
+                                            navigation={navigation}
+                                        />
+                                    ) : (
+                                        <AlbumCover
+                                            album={data2}
+                                            navigation={navigation}
+                                        />
+                                    )}
+                                </View>
+                            )}
+                        </View>
+                    );
+                })}
+            </View>
+
             <View style={styles.container}>
-                <Text size={20} bold>
+                <Text size={20} bold style={{ marginLeft: 20 }}>
                     Suggested for you
                 </Text>
                 <View style={styles.songsContainer}>
                     <ScrollView
                         horizontal
-                        showsHorizontalScrollIndicator={false}>
+                        showScroll={false}
+                        top={10}
+                        bottom={10}>
                         {randomSongs.map((song: SongType, index: number) => (
-                            <View key={index} style={{ marginRight: 10 }}>
+                            <View key={index} style={{ marginHorizontal: 7.5 }}>
                                 <SongCover
                                     song={song}
                                     navigation={navigation}
@@ -82,6 +91,32 @@ const Home = ({ navigation }: { navigation: any }) => {
                                 />
                             </View>
                         ))}
+                    </ScrollView>
+                </View>
+            </View>
+            <View style={styles.container}>
+                <Text size={20} bold style={{ marginLeft: 20 }}>
+                    Your Albums
+                </Text>
+                <View style={styles.songsContainer}>
+                    <ScrollView
+                        horizontal
+                        showScroll={false}
+                        top={10}
+                        bottom={10}>
+                        {createdAlbums.map(
+                            (album: AlbumType, index: number) => (
+                                <View
+                                    key={index}
+                                    style={{ marginHorizontal: 7.5 }}>
+                                    <AlbumCover
+                                        album={album}
+                                        navigation={navigation}
+                                        vertical
+                                    />
+                                </View>
+                            )
+                        )}
                     </ScrollView>
                 </View>
             </View>
@@ -105,8 +140,12 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         marginTop: 15,
+        marginHorizontal: -7.5,
     },
     container: {
         marginTop: 20,
+    },
+    recent: {
+        marginHorizontal: 20,
     },
 });

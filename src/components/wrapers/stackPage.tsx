@@ -1,4 +1,7 @@
-import { Entypo as EIcons } from "@expo/vector-icons";
+import {
+    Entypo as EIcons,
+    MaterialCommunityIcons as MCIcons,
+} from "@expo/vector-icons";
 import React, { useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import { ThemeContext } from "../../context/theme";
@@ -10,10 +13,20 @@ interface StackPageProps {
     children: React.ReactNode | React.ReactNode[];
     navigation: any;
     title: string;
+    icon?: keyof typeof MCIcons.glyphMap;
+    action?: () => void;
 }
 
-const StackPage = ({ children, navigation, title }: StackPageProps) => {
+const StackPage = ({
+    children,
+    navigation,
+    title,
+    icon,
+    action,
+}: StackPageProps) => {
     const { theme } = useContext(ThemeContext);
+
+    const iconSize = 30;
 
     return (
         <Background noPadding>
@@ -25,15 +38,36 @@ const StackPage = ({ children, navigation, title }: StackPageProps) => {
                     }}>
                     <EIcons
                         name="chevron-left"
-                        size={30}
+                        size={iconSize}
                         color={theme.colors.text}
                     />
                 </AnimatedTouchable>
-                <View style={styles.textContainer}>
+                <View
+                    style={[
+                        styles.textContainer,
+                        {
+                            marginRight: icon ? 0 : iconSize,
+                        },
+                    ]}>
                     <Text center size={24}>
                         {title}
                     </Text>
                 </View>
+                {icon && (
+                    <AnimatedTouchable
+                        style={{
+                            ...styles.cornerButton,
+                        }}
+                        onPress={() => {
+                            action && action();
+                        }}>
+                        <MCIcons
+                            name={icon}
+                            size={iconSize}
+                            color={theme.colors.text}
+                        />
+                    </AnimatedTouchable>
+                )}
             </View>
             <View style={styles.container}>{children}</View>
         </Background>
@@ -52,12 +86,14 @@ const styles = StyleSheet.create({
     textContainer: {
         flex: 1,
         alignItems: "center",
-        marginRight: 40,
     },
     container: {
         width: "100%",
         display: "flex",
         flex: 1,
         marginBottom: 10,
+    },
+    cornerButton: {
+        marginRight: 10,
     },
 });

@@ -7,16 +7,25 @@ interface ScrollViewProps {
     style?: ViewStyle;
     bottom?: number;
     top?: number;
+    horizontal?: boolean;
+    showScroll?: boolean;
 }
 
 const ScrollView = ({
     children,
     style,
-    bottom = 15,
+    bottom = 0,
     top = 0,
+    horizontal = false,
+    showScroll = true,
 }: ScrollViewProps) => {
     return (
-        <SV overScrollMode="never" style={style}>
+        <SV
+            overScrollMode="never"
+            style={style}
+            showsHorizontalScrollIndicator={showScroll}
+            showsVerticalScrollIndicator={showScroll}
+            horizontal={horizontal}>
             <View style={{ margin: top }} />
             {children}
             <View style={{ margin: bottom }} />

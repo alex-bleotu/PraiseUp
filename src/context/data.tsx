@@ -229,6 +229,23 @@ export const DataProvider = ({
         return randomSongs;
     };
 
+    const getRandomAlbums = async (number: number) => {
+        const randomAlbums: AlbumType[] = [];
+
+        if (number > albumIds.length) return [];
+
+        while (randomAlbums.length < number) {
+            const id = albumIds[Math.floor(Math.random() * albumIds.length)];
+
+            if (!randomAlbums.find((album) => album.id === id)) {
+                const album = await getAlbumById(id);
+                randomAlbums.push(album);
+            }
+        }
+
+        return randomAlbums;
+    };
+
     return (
         <DataContext.Provider
             value={{
@@ -241,6 +258,7 @@ export const DataProvider = ({
                 getById,
                 filter,
                 getRandomSongs,
+                getRandomAlbums,
                 getSongById,
                 getAlbumById,
                 removeId,

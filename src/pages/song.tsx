@@ -5,6 +5,7 @@ import {
 import React, { useContext, useState } from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import Button from "../components/wrapers/button";
+import Modal from "../components/wrapers/modal";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
 import { ThemeContext } from "../context/theme";
@@ -61,6 +62,7 @@ const Song = ({ route, navigation }: SongProps) => {
     const { song } = route.params;
 
     const [value, setValue] = useState("lyrics");
+    const [modalVisible, setModalVisible] = useState(false);
 
     if (!song)
         return (
@@ -71,17 +73,17 @@ const Song = ({ route, navigation }: SongProps) => {
 
     const hasChords = song.lyrics && song.lyrics.match(/\[.*?\]/);
 
-    const numberOfButtons = song.lyrics && hasChords ? 3 : 2;
-    const buttonWidth =
-        Dimensions.get("screen").width / numberOfButtons -
-        (numberOfButtons === 3 ? 20 : 25);
-    const buttonsContainerWidth =
-        buttonWidth * numberOfButtons + 25 + 10 * (numberOfButtons - 2);
+    const buttonWidth = Dimensions.get("screen").width / 2 - 25;
+    const buttonsContainerWidth = buttonWidth * 2 + 25;
 
     return (
-        <StackPage navigation={navigation} title={song.title}>
+        <StackPage
+            navigation={navigation}
+            title={song.title}
+            icon={"dots-vertical"}
+            action={() => setModalVisible(true)}>
             <View style={styles.container}>
-                {song.lyrics && (
+                {song.lyrics && hasChords && (
                     <View
                         style={[
                             styles.selector,
@@ -134,6 +136,13 @@ const Song = ({ route, navigation }: SongProps) => {
                     </ScrollView>
                 )}
             </View>
+            <Modal
+                title="Info"
+                visible={modalVisible}
+                setVisible={setModalVisible}
+                onClose={() => console.log("closed")}>
+                <Text>Information</Text>
+            </Modal>
         </StackPage>
     );
 };

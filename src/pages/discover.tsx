@@ -71,7 +71,7 @@ const Discover = ({ navigation }: { navigation: any }) => {
                 <>
                     {history.length !== 0 ? (
                         <View style={styles.container}>
-                            <ScrollView>
+                            <ScrollView bottom={15}>
                                 <View style={{ marginTop: 15 }}>
                                     <Text size={20} bold>
                                         Recent Searches
@@ -163,7 +163,7 @@ const Discover = ({ navigation }: { navigation: any }) => {
                         <>
                             {filteredData?.length !== 0 ? (
                                 <View style={styles.container}>
-                                    <ScrollView>
+                                    <ScrollView bottom={15}>
                                         {filteredData?.map(
                                             (data: any, index: number) => (
                                                 <View
