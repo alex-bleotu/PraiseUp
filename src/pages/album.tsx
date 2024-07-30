@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import SongCover from "../components/items/songCover";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
-import { AlbumType } from "../context/data";
-import { getById } from "../utils/data";
+import { DataContext, SongType } from "../context/data";
 
 interface AlbumProps {
     route: any;
@@ -13,10 +12,28 @@ interface AlbumProps {
 }
 
 const Album = ({ route, navigation }: AlbumProps) => {
-    const { id } = route.params;
-    const album = getById(id);
+    const { album } = route.params;
 
-    if (!album || !(album as AlbumType))
+    const [songs, setSongs] = useState<SongType[]>([]);
+
+    const { getById } = useContext(DataContext);
+
+    useEffect(() => {
+        const load = async () => {
+            let loaded: SongType[] = [];
+
+            for (let i = 0; i < album.songs.length; i++) {
+                const song = await getById(album.songs[i]);
+                if (song) loaded.push(song as SongType);
+            }
+
+            setSongs(loaded);
+        };
+
+        load();
+    }, []);
+
+    if (!album)
         return (
             <StackPage navigation={navigation} title="Album">
                 <Text>Not found</Text>
@@ -27,16 +44,14 @@ const Album = ({ route, navigation }: AlbumProps) => {
         <StackPage navigation={navigation} title={album.title}>
             <View style={styles.container}>
                 <ScrollView bottom={10}>
-                    {album.songs.map((id: string, index: any) => {
-                        const song = getById(id);
-
+                    {songs.map((song: SongType, index: any) => {
                         if (!song) return null;
 
                         return (
                             <View key={index} style={styles.songs}>
                                 <SongCover
                                     key={index}
-                                    id={song.id}
+                                    song={song}
                                     navigation={navigation}
                                     fullWidth
                                     artist={false}

@@ -1,6 +1,4 @@
-import { AlbumType, SongType } from "../context/data";
-
-export const songs: SongType[] = [
+export const songs: any[] = [
     {
         id: "S1",
         title: "Song 1",
@@ -138,93 +136,55 @@ We'll find our place, and there abide.
     },
 ];
 
-export const albums: AlbumType[] = [
+export const albums: any[] = [
     {
         id: "A1",
         title: "Album 1",
-        songs: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+        songs: ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S10"],
     },
     {
         id: "A2",
         title: "Album 2",
-        songs: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+        songs: ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S10"],
     },
     {
         id: "A3",
         title: "Album 3",
-        songs: ["1"],
+        songs: ["S1"],
     },
     {
         id: "A4",
         title: "Album 4",
-        songs: ["1"],
+        songs: ["S1"],
     },
     {
         id: "A5",
         title: "Album 5",
-        songs: ["1"],
+        songs: ["S1"],
     },
     {
         id: "A6",
         title: "Album 6",
-        songs: ["1"],
+        songs: ["S1"],
     },
     {
         id: "A7",
         title: "Album 7",
-        songs: ["1"],
+        songs: ["S1"],
     },
     {
         id: "A8",
         title: "Album 8",
-        songs: ["1"],
+        songs: ["S1"],
     },
     {
         id: "A9",
         title: "Album 9",
-        songs: ["1"],
+        songs: ["S1"],
     },
     {
         id: "A10",
         title: "Album 10",
-        songs: ["1"],
+        songs: ["S1"],
     },
 ];
-
-export const getById = (id: string) => {
-    if (id.includes("S")) return songs.find((song) => song.id === id);
-    else return albums.find((album) => album.id === id);
-};
-
-export const filterSongs = (searchQuery: string) => {
-    return songs.filter((song: any) => {
-        const query = searchQuery.toLowerCase();
-
-        const stripChords = (lyrics: string) => {
-            return lyrics.replace(/\[[^\]]+\]/g, "").toLowerCase();
-        };
-
-        const songNameMatches = song.name.toLowerCase().includes(query);
-        const artistMatches = song.artist
-            ? song.artist.toLowerCase().includes(query)
-            : false;
-        const lyricsMatches = song.lyrics
-            ? stripChords(song.lyrics).includes(query)
-            : false;
-
-        return songNameMatches || artistMatches || lyricsMatches;
-    });
-};
-
-export const getRandomSongs = (number: number) => {
-    const randomSongs: string[] = [];
-
-    while (randomSongs.length < number) {
-        const song = songs[Math.floor(Math.random() * songs.length)];
-
-        if (!randomSongs.includes(song.id) || (song as SongType))
-            randomSongs.push(song.id);
-    }
-
-    return randomSongs;
-};

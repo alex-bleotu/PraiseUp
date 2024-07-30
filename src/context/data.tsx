@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as FileSystem from "expo-file-system";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
+import { albums, songs } from "../../assets/bundle";
 
 export const DataContext = createContext<any>(null);
 
@@ -27,17 +28,43 @@ export const DataProvider = ({
     const [albumIds, setAlbumIds] = useState<string[]>([]);
 
     useEffect(() => {
+        const firstLoad = async () => {
+            const loaded = await AsyncStorage.getItem("loaded");
+
+            if (loaded === null) {
+                AsyncStorage.clear();
+
+                for (let i = 0; i < songs.length; i++)
+                    await writeSong(songs[i]);
+                for (let i = 0; i < albums.length; i++)
+                    await writeAlbum(albums[i]);
+
+                const path = FileSystem.documentDirectory + "bundle.ts";
+
+                try {
+                    const fileInfo = await FileSystem.getInfoAsync(path);
+                    if (fileInfo.exists) {
+                        await FileSystem.deleteAsync(path);
+                        console.log("Deleted bundle file");
+                    } else console.log("Bundle file does not exist");
+                } catch (error) {
+                    console.error("Error checking bundle file", error);
+                }
+
+                await AsyncStorage.setItem("loaded", "true");
+            }
+        };
+
         const readLists = async () => {
             const songs = await AsyncStorage.getItem("songIds");
             const albums = await AsyncStorage.getItem("albumIds");
 
             if (songs !== null) setSongIds(JSON.parse(songs));
-            else await AsyncStorage.setItem("songIds", JSON.stringify([]));
 
             if (albums !== null) setAlbumIds(JSON.parse(albums));
-            else await AsyncStorage.setItem("albumIds", JSON.stringify([]));
         };
 
+        firstLoad();
         readLists();
     }, []);
 
@@ -51,16 +78,10 @@ export const DataProvider = ({
     }, [songIds, albumIds]);
 
     const writeSong = async (song: SongType) => {
-        const directory = FileSystem.documentDirectory + "songs/";
-        const path = directory + song.id + ".json";
-
         try {
-            await FileSystem.makeDirectoryAsync(directory, {
-                intermediates: true,
-            });
-            await FileSystem.writeAsStringAsync(path, JSON.stringify(song));
+            await AsyncStorage.setItem(song.id, JSON.stringify(song));
 
-            if (!songIds.includes(song.id))
+            if (!songIds.find((id) => id === song.id))
                 setSongIds((prevArray) => [...prevArray, song.id]);
 
             console.log("Wrote song file", song.id);
@@ -70,16 +91,10 @@ export const DataProvider = ({
     };
 
     const writeAlbum = async (album: AlbumType) => {
-        const directory = FileSystem.documentDirectory + "albums/";
-        const path = directory + album.id + ".json";
-
         try {
-            await FileSystem.makeDirectoryAsync(directory, {
-                intermediates: true,
-            });
-            await FileSystem.writeAsStringAsync(path, JSON.stringify(album));
+            await AsyncStorage.setItem(album.id, JSON.stringify(album));
 
-            if (!albumIds.includes(album.id))
+            if (!albumIds.find((id) => id === album.id))
                 setAlbumIds((prevArray) => [...prevArray, album.id]);
 
             console.log("Wrote album file", album.id);
@@ -89,27 +104,18 @@ export const DataProvider = ({
     };
 
     const readSong = async (id: string) => {
-        const path = FileSystem.documentDirectory + "songs/" + id + ".json";
+        const song = await AsyncStorage.getItem(id);
 
-        const song = await FileSystem.readAsStringAsync(path);
+        if (!song) return null;
 
-        try {
-            return JSON.parse(song);
-        } catch {
-            return null;
-        }
+        return JSON.parse(song);
     };
 
     const readAlbum = async (id: string) => {
-        const path = FileSystem.documentDirectory + "albums/" + id + ".json";
+        const album = await AsyncStorage.getItem(id);
 
-        const album = await FileSystem.readAsStringAsync(path);
-
-        try {
-            return JSON.parse(album);
-        } catch {
-            return null;
-        }
+        if (!album) return null;
+        return JSON.parse(album);
     };
 
     const getById = async (id: string) => {
@@ -132,14 +138,18 @@ export const DataProvider = ({
     };
 
     const removeId = async (id: string) => {
-        const path =
-            FileSystem.documentDirectory +
-            (id.includes("A") ? "albums/" : "songs/") +
-            id +
-            ".json";
-
         try {
-            await FileSystem.deleteAsync(path);
+            await AsyncStorage.removeItem(id);
+
+            if (id.includes("S")) {
+                setSongIds((prevArray) =>
+                    prevArray.filter((songId) => songId !== id)
+                );
+            } else if (id.includes("A")) {
+                setAlbumIds((prevArray) =>
+                    prevArray.filter((albumId) => albumId !== id)
+                );
+            }
         } catch (error) {
             console.error("Error deleting song file:", error);
         }
@@ -189,13 +199,16 @@ export const DataProvider = ({
         return filtered;
     };
 
-    const getRandomSongs = (number: number) => {
-        const randomSongs: string[] = [];
+    const getRandomSongs = async (number: number) => {
+        const randomSongs: SongType[] = [];
 
         while (randomSongs.length < number) {
-            const song = songIds[Math.floor(Math.random() * songIds.length)];
+            const id = songIds[Math.floor(Math.random() * songIds.length)];
 
-            if (!randomSongs.includes(song)) randomSongs.push(song);
+            if (!randomSongs.find((song) => song.id === id)) {
+                const song = await getSongById(id);
+                randomSongs.push(song);
+            }
         }
 
         return randomSongs;
@@ -221,3 +234,5 @@ export const DataProvider = ({
         </DataContext.Provider>
     );
 };
+
+export const isSong = (data: SongType | AlbumType): data is SongType => {};

@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, ReactNode, useEffect } from "react";
+import { AlbumType, SongType } from "./data";
 
 export const HistoryContext = createContext<any>(null);
 
@@ -8,7 +9,7 @@ export const HistoryProvider = ({
 }: {
     children: ReactNode | ReactNode[];
 }) => {
-    const [history, setHistory] = React.useState<string[]>([]);
+    const [history, setHistory] = React.useState<(SongType | AlbumType)[]>([]);
 
     useEffect(() => {
         const loadHistory = async () => {
@@ -38,19 +39,18 @@ export const HistoryProvider = ({
         saveHistory();
     }, [history]);
 
-    const addSongToHistory = (id: string) => {
-        const newHistory = [];
+    const addToHistory = (data: SongType | AlbumType) => {
+        const newHistory = history.filter((value) => value.id !== data.id);
 
-        newHistory.push(id);
-        newHistory.push(...history.filter((songId: string) => songId !== id));
+        newHistory.unshift(data);
 
         if (newHistory.length > 30) newHistory.pop();
 
         setHistory(newHistory);
     };
 
-    const removeSongFromHistory = (id: string) => {
-        setHistory(history.filter((songId: string) => songId !== id));
+    const removeFromHistory = (song: SongType | AlbumType) => {
+        setHistory(history.filter((item) => item !== song));
     };
 
     const deleteHistory = () => {
@@ -61,8 +61,8 @@ export const HistoryProvider = ({
         <HistoryContext.Provider
             value={{
                 history,
-                addSongToHistory,
-                removeSongFromHistory,
+                addToHistory,
+                removeFromHistory,
                 deleteHistory,
             }}>
             {children}

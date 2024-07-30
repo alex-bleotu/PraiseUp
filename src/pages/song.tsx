@@ -7,7 +7,6 @@ import { Dimensions, StyleSheet, Text, View } from "react-native";
 import Button from "../components/wrapers/button";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
-import { getById } from "../utils/data";
 import { getTheme } from "../utils/theme";
 
 interface SongProps {
@@ -59,8 +58,7 @@ const renderLyrics = (lyrics: string, showChords: boolean) => {
 const Song = ({ route, navigation }: SongProps) => {
     const theme = getTheme();
 
-    const { id } = route.params;
-    const song = getById(id);
+    const { song } = route.params;
 
     const [value, setValue] = useState("lyrics");
 

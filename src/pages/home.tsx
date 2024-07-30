@@ -1,62 +1,71 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import AlbumCover from "../components/items/albumCover";
 import SongCover from "../components/items/songCover";
 import Background from "../components/wrapers/background";
 import Text from "../components/wrapers/text";
-import { SongType } from "../context/data";
+import { DataContext, isSong, SongType } from "../context/data";
 import { RecentContext } from "../context/recent";
-import { getById, getRandomSongs } from "../utils/data";
 
 const Home = ({ navigation }: { navigation: any }) => {
     const { recent } = useContext(RecentContext);
+    const { getRandomSongs } = useContext(DataContext);
 
-    const randomSongs = getRandomSongs(4);
+    const [randomSongs, setRandomSongs] = useState<SongType[]>([]);
+
+    // useEffect(() => {
+    //     const load = async () => {
+    //         const songs = await getRandomSongs(4);
+    //         setRandomSongs(songs);
+    //     };
+
+    //     load();
+    // }, []);
 
     return (
         <Background>
             {recent.length > 1 && (
                 <View style={styles.row}>
-                    {(getById(recent[0]) as SongType) ? (
-                        <SongCover id={recent[0]} navigation={navigation} />
+                    {isSong(recent[0]) ? (
+                        <SongCover song={recent[0]} navigation={navigation} />
                     ) : (
-                        <AlbumCover id={recent[0]} navigation={navigation} />
+                        <AlbumCover album={recent[0]} navigation={navigation} />
                     )}
                     <View style={{ width: 10 }} />
-                    {(getById(recent[1]) as SongType) ? (
-                        <SongCover id={recent[1]} navigation={navigation} />
+                    {isSong(recent[1]) ? (
+                        <SongCover song={recent[1]} navigation={navigation} />
                     ) : (
-                        <AlbumCover id={recent[1]} navigation={navigation} />
+                        <AlbumCover album={recent[1]} navigation={navigation} />
                     )}
                 </View>
             )}
             {recent.length > 3 && (
                 <View style={styles.row}>
-                    {(getById(recent[2]) as SongType) ? (
-                        <SongCover id={recent[2]} navigation={navigation} />
+                    {isSong(recent[2]) ? (
+                        <SongCover song={recent[2]} navigation={navigation} />
                     ) : (
-                        <AlbumCover id={recent[2]} navigation={navigation} />
+                        <AlbumCover album={recent[2]} navigation={navigation} />
                     )}
                     <View style={{ width: 10 }} />
-                    {(getById(recent[3]) as SongType) ? (
-                        <SongCover id={recent[3]} navigation={navigation} />
+                    {isSong(recent[3]) ? (
+                        <SongCover song={recent[3]} navigation={navigation} />
                     ) : (
-                        <AlbumCover id={recent[3]} navigation={navigation} />
+                        <AlbumCover album={recent[3]} navigation={navigation} />
                     )}
                 </View>
             )}
             {recent.length > 5 && (
                 <View style={styles.row}>
-                    {(getById(recent[4]) as SongType) ? (
-                        <SongCover id={recent[4]} navigation={navigation} />
+                    {isSong(recent[4]) ? (
+                        <SongCover song={recent[4]} navigation={navigation} />
                     ) : (
-                        <AlbumCover id={recent[4]} navigation={navigation} />
+                        <AlbumCover album={recent[4]} navigation={navigation} />
                     )}
                     <View style={{ width: 10 }} />
-                    {(getById(recent[5]) as SongType) ? (
-                        <SongCover id={recent[5]} navigation={navigation} />
+                    {isSong(recent[5]) ? (
+                        <SongCover song={recent[5]} navigation={navigation} />
                     ) : (
-                        <AlbumCover id={recent[5]} navigation={navigation} />
+                        <AlbumCover album={recent[5]} navigation={navigation} />
                     )}
                 </View>
             )}
@@ -65,14 +74,14 @@ const Home = ({ navigation }: { navigation: any }) => {
                     Suggested for you
                 </Text>
                 <View style={styles.songsContainer}>
-                    {randomSongs.map((id, index) => (
+                    {/* {getRandomSongs(4).map((song: SongType, index: number) => (
                         <SongCover
                             key={index}
-                            id={id}
+                            song={song}
                             navigation={navigation}
                             vertical
                         />
-                    ))}
+                    ))} */}
                 </View>
             </View>
         </Background>

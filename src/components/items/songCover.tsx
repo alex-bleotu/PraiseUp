@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
-import { DataContext, SongType } from "../../context/data";
+import { SongType } from "../../context/data";
 import { HistoryContext } from "../../context/history";
 import { RecentContext } from "../../context/recent";
 import { getTheme } from "../../utils/theme";
@@ -8,7 +8,7 @@ import AnimatedTouchable from "../wrapers/animatedTouchable";
 import Text from "../wrapers/text";
 
 interface SongCoverProps {
-    id: string;
+    song: SongType;
     navigation: any;
     fullWidth?: boolean;
     wasSearched?: boolean;
@@ -17,41 +17,28 @@ interface SongCoverProps {
 }
 
 const SongCover = ({
-    id,
+    song,
     navigation,
     fullWidth,
     wasSearched,
     artist = true,
     vertical = false,
 }: SongCoverProps) => {
-    const { addSongToHistory } = useContext(HistoryContext);
-    const { addSongToRecent } = useContext(RecentContext);
-    const { getById } = useContext(DataContext);
-
-    const [song, setSong] = useState<SongType | null>(null);
+    const { addToHistory } = useContext(HistoryContext);
+    const { addToRecent } = useContext(RecentContext);
 
     const theme = getTheme();
     const width = fullWidth ? "100%" : Dimensions.get("screen").width / 2 - 25;
-
-    useEffect(() => {
-        const load = async () => {
-            const song = await getById(id);
-
-            setSong(song);
-        };
-
-        load();
-    }, []);
 
     if (song === null) return null;
 
     return (
         <AnimatedTouchable
             onPress={() => {
-                navigation.navigate("Song Page", { id });
-                addSongToRecent(id);
+                navigation.navigate("Song Page", { song });
+                addToRecent(song);
 
-                if (wasSearched) addSongToHistory(id);
+                if (wasSearched) addToHistory(song);
             }}>
             <View
                 style={[

@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, ReactNode, useEffect } from "react";
+import { AlbumType, SongType } from "./data";
 
 export const RecentContext = createContext<any>(null);
 
@@ -8,7 +9,7 @@ export const RecentProvider = ({
 }: {
     children: ReactNode | ReactNode[];
 }) => {
-    const [recent, setRecent] = React.useState<string[]>([]);
+    const [recent, setRecent] = React.useState<(SongType | AlbumType)[]>([]);
 
     useEffect(() => {
         const loadRecent = async () => {
@@ -18,7 +19,7 @@ export const RecentProvider = ({
                 if (storedRecent !== null) setRecent(JSON.parse(storedRecent));
                 else await AsyncStorage.setItem("recent", JSON.stringify([]));
             } catch (error) {
-                console.error("Failed to load favorite from storage", error);
+                console.error("Failed to load recent from storage", error);
             }
         };
 
@@ -30,26 +31,25 @@ export const RecentProvider = ({
             try {
                 await AsyncStorage.setItem("recent", JSON.stringify(recent));
             } catch (error) {
-                console.error("Failed to save favorite to storage", error);
+                console.error("Failed to save recent to storage", error);
             }
         };
 
         saveRecent();
     }, [recent]);
 
-    const addSongToRecent = (id: string) => {
-        const newRecent = [];
+    const addToRecent = (data: SongType | AlbumType) => {
+        const newRecent = recent.filter((value) => value.id !== data.id);
 
-        newRecent.push(id);
-        newRecent.push(...recent.filter((songId: string) => songId !== id));
+        newRecent.unshift(data);
 
         if (newRecent.length > 6) newRecent.pop();
 
         setRecent(newRecent);
     };
 
-    const removeSongFromRecent = (id: string) => {
-        setRecent(recent.filter((songId: string) => songId !== id));
+    const removeFromRecent = (data: SongType | AlbumType) => {
+        setRecent(recent.filter((item) => item !== data));
     };
 
     const deleteRecent = () => {
@@ -60,8 +60,8 @@ export const RecentProvider = ({
         <RecentContext.Provider
             value={{
                 recent,
-                addSongToRecent,
-                removeSongFromRecent,
+                addToRecent,
+                removeFromRecent,
                 deleteRecent,
             }}>
             {children}

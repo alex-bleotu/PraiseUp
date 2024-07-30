@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
-import { AlbumType, DataContext } from "../../context/data";
+import { AlbumType } from "../../context/data";
 import { HistoryContext } from "../../context/history";
 import { RecentContext } from "../../context/recent";
 import { getTheme } from "../../utils/theme";
@@ -8,48 +8,35 @@ import AnimatedTouchable from "../wrapers/animatedTouchable";
 import Text from "../wrapers/text";
 
 interface AlbumCoverProps {
-    id: string;
+    album: AlbumType;
     navigation: any;
     fullWidth?: boolean;
     wasSearched?: boolean;
 }
 
 const AlbumCover = ({
-    id,
+    album,
     navigation,
     fullWidth,
     wasSearched,
 }: AlbumCoverProps) => {
-    const { addSongToHistory } = useContext(HistoryContext);
-    const { addSongToRecent } = useContext(RecentContext);
-    const { getById } = useContext(DataContext);
-
-    const [album, setAlbum] = useState<AlbumType | null>(null);
+    const { addToHistory } = useContext(HistoryContext);
+    const { addToRecent } = useContext(RecentContext);
 
     const theme = getTheme();
     const width: any = fullWidth
         ? "100%"
         : Dimensions.get("screen").width / 2 - 25;
 
-    useEffect(() => {
-        const load = async () => {
-            const song = await getById(id);
-
-            setAlbum(song);
-        };
-
-        load();
-    }, []);
-
     if (album === null) return null;
 
     return (
         <AnimatedTouchable
             onPress={() => {
-                navigation.navigate("Album Page", { id });
-                addSongToRecent(id);
+                navigation.navigate("Album Page", { album });
+                addToRecent(album);
 
-                if (wasSearched) addSongToHistory(id);
+                if (wasSearched) addToHistory(album);
             }}>
             <View
                 style={[

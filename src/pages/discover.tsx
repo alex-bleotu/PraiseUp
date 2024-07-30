@@ -9,7 +9,7 @@ import Background from "../components/wrapers/background";
 import Button from "../components/wrapers/button";
 import ScrollView from "../components/wrapers/scrollView";
 import Text from "../components/wrapers/text";
-import { DataContext, SongType } from "../context/data";
+import { AlbumType, DataContext, isSong, SongType } from "../context/data";
 import { HistoryContext } from "../context/history";
 import { getTheme } from "../utils/theme";
 
@@ -18,19 +18,19 @@ const Discover = ({ navigation }: { navigation: any }) => {
 
     const [searchQuery, setSearchQuery] = useState("");
     const [loading, setLoading] = useState(true);
-    const [filteredSongs, setFilteredSongs] = useState<any | null>(null);
+    const [filteredData, setFilteredData] = useState<any | null>(null);
     const searchRef = useRef(0);
 
-    const { history, deleteHistory, removeSongFromHistory, addSongToHistory } =
+    const { history, deleteHistory, removeFromHistory } =
         useContext(HistoryContext);
-    const { getById, filter } = useContext(DataContext);
+    const { filter } = useContext(DataContext);
 
     useEffect(() => {
         const currentSearch = ++searchRef.current;
 
         const loadSongs = async () => {
             if (searchQuery.length === 0) {
-                setFilteredSongs(null);
+                setFilteredData(null);
                 setLoading(false);
                 return;
             }
@@ -38,11 +38,12 @@ const Discover = ({ navigation }: { navigation: any }) => {
             setLoading(true);
 
             // Simulate delay
-            // await new Promise((resolve) => setTimeout(resolve, 500));
+            // await new Promise((resolve) => setTimeout(resolve, 50));
 
             if (currentSearch !== searchRef.current) return;
 
-            setFilteredSongs(await filter(searchQuery));
+            const filtered = await filter(searchQuery);
+            setFilteredData(filtered);
 
             setLoading(false);
         };
@@ -79,44 +80,53 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                         Recent Searches
                                     </Text>
                                 </View>
-                                {history.map((id: string, index: any) => {
-                                    return (
-                                        <View key={index} style={styles.songs}>
-                                            {id.includes("S") ? (
-                                                <SongCover
-                                                    key={index}
-                                                    id={id}
-                                                    navigation={navigation}
-                                                    fullWidth
-                                                />
-                                            ) : (
-                                                <AlbumCover
-                                                    id={id}
-                                                    key={index}
-                                                    navigation={navigation}
-                                                    fullWidth
-                                                />
-                                            )}
-                                            <AnimatedTouchable
-                                                style={{
-                                                    position: "absolute",
-                                                    right: 15,
-                                                    top: -46,
-                                                }}>
-                                                <MCIcons
-                                                    name="close"
-                                                    size={24}
-                                                    color={theme.colors.text}
-                                                    onPress={() =>
-                                                        removeSongFromHistory(
-                                                            id
-                                                        )
-                                                    }
-                                                />
-                                            </AnimatedTouchable>
-                                        </View>
-                                    );
-                                })}
+                                {history.map(
+                                    (
+                                        data: SongType | AlbumType,
+                                        index: any
+                                    ) => {
+                                        return (
+                                            <View
+                                                key={index}
+                                                style={styles.songs}>
+                                                {isSong(data) ? (
+                                                    <SongCover
+                                                        key={index}
+                                                        song={data}
+                                                        navigation={navigation}
+                                                        fullWidth
+                                                    />
+                                                ) : (
+                                                    <AlbumCover
+                                                        key={index}
+                                                        album={data}
+                                                        navigation={navigation}
+                                                        fullWidth
+                                                    />
+                                                )}
+                                                <AnimatedTouchable
+                                                    style={{
+                                                        position: "absolute",
+                                                        right: 15,
+                                                        top: -46,
+                                                    }}>
+                                                    <MCIcons
+                                                        name="close"
+                                                        size={24}
+                                                        color={
+                                                            theme.colors.text
+                                                        }
+                                                        onPress={() =>
+                                                            removeFromHistory(
+                                                                data
+                                                            )
+                                                        }
+                                                    />
+                                                </AnimatedTouchable>
+                                            </View>
+                                        );
+                                    }
+                                )}
                                 <View
                                     style={{
                                         display: "flex",
@@ -161,18 +171,18 @@ const Discover = ({ navigation }: { navigation: any }) => {
                         </View>
                     ) : (
                         <>
-                            {filteredSongs?.length !== 0 ? (
+                            {filteredData?.length !== 0 ? (
                                 <View style={styles.container}>
                                     <ScrollView>
-                                        {filteredSongs?.map(
-                                            (song: any, index: number) => (
+                                        {filteredData?.map(
+                                            (data: any, index: number) => (
                                                 <View
                                                     key={index}
                                                     style={styles.songs}>
-                                                    {(song as SongType) ? (
+                                                    {isSong(data) ? (
                                                         <SongCover
                                                             key={index}
-                                                            id={song.id}
+                                                            song={data}
                                                             navigation={
                                                                 navigation
                                                             }
@@ -181,8 +191,8 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                                         />
                                                     ) : (
                                                         <AlbumCover
-                                                            id={song.id}
                                                             key={index}
+                                                            album={data}
                                                             navigation={
                                                                 navigation
                                                             }
