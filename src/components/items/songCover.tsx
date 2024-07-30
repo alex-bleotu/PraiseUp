@@ -1,9 +1,10 @@
+import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
 import React, { useContext } from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
 import { SongType } from "../../context/data";
 import { HistoryContext } from "../../context/history";
 import { RecentContext } from "../../context/recent";
-import { getTheme } from "../../utils/theme";
+import { ThemeContext } from "../../context/theme";
 import AnimatedTouchable from "../wrapers/animatedTouchable";
 import Text from "../wrapers/text";
 
@@ -14,6 +15,8 @@ interface SongCoverProps {
     wasSearched?: boolean;
     artist?: boolean;
     vertical?: boolean;
+    icon?: keyof typeof MCIcons.glyphMap;
+    action?: () => void;
 }
 
 const SongCover = ({
@@ -23,11 +26,13 @@ const SongCover = ({
     wasSearched,
     artist = true,
     vertical = false,
+    icon,
+    action,
 }: SongCoverProps) => {
     const { addToHistory } = useContext(HistoryContext);
     const { addToRecent } = useContext(RecentContext);
+    const { theme } = useContext(ThemeContext);
 
-    const theme = getTheme();
     const width = fullWidth ? "100%" : Dimensions.get("screen").width / 2 - 25;
 
     if (song === null) return null;
@@ -50,19 +55,28 @@ const SongCover = ({
                 ]}>
                 <Image
                     source={require("../../../assets/images/songCover.png")}
-                    style={{ width: 70, height: 70, borderRadius: 15 }}
+                    style={vertical ? styles.imageVertical : styles.image}
                 />
-                <View style={styles.textContainer}>
-                    <Text bold size={14} center={vertical}>
-                        {song.title}
-                    </Text>
-                    {artist && (
-                        <Text size={12} center={vertical}>
-                            {song.artist}
+                {
+                    <View style={styles.textContainer}>
+                        <Text bold size={vertical ? 16 : 14} center={vertical}>
+                            {song.title}
                         </Text>
-                    )}
-                </View>
+                        {artist && (
+                            <Text size={12} center={vertical}>
+                                {song.artist}
+                            </Text>
+                        )}
+                    </View>
+                }
             </View>
+            {action && (
+                <AnimatedTouchable
+                    style={{ position: "absolute", right: 15, top: -46 }}
+                    onPress={() => action()}>
+                    <MCIcons name={icon} size={24} color={theme.colors.text} />
+                </AnimatedTouchable>
+            )}
         </AnimatedTouchable>
     );
 };
@@ -81,6 +95,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         padding: 5,
+        paddingBottom: 10,
     },
     textContainer: {
         display: "flex",
@@ -88,4 +103,10 @@ const styles = StyleSheet.create({
         marginHorizontal: 8,
         justifyContent: "center",
     },
+    imageVertical: {
+        width: 100,
+        height: 100,
+        borderRadius: 15,
+    },
+    image: { width: 70, height: 70, borderRadius: 15 },
 });

@@ -1,9 +1,10 @@
 import { FontAwesome6 } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useContext } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import AnimatedTouchable from "../components/wrapers/animatedTouchable";
+import { ThemeContext } from "../context/theme";
 import User from "../pages/user";
-import { getTheme } from "../utils/theme";
 import DiscoverStack from "./discoverStack";
 import HomeStack from "./homeStack";
 
@@ -12,7 +13,7 @@ const Tab = createBottomTabNavigator();
 const Tabs = () => {
     const height = Dimensions.get("screen").height - 15;
 
-    const theme = getTheme();
+    const { theme } = useContext(ThemeContext);
 
     return (
         <View style={{ height }}>
@@ -65,11 +66,11 @@ const Tabs = () => {
                     tabBarShowLabel: false,
                     headerShown: false,
                     footerShown: false,
-                    unmountOnBlur: true,
+                    // unmountOnBlur: true,
                 })}>
                 <Tab.Screen name="Home" component={HomeStack} />
                 <Tab.Screen name="Discover" component={DiscoverStack} />
-                <Tab.Screen name="Something" component={User} />
+                {/* <Tab.Screen name="Something" component={User} /> */}
                 <Tab.Screen name="User" component={User} />
             </Tab.Navigator>
         </View>

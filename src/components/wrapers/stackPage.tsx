@@ -1,7 +1,7 @@
 import { Entypo as EIcons } from "@expo/vector-icons";
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, View } from "react-native";
-import { getTheme } from "../../utils/theme";
+import { ThemeContext } from "../../context/theme";
 import AnimatedTouchable from "./animatedTouchable";
 import Background from "./background";
 import Text from "./text";
@@ -13,7 +13,7 @@ interface StackPageProps {
 }
 
 const StackPage = ({ children, navigation, title }: StackPageProps) => {
-    const theme = getTheme();
+    const { theme } = useContext(ThemeContext);
 
     return (
         <Background noPadding>

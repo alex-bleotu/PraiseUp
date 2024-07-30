@@ -215,6 +215,8 @@ export const DataProvider = ({
     const getRandomSongs = async (number: number) => {
         const randomSongs: SongType[] = [];
 
+        if (number > songIds.length) return [];
+
         while (randomSongs.length < number) {
             const id = songIds[Math.floor(Math.random() * songIds.length)];
 

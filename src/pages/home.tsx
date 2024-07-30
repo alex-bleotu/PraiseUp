@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import AlbumCover from "../components/items/albumCover";
 import SongCover from "../components/items/songCover";
 import Background from "../components/wrapers/background";
 import Text from "../components/wrapers/text";
-import { DataContext, isSong, SongType } from "../context/data";
+import { AlbumType, DataContext, isSong, SongType } from "../context/data";
 import { RecentContext } from "../context/recent";
 
 const Home = ({ navigation }: { navigation: any }) => {
@@ -13,75 +14,75 @@ const Home = ({ navigation }: { navigation: any }) => {
 
     const [randomSongs, setRandomSongs] = useState<SongType[]>([]);
 
-    // useEffect(() => {
-    //     const load = async () => {
-    //         const songs = await getRandomSongs(4);
-    //         setRandomSongs(songs);
-    //     };
+    useEffect(() => {
+        const load = async () => {
+            const songs = await getRandomSongs(6);
+            setRandomSongs(songs);
+        };
 
-    //     load();
-    // }, []);
+        load();
+    }, []);
 
     return (
         <Background>
-            {recent.length > 1 && (
-                <View style={styles.row}>
-                    {isSong(recent[0]) ? (
-                        <SongCover song={recent[0]} navigation={navigation} />
-                    ) : (
-                        <AlbumCover album={recent[0]} navigation={navigation} />
-                    )}
-                    <View style={{ width: 10 }} />
-                    {isSong(recent[1]) ? (
-                        <SongCover song={recent[1]} navigation={navigation} />
-                    ) : (
-                        <AlbumCover album={recent[1]} navigation={navigation} />
-                    )}
-                </View>
-            )}
-            {recent.length > 3 && (
-                <View style={styles.row}>
-                    {isSong(recent[2]) ? (
-                        <SongCover song={recent[2]} navigation={navigation} />
-                    ) : (
-                        <AlbumCover album={recent[2]} navigation={navigation} />
-                    )}
-                    <View style={{ width: 10 }} />
-                    {isSong(recent[3]) ? (
-                        <SongCover song={recent[3]} navigation={navigation} />
-                    ) : (
-                        <AlbumCover album={recent[3]} navigation={navigation} />
-                    )}
-                </View>
-            )}
-            {recent.length > 5 && (
-                <View style={styles.row}>
-                    {isSong(recent[4]) ? (
-                        <SongCover song={recent[4]} navigation={navigation} />
-                    ) : (
-                        <AlbumCover album={recent[4]} navigation={navigation} />
-                    )}
-                    <View style={{ width: 10 }} />
-                    {isSong(recent[5]) ? (
-                        <SongCover song={recent[5]} navigation={navigation} />
-                    ) : (
-                        <AlbumCover album={recent[5]} navigation={navigation} />
-                    )}
-                </View>
-            )}
+            {recent.map((data: SongType | AlbumType, index: number) => {
+                if (index % 2 !== 0) return null;
+
+                const data2 = recent[index + 1];
+
+                return (
+                    <View key={index} style={styles.row}>
+                        <View>
+                            {isSong(data) ? (
+                                <SongCover
+                                    song={data}
+                                    navigation={navigation}
+                                />
+                            ) : (
+                                <AlbumCover
+                                    album={data}
+                                    navigation={navigation}
+                                />
+                            )}
+                        </View>
+                        <View style={{ width: 10 }} />
+                        {data2 && (
+                            <View key={index + 1}>
+                                {isSong(data2) ? (
+                                    <SongCover
+                                        song={data2}
+                                        navigation={navigation}
+                                    />
+                                ) : (
+                                    <AlbumCover
+                                        album={data2}
+                                        navigation={navigation}
+                                    />
+                                )}
+                            </View>
+                        )}
+                    </View>
+                );
+            })}
             <View style={styles.container}>
                 <Text size={20} bold>
                     Suggested for you
                 </Text>
                 <View style={styles.songsContainer}>
-                    {/* {getRandomSongs(4).map((song: SongType, index: number) => (
-                        <SongCover
-                            key={index}
-                            song={song}
-                            navigation={navigation}
-                            vertical
-                        />
-                    ))} */}
+                    <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}>
+                        {randomSongs.map((song: SongType, index: number) => (
+                            <View key={index} style={{ marginRight: 10 }}>
+                                <SongCover
+                                    song={song}
+                                    navigation={navigation}
+                                    artist={false}
+                                    vertical
+                                />
+                            </View>
+                        ))}
+                    </ScrollView>
                 </View>
             </View>
         </Background>
@@ -107,6 +108,5 @@ const styles = StyleSheet.create({
     },
     container: {
         marginTop: 20,
-        // marginHorizontal: 5,
     },
 });

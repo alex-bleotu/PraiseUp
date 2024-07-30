@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useContext } from "react";
 import { Dimensions, View } from "react-native";
-import { getTheme } from "../../utils/theme";
+import { ThemeContext } from "../../context/theme";
 
 const Background = ({
     children,
@@ -9,7 +9,8 @@ const Background = ({
     children: ReactNode | ReactNode[];
     noPadding?: boolean;
 }) => {
-    const theme = getTheme();
+    const { theme } = useContext(ThemeContext);
+
     const height = Dimensions.get("screen").height - 15;
 
     return (

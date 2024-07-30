@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import Background from "../components/wrapers/background";
-import { getTheme } from "../utils/theme";
+import { ThemeContext } from "../context/theme";
 
 const Loading = () => {
-    const theme = getTheme();
+    const { theme } = useContext(ThemeContext);
 
     return (
         <Background>

@@ -1,26 +1,23 @@
-import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ActivityIndicator, Searchbar as SearchBar } from "react-native-paper";
 import AlbumCover from "../components/items/albumCover";
 import SongCover from "../components/items/songCover";
-import AnimatedTouchable from "../components/wrapers/animatedTouchable";
 import Background from "../components/wrapers/background";
 import Button from "../components/wrapers/button";
 import ScrollView from "../components/wrapers/scrollView";
 import Text from "../components/wrapers/text";
 import { AlbumType, DataContext, isSong, SongType } from "../context/data";
 import { HistoryContext } from "../context/history";
-import { getTheme } from "../utils/theme";
+import { ThemeContext } from "../context/theme";
 
 const Discover = ({ navigation }: { navigation: any }) => {
-    const theme = getTheme();
-
     const [searchQuery, setSearchQuery] = useState("");
     const [loading, setLoading] = useState(true);
     const [filteredData, setFilteredData] = useState<any | null>(null);
     const searchRef = useRef(0);
 
+    const { theme } = useContext(ThemeContext);
     const { history, deleteHistory, removeFromHistory } =
         useContext(HistoryContext);
     const { filter } = useContext(DataContext);
@@ -95,6 +92,12 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                                         song={data}
                                                         navigation={navigation}
                                                         fullWidth
+                                                        icon="close"
+                                                        action={() =>
+                                                            removeFromHistory(
+                                                                data
+                                                            )
+                                                        }
                                                     />
                                                 ) : (
                                                     <AlbumCover
@@ -102,27 +105,14 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                                         album={data}
                                                         navigation={navigation}
                                                         fullWidth
-                                                    />
-                                                )}
-                                                <AnimatedTouchable
-                                                    style={{
-                                                        position: "absolute",
-                                                        right: 15,
-                                                        top: -46,
-                                                    }}>
-                                                    <MCIcons
-                                                        name="close"
-                                                        size={24}
-                                                        color={
-                                                            theme.colors.text
-                                                        }
-                                                        onPress={() =>
+                                                        icon="close"
+                                                        action={() =>
                                                             removeFromHistory(
                                                                 data
                                                             )
                                                         }
                                                     />
-                                                </AnimatedTouchable>
+                                                )}
                                             </View>
                                         );
                                     }

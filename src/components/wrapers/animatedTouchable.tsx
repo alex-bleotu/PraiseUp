@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Animated, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { getTheme } from "../../utils/theme";
+import { ThemeContext } from "../../context/theme";
 
 interface AnimatedTouchableProps {
     children: React.ReactNode;
@@ -14,7 +14,7 @@ const AnimatedTouchable = ({
     style,
     onPress,
 }: AnimatedTouchableProps) => {
-    const theme = getTheme();
+    const { theme } = useContext(ThemeContext);
 
     const [scale] = useState(new Animated.Value(1));
 

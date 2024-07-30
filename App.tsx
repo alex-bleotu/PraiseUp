@@ -5,6 +5,7 @@ import { PaperProvider } from "react-native-paper";
 import { DataProvider } from "./src/context/data";
 import { HistoryProvider } from "./src/context/history";
 import { RecentProvider } from "./src/context/recent";
+import { ThemeProvider } from "./src/context/theme";
 import Tabs from "./src/navigation/tabs";
 import { darkTheme } from "./src/utils/theme";
 
@@ -12,16 +13,18 @@ export default function App() {
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <PaperProvider theme={darkTheme}>
-                <HistoryProvider>
-                    <RecentProvider>
-                        <DataProvider>
-                            <NavigationContainer>
-                                <Tabs />
-                                <StatusBar style="auto" />
-                            </NavigationContainer>
-                        </DataProvider>
-                    </RecentProvider>
-                </HistoryProvider>
+                <ThemeProvider>
+                    <HistoryProvider>
+                        <RecentProvider>
+                            <DataProvider>
+                                <NavigationContainer>
+                                    <Tabs />
+                                    <StatusBar style="auto" />
+                                </NavigationContainer>
+                            </DataProvider>
+                        </RecentProvider>
+                    </HistoryProvider>
+                </ThemeProvider>
             </PaperProvider>
         </GestureHandlerRootView>
     );

@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useContext } from "react";
 import { StyleSheet, Text as Ts, ViewStyle } from "react-native";
-import { getTheme } from "../../utils/theme";
+import { ThemeContext } from "../../context/theme";
 
 interface TextProps {
     children: ReactNode;
@@ -19,7 +19,7 @@ const Text = ({
     style,
     center,
 }: TextProps) => {
-    const theme = getTheme();
+    const { theme } = useContext(ThemeContext);
 
     return (
         <Ts

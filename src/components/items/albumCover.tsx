@@ -1,9 +1,10 @@
+import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
 import React, { useContext } from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
 import { AlbumType } from "../../context/data";
 import { HistoryContext } from "../../context/history";
 import { RecentContext } from "../../context/recent";
-import { getTheme } from "../../utils/theme";
+import { ThemeContext } from "../../context/theme";
 import AnimatedTouchable from "../wrapers/animatedTouchable";
 import Text from "../wrapers/text";
 
@@ -12,6 +13,8 @@ interface AlbumCoverProps {
     navigation: any;
     fullWidth?: boolean;
     wasSearched?: boolean;
+    icon?: keyof typeof MCIcons.glyphMap;
+    action?: () => void;
 }
 
 const AlbumCover = ({
@@ -19,11 +22,13 @@ const AlbumCover = ({
     navigation,
     fullWidth,
     wasSearched,
+    icon,
+    action,
 }: AlbumCoverProps) => {
     const { addToHistory } = useContext(HistoryContext);
     const { addToRecent } = useContext(RecentContext);
+    const { theme } = useContext(ThemeContext);
 
-    const theme = getTheme();
     const width: any = fullWidth
         ? "100%"
         : Dimensions.get("screen").width / 2 - 25;
@@ -57,6 +62,13 @@ const AlbumCover = ({
                     </Text>
                 </View>
             </View>
+            {action && (
+                <AnimatedTouchable
+                    style={{ position: "absolute", right: 15, top: -46 }}
+                    onPress={() => action()}>
+                    <MCIcons name={icon} size={24} color={theme.colors.text} />
+                </AnimatedTouchable>
+            )}
         </AnimatedTouchable>
     );
 };

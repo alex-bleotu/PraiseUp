@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useContext } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
-import { getTheme } from "../../utils/theme";
+import { ThemeContext } from "../../context/theme";
 import AnimatedTouchable from "./animatedTouchable";
 import Text from "./text";
 
@@ -23,7 +23,7 @@ const Button = ({
     icon,
     onPress,
 }: ButtonProps) => {
-    const theme = getTheme();
+    const { theme } = useContext(ThemeContext);
 
     return (
         <AnimatedTouchable onPress={onPress}>

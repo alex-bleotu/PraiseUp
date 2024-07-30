@@ -2,12 +2,12 @@ import {
     FontAwesome6 as FIcon,
     MaterialIcons as MIcon,
 } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import Button from "../components/wrapers/button";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
-import { getTheme } from "../utils/theme";
+import { ThemeContext } from "../context/theme";
 
 interface SongProps {
     route: any;
@@ -56,7 +56,7 @@ const renderLyrics = (lyrics: string, showChords: boolean) => {
 };
 
 const Song = ({ route, navigation }: SongProps) => {
-    const theme = getTheme();
+    const { theme } = useContext(ThemeContext);
 
     const { song } = route.params;
 
@@ -121,14 +121,6 @@ const Song = ({ route, navigation }: SongProps) => {
                                 <View style={{ width: 10 }} />
                             </>
                         )}
-                        <Button
-                            mode={value === "info" ? "contained" : "none"}
-                            onPress={() => setValue("info")}
-                            text="Info"
-                            fontSize={15}
-                            style={{ ...styles.button, width: buttonWidth }}
-                            icon={<FIcon name="info" size={18} />}
-                        />
                     </View>
                 )}
                 {value === "lyrics" && song.lyrics && (

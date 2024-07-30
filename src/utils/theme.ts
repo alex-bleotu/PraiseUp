@@ -51,13 +51,3 @@ export const darkTheme = {
         textInverted: "#1a1a1a",
     },
 };
-
-const theme = lightTheme;
-
-export const getThemeType = () => {
-    return theme === lightTheme ? "light" : "dark";
-};
-
-export const getTheme = () => {
-    return theme;
-};
