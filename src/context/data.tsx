@@ -157,19 +157,30 @@ export const DataProvider = ({
 
     const filter = async (searchQuery: string) => {
         let filtered: any[] = [];
-        const query = searchQuery.toLowerCase();
+
+        const normalizeString = (str: string) => {
+            return str
+                .toLowerCase()
+                .replace(/ă/g, "a")
+                .replace(/î/g, "i")
+                .replace(/â/g, "a")
+                .replace(/ș/g, "s")
+                .replace(/ț/g, "t");
+        };
+
+        const query = normalizeString(searchQuery);
 
         const stripChords = (lyrics: string) => {
-            return lyrics.replace(/\[[^\]]+\]/g, "").toLowerCase();
+            return normalizeString(lyrics.replace(/\[[^\]]+\]/g, ""));
         };
 
         const songPromises = songIds.map(async (id) => {
             const song = await readSong(id);
             if (!song) return null;
 
-            const songNameMatches = song.title.toLowerCase().includes(query);
+            const songNameMatches = normalizeString(song.title).includes(query);
             const artistMatches = song.artist
-                ? song.artist.toLowerCase().includes(query)
+                ? normalizeString(song.artist).includes(query)
                 : false;
             const lyricsMatches = song.lyrics
                 ? stripChords(song.lyrics).includes(query)
@@ -185,7 +196,9 @@ export const DataProvider = ({
             const album = await readAlbum(id);
             if (!album) return null;
 
-            const albumNameMatches = album.title.toLowerCase().includes(query);
+            const albumNameMatches = normalizeString(album.title).includes(
+                query
+            );
             if (albumNameMatches) {
                 return album;
             }
@@ -235,4 +248,6 @@ export const DataProvider = ({
     );
 };
 
-export const isSong = (data: SongType | AlbumType): data is SongType => {};
+export const isSong = (data: SongType | AlbumType): data is SongType => {
+    return (data as SongType).artist !== undefined;
+};
