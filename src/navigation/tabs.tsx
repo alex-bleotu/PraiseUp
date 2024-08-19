@@ -3,8 +3,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useContext } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import AnimatedTouchable from "../components/wrapers/animatedTouchable";
-import BottomSheet from "../components/wrapers/bottomSheet";
-import { BottomSheetContext } from "../context/bottomSheet";
 import { ThemeContext } from "../context/theme";
 import User from "../pages/user";
 import DiscoverStack from "./discoverStack";
@@ -14,8 +12,6 @@ const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
     const { theme } = useContext(ThemeContext);
-    const { bottomSheetRef, bottomSheetContent } =
-        useContext(BottomSheetContext);
 
     const height = Dimensions.get("screen").height - 15;
 
@@ -73,8 +69,6 @@ const Tabs = () => {
                 <Tab.Screen name="Discover" component={DiscoverStack} />
                 <Tab.Screen name="User" component={User} />
             </Tab.Navigator>
-
-            <BottomSheet ref={bottomSheetRef}>{bottomSheetContent}</BottomSheet>
         </View>
     );
 };
