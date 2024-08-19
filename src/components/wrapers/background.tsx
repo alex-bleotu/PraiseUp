@@ -5,9 +5,11 @@ import { ThemeContext } from "../../context/theme";
 const Background = ({
     children,
     noPadding,
+    color,
 }: {
     children: ReactNode | ReactNode[];
     noPadding?: boolean;
+    color?: string;
 }) => {
     const { theme } = useContext(ThemeContext);
 
@@ -17,7 +19,7 @@ const Background = ({
         <View
             style={{
                 flex: 1,
-                backgroundColor: theme.colors.background,
+                backgroundColor: color ? color : theme.colors.background,
                 alignItems: "center",
                 paddingTop: 50,
                 paddingHorizontal: noPadding ? 0 : 20,

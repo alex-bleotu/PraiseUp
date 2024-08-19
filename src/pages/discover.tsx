@@ -7,6 +7,7 @@ import Background from "../components/wrapers/background";
 import Button from "../components/wrapers/button";
 import ScrollView from "../components/wrapers/scrollView";
 import Text from "../components/wrapers/text";
+import { BottomSheetContext } from "../context/bottomSheet";
 import { AlbumType, DataContext, isSong, SongType } from "../context/data";
 import { HistoryContext } from "../context/history";
 import { ThemeContext } from "../context/theme";
@@ -21,6 +22,9 @@ const Discover = ({ navigation }: { navigation: any }) => {
     const { history, deleteHistory, removeFromHistory } =
         useContext(HistoryContext);
     const { filter } = useContext(DataContext);
+
+    const { setBottomSheetContent, bottomSheetRef } =
+        useContext(BottomSheetContext);
 
     useEffect(() => {
         const currentSearch = ++searchRef.current;
@@ -177,7 +181,16 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                                                 navigation
                                                             }
                                                             icon="dots-vertical"
-                                                            action={() => {}}
+                                                            action={() => {
+                                                                setBottomSheetContent(
+                                                                    <Text>
+                                                                        {
+                                                                            data.title
+                                                                        }
+                                                                    </Text>
+                                                                );
+                                                                bottomSheetRef.current?.open();
+                                                            }}
                                                             fullWidth
                                                             wasSearched
                                                         />
@@ -189,7 +202,16 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                                                 navigation
                                                             }
                                                             icon="dots-vertical"
-                                                            action={() => {}}
+                                                            action={() => {
+                                                                setBottomSheetContent(
+                                                                    <Text>
+                                                                        {
+                                                                            data.title
+                                                                        }
+                                                                    </Text>
+                                                                );
+                                                                bottomSheetRef.current?.open();
+                                                            }}
                                                             fullWidth
                                                             wasSearched
                                                         />
