@@ -176,6 +176,8 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                                             navigation={
                                                                 navigation
                                                             }
+                                                            icon="dots-vertical"
+                                                            action={() => {}}
                                                             fullWidth
                                                             wasSearched
                                                         />
@@ -186,6 +188,8 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                                             navigation={
                                                                 navigation
                                                             }
+                                                            icon="dots-vertical"
+                                                            action={() => {}}
                                                             fullWidth
                                                             wasSearched
                                                         />

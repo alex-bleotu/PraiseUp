@@ -54,7 +54,7 @@ const Album = ({ route, navigation }: AlbumProps) => {
                                     song={song}
                                     navigation={navigation}
                                     fullWidth
-                                    icon="heart-outline"
+                                    icon="dots-vertical"
                                     action={() => {}}
                                 />
                             </View>
