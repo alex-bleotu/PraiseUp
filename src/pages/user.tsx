@@ -1,24 +1,26 @@
-import React, { useContext, useEffect } from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text } from "react-native";
 import Background from "../components/wrapers/background";
+import BottomSheetModal from "../components/wrapers/bottomSheetModal";
 import Button from "../components/wrapers/button";
-import { BottomSheetContext } from "../context/bottomSheet";
 
 const User = () => {
-    const { setBottomSheetContent, bottomSheetRef } =
-        useContext(BottomSheetContext);
-
-    useEffect(() => {
-        setBottomSheetContent(<Text>Bottom Sheet Content</Text>);
-    }, []);
+    const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
 
     return (
         <Background>
             <Button
                 text="Open Bottom Sheet"
-                onPress={() => bottomSheetRef.current?.open()}
+                onPress={() => setBottomSheetOpen(true)}
                 mode={"contained"}
             />
+            <BottomSheetModal
+                open={isBottomSheetOpen}
+                onClose={() => {
+                    setBottomSheetOpen(false);
+                }}>
+                <Text>Bottom Sheet Content</Text>
+            </BottomSheetModal>
             <Text>User</Text>
         </Background>
     );
