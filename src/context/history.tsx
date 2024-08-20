@@ -35,11 +35,9 @@ export const HistoryProvider = ({
 
     useEffect(() => {
         const saveHistory = async () => {
-            try {
-                await AsyncStorage.setItem("history", JSON.stringify(history));
-            } catch (error) {
-                console.error("Failed to save history to storage", error);
-            }
+            if (history === null || history.length === 0) return;
+
+            await AsyncStorage.setItem("history", JSON.stringify(history));
         };
 
         saveHistory();

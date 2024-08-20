@@ -107,7 +107,13 @@ const Song = ({ route, navigation }: SongProps) => {
                             text={t`Lyrics`}
                             style={{ ...styles.button, width: buttonWidth }}
                             fontSize={15}
-                            icon={<MIcon name="lyrics" size={18} />}
+                            icon={
+                                <MIcon
+                                    name="lyrics"
+                                    size={18}
+                                    color={theme.colors.text}
+                                />
+                            }
                         />
                         <View style={{ width: 10 }} />
                         {hasChords && (
@@ -126,7 +132,11 @@ const Song = ({ route, navigation }: SongProps) => {
                                     fontSize={15}
                                     text={t`Chords`}
                                     icon={
-                                        <FIcon name="itunes-note" size={18} />
+                                        <FIcon
+                                            name="itunes-note"
+                                            size={18}
+                                            color={theme.colors.text}
+                                        />
                                     }
                                 />
                                 <View style={{ width: 10 }} />

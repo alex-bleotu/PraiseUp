@@ -1,23 +1,31 @@
 import React, { useContext } from "react";
-import { StyleSheet, Text } from "react-native";
-import Background from "../components/wrapers/background";
+import { StyleSheet } from "react-native";
 import Button from "../components/wrapers/button";
+import StackPage from "../components/wrapers/stackPage";
+import { LanguageContext } from "../context/language";
 import { ThemeContext } from "../context/theme";
 
 const User = () => {
     const { theme, changeTheme } = useContext(ThemeContext);
+    const { language, changeLanguage } = useContext(LanguageContext);
 
     return (
-        <Background>
-            <Text>User</Text>
+        <StackPage title="User" back={false}>
             <Button
                 mode="contained"
-                text="Logout"
+                text="Theme"
                 onPress={() => {
                     changeTheme();
                 }}
             />
-        </Background>
+            <Button
+                mode="contained"
+                text="Language"
+                onPress={() => {
+                    changeLanguage();
+                }}
+            />
+        </StackPage>
     );
 };
 

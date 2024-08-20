@@ -10,10 +10,7 @@ import { ThemeProvider } from "./src/context/theme";
 import Tabs from "./src/navigation/tabs";
 import { darkTheme } from "./src/utils/theme";
 
-import { i18n } from "@lingui/core";
-import { I18nProvider } from "@lingui/react";
-import { messages as enMessages } from "./src/locales/en/messages";
-import { messages as roMessages } from "./src/locales/ro/messages";
+import { LanguageProvider } from "./src/context/language";
 
 const linking: LinkingOptions<any> = {
     prefixes: ["app://"],
@@ -32,18 +29,11 @@ const linking: LinkingOptions<any> = {
     },
 };
 
-i18n.load({
-    en: enMessages,
-    ro: roMessages,
-});
-
-i18n.activate("ro");
-
 export default function App() {
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <NavigationContainer linking={linking}>
-                <I18nProvider i18n={i18n}>
+                <LanguageProvider>
                     <PaperProvider theme={darkTheme}>
                         <ThemeProvider>
                             <DataProvider>
@@ -58,7 +48,7 @@ export default function App() {
                             </DataProvider>
                         </ThemeProvider>
                     </PaperProvider>
-                </I18nProvider>
+                </LanguageProvider>
             </NavigationContainer>
         </GestureHandlerRootView>
     );

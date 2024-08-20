@@ -11,9 +11,10 @@ import Text from "./text";
 
 interface StackPageProps {
     children: React.ReactNode | React.ReactNode[];
-    navigation: any;
+    navigation?: any;
     title: string;
     icon?: keyof typeof MCIcons.glyphMap;
+    back?: boolean;
     action?: () => void;
 }
 
@@ -23,6 +24,7 @@ const StackPage = ({
     title,
     icon,
     action,
+    back = true,
 }: StackPageProps) => {
     const { theme } = useContext(ThemeContext);
 
@@ -31,22 +33,24 @@ const StackPage = ({
     return (
         <Background noPadding>
             <View style={styles.topBar}>
-                <AnimatedTouchable
-                    style={{ marginLeft: 10 }}
-                    onPress={() => {
-                        navigation.goBack();
-                    }}>
-                    <EIcons
-                        name="chevron-left"
-                        size={iconSize}
-                        color={theme.colors.text}
-                    />
-                </AnimatedTouchable>
+                {back && (
+                    <AnimatedTouchable
+                        style={{ marginLeft: 10 }}
+                        onPress={() => {
+                            navigation.goBack();
+                        }}>
+                        <EIcons
+                            name="chevron-left"
+                            size={iconSize}
+                            color={theme.colors.text}
+                        />
+                    </AnimatedTouchable>
+                )}
                 <View
                     style={[
                         styles.textContainer,
                         {
-                            marginRight: icon ? 0 : iconSize,
+                            marginRight: icon || !back ? 0 : iconSize,
                         },
                     ]}>
                     <Text center size={24}>

@@ -96,8 +96,14 @@ export const DataProvider = ({
 
     useEffect(() => {
         const writeLists = async () => {
-            await AsyncStorage.setItem("songIds", JSON.stringify(songIds));
-            await AsyncStorage.setItem("albumIds", JSON.stringify(albumIds));
+            if (songIds.length !== 0)
+                await AsyncStorage.setItem("songIds", JSON.stringify(songIds));
+
+            if (albumIds.length !== 0)
+                await AsyncStorage.setItem(
+                    "albumIds",
+                    JSON.stringify(albumIds)
+                );
         };
 
         writeLists();

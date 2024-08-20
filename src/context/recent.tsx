@@ -34,11 +34,9 @@ export const RecentProvider = ({
 
     useEffect(() => {
         const saveRecent = async () => {
-            try {
-                await AsyncStorage.setItem("recent", JSON.stringify(recent));
-            } catch (error) {
-                console.error("Failed to save recent to storage", error);
-            }
+            if (recent === null || recent.length === 0) return;
+
+            await AsyncStorage.setItem("recent", JSON.stringify(recent));
         };
 
         saveRecent();
