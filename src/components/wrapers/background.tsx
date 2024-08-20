@@ -36,7 +36,7 @@ const Background = ({
                     overflow: "hidden",
                     display: "flex",
                     justifyContent: center ? "center" : "flex-start",
-                    alignItems: "center",
+                    // alignItems: "center",
                 }}>
                 {children}
             </View>

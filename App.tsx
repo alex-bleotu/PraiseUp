@@ -10,6 +10,11 @@ import { ThemeProvider } from "./src/context/theme";
 import Tabs from "./src/navigation/tabs";
 import { darkTheme } from "./src/utils/theme";
 
+import { i18n } from "@lingui/core";
+import { I18nProvider } from "@lingui/react";
+import { messages as enMessages } from "./src/locales/en/messages";
+import { messages as roMessages } from "./src/locales/ro/messages";
+
 const linking: LinkingOptions<any> = {
     prefixes: ["app://"],
     config: {
@@ -27,24 +32,33 @@ const linking: LinkingOptions<any> = {
     },
 };
 
+i18n.load({
+    en: enMessages,
+    ro: roMessages,
+});
+
+i18n.activate("ro");
+
 export default function App() {
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <NavigationContainer linking={linking}>
-                <PaperProvider theme={darkTheme}>
-                    <ThemeProvider>
-                        <HistoryProvider>
-                            <RecentProvider>
-                                <DataProvider>
-                                    <RefreshProvider>
-                                        <Tabs />
-                                        <StatusBar style="auto" />
-                                    </RefreshProvider>
-                                </DataProvider>
-                            </RecentProvider>
-                        </HistoryProvider>
-                    </ThemeProvider>
-                </PaperProvider>
+                <I18nProvider i18n={i18n}>
+                    <PaperProvider theme={darkTheme}>
+                        <ThemeProvider>
+                            <DataProvider>
+                                <HistoryProvider>
+                                    <RecentProvider>
+                                        <RefreshProvider>
+                                            <Tabs />
+                                            <StatusBar style="auto" />
+                                        </RefreshProvider>
+                                    </RecentProvider>
+                                </HistoryProvider>
+                            </DataProvider>
+                        </ThemeProvider>
+                    </PaperProvider>
+                </I18nProvider>
             </NavigationContainer>
         </GestureHandlerRootView>
     );

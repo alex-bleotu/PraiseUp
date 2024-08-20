@@ -1,0 +1,70 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2024-08-20 15:45+0300\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ro\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/components/wrapers/dataBottomSheet.tsx:92
+msgid "Add to playlist"
+msgstr "Adaugă in playlist"
+
+#: src/components/wrapers/dataBottomSheet.tsx:107
+msgid "Check out this"
+msgstr "Verifică asta"
+
+#: src/pages/song.tsx:127
+msgid "Chords"
+msgstr "Acorduri"
+
+#: src/pages/discover.tsx:137
+msgid "Clear recent searches"
+msgstr "Șterge căutările recente"
+
+#: src/components/wrapers/dataBottomSheet.tsx:78
+msgid "Favorite"
+msgstr "Favorite"
+
+#: src/pages/home.tsx:155
+msgid "Favorite albums"
+msgstr "Albume favorite"
+
+#: src/pages/song.tsx:107
+msgid "Lyrics"
+msgstr "Versuri"
+
+#: src/pages/discover.tsx:151
+msgid "No recent searches"
+msgstr "Nicio căutare recentă"
+
+#: src/pages/discover.tsx:243
+msgid "No search result"
+msgstr "Niciun rezultat de căutare"
+
+#: src/pages/discover.tsx:249
+msgid "No song or album matches your search"
+msgstr "Nicio melodie sau album nu se potrivește căutării dvs"
+
+#: src/pages/discover.tsx:85
+msgid "Recent Searches"
+msgstr "Căutări recente"
+
+#: src/components/wrapers/dataBottomSheet.tsx:120
+msgid "Share"
+msgstr "Distribuie"
+
+#: src/pages/discover.tsx:154
+msgid "Start searching for your favorite songs"
+msgstr "Începeți să căutați melodiile preferate"
+
+#: src/pages/home.tsx:124
+msgid "Suggested for you"
+msgstr "Recomandat pentru tine"

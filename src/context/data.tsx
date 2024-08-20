@@ -30,14 +30,24 @@ export const DataProvider = ({
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
+        setLoading(true);
+
+        const clear = async () => {
+            setSongIds([]);
+            setAlbumIds([]);
+
+            await AsyncStorage.clear();
+        };
+
         const firstLoad = async () => {
             const loaded = await AsyncStorage.getItem("loaded");
 
             if (loaded === null) {
-                AsyncStorage.clear();
+                await AsyncStorage.clear();
 
                 for (let i = 0; i < songs.length; i++)
                     await writeSong(songs[i]);
+
                 for (let i = 0; i < albums.length; i++)
                     await writeAlbum(albums[i]);
 
@@ -46,18 +56,42 @@ export const DataProvider = ({
         };
 
         const readLists = async () => {
-            const songs = await AsyncStorage.getItem("songIds");
-            const albums = await AsyncStorage.getItem("albumIds");
+            const storedSongs = await AsyncStorage.getItem("songIds");
+            const storedAlbums = await AsyncStorage.getItem("albumIds");
 
-            if (songs !== null) setSongIds(JSON.parse(songs));
+            if (storedSongs !== null) {
+                setSongIds(
+                    JSON.parse(storedSongs).sort((a: string, b: string) => {
+                        const aNum = parseInt(a.slice(1));
+                        const bNum = parseInt(b.slice(1));
 
-            if (albums !== null) setAlbumIds(JSON.parse(albums));
+                        return aNum - bNum;
+                    })
+                );
+            }
+
+            if (storedAlbums !== null) {
+                setAlbumIds(
+                    JSON.parse(storedAlbums).sort((a: string, b: string) => {
+                        const aNum = parseInt(a.slice(1));
+                        const bNum = parseInt(b.slice(1));
+
+                        return aNum - bNum;
+                    })
+                );
+            }
+        };
+
+        const initialize = async () => {
+            // await clear();
+
+            await firstLoad();
+            await readLists();
 
             setLoading(false);
         };
 
-        firstLoad();
-        readLists();
+        initialize();
     }, []);
 
     useEffect(() => {
@@ -204,10 +238,37 @@ export const DataProvider = ({
         return filtered;
     };
 
+    const getRandom = async (number: number) => {
+        const randomSongs: any[] = [];
+        const randomAlbums: AlbumType[] = [];
+
+        if (number > songIds.length + albumIds.length) number = songIds.length;
+
+        while (randomSongs.length + randomAlbums.length < number) {
+            const id = Math.floor(
+                Math.random() * (songIds.length + albumIds.length)
+            );
+
+            if (id < songIds.length) {
+                const song = await getSongById(songIds[id]);
+
+                if (!randomSongs.find((s) => s.id === song.id))
+                    randomSongs.push(song);
+            } else {
+                const album = await getAlbumById(albumIds[id - songIds.length]);
+
+                if (!randomAlbums.find((a) => a.id === album.id))
+                    randomAlbums.push(album);
+            }
+        }
+
+        return randomSongs.concat(randomAlbums);
+    };
+
     const getRandomSongs = async (number: number) => {
         const randomSongs: SongType[] = [];
 
-        if (number > songIds.length) return [];
+        if (number > songIds.length) number = songIds.length;
 
         while (randomSongs.length < number) {
             const id = songIds[Math.floor(Math.random() * songIds.length)];
@@ -224,7 +285,7 @@ export const DataProvider = ({
     const getRandomAlbums = async (number: number) => {
         const randomAlbums: AlbumType[] = [];
 
-        if (number > albumIds.length) return [];
+        if (number > albumIds.length) number = albumIds.length;
 
         while (randomAlbums.length < number) {
             const id = albumIds[Math.floor(Math.random() * albumIds.length)];
@@ -301,6 +362,7 @@ export const DataProvider = ({
                 writeSong,
                 getById,
                 filter,
+                getRandom,
                 getRandomSongs,
                 getRandomAlbums,
                 getSongById,

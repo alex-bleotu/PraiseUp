@@ -2,6 +2,7 @@ import {
     FontAwesome6 as FIcon,
     MaterialIcons as MIcon,
 } from "@expo/vector-icons";
+import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useState } from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import Button from "../components/wrapers/button";
@@ -103,7 +104,7 @@ const Song = ({ route, navigation }: SongProps) => {
                         <Button
                             mode={value === "lyrics" ? "contained" : "none"}
                             onPress={() => setValue("lyrics")}
-                            text="Lyrics"
+                            text={t`Lyrics`}
                             style={{ ...styles.button, width: buttonWidth }}
                             fontSize={15}
                             icon={<MIcon name="lyrics" size={18} />}
@@ -123,7 +124,7 @@ const Song = ({ route, navigation }: SongProps) => {
                                         ...styles.button,
                                     }}
                                     fontSize={15}
-                                    text="Chords"
+                                    text={t`Chords`}
                                     icon={
                                         <FIcon name="itunes-note" size={18} />
                                     }

@@ -1,3 +1,4 @@
+import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import AlbumCover from "../components/items/albumCover";
@@ -9,6 +10,7 @@ import Text from "../components/wrapers/text";
 import { AlbumType, DataContext, isSong, SongType } from "../context/data";
 import { RecentContext } from "../context/recent";
 import { RefreshContext } from "../context/refresh";
+import Loading from "./loading";
 
 const Home = ({ navigation }: { navigation: any }) => {
     const { recent } = useContext(RecentContext);
@@ -20,7 +22,7 @@ const Home = ({ navigation }: { navigation: any }) => {
     } = useContext(DataContext);
     const { refresh } = useContext(RefreshContext);
 
-    const [randomSongs, setRandomSongs] = useState<SongType[]>([]);
+    const [randomSongs, setRandomSongs] = useState<SongType[] | null>(null);
     const [favoriteAlbums, setFavoriteAlbums] = useState<AlbumType[]>([]);
 
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
@@ -29,14 +31,14 @@ const Home = ({ navigation }: { navigation: any }) => {
     );
 
     useEffect(() => {
-        if (!loading) {
-            const load = async () => {
-                const songs = await getRandomSongs(6);
-                setRandomSongs(songs);
-            };
+        if (loading) return;
 
-            load();
-        }
+        const load = async () => {
+            const songs = await getRandomSongs(10);
+            setRandomSongs(songs);
+        };
+
+        load();
     }, [loading]);
 
     useEffect(() => {
@@ -45,16 +47,16 @@ const Home = ({ navigation }: { navigation: any }) => {
                 const favoriteAlbum = await getFavoriteSongsAlbum();
                 const albums = await getFavoriteAlbums();
 
-                const combined = [favoriteAlbum, ...albums];
-
-                setFavoriteAlbums(combined);
+                if (favoriteAlbum.songs.length > 0)
+                    setFavoriteAlbums([favoriteAlbum, ...albums]);
+                else setFavoriteAlbums(albums);
             };
 
             load();
         }
     }, [loading, refresh]);
 
-    if (loading) return <></>;
+    if (loading || randomSongs === null || recent === null) return <Loading />;
 
     return (
         <Background noPadding>
@@ -116,63 +118,67 @@ const Home = ({ navigation }: { navigation: any }) => {
                 })}
             </View>
 
-            <View style={styles.container}>
-                <Text size={20} bold style={{ marginLeft: 20 }}>
-                    Suggested for you
-                </Text>
-                <View style={styles.songsContainer}>
-                    <ScrollView
-                        horizontal
-                        showScroll={false}
-                        top={10}
-                        bottom={10}>
-                        {randomSongs.map((song: SongType) => (
-                            <View
-                                key={song.id}
-                                style={{ marginHorizontal: 7.5 }}>
-                                <SongCover
-                                    song={song}
-                                    navigation={navigation}
-                                    artist={false}
-                                    vertical
-                                    onLongPress={() => {
-                                        setCurrentData(song);
-                                        setBottomSheetOpen(true);
-                                    }}
-                                />
-                            </View>
-                        ))}
-                    </ScrollView>
+            {randomSongs.length !== 0 && (
+                <View style={styles.container}>
+                    <Text size={20} bold style={{ marginLeft: 20 }}>
+                        {t`Suggested for you`}
+                    </Text>
+                    <View style={styles.songsContainer}>
+                        <ScrollView
+                            horizontal
+                            showScroll={false}
+                            top={10}
+                            bottom={10}>
+                            {randomSongs.map((song: SongType) => (
+                                <View
+                                    key={song.id}
+                                    style={{ marginHorizontal: 7.5 }}>
+                                    <SongCover
+                                        song={song}
+                                        navigation={navigation}
+                                        artist={false}
+                                        vertical
+                                        onLongPress={() => {
+                                            setCurrentData(song);
+                                            setBottomSheetOpen(true);
+                                        }}
+                                    />
+                                </View>
+                            ))}
+                        </ScrollView>
+                    </View>
                 </View>
-            </View>
-            <View style={styles.container}>
-                <Text size={20} bold style={{ marginLeft: 20 }}>
-                    Favorite
-                </Text>
-                <View style={styles.songsContainer}>
-                    <ScrollView
-                        horizontal
-                        showScroll={false}
-                        top={10}
-                        bottom={10}>
-                        {favoriteAlbums.map((album: AlbumType) => (
-                            <View
-                                key={album.id}
-                                style={{ marginHorizontal: 7.5 }}>
-                                <AlbumCover
-                                    album={album}
-                                    navigation={navigation}
-                                    vertical
-                                    onLongPress={() => {
-                                        setCurrentData(album);
-                                        setBottomSheetOpen(true);
-                                    }}
-                                />
-                            </View>
-                        ))}
-                    </ScrollView>
+            )}
+            {favoriteAlbums.length !== 0 && (
+                <View style={styles.container}>
+                    <Text size={20} bold style={{ marginLeft: 20 }}>
+                        {t`Favorite albums`}
+                    </Text>
+                    <View style={styles.songsContainer}>
+                        <ScrollView
+                            horizontal
+                            showScroll={false}
+                            top={10}
+                            bottom={10}>
+                            {favoriteAlbums.map((album: AlbumType) => (
+                                <View
+                                    key={album.id}
+                                    style={{ marginHorizontal: 7.5 }}>
+                                    <AlbumCover
+                                        album={album}
+                                        navigation={navigation}
+                                        vertical
+                                        onLongPress={() => {
+                                            setCurrentData(album);
+                                            setBottomSheetOpen(true);
+                                        }}
+                                    />
+                                </View>
+                            ))}
+                        </ScrollView>
+                    </View>
                 </View>
-            </View>
+            )}
             <DataBottomSheet
                 data={currentData}
                 isOpen={isBottomSheetOpen}

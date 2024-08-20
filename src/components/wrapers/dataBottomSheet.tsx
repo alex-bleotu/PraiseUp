@@ -1,4 +1,5 @@
 import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
+import { t } from "@lingui/macro";
 import * as Linking from "expo-linking";
 import React, { useContext, useEffect, useState } from "react";
 import { Image, Share, StyleSheet, TouchableOpacity, View } from "react-native";
@@ -74,7 +75,7 @@ const DataBottomSheet = ({
                                 color={theme.colors.text}
                             />
                             <Text size={17} style={styles.text}>
-                                Favorite
+                                {t`Favorite`}
                             </Text>
                         </View>
                     </TouchableOpacity>
@@ -88,7 +89,7 @@ const DataBottomSheet = ({
                                 color={theme.colors.text}
                             />
                             <Text size={17} style={styles.text}>
-                                Add to playlist
+                                {t`Add to playlist`}
                             </Text>
                         </View>
                     </TouchableOpacity>
@@ -103,7 +104,7 @@ const DataBottomSheet = ({
 
                             try {
                                 await Share.share({
-                                    message: `Check out this ${url}`,
+                                    message: `${t`Check out this`} ${url}`,
                                 });
                             } catch (error) {
                                 console.log(error);
@@ -116,7 +117,7 @@ const DataBottomSheet = ({
                                 color={theme.colors.text}
                             />
                             <Text size={17} style={styles.text}>
-                                Share
+                                {t`Share`}
                             </Text>
                         </View>
                     </TouchableOpacity>

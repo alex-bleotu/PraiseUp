@@ -1,3 +1,4 @@
+import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ActivityIndicator, Searchbar as SearchBar } from "react-native-paper";
@@ -11,6 +12,7 @@ import Text from "../components/wrapers/text";
 import { AlbumType, DataContext, isSong, SongType } from "../context/data";
 import { HistoryContext } from "../context/history";
 import { ThemeContext } from "../context/theme";
+import Loading from "./loading";
 
 const Discover = ({ navigation }: { navigation: any }) => {
     const [searchQuery, setSearchQuery] = useState("");
@@ -41,9 +43,6 @@ const Discover = ({ navigation }: { navigation: any }) => {
 
             setLoading(true);
 
-            // Simulate delay
-            // await new Promise((resolve) => setTimeout(resolve, 50));
-
             if (currentSearch !== searchRef.current) return;
 
             const filtered = await filter(searchQuery);
@@ -58,6 +57,8 @@ const Discover = ({ navigation }: { navigation: any }) => {
             searchRef.current++;
         };
     }, [searchQuery]);
+
+    if (history === null) return <Loading />;
 
     return (
         <Background noPadding>
@@ -81,7 +82,7 @@ const Discover = ({ navigation }: { navigation: any }) => {
                             <ScrollView bottom={15}>
                                 <View style={{ marginTop: 15 }}>
                                     <Text size={20} bold>
-                                        Recent Searches
+                                        {t`Recent Searches`}
                                     </Text>
                                 </View>
                                 {history.map(
@@ -133,7 +134,7 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                     }}>
                                     <Button
                                         style={{ marginTop: 20 }}
-                                        text="Clear recent searches"
+                                        text={t`Clear recent searches`}
                                         fontSize={14}
                                         mode="outlined"
                                         bold
@@ -147,10 +148,10 @@ const Discover = ({ navigation }: { navigation: any }) => {
                     ) : (
                         <View style={styles.placeHolderContainer}>
                             <Text size={20} bold>
-                                No recent searches
+                                {t`No recent searches`}
                             </Text>
                             <Text size={16} style={{ marginTop: 10 }}>
-                                Start searching for your favorite songs
+                                {t`Start searching for your favorite songs`}
                             </Text>
                         </View>
                     )}
@@ -238,11 +239,14 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                 </View>
                             ) : (
                                 <View style={styles.placeHolderContainer}>
-                                    <Text size={20} bold>
-                                        No search result
+                                    <Text size={20} bold center>
+                                        {t`No search result`}
                                     </Text>
-                                    <Text size={16} style={{ marginTop: 10 }}>
-                                        No song or album matches your search
+                                    <Text
+                                        size={16}
+                                        style={{ marginTop: 10 }}
+                                        center>
+                                        {t`No song or album matches your search`}
                                     </Text>
                                 </View>
                             )}
@@ -277,6 +281,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         marginTop: -70,
+        marginHorizontal: 35,
     },
     indicator: {
         display: "flex",
