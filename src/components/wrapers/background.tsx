@@ -6,10 +6,12 @@ const Background = ({
     children,
     noPadding,
     color,
+    center,
 }: {
     children: ReactNode | ReactNode[];
     noPadding?: boolean;
     color?: string;
+    center?: boolean;
 }) => {
     const { theme } = useContext(ThemeContext);
 
@@ -20,6 +22,7 @@ const Background = ({
             style={{
                 flex: 1,
                 backgroundColor: color ? color : theme.colors.background,
+                display: "flex",
                 alignItems: "center",
                 paddingTop: 50,
                 paddingHorizontal: noPadding ? 0 : 20,
@@ -31,6 +34,9 @@ const Background = ({
                     width: "100%",
                     marginBottom: 80,
                     overflow: "hidden",
+                    display: "flex",
+                    justifyContent: center ? "center" : "flex-start",
+                    alignItems: "center",
                 }}>
                 {children}
             </View>

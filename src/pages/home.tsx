@@ -8,13 +8,20 @@ import ScrollView from "../components/wrapers/scrollView";
 import Text from "../components/wrapers/text";
 import { AlbumType, DataContext, isSong, SongType } from "../context/data";
 import { RecentContext } from "../context/recent";
+import { RefreshContext } from "../context/refresh";
 
 const Home = ({ navigation }: { navigation: any }) => {
     const { recent } = useContext(RecentContext);
-    const { getRandomSongs, getRandomAlbums } = useContext(DataContext);
+    const {
+        loading,
+        getRandomSongs,
+        getFavoriteSongsAlbum,
+        getFavoriteAlbums,
+    } = useContext(DataContext);
+    const { refresh } = useContext(RefreshContext);
 
     const [randomSongs, setRandomSongs] = useState<SongType[]>([]);
-    const [createdAlbums, setCreatedAlbums] = useState<AlbumType[]>([]);
+    const [favoriteAlbums, setFavoriteAlbums] = useState<AlbumType[]>([]);
 
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
     const [currentData, setCurrentData] = useState<SongType | AlbumType | null>(
@@ -22,16 +29,32 @@ const Home = ({ navigation }: { navigation: any }) => {
     );
 
     useEffect(() => {
-        const load = async () => {
-            const songs = await getRandomSongs(6);
-            setRandomSongs(songs);
+        if (!loading) {
+            const load = async () => {
+                const songs = await getRandomSongs(6);
+                setRandomSongs(songs);
+            };
 
-            const albums = await getRandomAlbums(6);
-            setCreatedAlbums(albums);
-        };
+            load();
+        }
+    }, [loading]);
 
-        load();
-    }, []);
+    useEffect(() => {
+        if (!loading) {
+            const load = async () => {
+                const favoriteAlbum = await getFavoriteSongsAlbum();
+                const albums = await getFavoriteAlbums();
+
+                const combined = [favoriteAlbum, ...albums];
+
+                setFavoriteAlbums(combined);
+            };
+
+            load();
+        }
+    }, [loading, refresh]);
+
+    if (loading) return <></>;
 
     return (
         <Background noPadding>
@@ -103,13 +126,19 @@ const Home = ({ navigation }: { navigation: any }) => {
                         showScroll={false}
                         top={10}
                         bottom={10}>
-                        {randomSongs.map((song: SongType, index: number) => (
-                            <View key={index} style={{ marginHorizontal: 7.5 }}>
+                        {randomSongs.map((song: SongType) => (
+                            <View
+                                key={song.id}
+                                style={{ marginHorizontal: 7.5 }}>
                                 <SongCover
                                     song={song}
                                     navigation={navigation}
                                     artist={false}
                                     vertical
+                                    onLongPress={() => {
+                                        setCurrentData(song);
+                                        setBottomSheetOpen(true);
+                                    }}
                                 />
                             </View>
                         ))}
@@ -118,7 +147,7 @@ const Home = ({ navigation }: { navigation: any }) => {
             </View>
             <View style={styles.container}>
                 <Text size={20} bold style={{ marginLeft: 20 }}>
-                    Your Albums
+                    Favorite
                 </Text>
                 <View style={styles.songsContainer}>
                     <ScrollView
@@ -126,19 +155,21 @@ const Home = ({ navigation }: { navigation: any }) => {
                         showScroll={false}
                         top={10}
                         bottom={10}>
-                        {createdAlbums.map(
-                            (album: AlbumType, index: number) => (
-                                <View
-                                    key={index}
-                                    style={{ marginHorizontal: 7.5 }}>
-                                    <AlbumCover
-                                        album={album}
-                                        navigation={navigation}
-                                        vertical
-                                    />
-                                </View>
-                            )
-                        )}
+                        {favoriteAlbums.map((album: AlbumType) => (
+                            <View
+                                key={album.id}
+                                style={{ marginHorizontal: 7.5 }}>
+                                <AlbumCover
+                                    album={album}
+                                    navigation={navigation}
+                                    vertical
+                                    onLongPress={() => {
+                                        setCurrentData(album);
+                                        setBottomSheetOpen(true);
+                                    }}
+                                />
+                            </View>
+                        ))}
                     </ScrollView>
                 </View>
             </View>

@@ -1,7 +1,8 @@
 import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
-import { AlbumType, isSong, SongType } from "../../context/data";
+import { AlbumType, DataContext, isSong, SongType } from "../../context/data";
+import { RefreshContext } from "../../context/refresh";
 import { ThemeContext } from "../../context/theme";
 import BottomSheetModal from "./bottomSheetModal";
 import Text from "./text";
@@ -12,8 +13,24 @@ interface DataBottomSheetProps {
     onClose: () => void;
 }
 
-const DataBottomSheet = ({ data, isOpen, onClose }: DataBottomSheetProps) => {
+const DataBottomSheet = ({
+    data: d,
+    isOpen,
+    onClose,
+}: DataBottomSheetProps) => {
     const { theme } = useContext(ThemeContext);
+    const { setFavorite, getById } = useContext(DataContext);
+    const { refresh, setRefresh } = useContext(RefreshContext);
+
+    const [data, setData] = useState<SongType | AlbumType | null>(null);
+
+    useEffect(() => {
+        const load = async () => {
+            if (d !== null) setData(await getById(d.id));
+        };
+
+        load();
+    }, [d]);
 
     if (data === null) return <></>;
 
@@ -41,10 +58,17 @@ const DataBottomSheet = ({ data, isOpen, onClose }: DataBottomSheetProps) => {
                 <View style={styles.buttons}>
                     <TouchableOpacity
                         activeOpacity={theme.activeOpacity}
-                        onPress={() => console.log("Favorite")}>
+                        onPress={async () => {
+                            if (data !== null) {
+                                await setFavorite(data.id, !data.favorite);
+                                setData(await getById(data.id));
+
+                                setRefresh(refresh + 1);
+                            }
+                        }}>
                         <View style={styles.button}>
                             <MCIcons
-                                name="heart-outline"
+                                name={data.favorite ? "heart" : "heart-outline"}
                                 size={30}
                                 color={theme.colors.text}
                             />
@@ -94,8 +118,6 @@ const styles = StyleSheet.create({
         width: 60,
         height: 60,
         borderRadius: 15,
-        borderWidth: 1,
-        borderColor: "black",
         marginRight: 15,
     },
     top: {

@@ -16,6 +16,7 @@ interface SongCoverProps {
     artist?: boolean;
     vertical?: boolean;
     icon?: keyof typeof MCIcons.glyphMap;
+    update?: boolean;
     action?: () => void;
     onLongPress?: () => void;
 }
@@ -28,6 +29,7 @@ const SongCover = ({
     artist = true,
     vertical = false,
     icon,
+    update,
     action,
     onLongPress,
 }: SongCoverProps) => {
@@ -43,7 +45,7 @@ const SongCover = ({
         <AnimatedTouchable
             onLongPress={onLongPress}
             onPress={() => {
-                navigation.navigate("Song Page", { song });
+                navigation.navigate("Song Page", { id: song.id });
                 addToRecent(song);
 
                 if (wasSearched) addToHistory(song);
@@ -62,7 +64,7 @@ const SongCover = ({
                 />
                 {
                     <View style={styles.textContainer}>
-                        <Text bold size={vertical ? 16 : 14} center={vertical}>
+                        <Text bold size={14} center={vertical}>
                             {song.title}
                         </Text>
                         {artist && (
@@ -107,8 +109,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     imageVertical: {
-        width: 110,
-        height: 110,
+        width: 90,
+        height: 90,
         borderRadius: 15,
     },
     image: { width: 70, height: 70, borderRadius: 15 },

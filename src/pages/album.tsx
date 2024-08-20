@@ -4,8 +4,9 @@ import SongCover from "../components/items/songCover";
 import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
-import Text from "../components/wrapers/text";
-import { DataContext, SongType } from "../context/data";
+import { AlbumType, DataContext, SongType } from "../context/data";
+import { RefreshContext } from "../context/refresh";
+import Loading from "./loading";
 
 interface AlbumProps {
     route: any;
@@ -13,36 +14,40 @@ interface AlbumProps {
 }
 
 const Album = ({ route, navigation }: AlbumProps) => {
-    const { album } = route.params;
+    const { id } = route.params;
+    const { refresh } = useContext(RefreshContext);
+    const { getSongById, getFavoriteSongsAlbum, getAlbumById } =
+        useContext(DataContext);
 
     const [songs, setSongs] = useState<SongType[]>([]);
 
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
     const [currentData, setCurrentData] = useState<SongType | null>(null);
-
-    const { getById } = useContext(DataContext);
+    const [album, setAlbum] = useState<AlbumType | null>(null);
 
     useEffect(() => {
         const load = async () => {
+            let album;
+
+            if (id === "F") album = await getFavoriteSongsAlbum();
+            else album = await getAlbumById(id);
+
+            setAlbum(album);
+
             let loaded: SongType[] = [];
 
             for (let i = 0; i < album.songs.length; i++) {
-                const song = await getById(album.songs[i]);
-                if (song) loaded.push(song as SongType);
+                const song = await getSongById(album.songs[i]);
+                if (song) loaded.push(song);
             }
 
             setSongs(loaded);
         };
 
         load();
-    }, []);
+    }, [refresh]);
 
-    if (!album)
-        return (
-            <StackPage navigation={navigation} title="Album">
-                <Text>Not found</Text>
-            </StackPage>
-        );
+    if (album === null) return <Loading />;
 
     return (
         <StackPage navigation={navigation} title={album.title}>

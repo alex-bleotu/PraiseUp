@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as FileSystem from "expo-file-system";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 import { albums, songs } from "../../assets/bundle";
 
@@ -9,6 +8,7 @@ export interface AlbumType {
     id: string;
     title: string;
     songs: string[];
+    favorite: boolean;
 }
 
 export interface SongType {
@@ -17,6 +17,7 @@ export interface SongType {
     artist: string;
     cover: string | null;
     lyrics: string;
+    favorite: boolean;
 }
 
 export const DataProvider = ({
@@ -26,6 +27,7 @@ export const DataProvider = ({
 }) => {
     const [songIds, setSongIds] = useState<string[]>([]);
     const [albumIds, setAlbumIds] = useState<string[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const firstLoad = async () => {
@@ -39,18 +41,6 @@ export const DataProvider = ({
                 for (let i = 0; i < albums.length; i++)
                     await writeAlbum(albums[i]);
 
-                const path = FileSystem.documentDirectory + "bundle.ts";
-
-                try {
-                    const fileInfo = await FileSystem.getInfoAsync(path);
-                    if (fileInfo.exists) {
-                        await FileSystem.deleteAsync(path);
-                        console.log("Deleted bundle file");
-                    } else console.log("Bundle file does not exist");
-                } catch (error) {
-                    console.error("Error checking bundle file", error);
-                }
-
                 await AsyncStorage.setItem("loaded", "true");
             }
         };
@@ -62,6 +52,8 @@ export const DataProvider = ({
             if (songs !== null) setSongIds(JSON.parse(songs));
 
             if (albums !== null) setAlbumIds(JSON.parse(albums));
+
+            setLoading(false);
         };
 
         firstLoad();
@@ -246,11 +238,63 @@ export const DataProvider = ({
         return randomAlbums;
     };
 
+    const getFavoriteSongs = async () => {
+        const favoriteSongs: SongType[] = [];
+
+        for (let i = 0; i < songIds.length; i++) {
+            const song = await getSongById(songIds[i]);
+
+            if (song.favorite) favoriteSongs.push(song);
+        }
+
+        return favoriteSongs;
+    };
+
+    const getFavoriteAlbums = async () => {
+        const favoriteAlbums: AlbumType[] = [];
+
+        for (let i = 0; i < albumIds.length; i++) {
+            const album = await getAlbumById(albumIds[i]);
+
+            if (album.favorite) favoriteAlbums.push(album);
+        }
+
+        return favoriteAlbums;
+    };
+
+    const setFavorite = async (id: string, isFavorite: boolean) => {
+        if (id.includes("S")) {
+            const song = await getSongById(id);
+            song.favorite = isFavorite;
+
+            await writeSong(song);
+        } else if (id.includes("A")) {
+            const album = await getAlbumById(id);
+            album.favorite = isFavorite;
+
+            await writeAlbum(album);
+        }
+    };
+
+    const getFavoriteSongsAlbum = async () => {
+        const favoriteSongs = await getFavoriteSongs();
+
+        const album: AlbumType = {
+            id: "F",
+            title: "Favorite Songs",
+            songs: favoriteSongs.map((song) => song.id),
+            favorite: true,
+        };
+
+        return album;
+    };
+
     return (
         <DataContext.Provider
             value={{
                 songIds,
                 albumIds,
+                loading,
                 readSong,
                 readAlbum,
                 writeAlbum,
@@ -262,6 +306,10 @@ export const DataProvider = ({
                 getSongById,
                 getAlbumById,
                 removeId,
+                getFavoriteSongs,
+                getFavoriteAlbums,
+                setFavorite,
+                getFavoriteSongsAlbum,
             }}>
             {children}
         </DataContext.Provider>

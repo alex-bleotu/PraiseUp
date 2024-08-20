@@ -5,6 +5,7 @@ import { PaperProvider } from "react-native-paper";
 import { DataProvider } from "./src/context/data";
 import { HistoryProvider } from "./src/context/history";
 import { RecentProvider } from "./src/context/recent";
+import { RefreshProvider } from "./src/context/refresh";
 import { ThemeProvider } from "./src/context/theme";
 import Tabs from "./src/navigation/tabs";
 import { darkTheme } from "./src/utils/theme";
@@ -17,10 +18,12 @@ export default function App() {
                     <HistoryProvider>
                         <RecentProvider>
                             <DataProvider>
-                                <NavigationContainer>
-                                    <Tabs />
-                                    <StatusBar style="auto" />
-                                </NavigationContainer>
+                                <RefreshProvider>
+                                    <NavigationContainer>
+                                        <Tabs />
+                                        <StatusBar style="auto" />
+                                    </NavigationContainer>
+                                </RefreshProvider>
                             </DataProvider>
                         </RecentProvider>
                     </HistoryProvider>

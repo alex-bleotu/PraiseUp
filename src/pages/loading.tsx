@@ -7,10 +7,10 @@ const Loading = () => {
     const { theme } = useContext(ThemeContext);
 
     return (
-        <Background>
+        <Background center>
             <ActivityIndicator
                 animating={true}
-                size="large"
+                size={50}
                 color={theme.colors.primary}
             />
         </Background>

@@ -43,7 +43,7 @@ const AlbumCover = ({
         <AnimatedTouchable
             onLongPress={onLongPress}
             onPress={() => {
-                navigation.navigate("Album Page", { album });
+                navigation.navigate("Album Page", { id: album.id });
                 addToRecent(album);
 
                 if (wasSearched) addToHistory(album);
@@ -65,7 +65,7 @@ const AlbumCover = ({
                         styles.textContainer,
                         { width: !fullWidth ? width - 80 : "auto" },
                     ]}>
-                    <Text bold size={vertical ? 16 : 14} center={vertical}>
+                    <Text bold size={14} center={vertical}>
                         {album.title}
                     </Text>
                 </View>
@@ -104,8 +104,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     imageVertical: {
-        width: 110,
-        height: 110,
+        width: 90,
+        height: 90,
         borderRadius: 15,
     },
     image: { width: 70, height: 70, borderRadius: 15 },
