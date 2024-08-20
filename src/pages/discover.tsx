@@ -5,6 +5,7 @@ import AlbumCover from "../components/items/albumCover";
 import SongCover from "../components/items/songCover";
 import Background from "../components/wrapers/background";
 import Button from "../components/wrapers/button";
+import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
 import Text from "../components/wrapers/text";
 import { AlbumType, DataContext, isSong, SongType } from "../context/data";
@@ -15,6 +16,12 @@ const Discover = ({ navigation }: { navigation: any }) => {
     const [searchQuery, setSearchQuery] = useState("");
     const [loading, setLoading] = useState(true);
     const [filteredData, setFilteredData] = useState<any | null>(null);
+
+    const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
+    const [currentData, setCurrentData] = useState<SongType | AlbumType | null>(
+        null
+    );
+
     const searchRef = useRef(0);
 
     const { theme } = useContext(ThemeContext);
@@ -177,7 +184,22 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                                                 navigation
                                                             }
                                                             icon="dots-vertical"
-                                                            action={() => {}}
+                                                            action={() => {
+                                                                setCurrentData(
+                                                                    data
+                                                                );
+                                                                setBottomSheetOpen(
+                                                                    true
+                                                                );
+                                                            }}
+                                                            onLongPress={() => {
+                                                                setCurrentData(
+                                                                    data
+                                                                );
+                                                                setBottomSheetOpen(
+                                                                    true
+                                                                );
+                                                            }}
                                                             fullWidth
                                                             wasSearched
                                                         />
@@ -189,7 +211,22 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                                                 navigation
                                                             }
                                                             icon="dots-vertical"
-                                                            action={() => {}}
+                                                            action={() => {
+                                                                setCurrentData(
+                                                                    data
+                                                                );
+                                                                setBottomSheetOpen(
+                                                                    true
+                                                                );
+                                                            }}
+                                                            onLongPress={() => {
+                                                                setCurrentData(
+                                                                    data
+                                                                );
+                                                                setBottomSheetOpen(
+                                                                    true
+                                                                );
+                                                            }}
                                                             fullWidth
                                                             wasSearched
                                                         />
@@ -213,6 +250,13 @@ const Discover = ({ navigation }: { navigation: any }) => {
                     )}
                 </>
             )}
+            <DataBottomSheet
+                data={currentData}
+                isOpen={isBottomSheetOpen}
+                onClose={() => {
+                    setBottomSheetOpen(false);
+                }}
+            />
         </Background>
     );
 };

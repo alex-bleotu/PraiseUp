@@ -5,7 +5,7 @@ import {
 import React, { useContext, useState } from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import Button from "../components/wrapers/button";
-import Modal from "../components/wrapers/modal";
+import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
 import { ThemeContext } from "../context/theme";
@@ -62,7 +62,8 @@ const Song = ({ route, navigation }: SongProps) => {
     const { song } = route.params;
 
     const [value, setValue] = useState("lyrics");
-    const [modalVisible, setModalVisible] = useState(false);
+
+    const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
 
     if (!song)
         return (
@@ -81,7 +82,7 @@ const Song = ({ route, navigation }: SongProps) => {
             navigation={navigation}
             title={song.title}
             icon={"dots-vertical"}
-            action={() => setModalVisible(true)}>
+            action={() => setBottomSheetOpen(true)}>
             <View style={styles.container}>
                 {song.lyrics && hasChords && (
                     <View
@@ -136,13 +137,13 @@ const Song = ({ route, navigation }: SongProps) => {
                     </ScrollView>
                 )}
             </View>
-            <Modal
-                title="Info"
-                visible={modalVisible}
-                setVisible={setModalVisible}
-                onClose={() => console.log("closed")}>
-                <Text>Information</Text>
-            </Modal>
+            <DataBottomSheet
+                data={song}
+                isOpen={isBottomSheetOpen}
+                onClose={() => {
+                    setBottomSheetOpen(false);
+                }}
+            />
         </StackPage>
     );
 };

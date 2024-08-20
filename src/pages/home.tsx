@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 import AlbumCover from "../components/items/albumCover";
 import SongCover from "../components/items/songCover";
 import Background from "../components/wrapers/background";
+import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
 import Text from "../components/wrapers/text";
 import { AlbumType, DataContext, isSong, SongType } from "../context/data";
@@ -14,6 +15,11 @@ const Home = ({ navigation }: { navigation: any }) => {
 
     const [randomSongs, setRandomSongs] = useState<SongType[]>([]);
     const [createdAlbums, setCreatedAlbums] = useState<AlbumType[]>([]);
+
+    const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
+    const [currentData, setCurrentData] = useState<SongType | AlbumType | null>(
+        null
+    );
 
     useEffect(() => {
         const load = async () => {
@@ -42,11 +48,19 @@ const Home = ({ navigation }: { navigation: any }) => {
                                     <SongCover
                                         song={data}
                                         navigation={navigation}
+                                        onLongPress={() => {
+                                            setCurrentData(data);
+                                            setBottomSheetOpen(true);
+                                        }}
                                     />
                                 ) : (
                                     <AlbumCover
                                         album={data}
                                         navigation={navigation}
+                                        onLongPress={() => {
+                                            setCurrentData(data);
+                                            setBottomSheetOpen(true);
+                                        }}
                                     />
                                 )}
                             </View>
@@ -57,11 +71,19 @@ const Home = ({ navigation }: { navigation: any }) => {
                                         <SongCover
                                             song={data2}
                                             navigation={navigation}
+                                            onLongPress={() => {
+                                                setCurrentData(data2);
+                                                setBottomSheetOpen(true);
+                                            }}
                                         />
                                     ) : (
                                         <AlbumCover
                                             album={data2}
                                             navigation={navigation}
+                                            onLongPress={() => {
+                                                setCurrentData(data2);
+                                                setBottomSheetOpen(true);
+                                            }}
                                         />
                                     )}
                                 </View>
@@ -120,6 +142,13 @@ const Home = ({ navigation }: { navigation: any }) => {
                     </ScrollView>
                 </View>
             </View>
+            <DataBottomSheet
+                data={currentData}
+                isOpen={isBottomSheetOpen}
+                onClose={() => {
+                    setBottomSheetOpen(false);
+                }}
+            />
         </Background>
     );
 };

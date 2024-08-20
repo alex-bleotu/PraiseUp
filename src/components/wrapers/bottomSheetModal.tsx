@@ -6,6 +6,7 @@ import {
     PanResponder,
     StyleSheet,
     TouchableOpacity,
+    TouchableWithoutFeedback,
     View,
 } from "react-native";
 import { ThemeContext } from "../../context/theme";
@@ -13,38 +14,46 @@ import { ThemeContext } from "../../context/theme";
 const { height: windowHeight } = Dimensions.get("window");
 
 interface BottomSheetModalProps {
-    open: boolean;
+    isOpen: boolean;
     children: React.ReactNode | React.ReactNode[];
     onClose?: () => void;
 }
 
 const BottomSheetModal = ({
-    open,
+    isOpen,
     onClose,
     children,
 }: BottomSheetModalProps) => {
-    const [modalVisible, setModalVisible] = useState(open);
+    const [modalVisible, setModalVisible] = useState(isOpen);
     const translateY = useRef(new Animated.Value(windowHeight)).current;
+    const gestureStartY = useRef(0);
 
     const { theme } = useContext(ThemeContext);
 
     const panResponder = useRef(
         PanResponder.create({
-            onStartShouldSetPanResponder: () => true,
-            onMoveShouldSetPanResponder: () => true,
+            onStartShouldSetPanResponder: () => false,
+            onMoveShouldSetPanResponder: (evt, gestureState) => {
+                return Math.abs(gestureState.dy) > 10;
+            },
+            onPanResponderGrant: (evt, gestureState) => {
+                gestureStartY.current = gestureState.y0;
+            },
             onPanResponderMove: (evt, gestureState) => {
                 if (gestureState.dy > 0) {
                     translateY.setValue(gestureState.dy);
                 }
             },
             onPanResponderRelease: (evt, gestureState) => {
-                if (gestureState.dy > windowHeight * 0.25) {
+                const distanceMoved =
+                    gestureState.moveY - gestureStartY.current;
+
+                if (distanceMoved > 50) {
                     closeBottomSheet();
                 } else {
                     Animated.spring(translateY, {
                         toValue: 0,
                         useNativeDriver: true,
-
                         stiffness: 200,
                         damping: 30,
                         mass: 0.8,
@@ -55,19 +64,18 @@ const BottomSheetModal = ({
     ).current;
 
     useEffect(() => {
-        if (open) {
+        if (isOpen) {
             setModalVisible(true);
             openBottomSheet();
         } else {
             closeBottomSheet();
         }
-    }, [open]);
+    }, [isOpen]);
 
     const openBottomSheet = () => {
         Animated.spring(translateY, {
             toValue: 0,
             useNativeDriver: true,
-
             stiffness: 200,
             damping: 30,
             mass: 0.8,
@@ -77,7 +85,7 @@ const BottomSheetModal = ({
     const closeBottomSheet = () => {
         Animated.timing(translateY, {
             toValue: windowHeight,
-            duration: 300,
+            duration: 200,
             useNativeDriver: true,
         }).start(() => {
             setModalVisible(false);
@@ -112,7 +120,9 @@ const BottomSheetModal = ({
                             { backgroundColor: theme.colors.grey },
                         ]}
                     />
-                    <View style={styles.sheetContent}>{children}</View>
+                    <TouchableWithoutFeedback>
+                        <View style={styles.sheetContent}>{children}</View>
+                    </TouchableWithoutFeedback>
                 </Animated.View>
             </View>
         </Modal>
@@ -131,10 +141,9 @@ const styles = StyleSheet.create({
         position: "absolute",
         bottom: 0,
         width: "100%",
-        height: 400,
+        height: 275,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
-        paddingHorizontal: 20,
     },
     bottomSheetHandle: {
         width: 40,
@@ -144,8 +153,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     sheetContent: {
-        fontSize: 18,
-        textAlign: "center",
         marginVertical: 20,
     },
 });

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import SongCover from "../components/items/songCover";
+import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
@@ -15,6 +16,9 @@ const Album = ({ route, navigation }: AlbumProps) => {
     const { album } = route.params;
 
     const [songs, setSongs] = useState<SongType[]>([]);
+
+    const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
+    const [currentData, setCurrentData] = useState<SongType | null>(null);
 
     const { getById } = useContext(DataContext);
 
@@ -55,13 +59,27 @@ const Album = ({ route, navigation }: AlbumProps) => {
                                     navigation={navigation}
                                     fullWidth
                                     icon="dots-vertical"
-                                    action={() => {}}
+                                    action={() => {
+                                        setCurrentData(song);
+                                        setBottomSheetOpen(true);
+                                    }}
+                                    onLongPress={() => {
+                                        setCurrentData(song);
+                                        setBottomSheetOpen(true);
+                                    }}
                                 />
                             </View>
                         );
                     })}
                 </ScrollView>
             </View>
+            <DataBottomSheet
+                data={currentData}
+                isOpen={isBottomSheetOpen}
+                onClose={() => {
+                    setBottomSheetOpen(false);
+                }}
+            />
         </StackPage>
     );
 };

@@ -16,6 +16,7 @@ interface AlbumCoverProps {
     vertical?: boolean;
     icon?: keyof typeof MCIcons.glyphMap;
     action?: () => void;
+    onLongPress?: () => void;
 }
 
 const AlbumCover = ({
@@ -26,6 +27,7 @@ const AlbumCover = ({
     vertical = false,
     icon,
     action,
+    onLongPress,
 }: AlbumCoverProps) => {
     const { addToHistory } = useContext(HistoryContext);
     const { addToRecent } = useContext(RecentContext);
@@ -39,6 +41,7 @@ const AlbumCover = ({
 
     return (
         <AnimatedTouchable
+            onLongPress={onLongPress}
             onPress={() => {
                 navigation.navigate("Album Page", { album });
                 addToRecent(album);

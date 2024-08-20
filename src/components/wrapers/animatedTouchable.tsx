@@ -7,12 +7,14 @@ interface AnimatedTouchableProps {
     children: React.ReactNode;
     style?: ViewStyle;
     onPress?: () => void;
+    onLongPress?: () => void;
 }
 
 const AnimatedTouchable = ({
     children,
     style,
     onPress,
+    onLongPress,
 }: AnimatedTouchableProps) => {
     const { theme } = useContext(ThemeContext);
 
@@ -34,10 +36,14 @@ const AnimatedTouchable = ({
 
     return (
         <TouchableOpacity
+            delayLongPress={400}
             style={style}
             activeOpacity={theme.activeOpacity}
             onPress={() => {
                 onPress && onPress();
+            }}
+            onLongPress={() => {
+                onLongPress && onLongPress();
             }}
             onPressIn={handlePressIn}
             onPressOut={handlePressOut}>
