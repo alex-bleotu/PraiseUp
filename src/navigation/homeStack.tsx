@@ -12,9 +12,9 @@ const HomeStack = ({ navigation }: { navigation: any }) => {
             screenOptions={{
                 headerShown: false,
             }}>
-            <S.Screen name="Home Page" component={Home} />
-            <S.Screen name="Song Page" component={Song} />
-            <S.Screen name="Album Page" component={Album} />
+            <S.Screen name="HomePage" component={Home} />
+            <S.Screen name="SongPage" component={Song} />
+            <S.Screen name="AlbumPage" component={Album} />
         </S.Navigator>
     );
 };

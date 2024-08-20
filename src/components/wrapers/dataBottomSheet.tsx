@@ -1,6 +1,7 @@
 import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
+import * as Linking from "expo-linking";
 import React, { useContext, useEffect, useState } from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Image, Share, StyleSheet, TouchableOpacity, View } from "react-native";
 import { AlbumType, DataContext, isSong, SongType } from "../../context/data";
 import { RefreshContext } from "../../context/refresh";
 import { ThemeContext } from "../../context/theme";
@@ -93,7 +94,21 @@ const DataBottomSheet = ({
                     </TouchableOpacity>
                     <TouchableOpacity
                         activeOpacity={theme.activeOpacity}
-                        onPress={() => console.log("Share")}>
+                        onPress={async () => {
+                            let url;
+
+                            if (isSong(data))
+                                url = Linking.createURL(`song/${data.id}`);
+                            else url = Linking.createURL(`album/${data.id}`);
+
+                            try {
+                                await Share.share({
+                                    message: `Check out this ${url}`,
+                                });
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        }}>
                         <View style={styles.button}>
                             <MCIcons
                                 name="share-variant-outline"

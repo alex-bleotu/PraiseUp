@@ -12,9 +12,9 @@ const DiscoverStack = ({ navigation }: { navigation: any }) => {
             screenOptions={{
                 headerShown: false,
             }}>
-            <S.Screen name="Discover Page" component={Discover} />
-            <S.Screen name="Song Page" component={Song} />
-            <S.Screen name="Album Page" component={Album} />
+            <S.Screen name="DiscoverPage" component={Discover} />
+            <S.Screen name="SongPage" component={Song} />
+            <S.Screen name="AlbumPage" component={Album} />
         </S.Navigator>
     );
 };

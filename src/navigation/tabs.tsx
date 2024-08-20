@@ -1,6 +1,6 @@
 import { FontAwesome6 } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import AnimatedTouchable from "../components/wrapers/animatedTouchable";
 import { ThemeContext } from "../context/theme";
@@ -15,18 +15,30 @@ const Tabs = () => {
 
     const height = Dimensions.get("screen").height - 15;
 
+    const getIconName = (
+        routeName: string
+    ): keyof typeof FontAwesome6.glyphMap => {
+        switch (routeName) {
+            case "Home":
+                return "house";
+            case "Discover":
+                return "magnifying-glass";
+            case "User":
+                return "user-large";
+            default:
+                return "question";
+        }
+    };
+
     return (
         <View style={{ height }}>
             <Tab.Navigator
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ focused, color, size }) => {
-                        let iconName: keyof typeof FontAwesome6.glyphMap;
-
-                        if (route.name === "Home") iconName = "house";
-                        else if (route.name === "User") iconName = "user-large";
-                        else if (route.name === "Discover")
-                            iconName = "magnifying-glass";
-                        else iconName = "question";
+                        const iconName = useMemo(
+                            () => getIconName(route.name),
+                            [route.name]
+                        );
 
                         return (
                             <AnimatedTouchable>
@@ -48,7 +60,6 @@ const Tabs = () => {
                             </AnimatedTouchable>
                         );
                     },
-
                     tabBarStyle: {
                         backgroundColor: theme.colors.paper,
                         borderRadius: 20,
@@ -59,7 +70,6 @@ const Tabs = () => {
                         borderTopWidth: 0,
                         elevation: 0,
                     },
-
                     tabBarActiveTintColor: theme.colors.primary,
                     tabBarInactiveTintColor: "gray",
                     tabBarShowLabel: false,

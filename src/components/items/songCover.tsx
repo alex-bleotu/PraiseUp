@@ -45,7 +45,7 @@ const SongCover = ({
         <AnimatedTouchable
             onLongPress={onLongPress}
             onPress={() => {
-                navigation.navigate("Song Page", { id: song.id });
+                navigation.navigate("SongPage", { id: song.id });
                 addToRecent(song);
 
                 if (wasSearched) addToHistory(song);

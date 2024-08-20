@@ -1,4 +1,4 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { PaperProvider } from "react-native-paper";
@@ -10,25 +10,42 @@ import { ThemeProvider } from "./src/context/theme";
 import Tabs from "./src/navigation/tabs";
 import { darkTheme } from "./src/utils/theme";
 
+const linking: LinkingOptions<any> = {
+    prefixes: ["app://"],
+    config: {
+        screens: {
+            Home: {
+                screens: {
+                    HomePage: "home",
+                    SongPage: "song/:id",
+                    AlbumPage: "album/:id",
+                },
+            },
+            Discover: "discover",
+            User: "user",
+        },
+    },
+};
+
 export default function App() {
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
-            <PaperProvider theme={darkTheme}>
-                <ThemeProvider>
-                    <HistoryProvider>
-                        <RecentProvider>
-                            <DataProvider>
-                                <RefreshProvider>
-                                    <NavigationContainer>
+            <NavigationContainer linking={linking}>
+                <PaperProvider theme={darkTheme}>
+                    <ThemeProvider>
+                        <HistoryProvider>
+                            <RecentProvider>
+                                <DataProvider>
+                                    <RefreshProvider>
                                         <Tabs />
                                         <StatusBar style="auto" />
-                                    </NavigationContainer>
-                                </RefreshProvider>
-                            </DataProvider>
-                        </RecentProvider>
-                    </HistoryProvider>
-                </ThemeProvider>
-            </PaperProvider>
+                                    </RefreshProvider>
+                                </DataProvider>
+                            </RecentProvider>
+                        </HistoryProvider>
+                    </ThemeProvider>
+                </PaperProvider>
+            </NavigationContainer>
         </GestureHandlerRootView>
     );
 }

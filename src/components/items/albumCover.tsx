@@ -43,7 +43,7 @@ const AlbumCover = ({
         <AnimatedTouchable
             onLongPress={onLongPress}
             onPress={() => {
-                navigation.navigate("Album Page", { id: album.id });
+                navigation.navigate("AlbumPage", { id: album.id });
                 addToRecent(album);
 
                 if (wasSearched) addToHistory(album);
