@@ -22,7 +22,7 @@ const ScrollView = ({
     return (
         <SV
             overScrollMode="never"
-            style={style}
+            contentContainerStyle={style}
             showsHorizontalScrollIndicator={showScroll}
             showsVerticalScrollIndicator={showScroll}
             horizontal={horizontal}>

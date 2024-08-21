@@ -133,7 +133,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                                 {randomSongs.map((song: SongType) => (
                                     <View
                                         key={song.id}
-                                        style={{ marginHorizontal: 7.5 }}>
+                                        style={{ marginHorizontal: 5 }}>
                                         <SongCover
                                             song={song}
                                             navigation={navigation}
@@ -163,7 +163,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                                 {favoriteAlbums.map((album: AlbumType) => (
                                     <View
                                         key={album.id}
-                                        style={{ marginHorizontal: 7.5 }}>
+                                        style={{ marginHorizontal: 5 }}>
                                         <AlbumCover
                                             album={album}
                                             navigation={navigation}

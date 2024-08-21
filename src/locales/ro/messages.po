@@ -21,7 +21,7 @@ msgstr "Adaugă in playlist"
 msgid "Check out this"
 msgstr "Verifică asta"
 
-#: src/pages/song.tsx:133
+#: src/pages/song.tsx:136
 msgid "Chords"
 msgstr "Acorduri"
 
@@ -37,7 +37,7 @@ msgstr "Favorite"
 msgid "Favorite albums"
 msgstr "Albume favorite"
 
-#: src/pages/song.tsx:107
+#: src/pages/song.tsx:110
 msgid "Lyrics"
 msgstr "Versuri"
 
@@ -69,6 +69,10 @@ msgstr "Distribuie"
 msgid "Start searching for your favorite songs"
 msgstr "Începeți să căutați melodiile preferate"
 
-#: src/pages/home.tsx:124
+#: src/pages/home.tsx:125
 msgid "Suggested for you"
 msgstr "Recomandat pentru tine"
+
+#: src/pages/user.tsx:15
+msgid "Your library"
+msgstr "Biblioteca ta"

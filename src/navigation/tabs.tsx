@@ -6,7 +6,7 @@ import AnimatedTouchable from "../components/wrapers/animatedTouchable";
 import { ThemeContext } from "../context/theme";
 import DiscoverStack from "./discoverStack";
 import HomeStack from "./homeStack";
-import UserStack from "./userStack";
+import LibraryStack from "./libraryStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -82,7 +82,7 @@ const Tabs = () => {
                 })}>
                 <Tab.Screen name="Home" component={HomeStack} />
                 <Tab.Screen name="Discover" component={DiscoverStack} />
-                <Tab.Screen name="User" component={UserStack} />
+                <Tab.Screen name="User" component={LibraryStack} />
             </Tab.Navigator>
         </View>
     );

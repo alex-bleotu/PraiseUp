@@ -21,7 +21,7 @@ msgstr "Add to playlist"
 msgid "Check out this"
 msgstr "Check out this"
 
-#: src/pages/song.tsx:133
+#: src/pages/song.tsx:136
 msgid "Chords"
 msgstr "Chords"
 
@@ -37,7 +37,7 @@ msgstr "Favorite"
 msgid "Favorite albums"
 msgstr "Favorite albums"
 
-#: src/pages/song.tsx:107
+#: src/pages/song.tsx:110
 msgid "Lyrics"
 msgstr "Lyrics"
 
@@ -69,6 +69,10 @@ msgstr "Share"
 msgid "Start searching for your favorite songs"
 msgstr "Start searching for your favorite songs"
 
-#: src/pages/home.tsx:124
+#: src/pages/home.tsx:125
 msgid "Suggested for you"
 msgstr "Suggested for you"
+
+#: src/pages/user.tsx:15
+msgid "Your library"
+msgstr "Your library"

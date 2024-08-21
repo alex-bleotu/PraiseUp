@@ -111,8 +111,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     imageVertical: {
-        width: 90,
-        height: 90,
+        width: 85,
+        height: 85,
         borderRadius: 12,
     },
     image: { width: 70, height: 70, borderRadius: 15, marginRight: 8 },
