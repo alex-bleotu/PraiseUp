@@ -22,7 +22,7 @@ const DataBottomSheet = ({
 }: DataBottomSheetProps) => {
     const { theme } = useContext(ThemeContext);
     const { setFavorite, getById } = useContext(DataContext);
-    const { refresh, updateRefresh } = useContext(RefreshContext);
+    const { updateRefresh } = useContext(RefreshContext);
 
     const [data, setData] = useState<SongType | AlbumType | null>(null);
 

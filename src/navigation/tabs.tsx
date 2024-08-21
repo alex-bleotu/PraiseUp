@@ -20,7 +20,8 @@ const Tabs = () => {
 
     // TODO: Fix tabs height
     let tabsHeight;
-    if (height / width > 2) tabsHeight = Dimensions.get("screen").height - 15;
+    console.log(height / width);
+    if (height / width > 1.9) tabsHeight = Dimensions.get("screen").height - 15;
     else tabsHeight = height + 33;
 
     const getIconName = (
