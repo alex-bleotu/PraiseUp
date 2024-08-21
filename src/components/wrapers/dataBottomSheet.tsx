@@ -81,7 +81,7 @@ const DataBottomSheet = ({
                     </TouchableOpacity>
                     <TouchableOpacity
                         activeOpacity={theme.activeOpacity}
-                        onPress={() => console.log("Add to playlist")}>
+                        onPress={() => {}}>
                         <View style={styles.button}>
                             <MCIcons
                                 name="plus-circle-outline"

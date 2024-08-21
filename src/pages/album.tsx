@@ -94,6 +94,7 @@ const Album = ({ route, navigation }: AlbumProps) => {
             icon={album.id !== "F" ? "dots-vertical" : undefined}
             action={() => {
                 setCurrentData(album);
+                setBottomSheetOpen(true);
             }}>
             <View style={styles.container}>
                 {album.id === "F" && (

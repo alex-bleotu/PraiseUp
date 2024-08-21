@@ -23,7 +23,11 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     styles.container,
                     { backgroundColor: theme.colors.paper },
                 ]}>
-                <ScrollView style={styles.scroll}>
+                <ScrollView
+                    style={styles.scroll}
+                    top={10}
+                    bottom={10}
+                    showScroll={false}>
                     <Text
                         size={16}
                         color={theme.colors.grey}
@@ -213,7 +217,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         marginTop: 10,
         marginBottom: 20,
-        paddingVertical: 20,
         borderRadius: 30,
     },
     scroll: {
