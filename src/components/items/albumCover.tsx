@@ -63,7 +63,11 @@ const AlbumCover = ({
                     },
                 ]}>
                 <Image
-                    source={require("../../../assets/images/songCover.png")}
+                    source={
+                        album.cover
+                            ? require("../../../assets/images/default.png")
+                            : require("../../../assets/images/default.png")
+                    }
                     style={vertical ? styles.imageVertical : styles.image}
                 />
                 <View

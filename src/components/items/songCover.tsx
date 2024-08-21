@@ -62,7 +62,11 @@ const SongCover = ({
                     },
                 ]}>
                 <Image
-                    source={require("../../../assets/images/songCover.png")}
+                    source={
+                        song.cover
+                            ? require("../../../assets/images/default.png")
+                            : require("../../../assets/images/default.png")
+                    }
                     style={vertical ? styles.imageVertical : styles.image}
                 />
                 {

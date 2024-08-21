@@ -17,6 +17,7 @@ export interface AlbumType {
     songs: string[];
     favorite: boolean;
     date: string;
+    cover: string | null;
 }
 
 export interface SongType {
@@ -381,6 +382,7 @@ export const DataProvider = ({
             songs: favoriteSongs.map((song) => song.id),
             favorite: true,
             date: new Date().toISOString(),
+            cover: null,
         };
 
         return album;

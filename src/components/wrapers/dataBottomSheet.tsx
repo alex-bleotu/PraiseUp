@@ -41,7 +41,11 @@ const DataBottomSheet = ({
             <View>
                 <View style={styles.top}>
                     <Image
-                        source={require("../../../assets/images/songCover.png")}
+                        source={
+                            data.cover
+                                ? require("../../../assets/images/default.png")
+                                : require("../../../assets/images/default.png")
+                        }
                         style={styles.image}
                     />
                     <View>
