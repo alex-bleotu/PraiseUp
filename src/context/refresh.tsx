@@ -9,11 +9,15 @@ export const RefreshProvider = ({
 }) => {
     const [refresh, setRefresh] = useState<number>(0);
 
+    const updateRefresh = () => {
+        setRefresh(refresh + 1);
+    };
+
     return (
         <RefreshContext.Provider
             value={{
                 refresh,
-                setRefresh,
+                updateRefresh,
             }}>
             {children}
         </RefreshContext.Provider>

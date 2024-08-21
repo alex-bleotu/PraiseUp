@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
 import React, { useContext } from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
-import { AlbumType } from "../../context/data";
+import { AlbumType, DataContext } from "../../context/data";
 import { HistoryContext } from "../../context/history";
 import { LanguageContext } from "../../context/language";
 import { RecentContext } from "../../context/recent";
@@ -34,6 +34,7 @@ const AlbumCover = ({
     const { addToRecent } = useContext(RecentContext);
     const { theme } = useContext(ThemeContext);
     const { language } = useContext(LanguageContext);
+    const { updateDate } = useContext(DataContext);
 
     const width: any = fullWidth
         ? "100%"
@@ -46,7 +47,10 @@ const AlbumCover = ({
             onLongPress={onLongPress}
             onPress={() => {
                 navigation.navigate("AlbumPage", { id: album.id });
-                addToRecent(album);
+
+                if (album.id !== "F") addToRecent(album);
+
+                updateDate(album.id);
 
                 if (wasSearched) addToHistory(album);
             }}>

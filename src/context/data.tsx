@@ -1,6 +1,13 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { createContext, ReactNode, useEffect, useState } from "react";
+import React, {
+    createContext,
+    ReactNode,
+    useContext,
+    useEffect,
+    useState,
+} from "react";
 import { albums, songs } from "../../assets/bundle";
+import { RefreshContext } from "./refresh";
 
 export const DataContext = createContext<any>(null);
 
@@ -9,6 +16,7 @@ export interface AlbumType {
     title: string;
     songs: string[];
     favorite: boolean;
+    date: string;
 }
 
 export interface SongType {
@@ -18,6 +26,7 @@ export interface SongType {
     cover: string | null;
     lyrics: string;
     favorite: boolean;
+    date: string;
 }
 
 export const DataProvider = ({
@@ -25,6 +34,8 @@ export const DataProvider = ({
 }: {
     children: ReactNode | ReactNode[];
 }) => {
+    const { updateRefresh } = useContext(RefreshContext);
+
     const [songIds, setSongIds] = useState<string[]>([]);
     const [albumIds, setAlbumIds] = useState<string[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -133,6 +144,22 @@ export const DataProvider = ({
         } catch (error) {
             console.error("Error writing album file:", error);
         }
+    };
+
+    const updateDate = async (id: string) => {
+        if (id.includes("S")) {
+            const song = await readSong(id);
+            song.date = new Date().toISOString();
+
+            await writeSong(song);
+        } else if (id.includes("A")) {
+            const album = await readAlbum(id);
+            album.date = new Date().toISOString();
+
+            await writeAlbum(album);
+        }
+
+        updateRefresh();
     };
 
     const readSong = async (id: string) => {
@@ -333,11 +360,13 @@ export const DataProvider = ({
         if (id.includes("S")) {
             const song = await getSongById(id);
             song.favorite = isFavorite;
+            song.date = new Date().toISOString();
 
             await writeSong(song);
         } else if (id.includes("A")) {
             const album = await getAlbumById(id);
             album.favorite = isFavorite;
+            album.date = new Date().toISOString();
 
             await writeAlbum(album);
         }
@@ -351,6 +380,7 @@ export const DataProvider = ({
             title: "Favorite Songs",
             songs: favoriteSongs.map((song) => song.id),
             favorite: true,
+            date: new Date().toISOString(),
         };
 
         return album;
@@ -362,6 +392,7 @@ export const DataProvider = ({
                 songIds,
                 albumIds,
                 loading,
+                updateDate,
                 readSong,
                 readAlbum,
                 writeAlbum,

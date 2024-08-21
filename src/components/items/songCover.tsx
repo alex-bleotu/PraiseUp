@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
 import React, { useContext } from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
-import { SongType } from "../../context/data";
+import { DataContext, SongType } from "../../context/data";
 import { HistoryContext } from "../../context/history";
 import { RecentContext } from "../../context/recent";
 import { ThemeContext } from "../../context/theme";
@@ -35,6 +35,7 @@ const SongCover = ({
 }: SongCoverProps) => {
     const { addToHistory } = useContext(HistoryContext);
     const { addToRecent } = useContext(RecentContext);
+    const { updateDate } = useContext(DataContext);
     const { theme } = useContext(ThemeContext);
 
     const width = fullWidth ? "100%" : Dimensions.get("screen").width / 2 - 25;
@@ -47,6 +48,8 @@ const SongCover = ({
             onPress={() => {
                 navigation.navigate("SongPage", { id: song.id });
                 addToRecent(song);
+
+                updateDate(song.id);
 
                 if (wasSearched) addToHistory(song);
             }}>

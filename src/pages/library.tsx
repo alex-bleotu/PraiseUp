@@ -16,16 +16,12 @@ import Loading from "./loading";
 const Library = ({ navigation }: { navigation: any }) => {
     const { theme } = useContext(ThemeContext);
     const { refresh } = useContext(RefreshContext);
-    const {
-        loading,
-        getRandomSongs,
-        getFavoriteSongsAlbum,
-        getFavoriteAlbums,
-    } = useContext(DataContext);
+    const { loading, getFavoriteSongsAlbum, getFavoriteAlbums } =
+        useContext(DataContext);
 
     const [sortBy, setSortBy] = useState<"date" | "name">("date");
     const [display, setDisplay] = useState<"grid" | "list">("grid");
-    const [albums, setAlbums] = useState<AlbumType[] | null>(null);
+    const [albums, setAlbums] = useState<any>(null);
 
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
     const [currentData, setCurrentData] = useState<SongType | AlbumType | null>(
@@ -34,7 +30,7 @@ const Library = ({ navigation }: { navigation: any }) => {
 
     useEffect(() => {
         if (!loading) {
-            const load = async () => {
+            const loadAndSort = async () => {
                 const favoriteAlbum = await getFavoriteSongsAlbum();
                 const albums = await getFavoriteAlbums();
 
@@ -45,51 +41,42 @@ const Library = ({ navigation }: { navigation: any }) => {
                     favorite: false,
                 };
 
-                if (favoriteAlbum.songs.length > 0)
-                    setAlbums([favoriteAlbum, ...albums, buttonAlbum]);
-                else setAlbums([...albums, buttonAlbum]);
+                let combinedAlbums =
+                    favoriteAlbum.songs.length > 0
+                        ? [favoriteAlbum, ...albums, buttonAlbum]
+                        : [...albums, buttonAlbum];
 
-                setSortBy("date");
+                combinedAlbums = sortAlbums(combinedAlbums);
+
+                setAlbums(combinedAlbums);
             };
 
-            load();
+            loadAndSort();
         }
-    }, [loading, refresh]);
+    }, [loading, refresh, sortBy]);
+
+    const sortAlbums = (albumsList: AlbumType[]) => {
+        const favorite = albumsList.find((album) => album.id === "F");
+        const button = albumsList.find((album) => album.id === "B");
+        const rest = albumsList.filter(
+            (album) => album.id !== "F" && album.id !== "B"
+        );
+
+        if (sortBy === "date") {
+            rest.sort(
+                (a, b) =>
+                    new Date(b.date).getTime() - new Date(a.date).getTime()
+            );
+        } else rest.sort((a, b) => a.title.localeCompare(b.title));
+
+        return favorite ? [favorite, ...rest, button] : [...rest, button];
+    };
 
     useEffect(() => {
-        const sort = async () => {
-            if (albums) {
-                const favorite = albums.find((album) => album.id === "F");
-
-                if (favorite) {
-                    const rest = albums.filter((album) => album.id !== "F");
-
-                    if (sortBy === "date") {
-                        // rest.sort((a, b) => {
-                        //     return b.date - a.date;
-                        // });
-                    } else
-                        rest.sort((a, b) => {
-                            return a.title.localeCompare(b.title);
-                        });
-
-                    setAlbums([favorite, ...rest]);
-                } else {
-                    if (sortBy === "date") {
-                        // albums.sort((a, b) => {
-                        //     return b.date - a.date;
-                        // });
-                    } else
-                        albums.sort((a, b) => {
-                            return a.title.localeCompare(b.title);
-                        });
-
-                    setAlbums(albums);
-                }
-            }
-        };
-
-        sort();
+        if (albums) {
+            const sortedAlbums = sortAlbums(albums);
+            setAlbums(sortedAlbums);
+        }
     }, [sortBy]);
 
     return (

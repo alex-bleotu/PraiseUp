@@ -35,18 +35,18 @@ export default function App() {
             <NavigationContainer linking={linking}>
                 <LanguageProvider>
                     <PaperProvider theme={darkTheme}>
-                        <ThemeProvider>
-                            <DataProvider>
-                                <HistoryProvider>
-                                    <RecentProvider>
-                                        <RefreshProvider>
+                        <RefreshProvider>
+                            <ThemeProvider>
+                                <DataProvider>
+                                    <HistoryProvider>
+                                        <RecentProvider>
                                             <Tabs />
                                             <StatusBar style="auto" />
-                                        </RefreshProvider>
-                                    </RecentProvider>
-                                </HistoryProvider>
-                            </DataProvider>
-                        </ThemeProvider>
+                                        </RecentProvider>
+                                    </HistoryProvider>
+                                </DataProvider>
+                            </ThemeProvider>
+                        </RefreshProvider>
                     </PaperProvider>
                 </LanguageProvider>
             </NavigationContainer>
