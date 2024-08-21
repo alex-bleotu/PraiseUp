@@ -16,13 +16,13 @@ const Tab = createBottomTabNavigator();
 const Tabs = () => {
     const { theme } = useContext(ThemeContext);
 
-    const { height, width } = Dimensions.get("window");
+    const { height: windowHeight } = Dimensions.get("window");
+    const { height: screenHeight } = Dimensions.get("screen");
 
     // TODO: Fix tabs height
     let tabsHeight;
-    console.log(height / width);
-    if (height / width > 1.9) tabsHeight = Dimensions.get("screen").height - 15;
-    else tabsHeight = height + 33;
+    if (screenHeight - windowHeight > 100) tabsHeight = screenHeight - 15;
+    else tabsHeight = screenHeight - 48;
 
     const getIconName = (
         routeName: string
