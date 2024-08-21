@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
 import { AlbumType } from "../../context/data";
 import { HistoryContext } from "../../context/history";
+import { LanguageContext } from "../../context/language";
 import { RecentContext } from "../../context/recent";
 import { ThemeContext } from "../../context/theme";
 import AnimatedTouchable from "../wrapers/animatedTouchable";
@@ -32,6 +33,7 @@ const AlbumCover = ({
     const { addToHistory } = useContext(HistoryContext);
     const { addToRecent } = useContext(RecentContext);
     const { theme } = useContext(ThemeContext);
+    const { language } = useContext(LanguageContext);
 
     const width: any = fullWidth
         ? "100%"
@@ -63,10 +65,17 @@ const AlbumCover = ({
                 <View
                     style={[
                         styles.textContainer,
-                        { width: !fullWidth ? width - 80 : "auto" },
+                        {
+                            width: !fullWidth ? width - 80 : "auto",
+                            marginTop: vertical ? 5 : 0,
+                        },
                     ]}>
                     <Text bold size={14} center={vertical}>
-                        {album.title}
+                        {album.id !== "F"
+                            ? album.title
+                            : language === "en"
+                            ? album.title
+                            : "Cântece favorite"}
                     </Text>
                 </View>
             </View>
@@ -94,19 +103,17 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        padding: 5,
-        paddingBottom: 8,
+        padding: 8,
     },
     textContainer: {
         display: "flex",
         flexDirection: "column",
-        marginHorizontal: 8,
         justifyContent: "center",
     },
     imageVertical: {
         width: 90,
         height: 90,
-        borderRadius: 15,
+        borderRadius: 12,
     },
-    image: { width: 70, height: 70, borderRadius: 15 },
+    image: { width: 70, height: 70, borderRadius: 15, marginRight: 8 },
 });

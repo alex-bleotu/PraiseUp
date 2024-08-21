@@ -63,7 +63,11 @@ const SongCover = ({
                     style={vertical ? styles.imageVertical : styles.image}
                 />
                 {
-                    <View style={styles.textContainer}>
+                    <View
+                        style={[
+                            styles.textContainer,
+                            { marginTop: vertical ? 5 : 0 },
+                        ]}>
                         <Text bold size={14} center={vertical}>
                             {song.title}
                         </Text>
@@ -99,19 +103,17 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        padding: 5,
-        paddingBottom: 8,
+        padding: 8,
     },
     textContainer: {
         display: "flex",
         flexDirection: "column",
-        marginHorizontal: 8,
         justifyContent: "center",
     },
     imageVertical: {
         width: 90,
         height: 90,
-        borderRadius: 15,
+        borderRadius: 12,
     },
-    image: { width: 70, height: 70, borderRadius: 15 },
+    image: { width: 70, height: 70, borderRadius: 15, marginRight: 8 },
 });

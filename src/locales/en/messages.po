@@ -21,7 +21,7 @@ msgstr "Add to playlist"
 msgid "Check out this"
 msgstr "Check out this"
 
-#: src/pages/song.tsx:127
+#: src/pages/song.tsx:133
 msgid "Chords"
 msgstr "Chords"
 
@@ -56,6 +56,10 @@ msgstr "No song or album matches your search"
 #: src/pages/discover.tsx:85
 msgid "Recent Searches"
 msgstr "Recent Searches"
+
+#: src/pages/discover.tsx:73
+msgid "Search"
+msgstr "Search"
 
 #: src/components/wrapers/dataBottomSheet.tsx:120
 msgid "Share"

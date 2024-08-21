@@ -16,9 +16,7 @@ export const ThemeProvider = ({
             const themeLoaded = await AsyncStorage.getItem("theme");
 
             if (themeLoaded === "dark") setTheme(darkTheme);
-            else {
-                setTheme(lightTheme);
-            }
+            else setTheme(lightTheme);
         };
 
         load();

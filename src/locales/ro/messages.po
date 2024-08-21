@@ -21,7 +21,7 @@ msgstr "Adaugă in playlist"
 msgid "Check out this"
 msgstr "Verifică asta"
 
-#: src/pages/song.tsx:127
+#: src/pages/song.tsx:133
 msgid "Chords"
 msgstr "Acorduri"
 
@@ -56,6 +56,10 @@ msgstr "Nicio melodie sau album nu se potrivește căutării dvs"
 #: src/pages/discover.tsx:85
 msgid "Recent Searches"
 msgstr "Căutări recente"
+
+#: src/pages/discover.tsx:73
+msgid "Search"
+msgstr "Caută"
 
 #: src/components/wrapers/dataBottomSheet.tsx:120
 msgid "Share"

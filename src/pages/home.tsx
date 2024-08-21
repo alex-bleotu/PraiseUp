@@ -56,129 +56,129 @@ const Home = ({ navigation }: { navigation: any }) => {
         }
     }, [loading, refresh]);
 
+    useEffect(() => {
+        if (currentData) setBottomSheetOpen(true);
+    }, [currentData]);
+
     if (loading || randomSongs === null || recent === null) return <Loading />;
 
     return (
         <Background noPadding>
-            <View style={styles.recent}>
-                {recent.map((data: SongType | AlbumType, index: number) => {
-                    if (index % 2 !== 0) return null;
+            <ScrollView bottom={15} showScroll={false}>
+                <View style={styles.recent}>
+                    {recent.map((data: SongType | AlbumType, index: number) => {
+                        if (index % 2 !== 0) return null;
 
-                    const data2 = recent[index + 1];
+                        const data2 = recent[index + 1];
 
-                    return (
-                        <View key={index} style={styles.row}>
-                            <View>
-                                {isSong(data) ? (
-                                    <SongCover
-                                        song={data}
-                                        navigation={navigation}
-                                        onLongPress={() => {
-                                            setCurrentData(data);
-                                            setBottomSheetOpen(true);
-                                        }}
-                                    />
-                                ) : (
-                                    <AlbumCover
-                                        album={data}
-                                        navigation={navigation}
-                                        onLongPress={() => {
-                                            setCurrentData(data);
-                                            setBottomSheetOpen(true);
-                                        }}
-                                    />
-                                )}
-                            </View>
-                            <View style={{ width: 10 }} />
-                            {data2 && (
-                                <View key={index + 1}>
-                                    {isSong(data2) ? (
+                        return (
+                            <View key={index} style={styles.row}>
+                                <View>
+                                    {isSong(data) ? (
                                         <SongCover
-                                            song={data2}
+                                            song={data}
                                             navigation={navigation}
                                             onLongPress={() => {
-                                                setCurrentData(data2);
-                                                setBottomSheetOpen(true);
+                                                setCurrentData(data);
                                             }}
                                         />
                                     ) : (
                                         <AlbumCover
-                                            album={data2}
+                                            album={data}
                                             navigation={navigation}
                                             onLongPress={() => {
-                                                setCurrentData(data2);
-                                                setBottomSheetOpen(true);
+                                                setCurrentData(data);
                                             }}
                                         />
                                     )}
                                 </View>
-                            )}
-                        </View>
-                    );
-                })}
-            </View>
+                                <View style={{ width: 10 }} />
+                                {data2 && (
+                                    <View key={index + 1}>
+                                        {isSong(data2) ? (
+                                            <SongCover
+                                                song={data2}
+                                                navigation={navigation}
+                                                onLongPress={() => {
+                                                    setCurrentData(data2);
+                                                }}
+                                            />
+                                        ) : (
+                                            <AlbumCover
+                                                album={data2}
+                                                navigation={navigation}
+                                                onLongPress={() => {
+                                                    setCurrentData(data2);
+                                                }}
+                                            />
+                                        )}
+                                    </View>
+                                )}
+                            </View>
+                        );
+                    })}
+                </View>
 
-            {randomSongs.length !== 0 && (
-                <View style={styles.container}>
-                    <Text size={20} bold style={{ marginLeft: 20 }}>
-                        {t`Suggested for you`}
-                    </Text>
-                    <View style={styles.songsContainer}>
-                        <ScrollView
-                            horizontal
-                            showScroll={false}
-                            top={10}
-                            bottom={10}>
-                            {randomSongs.map((song: SongType) => (
-                                <View
-                                    key={song.id}
-                                    style={{ marginHorizontal: 7.5 }}>
-                                    <SongCover
-                                        song={song}
-                                        navigation={navigation}
-                                        artist={false}
-                                        vertical
-                                        onLongPress={() => {
-                                            setCurrentData(song);
-                                            setBottomSheetOpen(true);
-                                        }}
-                                    />
-                                </View>
-                            ))}
-                        </ScrollView>
+                {randomSongs.length !== 0 && (
+                    <View style={styles.container}>
+                        <Text size={20} bold style={{ marginLeft: 20 }}>
+                            {t`Suggested for you`}
+                        </Text>
+                        <View style={styles.songsContainer}>
+                            <ScrollView
+                                horizontal
+                                showScroll={false}
+                                top={10}
+                                bottom={10}>
+                                {randomSongs.map((song: SongType) => (
+                                    <View
+                                        key={song.id}
+                                        style={{ marginHorizontal: 7.5 }}>
+                                        <SongCover
+                                            song={song}
+                                            navigation={navigation}
+                                            artist={false}
+                                            vertical
+                                            onLongPress={() => {
+                                                setCurrentData(song);
+                                            }}
+                                        />
+                                    </View>
+                                ))}
+                            </ScrollView>
+                        </View>
                     </View>
-                </View>
-            )}
-            {favoriteAlbums.length !== 0 && (
-                <View style={styles.container}>
-                    <Text size={20} bold style={{ marginLeft: 20 }}>
-                        {t`Favorite albums`}
-                    </Text>
-                    <View style={styles.songsContainer}>
-                        <ScrollView
-                            horizontal
-                            showScroll={false}
-                            top={10}
-                            bottom={10}>
-                            {favoriteAlbums.map((album: AlbumType) => (
-                                <View
-                                    key={album.id}
-                                    style={{ marginHorizontal: 7.5 }}>
-                                    <AlbumCover
-                                        album={album}
-                                        navigation={navigation}
-                                        vertical
-                                        onLongPress={() => {
-                                            setCurrentData(album);
-                                            setBottomSheetOpen(true);
-                                        }}
-                                    />
-                                </View>
-                            ))}
-                        </ScrollView>
+                )}
+                {favoriteAlbums.length !== 0 && (
+                    <View style={styles.container}>
+                        <Text size={20} bold style={{ marginLeft: 20 }}>
+                            {t`Favorite albums`}
+                        </Text>
+                        <View style={styles.songsContainer}>
+                            <ScrollView
+                                horizontal
+                                showScroll={false}
+                                top={10}
+                                bottom={10}>
+                                {favoriteAlbums.map((album: AlbumType) => (
+                                    <View
+                                        key={album.id}
+                                        style={{ marginHorizontal: 7.5 }}>
+                                        <AlbumCover
+                                            album={album}
+                                            navigation={navigation}
+                                            vertical
+                                            onLongPress={() => {
+                                                setCurrentData(album);
+                                            }}
+                                        />
+                                    </View>
+                                ))}
+                            </ScrollView>
+                        </View>
                     </View>
-                </View>
-            )}
+                )}
+            </ScrollView>
             <DataBottomSheet
                 data={currentData}
                 isOpen={isBottomSheetOpen}

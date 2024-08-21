@@ -4,11 +4,12 @@ import {
 } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useState } from "react";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import Button from "../components/wrapers/button";
 import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
+import Text from "../components/wrapers/text";
 import { DataContext, SongType } from "../context/data";
 import { ThemeContext } from "../context/theme";
 import Loading from "./loading";
@@ -18,7 +19,7 @@ interface SongProps {
     navigation: any;
 }
 
-const renderLyrics = (lyrics: string, showChords: boolean) => {
+const renderLyrics = (lyrics: string, showChords: boolean, theme: any) => {
     const lines = lyrics.split("\n");
 
     return lines.map((line, index) => {
@@ -44,7 +45,9 @@ const renderLyrics = (lyrics: string, showChords: boolean) => {
 
             return (
                 <View key={index} style={styles.line}>
-                    <Text style={styles.chordsLine}>{chordsLine}</Text>
+                    <Text style={styles.chordsLine} color={theme.colors.danger}>
+                        {chordsLine}
+                    </Text>
                     <Text style={styles.lyricsLine}>{lyricsLine}</Text>
                 </View>
             );
@@ -146,12 +149,12 @@ const Song = ({ route, navigation }: SongProps) => {
                 )}
                 {value === "lyrics" && song.lyrics && (
                     <ScrollView style={styles.lyrics} bottom={10} top={10}>
-                        {renderLyrics(song.lyrics, false)}
+                        {renderLyrics(song.lyrics, false, theme)}
                     </ScrollView>
                 )}
                 {value === "chords" && song.lyrics && (
                     <ScrollView style={styles.lyrics} bottom={7} top={10}>
-                        {renderLyrics(song.lyrics, true)}
+                        {renderLyrics(song.lyrics, true, theme)}
                     </ScrollView>
                 )}
             </View>
@@ -198,7 +201,6 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         fontSize: 15,
         lineHeight: 24,
-        color: "red",
         fontWeight: "bold",
         marginBottom: -5,
         marginTop: -3,

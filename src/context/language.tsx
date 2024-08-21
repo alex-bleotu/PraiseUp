@@ -1,7 +1,7 @@
-import React, { createContext, ReactNode, useEffect, useState } from "react";
-
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { createContext, ReactNode, useEffect, useState } from "react";
 import { messages as enMessages } from "../../src/locales/en/messages";
 import { messages as roMessages } from "../../src/locales/ro/messages";
 
@@ -9,8 +9,6 @@ i18n.load({
     en: enMessages,
     ro: roMessages,
 });
-
-i18n.activate("ro");
 
 export const LanguageContext = createContext<any>(null);
 
@@ -20,22 +18,37 @@ export const LanguageProvider = ({
     children: ReactNode | ReactNode[];
 }) => {
     const [language, setLanguage] = useState<"en" | "ro">("ro");
+    const [key, setKey] = useState(0);
+
+    useEffect(() => {
+        const loadLanguage = async () => {
+            const storedLanguage = await AsyncStorage.getItem("language");
+            if (storedLanguage === "en" || storedLanguage === "ro") {
+                setLanguage(storedLanguage);
+            } else {
+                await AsyncStorage.setItem("language", "en");
+                setLanguage("en");
+            }
+        };
+
+        loadLanguage();
+    }, []);
 
     useEffect(() => {
         i18n.activate(language);
+        AsyncStorage.setItem("language", language);
+        setKey((prevKey) => prevKey + 1);
     }, [language]);
 
     const changeLanguage = () => {
-        setLanguage("ro");
+        setLanguage((prevLang) => (prevLang === "en" ? "ro" : "en"));
     };
 
     return (
-        <LanguageContext.Provider
-            value={{
-                language,
-                changeLanguage,
-            }}>
-            <I18nProvider i18n={i18n}>{children}</I18nProvider>
+        <LanguageContext.Provider value={{ language, changeLanguage }}>
+            <I18nProvider i18n={i18n} key={key}>
+                {children}
+            </I18nProvider>
         </LanguageContext.Provider>
     );
 };

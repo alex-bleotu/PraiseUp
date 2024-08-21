@@ -4,16 +4,21 @@ import React, { useContext, useMemo } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import AnimatedTouchable from "../components/wrapers/animatedTouchable";
 import { ThemeContext } from "../context/theme";
-import User from "../pages/user";
 import DiscoverStack from "./discoverStack";
 import HomeStack from "./homeStack";
+import UserStack from "./userStack";
 
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
     const { theme } = useContext(ThemeContext);
 
-    const height = Dimensions.get("screen").height - 15;
+    const { height, width } = Dimensions.get("window");
+
+    // TODO: Fix tabs height
+    let tabsHeight;
+    if (height / width > 2) tabsHeight = Dimensions.get("screen").height - 15;
+    else tabsHeight = height + 33;
 
     const getIconName = (
         routeName: string
@@ -31,7 +36,7 @@ const Tabs = () => {
     };
 
     return (
-        <View style={{ height }}>
+        <View style={{ height: tabsHeight }}>
             <Tab.Navigator
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ focused, color, size }) => {
@@ -77,7 +82,7 @@ const Tabs = () => {
                 })}>
                 <Tab.Screen name="Home" component={HomeStack} />
                 <Tab.Screen name="Discover" component={DiscoverStack} />
-                <Tab.Screen name="User" component={User} />
+                <Tab.Screen name="User" component={UserStack} />
             </Tab.Navigator>
         </View>
     );

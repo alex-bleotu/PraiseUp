@@ -5,12 +5,18 @@ import StackPage from "../components/wrapers/stackPage";
 import { LanguageContext } from "../context/language";
 import { ThemeContext } from "../context/theme";
 
-const User = () => {
+const User = ({ navigation }: { navigation: any }) => {
     const { theme, changeTheme } = useContext(ThemeContext);
     const { language, changeLanguage } = useContext(LanguageContext);
 
     return (
-        <StackPage title="User" back={false}>
+        <StackPage
+            title="User"
+            back={false}
+            icon={"cog"}
+            action={() => {
+                navigation.navigate("SettingsPage");
+            }}>
             <Button
                 mode="contained"
                 text="Theme"

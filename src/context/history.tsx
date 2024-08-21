@@ -35,7 +35,7 @@ export const HistoryProvider = ({
 
     useEffect(() => {
         const saveHistory = async () => {
-            if (history === null || history.length === 0) return;
+            if (history === null) return;
 
             await AsyncStorage.setItem("history", JSON.stringify(history));
         };

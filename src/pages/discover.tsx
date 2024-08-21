@@ -70,7 +70,7 @@ const Discover = ({ navigation }: { navigation: any }) => {
                     placeholderTextColor={theme.colors.text}
                     iconColor={theme.colors.text}
                     inputStyle={{ color: theme.colors.text }}
-                    placeholder="Search"
+                    placeholder={t`Search`}
                     onChangeText={(query) => setSearchQuery(query)}
                     value={searchQuery}
                 />

@@ -5,6 +5,7 @@ import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
 import { AlbumType, DataContext, SongType } from "../context/data";
+import { LanguageContext } from "../context/language";
 import { RefreshContext } from "../context/refresh";
 import Loading from "./loading";
 
@@ -18,11 +19,14 @@ const Album = ({ route, navigation }: AlbumProps) => {
     const { refresh } = useContext(RefreshContext);
     const { getSongById, getFavoriteSongsAlbum, getAlbumById } =
         useContext(DataContext);
+    const { language } = useContext(LanguageContext);
 
-    const [songs, setSongs] = useState<SongType[]>([]);
+    const [songs, setSongs] = useState<SongType[] | null>(null);
 
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
-    const [currentData, setCurrentData] = useState<SongType | null>(null);
+    const [currentData, setCurrentData] = useState<AlbumType | SongType | null>(
+        null
+    );
     const [album, setAlbum] = useState<AlbumType | null>(null);
 
     useEffect(() => {
@@ -47,10 +51,26 @@ const Album = ({ route, navigation }: AlbumProps) => {
         load();
     }, [refresh]);
 
-    if (album === null) return <Loading />;
+    useEffect(() => {
+        if (currentData) setBottomSheetOpen(true);
+    }, [currentData]);
+
+    if (album === null || songs === null) return <Loading />;
 
     return (
-        <StackPage navigation={navigation} title={album.title}>
+        <StackPage
+            navigation={navigation}
+            title={
+                album.id !== "F"
+                    ? album.title
+                    : language === "en"
+                    ? album.title
+                    : "Cântece favorite"
+            }
+            icon={"dots-vertical"}
+            action={() => {
+                setCurrentData(album);
+            }}>
             <View style={styles.container}>
                 <ScrollView bottom={10}>
                     {songs.map((song: SongType, index: any) => {
@@ -66,11 +86,9 @@ const Album = ({ route, navigation }: AlbumProps) => {
                                     icon="dots-vertical"
                                     action={() => {
                                         setCurrentData(song);
-                                        setBottomSheetOpen(true);
                                     }}
                                     onLongPress={() => {
                                         setCurrentData(song);
-                                        setBottomSheetOpen(true);
                                     }}
                                 />
                             </View>

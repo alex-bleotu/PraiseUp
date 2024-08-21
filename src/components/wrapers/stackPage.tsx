@@ -50,7 +50,8 @@ const StackPage = ({
                     style={[
                         styles.textContainer,
                         {
-                            marginRight: icon || !back ? 0 : iconSize,
+                            marginRight: icon || !back ? 0 : iconSize + 15,
+                            marginLeft: !back ? iconSize + 5 : 0,
                         },
                     ]}>
                     <Text center size={24}>
