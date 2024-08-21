@@ -1,3 +1,4 @@
+import { t } from "@lingui/macro";
 import React, { useContext } from "react";
 import { StyleSheet } from "react-native";
 import Button from "../components/wrapers/button";
@@ -10,7 +11,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
     const { language, changeLanguage } = useContext(LanguageContext);
 
     return (
-        <StackPage title="Settings" navigation={navigation}>
+        <StackPage title={t`Settings`} navigation={navigation}>
             <Button
                 mode="contained"
                 text="Theme"

@@ -17,6 +17,10 @@ msgstr ""
 msgid "Add to playlist"
 msgstr "Adaugă in playlist"
 
+#: src/pages/library.tsx:120
+msgid "Alphabetical"
+msgstr "Alfabetic"
+
 #: src/components/wrapers/dataBottomSheet.tsx:107
 msgid "Check out this"
 msgstr "Verifică asta"
@@ -29,11 +33,15 @@ msgstr "Acorduri"
 msgid "Clear recent searches"
 msgstr "Șterge căutările recente"
 
+#: src/pages/library.tsx:248
+msgid "Create album"
+msgstr "Creează album"
+
 #: src/components/wrapers/dataBottomSheet.tsx:78
 msgid "Favorite"
 msgstr "Favorite"
 
-#: src/pages/home.tsx:155
+#: src/pages/home.tsx:156
 msgid "Favorite albums"
 msgstr "Albume favorite"
 
@@ -53,6 +61,10 @@ msgstr "Niciun rezultat de căutare"
 msgid "No song or album matches your search"
 msgstr "Nicio melodie sau album nu se potrivește căutării dvs"
 
+#: src/pages/library.tsx:119
+msgid "Recent"
+msgstr "Recent"
+
 #: src/pages/discover.tsx:85
 msgid "Recent Searches"
 msgstr "Căutări recente"
@@ -60,6 +72,10 @@ msgstr "Căutări recente"
 #: src/pages/discover.tsx:73
 msgid "Search"
 msgstr "Caută"
+
+#: src/pages/settings.tsx:14
+msgid "Settings"
+msgstr "Setări"
 
 #: src/components/wrapers/dataBottomSheet.tsx:120
 msgid "Share"
@@ -73,6 +89,6 @@ msgstr "Începeți să căutați melodiile preferate"
 msgid "Suggested for you"
 msgstr "Recomandat pentru tine"
 
-#: src/pages/user.tsx:15
+#: src/pages/library.tsx:97
 msgid "Your library"
 msgstr "Biblioteca ta"

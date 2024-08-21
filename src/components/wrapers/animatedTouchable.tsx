@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
-import { Animated, ViewStyle } from "react-native";
+import { Animated } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ThemeContext } from "../../context/theme";
 
 interface AnimatedTouchableProps {
     children: React.ReactNode;
-    style?: ViewStyle;
+    style?: any;
     onPress?: () => void;
     onLongPress?: () => void;
 }

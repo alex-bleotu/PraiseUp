@@ -38,9 +38,16 @@ const Library = ({ navigation }: { navigation: any }) => {
                 const favoriteAlbum = await getFavoriteSongsAlbum();
                 const albums = await getFavoriteAlbums();
 
+                const buttonAlbum = {
+                    id: "B",
+                    title: "",
+                    songs: [],
+                    favorite: false,
+                };
+
                 if (favoriteAlbum.songs.length > 0)
-                    setAlbums([favoriteAlbum, ...albums]);
-                else setAlbums(albums);
+                    setAlbums([favoriteAlbum, ...albums, buttonAlbum]);
+                else setAlbums([...albums, buttonAlbum]);
 
                 setSortBy("date");
             };
@@ -48,10 +55,6 @@ const Library = ({ navigation }: { navigation: any }) => {
             load();
         }
     }, [loading, refresh]);
-
-    useEffect(() => {
-        if (currentData) setBottomSheetOpen(true);
-    }, [currentData]);
 
     useEffect(() => {
         const sort = async () => {
@@ -97,7 +100,7 @@ const Library = ({ navigation }: { navigation: any }) => {
             action={() => {
                 navigation.navigate("SettingsPage");
             }}>
-            <View>
+            <View style={styles.container}>
                 <View style={styles.top}>
                     <AnimatedTouchable
                         onPress={() => {
@@ -141,80 +144,145 @@ const Library = ({ navigation }: { navigation: any }) => {
                 </View>
                 {albums !== null ? (
                     display === "grid" ? (
-                        <View
-                            style={[
-                                styles.container,
-                                {
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                },
-                            ]}>
-                            <View style={{}}>
-                                <SV
-                                    contentContainerStyle={styles.grid}
-                                    showsVerticalScrollIndicator={false}>
-                                    {albums.map(
-                                        (data: AlbumType, index: number) => {
-                                            return (
-                                                <View
-                                                    key={data.id}
-                                                    style={[
-                                                        styles.item,
-                                                        {
-                                                            marginHorizontal:
-                                                                (index - 1) %
-                                                                    3 ==
-                                                                0
-                                                                    ? 8
-                                                                    : 0,
-                                                        },
-                                                    ]}>
+                        <View style={styles.scrollContainer}>
+                            <SV
+                                contentContainerStyle={styles.grid}
+                                showsVerticalScrollIndicator={false}>
+                                {albums.map(
+                                    (data: AlbumType, index: number) => {
+                                        return (
+                                            <View
+                                                key={data.id}
+                                                style={[
+                                                    styles.item,
+                                                    {
+                                                        marginHorizontal:
+                                                            (index - 1) % 3 == 0
+                                                                ? 15
+                                                                : 0,
+                                                    },
+                                                ]}>
+                                                {data.id === "B" ? (
+                                                    <AnimatedTouchable
+                                                        onPress={() => {}}
+                                                        style={[
+                                                            styles.addGrid,
+                                                            {
+                                                                backgroundColor:
+                                                                    theme.colors
+                                                                        .paper,
+                                                            },
+                                                        ]}>
+                                                        <FAIcons
+                                                            name="plus"
+                                                            size={30}
+                                                            color={
+                                                                theme.colors
+                                                                    .text
+                                                            }
+                                                        />
+                                                    </AnimatedTouchable>
+                                                ) : (
                                                     <AlbumCover
                                                         key={data.id}
                                                         album={data}
                                                         navigation={navigation}
                                                         vertical
                                                         onLongPress={() => {
+                                                            if (data.id === "F")
+                                                                return;
+
                                                             setCurrentData(
                                                                 data
                                                             );
+                                                            setBottomSheetOpen(
+                                                                true
+                                                            );
                                                         }}
                                                     />
-                                                </View>
-                                            );
-                                        }
-                                    )}
-                                </SV>
-                            </View>
+                                                )}
+                                            </View>
+                                        );
+                                    }
+                                )}
+                            </SV>
                         </View>
                     ) : (
                         <View style={styles.container}>
-                            <ScrollView bottom={20} showScroll={false}>
+                            <ScrollView bottom={25} showScroll={false}>
                                 {albums.map((data: AlbumType) => {
                                     return (
                                         <View
                                             key={data.id}
                                             style={{ marginBottom: 15 }}>
-                                            <AlbumCover
-                                                key={data.id}
-                                                album={data}
-                                                navigation={navigation}
-                                                fullWidth
-                                                icon={
-                                                    data.id === "F"
-                                                        ? "pin"
-                                                        : "dots-vertical"
-                                                }
-                                                onLongPress={() => {
-                                                    if (data.id !== "F")
-                                                        setCurrentData(data);
-                                                }}
-                                                action={() => {
-                                                    if (data.id !== "F")
-                                                        setCurrentData(data);
-                                                }}
-                                            />
+                                            {data.id === "B" ? (
+                                                <AnimatedTouchable
+                                                    onPress={() => {}}>
+                                                    <View
+                                                        style={[
+                                                            styles.addList,
+                                                            {
+                                                                backgroundColor:
+                                                                    theme.colors
+                                                                        .paper,
+                                                            },
+                                                        ]}>
+                                                        <View
+                                                            style={
+                                                                styles.textContainer
+                                                            }>
+                                                            <FAIcons
+                                                                name="plus"
+                                                                size={30}
+                                                                color={
+                                                                    theme.colors
+                                                                        .text
+                                                                }
+                                                            />
+                                                            <Text
+                                                                size={14}
+                                                                bold
+                                                                style={{
+                                                                    marginLeft: 28,
+                                                                }}>
+                                                                {t`Create album`}
+                                                            </Text>
+                                                        </View>
+                                                    </View>
+                                                </AnimatedTouchable>
+                                            ) : (
+                                                <AlbumCover
+                                                    key={data.id}
+                                                    album={data}
+                                                    navigation={navigation}
+                                                    fullWidth
+                                                    icon={
+                                                        data.id === "F"
+                                                            ? "pin"
+                                                            : "dots-vertical"
+                                                    }
+                                                    onLongPress={() => {
+                                                        if (data.id !== "F") {
+                                                            setCurrentData(
+                                                                data
+                                                            );
+                                                            setBottomSheetOpen(
+                                                                true
+                                                            );
+                                                        }
+                                                    }}
+                                                    action={() => {
+                                                        if (data.id !== "F") {
+                                                            setCurrentData(
+                                                                data
+                                                            );
+                                                            setBottomSheetOpen(
+                                                                true
+                                                            );
+                                                        }
+                                                    }}
+                                                />
+                                            )}
                                         </View>
                                     );
                                 })}
@@ -258,22 +326,46 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginHorizontal: 10,
     },
     container: {
-        display: "flex",
-        flexDirection: "row",
-        marginHorizontal: 20,
-        marginBottom: 70,
+        flex: 1,
+        marginHorizontal: 10,
+    },
+    scrollContainer: {
+        flex: 1,
+        width: "100%",
     },
     grid: {
-        flexWrap: "wrap",
         flexDirection: "row",
-        width: "100%",
-        paddingBottom: 40,
+        flexWrap: "wrap",
         justifyContent: "flex-start",
+        marginHorizontal: 10,
     },
     item: {
         marginBottom: 15,
+        width: "30%",
+    },
+    addGrid: {
+        borderRadius: 15,
+        width: 94,
+        height: 125,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    addList: {
+        borderRadius: 15,
+        width: "100%",
+        height: 70,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        paddingLeft: 22,
+    },
+    textContainer: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: -3,
     },
 });

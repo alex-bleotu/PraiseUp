@@ -1,4 +1,7 @@
-import { FontAwesome6 } from "@expo/vector-icons";
+import {
+    FontAwesome6,
+    MaterialCommunityIcons as MCIcons,
+} from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React, { useContext, useMemo } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
@@ -28,8 +31,8 @@ const Tabs = () => {
                 return "house";
             case "Discover":
                 return "magnifying-glass";
-            case "User":
-                return "user-large";
+            case "Library":
+                return "bookshelf";
             default:
                 return "question";
         }
@@ -56,11 +59,19 @@ const Tabs = () => {
                                                 : "transparent",
                                         },
                                     ]}>
-                                    <FontAwesome6
-                                        name={iconName}
-                                        size={size}
-                                        color={color}
-                                    />
+                                    {iconName === "bookshelf" ? (
+                                        <MCIcons
+                                            name={iconName}
+                                            size={35}
+                                            color={color}
+                                        />
+                                    ) : (
+                                        <FontAwesome6
+                                            name={iconName}
+                                            size={size}
+                                            color={color}
+                                        />
+                                    )}
                                 </View>
                             </AnimatedTouchable>
                         );
@@ -82,7 +93,7 @@ const Tabs = () => {
                 })}>
                 <Tab.Screen name="Home" component={HomeStack} />
                 <Tab.Screen name="Discover" component={DiscoverStack} />
-                <Tab.Screen name="User" component={LibraryStack} />
+                <Tab.Screen name="Library" component={LibraryStack} />
             </Tab.Navigator>
         </View>
     );

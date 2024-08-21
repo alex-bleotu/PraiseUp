@@ -56,10 +56,6 @@ const Home = ({ navigation }: { navigation: any }) => {
         }
     }, [loading, refresh]);
 
-    useEffect(() => {
-        if (currentData) setBottomSheetOpen(true);
-    }, [currentData]);
-
     if (loading || randomSongs === null || recent === null) return <Loading />;
 
     return (
@@ -80,6 +76,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                                             navigation={navigation}
                                             onLongPress={() => {
                                                 setCurrentData(data);
+                                                setBottomSheetOpen(true);
                                             }}
                                         />
                                     ) : (
@@ -88,6 +85,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                                             navigation={navigation}
                                             onLongPress={() => {
                                                 setCurrentData(data);
+                                                setBottomSheetOpen(true);
                                             }}
                                         />
                                     )}
@@ -101,6 +99,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                                                 navigation={navigation}
                                                 onLongPress={() => {
                                                     setCurrentData(data2);
+                                                    setBottomSheetOpen(true);
                                                 }}
                                             />
                                         ) : (
@@ -109,6 +108,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                                                 navigation={navigation}
                                                 onLongPress={() => {
                                                     setCurrentData(data2);
+                                                    setBottomSheetOpen(true);
                                                 }}
                                             />
                                         )}
@@ -141,6 +141,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                                             vertical
                                             onLongPress={() => {
                                                 setCurrentData(song);
+                                                setBottomSheetOpen(true);
                                             }}
                                         />
                                     </View>
@@ -170,6 +171,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                                             vertical
                                             onLongPress={() => {
                                                 setCurrentData(album);
+                                                setBottomSheetOpen(true);
                                             }}
                                         />
                                     </View>
