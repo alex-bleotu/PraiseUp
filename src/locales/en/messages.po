@@ -17,7 +17,8 @@ msgstr ""
 msgid "Add to playlist"
 msgstr "Add to playlist"
 
-#: src/pages/library.tsx:120
+#: src/pages/album.tsx:117
+#: src/pages/library.tsx:107
 msgid "Alphabetical"
 msgstr "Alphabetical"
 
@@ -33,9 +34,17 @@ msgstr "Chords"
 msgid "Clear recent searches"
 msgstr "Clear recent searches"
 
-#: src/pages/library.tsx:248
+#: src/pages/library.tsx:235
 msgid "Create album"
 msgstr "Create album"
+
+#: src/pages/settings.tsx:175
+msgid "Creator"
+msgstr "Creator"
+
+#: src/pages/settings.tsx:36
+msgid "Display settings"
+msgstr "Display settings"
 
 #: src/components/wrapers/dataBottomSheet.tsx:78
 msgid "Favorite"
@@ -44,6 +53,14 @@ msgstr "Favorite"
 #: src/pages/home.tsx:156
 msgid "Favorite albums"
 msgstr "Favorite albums"
+
+#: src/pages/settings.tsx:197
+msgid "Help"
+msgstr "Help"
+
+#: src/pages/settings.tsx:116
+msgid "Language"
+msgstr "Language"
 
 #: src/pages/song.tsx:110
 msgid "Lyrics"
@@ -61,7 +78,12 @@ msgstr "No search result"
 msgid "No song or album matches your search"
 msgstr "No song or album matches your search"
 
-#: src/pages/library.tsx:119
+#: src/pages/settings.tsx:162
+msgid "Other info"
+msgstr "Other info"
+
+#: src/pages/album.tsx:116
+#: src/pages/library.tsx:106
 msgid "Recent"
 msgstr "Recent"
 
@@ -69,11 +91,15 @@ msgstr "Recent"
 msgid "Recent Searches"
 msgstr "Recent Searches"
 
+#: src/pages/settings.tsx:186
+msgid "Report"
+msgstr "Report"
+
 #: src/pages/discover.tsx:73
 msgid "Search"
 msgstr "Search"
 
-#: src/pages/settings.tsx:14
+#: src/pages/settings.tsx:20
 msgid "Settings"
 msgstr "Settings"
 
@@ -89,6 +115,14 @@ msgstr "Start searching for your favorite songs"
 msgid "Suggested for you"
 msgstr "Suggested for you"
 
-#: src/pages/library.tsx:97
+#: src/pages/settings.tsx:45
+msgid "Theme"
+msgstr "Theme"
+
+#: src/pages/settings.tsx:166
+msgid "Version"
+msgstr "Version"
+
+#: src/pages/library.tsx:84
 msgid "Your library"
 msgstr "Your library"

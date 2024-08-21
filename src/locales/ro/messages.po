@@ -17,7 +17,8 @@ msgstr ""
 msgid "Add to playlist"
 msgstr "Adaugă in playlist"
 
-#: src/pages/library.tsx:120
+#: src/pages/album.tsx:117
+#: src/pages/library.tsx:107
 msgid "Alphabetical"
 msgstr "Alfabetic"
 
@@ -33,9 +34,17 @@ msgstr "Acorduri"
 msgid "Clear recent searches"
 msgstr "Șterge căutările recente"
 
-#: src/pages/library.tsx:248
+#: src/pages/library.tsx:235
 msgid "Create album"
 msgstr "Creează album"
+
+#: src/pages/settings.tsx:175
+msgid "Creator"
+msgstr "Creator"
+
+#: src/pages/settings.tsx:36
+msgid "Display settings"
+msgstr "Setări de afișare"
 
 #: src/components/wrapers/dataBottomSheet.tsx:78
 msgid "Favorite"
@@ -44,6 +53,14 @@ msgstr "Favorite"
 #: src/pages/home.tsx:156
 msgid "Favorite albums"
 msgstr "Albume favorite"
+
+#: src/pages/settings.tsx:197
+msgid "Help"
+msgstr "Ajutor"
+
+#: src/pages/settings.tsx:116
+msgid "Language"
+msgstr "Limbă"
 
 #: src/pages/song.tsx:110
 msgid "Lyrics"
@@ -61,7 +78,12 @@ msgstr "Niciun rezultat de căutare"
 msgid "No song or album matches your search"
 msgstr "Nicio melodie sau album nu se potrivește căutării dvs"
 
-#: src/pages/library.tsx:119
+#: src/pages/settings.tsx:162
+msgid "Other info"
+msgstr "Alte informații"
+
+#: src/pages/album.tsx:116
+#: src/pages/library.tsx:106
 msgid "Recent"
 msgstr "Recent"
 
@@ -69,11 +91,15 @@ msgstr "Recent"
 msgid "Recent Searches"
 msgstr "Căutări recente"
 
+#: src/pages/settings.tsx:186
+msgid "Report"
+msgstr "Raportează"
+
 #: src/pages/discover.tsx:73
 msgid "Search"
 msgstr "Caută"
 
-#: src/pages/settings.tsx:14
+#: src/pages/settings.tsx:20
 msgid "Settings"
 msgstr "Setări"
 
@@ -89,6 +115,14 @@ msgstr "Începeți să căutați melodiile preferate"
 msgid "Suggested for you"
 msgstr "Recomandat pentru tine"
 
-#: src/pages/library.tsx:97
+#: src/pages/settings.tsx:45
+msgid "Theme"
+msgstr "Temă"
+
+#: src/pages/settings.tsx:166
+msgid "Version"
+msgstr "Versiune"
+
+#: src/pages/library.tsx:84
 msgid "Your library"
 msgstr "Biblioteca ta"
