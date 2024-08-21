@@ -22,21 +22,16 @@ export const ThemeProvider = ({
         load();
     }, []);
 
-    const changeTheme = () => {
-        if (theme === lightTheme) {
-            setTheme(darkTheme);
-            AsyncStorage.setItem("theme", "dark");
-        } else {
-            setTheme(lightTheme);
-            AsyncStorage.setItem("theme", "light");
-        }
-    };
+    useEffect(() => {
+        if (theme === lightTheme) AsyncStorage.setItem("theme", "light");
+        else AsyncStorage.setItem("theme", "dark");
+    }, [theme]);
 
     return (
         <ThemeContext.Provider
             value={{
                 theme,
-                changeTheme,
+                setTheme,
             }}>
             {children}
         </ThemeContext.Provider>

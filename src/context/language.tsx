@@ -40,12 +40,8 @@ export const LanguageProvider = ({
         setKey((prevKey) => prevKey + 1);
     }, [language]);
 
-    const changeLanguage = () => {
-        setLanguage((prevLang) => (prevLang === "en" ? "ro" : "en"));
-    };
-
     return (
-        <LanguageContext.Provider value={{ language, changeLanguage }}>
+        <LanguageContext.Provider value={{ language, setLanguage }}>
             <I18nProvider i18n={i18n} key={key}>
                 {children}
             </I18nProvider>
