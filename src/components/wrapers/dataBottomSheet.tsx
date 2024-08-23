@@ -6,6 +6,7 @@ import { Image, Share, StyleSheet, TouchableOpacity, View } from "react-native";
 import { AlbumType, DataContext, isSong, SongType } from "../../context/data";
 import { RefreshContext } from "../../context/refresh";
 import { ThemeContext } from "../../context/theme";
+import { getImage } from "../../utils/images";
 import BottomSheetModal from "./bottomSheetModal";
 import Text from "./text";
 
@@ -40,14 +41,7 @@ const DataBottomSheet = ({
         <BottomSheetModal isOpen={isOpen} onClose={onClose}>
             <View>
                 <View style={styles.top}>
-                    <Image
-                        source={
-                            data.cover
-                                ? require("../../../assets/images/default.png")
-                                : require("../../../assets/images/default.png")
-                        }
-                        style={styles.image}
-                    />
+                    <Image source={getImage(data.cover)} style={styles.image} />
                     <View>
                         <Text bold size={18}>
                             {data.title}

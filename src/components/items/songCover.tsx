@@ -5,6 +5,7 @@ import { DataContext, SongType } from "../../context/data";
 import { HistoryContext } from "../../context/history";
 import { RecentContext } from "../../context/recent";
 import { ThemeContext } from "../../context/theme";
+import { getImage } from "../../utils/images";
 import AnimatedTouchable from "../wrapers/animatedTouchable";
 import Text from "../wrapers/text";
 
@@ -62,11 +63,7 @@ const SongCover = ({
                     },
                 ]}>
                 <Image
-                    source={
-                        song.cover
-                            ? require("../../../assets/images/default.png")
-                            : require("../../../assets/images/default.png")
-                    }
+                    source={getImage(song.cover)}
                     style={vertical ? styles.imageVertical : styles.image}
                 />
                 {
@@ -110,7 +107,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        padding: 8,
+        paddingBottom: 8,
     },
     textContainer: {
         display: "flex",
@@ -118,9 +115,10 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     imageVertical: {
-        width: 85,
-        height: 85,
-        borderRadius: 12,
+        width: 100,
+        height: 100,
+        borderRadius: 15,
+        borderEndEndRadius: 0,
     },
     image: { width: 70, height: 70, borderRadius: 15, marginRight: 8 },
 });

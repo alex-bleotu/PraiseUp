@@ -6,6 +6,7 @@ import { HistoryContext } from "../../context/history";
 import { LanguageContext } from "../../context/language";
 import { RecentContext } from "../../context/recent";
 import { ThemeContext } from "../../context/theme";
+import { getImage } from "../../utils/images";
 import AnimatedTouchable from "../wrapers/animatedTouchable";
 import Text from "../wrapers/text";
 
@@ -63,11 +64,7 @@ const AlbumCover = ({
                     },
                 ]}>
                 <Image
-                    source={
-                        album.cover
-                            ? require("../../../assets/images/default.png")
-                            : require("../../../assets/images/default.png")
-                    }
+                    source={getImage(album.cover)}
                     style={vertical ? styles.imageVertical : styles.image}
                 />
                 <View

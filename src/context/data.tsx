@@ -49,6 +49,12 @@ export const DataProvider = ({
             setAlbumIds([]);
 
             await AsyncStorage.clear();
+            await AsyncStorage.multiRemove([
+                "songIds",
+                "albumIds",
+                "recent",
+                "history",
+            ]);
         };
 
         const firstLoad = async () => {

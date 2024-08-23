@@ -254,8 +254,8 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between",
         alignItems: "center",
         marginHorizontal: -5,
+        justifyContent: "space-between",
     },
 });
