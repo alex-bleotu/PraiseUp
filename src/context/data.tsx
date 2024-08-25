@@ -423,6 +423,6 @@ export const DataProvider = ({
     );
 };
 
-export const isSong = (data: SongType | AlbumType): data is SongType => {
+export const isSong = (data: SongType | AlbumType | null): data is SongType => {
     return (data as SongType).artist !== undefined;
 };

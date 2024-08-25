@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
-import { AlbumType, DataContext } from "../../context/data";
+import { AlbumType, DataContext, SongType } from "../../context/data";
 import { HistoryContext } from "../../context/history";
 import { LanguageContext } from "../../context/language";
 import { RecentContext } from "../../context/recent";
@@ -35,13 +35,33 @@ const AlbumCover = ({
     const { addToRecent } = useContext(RecentContext);
     const { theme } = useContext(ThemeContext);
     const { language } = useContext(LanguageContext);
-    const { updateDate } = useContext(DataContext);
+    const { updateDate, getSongById } = useContext(DataContext);
+
+    const [songs, setSongs] = useState<SongType[] | null>(null);
 
     const width: any = fullWidth
         ? "100%"
         : Dimensions.get("screen").width / 2 - 25;
 
-    if (album === null) return null;
+    useEffect(() => {
+        const load = async () => {
+            const songList = album.songs.slice(0, 4);
+
+            const songArray: SongType[] = [];
+
+            for (let i = 0; i < songList.length; i++) {
+                const song = await getSongById(songList[i]);
+
+                songArray.push(song);
+            }
+
+            setSongs(songArray);
+        };
+
+        load();
+    }, []);
+
+    if (album === null || songs === null) return null;
 
     return (
         <AnimatedTouchable
@@ -63,10 +83,71 @@ const AlbumCover = ({
                         backgroundColor: theme.colors.paper,
                     },
                 ]}>
-                <Image
-                    source={getImage(album.cover)}
-                    style={vertical ? styles.imageVertical : styles.image}
-                />
+                {(album.cover === null || album.cover === "none") &&
+                songs.length > 2 ? (
+                    <View
+                        style={{
+                            marginRight: vertical ? 0 : 8,
+                        }}>
+                        <View style={styles.row}>
+                            <Image
+                                source={getImage(songs[0].cover)}
+                                style={[
+                                    vertical
+                                        ? styles.smallImageVertical
+                                        : styles.smallImage,
+                                    {
+                                        borderTopLeftRadius: 12,
+                                    },
+                                ]}
+                            />
+                            <Image
+                                source={getImage(songs[1].cover)}
+                                style={[
+                                    vertical
+                                        ? styles.smallImageVertical
+                                        : styles.smallImage,
+                                    {
+                                        borderTopRightRadius: 12,
+                                    },
+                                ]}
+                            />
+                        </View>
+                        <View style={styles.row}>
+                            <Image
+                                source={getImage(songs[2].cover)}
+                                style={[
+                                    vertical
+                                        ? styles.smallImageVertical
+                                        : styles.smallImage,
+                                    {
+                                        borderBottomLeftRadius: 12,
+                                    },
+                                ]}
+                            />
+                            <Image
+                                source={getImage(songs[3].cover)}
+                                style={[
+                                    vertical
+                                        ? styles.smallImageVertical
+                                        : styles.smallImage,
+                                    {
+                                        borderBottomRightRadius: 12,
+                                    },
+                                ]}
+                            />
+                        </View>
+                    </View>
+                ) : (
+                    <Image
+                        source={
+                            album.cover === "none" || album.cover === null
+                                ? getImage(songs[0].cover)
+                                : getImage(album.cover)
+                        }
+                        style={vertical ? styles.imageVertical : styles.image}
+                    />
+                )}
                 <View
                     style={[
                         styles.textContainer,
@@ -108,7 +189,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        padding: 8,
+        paddingBottom: 8,
     },
     textContainer: {
         display: "flex",
@@ -116,9 +197,19 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     imageVertical: {
-        width: 85,
-        height: 85,
+        width: 95,
+        height: 95,
         borderRadius: 12,
     },
-    image: { width: 70, height: 70, borderRadius: 15, marginRight: 8 },
+    image: { width: 70, height: 70, borderRadius: 15 },
+
+    smallImageVertical: {
+        width: 47.5,
+        height: 47.5,
+    },
+    smallImage: { width: 35, height: 35 },
+    row: {
+        display: "flex",
+        flexDirection: "row",
+    },
 });

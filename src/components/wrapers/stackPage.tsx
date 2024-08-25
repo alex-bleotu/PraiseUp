@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
         width: "100%",
         display: "flex",
         flex: 1,
-        marginBottom: 10,
+        marginBottom: 5,
     },
     cornerButton: {
         marginRight: 10,

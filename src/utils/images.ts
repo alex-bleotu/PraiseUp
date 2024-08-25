@@ -7,7 +7,7 @@ const covers = {
 };
 
 export const getImage = (cover: string | null) => {
-    if (cover === null) return covers.default;
+    if (cover === null || cover === "none") return covers.default;
 
     return covers[cover as keyof typeof covers] || covers.default;
 };

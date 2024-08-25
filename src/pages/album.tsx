@@ -1,7 +1,7 @@
 import { FontAwesome6 as FAIcons } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, ScrollView as SV, View } from "react-native";
 import SongCover from "../components/items/songCover";
 import AnimatedTouchable from "../components/wrapers/animatedTouchable";
 import DataBottomSheet from "../components/wrapers/dataBottomSheet";
@@ -35,6 +35,7 @@ const Album = ({ route, navigation }: AlbumProps) => {
     );
     const [album, setAlbum] = useState<AlbumType | null>(null);
     const [sortBy, setSortBy] = useState<"date" | "name">("date");
+    const [display, setDisplay] = useState<"grid" | "list">("grid");
 
     useEffect(() => {
         const load = async () => {
@@ -97,31 +98,48 @@ const Album = ({ route, navigation }: AlbumProps) => {
                 setBottomSheetOpen(true);
             }}>
             <View style={styles.container}>
-                {album.id === "F" && (
-                    <View style={styles.top}>
-                        <AnimatedTouchable
-                            onPress={() => {
-                                setSortBy(sortBy === "date" ? "name" : "date");
-                            }}
-                            style={styles.sortButton}>
-                            <View style={styles.row}>
-                                <FAIcons
-                                    name="sort"
-                                    size={20}
-                                    color={theme.colors.text}
-                                    style={{ marginRight: 10 }}
-                                />
-                                <Text bold>
-                                    {sortBy === "date"
-                                        ? t`Recent`
-                                        : t`Alphabetical
+                <View style={styles.top}>
+                    <AnimatedTouchable
+                        onPress={() => {
+                            setSortBy(sortBy === "date" ? "name" : "date");
+                        }}
+                        style={styles.sortButton}>
+                        <View style={styles.row}>
+                            <FAIcons
+                                name="sort"
+                                size={20}
+                                color={theme.colors.text}
+                                style={{ marginRight: 10 }}
+                            />
+                            <Text bold>
+                                {sortBy === "date"
+                                    ? t`Recent`
+                                    : t`Alphabetical
                             `}
-                                </Text>
-                            </View>
-                        </AnimatedTouchable>
-                    </View>
-                )}
-                <ScrollView bottom={10}>
+                            </Text>
+                        </View>
+                    </AnimatedTouchable>
+                    <AnimatedTouchable
+                        onPress={() => {
+                            setDisplay(display === "grid" ? "list" : "grid");
+                        }}
+                        style={styles.sortButton}>
+                        {display === "grid" ? (
+                            <FAIcons
+                                name="border-all"
+                                size={20}
+                                color={theme.colors.text}
+                            />
+                        ) : (
+                            <FAIcons
+                                name="list"
+                                size={20}
+                                color={theme.colors.text}
+                            />
+                        )}
+                    </AnimatedTouchable>
+                </View>
+                {/* <ScrollView bottom={10}>
                     {songs.map((song: SongType) => {
                         if (!song) return null;
 
@@ -145,7 +163,70 @@ const Album = ({ route, navigation }: AlbumProps) => {
                             </View>
                         );
                     })}
-                </ScrollView>
+                </ScrollView> */}
+                {display === "grid" ? (
+                    <View style={styles.scrollContainer}>
+                        <SV
+                            contentContainerStyle={styles.grid}
+                            showsVerticalScrollIndicator={false}>
+                            {songs.map((data: SongType, index: number) => {
+                                return (
+                                    <View
+                                        key={data.id}
+                                        style={[
+                                            styles.item,
+                                            {
+                                                marginHorizontal:
+                                                    (index - 1) % 3 == 0
+                                                        ? 15
+                                                        : 0,
+                                            },
+                                        ]}>
+                                        <SongCover
+                                            key={data.id}
+                                            song={data}
+                                            navigation={navigation}
+                                            vertical
+                                            artist={false}
+                                            onLongPress={() => {
+                                                setCurrentData(data);
+                                                setBottomSheetOpen(true);
+                                            }}
+                                        />
+                                    </View>
+                                );
+                            })}
+                        </SV>
+                    </View>
+                ) : (
+                    <View style={styles.container}>
+                        <ScrollView bottom={5} showScroll={false}>
+                            {songs.map((data: SongType) => {
+                                return (
+                                    <View
+                                        key={data.id}
+                                        style={{ marginBottom: 15 }}>
+                                        <SongCover
+                                            key={data.id}
+                                            song={data}
+                                            navigation={navigation}
+                                            fullWidth
+                                            icon={"dots-vertical"}
+                                            onLongPress={() => {
+                                                setCurrentData(data);
+                                                setBottomSheetOpen(true);
+                                            }}
+                                            action={() => {
+                                                setCurrentData(data);
+                                                setBottomSheetOpen(true);
+                                            }}
+                                        />
+                                    </View>
+                                );
+                            })}
+                        </ScrollView>
+                    </View>
+                )}
             </View>
             <DataBottomSheet
                 data={currentData}
@@ -165,7 +246,7 @@ const styles = StyleSheet.create({
         width: "100%",
         display: "flex",
         flex: 1,
-        paddingLeft: 25,
+        paddingHorizontal: 10,
     },
     songs: { marginTop: 15, paddingRight: 25 },
     sortButton: {
@@ -187,7 +268,20 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginHorizontal: -15,
-        marginVertical: -10,
+    },
+    scrollContainer: {
+        flex: 1,
+        width: "100%",
+    },
+    grid: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "flex-start",
+        marginHorizontal: 10,
+        paddingBottom: 10,
+    },
+    item: {
+        marginBottom: 15,
+        width: "30%",
     },
 });

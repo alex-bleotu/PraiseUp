@@ -16,6 +16,7 @@ const { height: windowHeight } = Dimensions.get("window");
 interface BottomSheetModalProps {
     isOpen: boolean;
     children: React.ReactNode | React.ReactNode[];
+    numberOfButtons?: number;
     onClose?: () => void;
 }
 
@@ -23,6 +24,7 @@ const BottomSheetModal = ({
     isOpen,
     onClose,
     children,
+    numberOfButtons = 3,
 }: BottomSheetModalProps) => {
     const [modalVisible, setModalVisible] = useState(isOpen);
     const translateY = useRef(new Animated.Value(windowHeight)).current;
@@ -111,6 +113,7 @@ const BottomSheetModal = ({
                         {
                             transform: [{ translateY }],
                             backgroundColor: theme.colors.paper,
+                            height: 125 + 50 * numberOfButtons,
                         },
                     ]}
                     {...panResponder.panHandlers}>
@@ -141,7 +144,6 @@ const styles = StyleSheet.create({
         position: "absolute",
         bottom: 0,
         width: "100%",
-        height: 275,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
     },

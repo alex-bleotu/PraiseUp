@@ -38,7 +38,10 @@ const DataBottomSheet = ({
     if (data === null) return <></>;
 
     return (
-        <BottomSheetModal isOpen={isOpen} onClose={onClose}>
+        <BottomSheetModal
+            isOpen={isOpen}
+            onClose={onClose}
+            numberOfButtons={isSong(data) ? 3 : 2}>
             <View>
                 <View style={styles.top}>
                     <Image source={getImage(data.cover)} style={styles.image} />
@@ -77,20 +80,22 @@ const DataBottomSheet = ({
                             </Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                        activeOpacity={theme.activeOpacity}
-                        onPress={() => {}}>
-                        <View style={styles.button}>
-                            <MCIcons
-                                name="plus-circle-outline"
-                                size={30}
-                                color={theme.colors.text}
-                            />
-                            <Text size={17} style={styles.text}>
-                                {t`Add to playlist`}
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+                    {isSong(data) && (
+                        <TouchableOpacity
+                            activeOpacity={theme.activeOpacity}
+                            onPress={() => {}}>
+                            <View style={styles.button}>
+                                <MCIcons
+                                    name="plus-circle-outline"
+                                    size={30}
+                                    color={theme.colors.text}
+                                />
+                                <Text size={17} style={styles.text}>
+                                    {t`Add to playlist`}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                    )}
                     <TouchableOpacity
                         activeOpacity={theme.activeOpacity}
                         onPress={async () => {

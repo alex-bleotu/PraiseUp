@@ -17,7 +17,6 @@ interface SongCoverProps {
     artist?: boolean;
     vertical?: boolean;
     icon?: keyof typeof MCIcons.glyphMap;
-    update?: boolean;
     action?: () => void;
     onLongPress?: () => void;
 }
@@ -30,7 +29,6 @@ const SongCover = ({
     artist = true,
     vertical = false,
     icon,
-    update,
     action,
     onLongPress,
 }: SongCoverProps) => {
@@ -115,10 +113,9 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     imageVertical: {
-        width: 100,
-        height: 100,
+        width: 95,
+        height: 95,
         borderRadius: 15,
-        borderEndEndRadius: 0,
     },
     image: { width: 70, height: 70, borderRadius: 15, marginRight: 8 },
 });

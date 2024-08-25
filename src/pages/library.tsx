@@ -196,7 +196,7 @@ const Library = ({ navigation }: { navigation: any }) => {
                         </View>
                     ) : (
                         <View style={styles.container}>
-                            <ScrollView bottom={25} showScroll={false}>
+                            <ScrollView bottom={5} showScroll={false}>
                                 {albums.map((data: AlbumType) => {
                                     return (
                                         <View
@@ -327,6 +327,7 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         justifyContent: "flex-start",
         marginHorizontal: 10,
+        paddingBottom: 10,
     },
     item: {
         marginBottom: 15,
