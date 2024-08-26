@@ -14,12 +14,14 @@ import Text from "./text";
 interface DataBottomSheetProps {
     data: SongType | AlbumType | null;
     isOpen: boolean;
+    zoom?: (zoom: boolean) => void;
     onClose: () => void;
 }
 
 const DataBottomSheet = ({
     data: d,
     isOpen,
+    zoom,
     onClose,
 }: DataBottomSheetProps) => {
     const { theme } = useContext(ThemeContext);
@@ -42,7 +44,7 @@ const DataBottomSheet = ({
         <BottomSheetModal
             isOpen={isOpen}
             onClose={onClose}
-            numberOfButtons={isSong(data) ? 3 : 2}>
+            numberOfButtons={isSong(data) ? (zoom ? 4 : 3) : 2}>
             <View>
                 <View style={styles.top}>
                     {isSong(data) ? (
@@ -67,6 +69,45 @@ const DataBottomSheet = ({
                     ]}
                 />
                 <View style={styles.buttons}>
+                    {zoom && (
+                        <View>
+                            <View style={styles.button}>
+                                <MCIcons
+                                    name={"magnify"}
+                                    size={30}
+                                    color={theme.colors.text}
+                                />
+                                <Text size={17} style={styles.text}>
+                                    {t`Zoom`}
+                                </Text>
+                                <View style={styles.zoomButtons}>
+                                    <TouchableOpacity
+                                        activeOpacity={theme.activeOpacity}
+                                        style={{ marginRight: 10 }}
+                                        onPress={() => {
+                                            zoom(true);
+                                        }}>
+                                        <MCIcons
+                                            name={"plus-circle-outline"}
+                                            size={30}
+                                            color={theme.colors.text}
+                                        />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        activeOpacity={theme.activeOpacity}
+                                        onPress={() => {
+                                            zoom(false);
+                                        }}>
+                                        <MCIcons
+                                            name={"minus-circle-outline"}
+                                            size={30}
+                                            color={theme.colors.text}
+                                        />
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+                    )}
                     <TouchableOpacity
                         activeOpacity={theme.activeOpacity}
                         onPress={async () => {
@@ -172,5 +213,10 @@ const styles = StyleSheet.create({
     },
     text: {
         marginLeft: 15,
+    },
+    zoomButtons: {
+        display: "flex",
+        flexDirection: "row",
+        marginLeft: "auto",
     },
 });

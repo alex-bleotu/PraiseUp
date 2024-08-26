@@ -19,7 +19,12 @@ interface SongProps {
     navigation: any;
 }
 
-const renderLyrics = (lyrics: string, showChords: boolean, theme: any) => {
+const renderLyrics = (
+    lyrics: string,
+    showChords: boolean,
+    theme: any,
+    fontSize: number = 16
+) => {
     const lines = lyrics.split("\n");
 
     return lines.map((line, index) => {
@@ -45,16 +50,27 @@ const renderLyrics = (lyrics: string, showChords: boolean, theme: any) => {
 
             return (
                 <View key={index} style={styles.line}>
-                    <Text style={styles.chordsLine} color={theme.colors.danger}>
+                    <Text
+                        style={[
+                            styles.chordsLine,
+                            {
+                                marginBottom: -21 + fontSize,
+                                marginTop: -19 + fontSize,
+                            },
+                        ]}
+                        color={theme.colors.danger}
+                        size={fontSize}>
                         {chordsLine}
                     </Text>
-                    <Text style={styles.lyricsLine}>{lyricsLine}</Text>
+                    <Text style={styles.lyricsLine} size={fontSize}>
+                        {lyricsLine}
+                    </Text>
                 </View>
             );
         } else {
             const cleanedLine = line.replace(/\[.*?\]/g, "");
             return (
-                <Text key={index} style={styles.lyricsLine}>
+                <Text key={index} style={styles.lyricsLine} size={fontSize}>
                     {cleanedLine}
                 </Text>
             );
@@ -71,6 +87,7 @@ const Song = ({ route, navigation }: SongProps) => {
     const [value, setValue] = useState("lyrics");
     const [song, setSong] = useState<SongType | null>(null);
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
+    const [fontSize, setFontSize] = useState(16);
 
     const buttonWidth = Dimensions.get("screen").width / 2 - 25;
     const buttonsContainerWidth = buttonWidth * 2 + 25;
@@ -147,20 +164,29 @@ const Song = ({ route, navigation }: SongProps) => {
                         )}
                     </View>
                 )}
-                {value === "lyrics" && song.lyrics && (
-                    <ScrollView style={styles.lyrics} bottom={10} top={7}>
-                        {renderLyrics(song.lyrics, false, theme)}
-                    </ScrollView>
-                )}
-                {value === "chords" && song.lyrics && (
-                    <ScrollView style={styles.lyrics} bottom={7} top={10}>
-                        {renderLyrics(song.lyrics, true, theme)}
-                    </ScrollView>
-                )}
+                <View
+                    style={{
+                        width: "100%",
+                    }}>
+                    {value === "lyrics" && song.lyrics && (
+                        <ScrollView style={styles.lyrics} bottom={40} top={7}>
+                            {renderLyrics(song.lyrics, false, theme, fontSize)}
+                        </ScrollView>
+                    )}
+                    {value === "chords" && song.lyrics && (
+                        <ScrollView style={styles.lyrics} bottom={37} top={10}>
+                            {renderLyrics(song.lyrics, true, theme, fontSize)}
+                        </ScrollView>
+                    )}
+                </View>
             </View>
             <DataBottomSheet
                 data={song}
                 isOpen={isBottomSheetOpen}
+                zoom={(zoomIn: boolean) => {
+                    if (zoomIn) setFontSize(fontSize + 1);
+                    else setFontSize(fontSize - 1);
+                }}
                 onClose={() => {
                     setBottomSheetOpen(false);
                 }}
@@ -188,8 +214,8 @@ const styles = StyleSheet.create({
     },
     lyrics: {
         width: "100%",
-        paddingLeft: 40,
-        paddingRight: 40,
+        paddingLeft: 30,
+        paddingRight: 30,
     },
 
     line: {
@@ -199,16 +225,12 @@ const styles = StyleSheet.create({
     chordsLine: {
         flexDirection: "row",
         flexWrap: "wrap",
-        fontSize: 15,
         lineHeight: 24,
         fontWeight: "bold",
-        marginBottom: -5,
-        marginTop: -3,
     },
     lyricsLine: {
         flexDirection: "row",
         flexWrap: "wrap",
-        fontSize: 16,
         lineHeight: 24,
     },
 });

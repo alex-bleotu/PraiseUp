@@ -7,7 +7,7 @@ interface TextProps {
     size?: number;
     bold?: boolean;
     color?: string;
-    style?: ViewStyle;
+    style?: ViewStyle | ViewStyle[];
     center?: boolean;
 }
 
