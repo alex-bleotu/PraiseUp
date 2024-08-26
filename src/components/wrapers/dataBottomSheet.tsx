@@ -7,6 +7,7 @@ import { AlbumType, DataContext, isSong, SongType } from "../../context/data";
 import { RefreshContext } from "../../context/refresh";
 import { ThemeContext } from "../../context/theme";
 import { getImage } from "../../utils/images";
+import AlbumImage from "../items/albumImage";
 import BottomSheetModal from "./bottomSheetModal";
 import Text from "./text";
 
@@ -44,7 +45,14 @@ const DataBottomSheet = ({
             numberOfButtons={isSong(data) ? 3 : 2}>
             <View>
                 <View style={styles.top}>
-                    <Image source={getImage(data.cover)} style={styles.image} />
+                    {isSong(data) ? (
+                        <Image
+                            source={getImage(data.cover)}
+                            style={styles.image}
+                        />
+                    ) : (
+                        <AlbumImage cover={data.cover} />
+                    )}
                     <View>
                         <Text bold size={18}>
                             {data.title}

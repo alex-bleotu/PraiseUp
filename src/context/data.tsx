@@ -17,7 +17,7 @@ export interface AlbumType {
     songs: string[];
     favorite: boolean;
     date: string;
-    cover: string | null;
+    cover: string | null | string[];
 }
 
 export interface SongType {
@@ -142,6 +142,24 @@ export const DataProvider = ({
 
     const writeAlbum = async (album: AlbumType) => {
         try {
+            if (album.songs.length > 2 && !Array.isArray(album.cover)) {
+                const songs = album.songs.slice(0, 4);
+
+                const songPromises = await Promise.all(
+                    songs.map(async (id) => {
+                        const song = await readSong(id);
+
+                        if (!song) return null;
+
+                        return song;
+                    })
+                );
+
+                const covers = songPromises.map((song) => song.cover);
+
+                album.cover = covers;
+            }
+
             await AsyncStorage.setItem(album.id, JSON.stringify(album));
 
             if (!albumIds.find((id) => id === album.id))
