@@ -10,6 +10,7 @@ import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
+import { ConstantsContext } from "../context/constants";
 import { DataContext, SongType } from "../context/data";
 import { ThemeContext } from "../context/theme";
 import Loading from "./loading";
@@ -83,11 +84,11 @@ const Song = ({ route, navigation }: SongProps) => {
 
     const { theme } = useContext(ThemeContext);
     const { getSongById } = useContext(DataContext);
+    const { lyricsSize, setLyricsSize } = useContext(ConstantsContext);
 
     const [value, setValue] = useState("lyrics");
     const [song, setSong] = useState<SongType | null>(null);
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
-    const [fontSize, setFontSize] = useState(16);
 
     const buttonWidth = Dimensions.get("screen").width / 2 - 25;
     const buttonsContainerWidth = buttonWidth * 2 + 25;
@@ -170,12 +171,17 @@ const Song = ({ route, navigation }: SongProps) => {
                     }}>
                     {value === "lyrics" && song.lyrics && (
                         <ScrollView style={styles.lyrics} bottom={40} top={7}>
-                            {renderLyrics(song.lyrics, false, theme, fontSize)}
+                            {renderLyrics(
+                                song.lyrics,
+                                false,
+                                theme,
+                                lyricsSize
+                            )}
                         </ScrollView>
                     )}
                     {value === "chords" && song.lyrics && (
                         <ScrollView style={styles.lyrics} bottom={37} top={10}>
-                            {renderLyrics(song.lyrics, true, theme, fontSize)}
+                            {renderLyrics(song.lyrics, true, theme, lyricsSize)}
                         </ScrollView>
                     )}
                 </View>
@@ -184,8 +190,8 @@ const Song = ({ route, navigation }: SongProps) => {
                 data={song}
                 isOpen={isBottomSheetOpen}
                 zoom={(zoomIn: boolean) => {
-                    if (zoomIn) setFontSize(fontSize + 1);
-                    else setFontSize(fontSize - 1);
+                    if (zoomIn) setLyricsSize(lyricsSize + 1);
+                    else setLyricsSize(lyricsSize - 1);
                 }}
                 onClose={() => {
                     setBottomSheetOpen(false);

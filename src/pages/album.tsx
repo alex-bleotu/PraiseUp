@@ -8,6 +8,7 @@ import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
+import { ConstantsContext } from "../context/constants";
 import { AlbumType, DataContext, SongType } from "../context/data";
 import { LanguageContext } from "../context/language";
 import { RefreshContext } from "../context/refresh";
@@ -26,6 +27,8 @@ const Album = ({ route, navigation }: AlbumProps) => {
         useContext(DataContext);
     const { language } = useContext(LanguageContext);
     const { theme } = useContext(ThemeContext);
+    const { sortBy, setSortBy, display, setDisplay } =
+        useContext(ConstantsContext);
 
     const [songs, setSongs] = useState<any>(null);
 
@@ -34,8 +37,6 @@ const Album = ({ route, navigation }: AlbumProps) => {
         null
     );
     const [album, setAlbum] = useState<AlbumType | null>(null);
-    const [sortBy, setSortBy] = useState<"date" | "name">("date");
-    const [display, setDisplay] = useState<"grid" | "list">("grid");
 
     useEffect(() => {
         const load = async () => {

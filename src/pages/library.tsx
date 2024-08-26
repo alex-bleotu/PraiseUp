@@ -8,6 +8,7 @@ import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
+import { ConstantsContext } from "../context/constants";
 import { AlbumType, DataContext, SongType } from "../context/data";
 import { RefreshContext } from "../context/refresh";
 import { ThemeContext } from "../context/theme";
@@ -18,9 +19,9 @@ const Library = ({ navigation }: { navigation: any }) => {
     const { refresh } = useContext(RefreshContext);
     const { loading, getFavoriteSongsAlbum, getFavoriteAlbums } =
         useContext(DataContext);
+    const { sortBy, setSortBy, display, setDisplay } =
+        useContext(ConstantsContext);
 
-    const [sortBy, setSortBy] = useState<"date" | "name">("date");
-    const [display, setDisplay] = useState<"grid" | "list">("grid");
     const [albums, setAlbums] = useState<any>(null);
 
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);

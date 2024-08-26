@@ -10,6 +10,7 @@ import { ThemeProvider } from "./src/context/theme";
 import Tabs from "./src/navigation/tabs";
 import { darkTheme } from "./src/utils/theme";
 
+import { ConstantsProvider } from "./src/context/constants";
 import { LanguageProvider } from "./src/context/language";
 
 const linking: LinkingOptions<any> = {
@@ -35,18 +36,20 @@ export default function App() {
             <NavigationContainer linking={linking}>
                 <LanguageProvider>
                     <PaperProvider theme={darkTheme}>
-                        <RefreshProvider>
-                            <ThemeProvider>
-                                <DataProvider>
-                                    <HistoryProvider>
-                                        <RecentProvider>
-                                            <Tabs />
-                                            <StatusBar style="auto" />
-                                        </RecentProvider>
-                                    </HistoryProvider>
-                                </DataProvider>
-                            </ThemeProvider>
-                        </RefreshProvider>
+                        <ConstantsProvider>
+                            <RefreshProvider>
+                                <ThemeProvider>
+                                    <DataProvider>
+                                        <HistoryProvider>
+                                            <RecentProvider>
+                                                <Tabs />
+                                                <StatusBar style="auto" />
+                                            </RecentProvider>
+                                        </HistoryProvider>
+                                    </DataProvider>
+                                </ThemeProvider>
+                            </RefreshProvider>
+                        </ConstantsProvider>
                     </PaperProvider>
                 </LanguageProvider>
             </NavigationContainer>
