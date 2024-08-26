@@ -5,18 +5,11 @@ import {
 import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
-import {
-    PinchGestureHandler,
-    PinchGestureHandlerGestureEvent,
-} from "react-native-gesture-handler";
-import Animated, {
-    useAnimatedGestureHandler,
-    useSharedValue,
-} from "react-native-reanimated";
 import Button from "../components/wrapers/button";
 import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
+import Text from "../components/wrapers/text";
 import { DataContext, SongType } from "../context/data";
 import { ThemeContext } from "../context/theme";
 import Loading from "./loading";
@@ -26,12 +19,7 @@ interface SongProps {
     navigation: any;
 }
 
-const renderLyrics = (
-    lyrics: string,
-    showChords: boolean,
-    theme: any,
-    fontSize: Animated.SharedValue<number>
-) => {
+const renderLyrics = (lyrics: string, showChords: boolean, theme: any) => {
     const lines = lyrics.split("\n");
 
     return lines.map((line, index) => {
@@ -57,27 +45,18 @@ const renderLyrics = (
 
             return (
                 <View key={index} style={styles.line}>
-                    <Animated.Text
-                        style={[
-                            styles.chordsLine,
-                            { fontSize: fontSize, color: theme.colors.danger },
-                        ]}>
+                    <Text style={styles.chordsLine} color={theme.colors.danger}>
                         {chordsLine}
-                    </Animated.Text>
-                    <Animated.Text
-                        style={[styles.lyricsLine, { fontSize: fontSize }]}>
-                        {lyricsLine}
-                    </Animated.Text>
+                    </Text>
+                    <Text style={styles.lyricsLine}>{lyricsLine}</Text>
                 </View>
             );
         } else {
             const cleanedLine = line.replace(/\[.*?\]/g, "");
             return (
-                <Animated.Text
-                    key={index}
-                    style={[styles.lyricsLine, { fontSize: fontSize }]}>
+                <Text key={index} style={styles.lyricsLine}>
                     {cleanedLine}
-                </Animated.Text>
+                </Text>
             );
         }
     });
@@ -95,18 +74,6 @@ const Song = ({ route, navigation }: SongProps) => {
 
     const buttonWidth = Dimensions.get("screen").width / 2 - 25;
     const buttonsContainerWidth = buttonWidth * 2 + 25;
-
-    const fontSize = useSharedValue(16);
-
-    const pinchGestureHandler =
-        useAnimatedGestureHandler<PinchGestureHandlerGestureEvent>({
-            onActive: (event) => {
-                fontSize.value = Math.max(
-                    10,
-                    Math.min(40, fontSize.value * event.scale)
-                );
-            },
-        });
 
     useEffect(() => {
         const load = async () => {
@@ -180,36 +147,16 @@ const Song = ({ route, navigation }: SongProps) => {
                         )}
                     </View>
                 )}
-                <PinchGestureHandler onGestureEvent={pinchGestureHandler}>
-                    <Animated.View style={{ flex: 1 }}>
-                        {value === "lyrics" && song.lyrics && (
-                            <ScrollView
-                                style={styles.lyrics}
-                                bottom={10}
-                                top={10}>
-                                {renderLyrics(
-                                    song.lyrics,
-                                    false,
-                                    theme,
-                                    fontSize
-                                )}
-                            </ScrollView>
-                        )}
-                        {value === "chords" && song.lyrics && (
-                            <ScrollView
-                                style={styles.lyrics}
-                                bottom={7}
-                                top={10}>
-                                {renderLyrics(
-                                    song.lyrics,
-                                    true,
-                                    theme,
-                                    fontSize
-                                )}
-                            </ScrollView>
-                        )}
-                    </Animated.View>
-                </PinchGestureHandler>
+                {value === "lyrics" && song.lyrics && (
+                    <ScrollView style={styles.lyrics} bottom={10} top={7}>
+                        {renderLyrics(song.lyrics, false, theme)}
+                    </ScrollView>
+                )}
+                {value === "chords" && song.lyrics && (
+                    <ScrollView style={styles.lyrics} bottom={7} top={10}>
+                        {renderLyrics(song.lyrics, true, theme)}
+                    </ScrollView>
+                )}
             </View>
             <DataBottomSheet
                 data={song}
@@ -244,6 +191,7 @@ const styles = StyleSheet.create({
         paddingLeft: 40,
         paddingRight: 40,
     },
+
     line: {
         flexDirection: "column",
         marginBottom: 5,
