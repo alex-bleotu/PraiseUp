@@ -4,6 +4,7 @@ export const songs: any[] = [
         title: "Song 1",
         artist: "Artist Name",
         cover: "default1",
+        initialChord: "C",
         lyrics: `[Am]I took a step into the [G]night,  
 With [C]dreams that glimmered in the [F]light,  
 A [Am]path unknown, a heart so [G]bold,  
@@ -43,6 +44,7 @@ We'll [C]find our place, and there a[F]bide.`,
         title: "Song 2",
         artist: "Artist Name",
         cover: "default2",
+        initialChord: null,
         lyrics: `I took a step into the night,  
 With dreams that glimmered in the light,  
 A path unknown, a heart so bold,  
@@ -83,6 +85,7 @@ We'll find our place, and there abide.
         title: "Song 3",
         artist: "Artist Name",
         cover: "default3",
+        initialChord: null,
         lyrics: "",
     },
     {
@@ -90,6 +93,7 @@ We'll find our place, and there abide.
         title: "Song 4",
         artist: "Artist Name",
         cover: "default4",
+        initialChord: null,
         lyrics: "",
     },
     {
@@ -97,6 +101,7 @@ We'll find our place, and there abide.
         title: "Song 5",
         artist: "Artist Name",
         cover: null,
+        initialChord: null,
         lyrics: "",
     },
     {
@@ -104,6 +109,7 @@ We'll find our place, and there abide.
         title: "Song 6",
         artist: "Artist Name",
         cover: null,
+        initialChord: null,
         lyrics: "",
     },
     {
@@ -111,6 +117,7 @@ We'll find our place, and there abide.
         title: "Song 7",
         artist: "Artist Name",
         cover: null,
+        initialChord: null,
         lyrics: "",
     },
     {
@@ -118,6 +125,7 @@ We'll find our place, and there abide.
         title: "Song 8",
         artist: "Artist Name",
         cover: null,
+        initialChord: null,
         lyrics: "",
     },
     {
@@ -125,6 +133,7 @@ We'll find our place, and there abide.
         title: "Song 9",
         artist: "Artist Name",
         cover: null,
+        initialChord: null,
         lyrics: "",
     },
     {
@@ -132,6 +141,7 @@ We'll find our place, and there abide.
         title: "Song 10",
         artist: "Artist Name",
         cover: null,
+        initialChord: null,
         lyrics: "",
     },
 ];

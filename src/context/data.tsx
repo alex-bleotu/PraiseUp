@@ -28,6 +28,7 @@ export interface SongType {
     lyrics: string;
     favorite: boolean;
     date: string;
+    initialChord: string | null;
 }
 
 export const DataProvider = ({

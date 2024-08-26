@@ -5,6 +5,7 @@ import {
 import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
+import { SelectList } from "react-native-dropdown-select-list";
 import Button from "../components/wrapers/button";
 import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
@@ -20,11 +21,48 @@ interface SongProps {
     navigation: any;
 }
 
+const chordChanger = (text: string, steps: number): string => {
+    const chords = [
+        "C",
+        "C#",
+        "D",
+        "Eb",
+        "E",
+        "F",
+        "F#",
+        "G",
+        "G#",
+        "A",
+        "Bb",
+        "B",
+    ];
+
+    const match = text.match(/^\[([A-G]#?[a-zA-Z0-9]*)\]$/);
+    if (!match) return text;
+
+    const chord = match[1];
+
+    const rootMatch = chord.match(/^([A-G]#?)(.*)$/);
+    if (!rootMatch) return text;
+
+    const root = rootMatch[1];
+    const suffix = rootMatch[2];
+
+    const rootIndex = chords.indexOf(root);
+    if (rootIndex === -1) return text;
+
+    const newIndex = (rootIndex + steps + chords.length) % chords.length;
+    const newChord = chords[newIndex] + suffix;
+
+    return `[${newChord}]`;
+};
+
 const renderLyrics = (
     lyrics: string,
     showChords: boolean,
     theme: any,
-    fontSize: number = 16
+    fontSize: number = 16,
+    steps: number = 0
 ) => {
     const lines = lyrics.split("\n");
 
@@ -39,7 +77,8 @@ const renderLyrics = (
 
             parts.forEach((part) => {
                 if (part.startsWith("[") && part.endsWith("]")) {
-                    chordsLine += part.padEnd(
+                    const updatedChord = chordChanger(part, steps);
+                    chordsLine += updatedChord.padEnd(
                         part.length + part.length - 2,
                         " "
                     );
@@ -80,6 +119,21 @@ const renderLyrics = (
     });
 };
 
+const data = [
+    { key: "1", value: "C" },
+    { key: "2", value: "C#" },
+    { key: "3", value: "D" },
+    { key: "4", value: "Eb" },
+    { key: "5", value: "E" },
+    { key: "6", value: "F" },
+    { key: "7", value: "F#" },
+    { key: "8", value: "G" },
+    { key: "9", value: "G#" },
+    { key: "10", value: "A" },
+    { key: "11", value: "Bb" },
+    { key: "12", value: "B" },
+];
+
 const Song = ({ route, navigation }: SongProps) => {
     const { id } = route.params;
 
@@ -90,9 +144,11 @@ const Song = ({ route, navigation }: SongProps) => {
     const [value, setValue] = useState("lyrics");
     const [song, setSong] = useState<SongType | null>(null);
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
+    const [steps, setSteps] = useState(0);
+    const [selectedChord, setSelectedChord] = useState([]);
 
-    const buttonWidth = Dimensions.get("screen").width / 2 - 25;
-    const buttonsContainerWidth = buttonWidth * 2 + 25;
+    const buttonWidth = Dimensions.get("screen").width / 2 - 50;
+    const buttonsContainerWidth = buttonWidth * 2 + 75;
 
     useEffect(() => {
         const load = async () => {
@@ -138,34 +194,81 @@ const Song = ({ route, navigation }: SongProps) => {
                             }
                         />
                         <View style={{ width: 10 }} />
-                        {hasChords && (
-                            <>
-                                <Button
-                                    mode={
-                                        value === "chords"
-                                            ? "contained"
-                                            : "none"
-                                    }
-                                    onPress={() => setValue("chords")}
-                                    style={{
-                                        width: buttonWidth,
-                                        ...styles.button,
-                                    }}
-                                    fontSize={15}
-                                    text={t`Chords`}
-                                    icon={
-                                        <FIcon
-                                            name="itunes-note"
-                                            size={18}
-                                            color={theme.colors.text}
-                                        />
-                                    }
+                        <Button
+                            mode={value === "chords" ? "contained" : "none"}
+                            onPress={() => setValue("chords")}
+                            style={{
+                                width: buttonWidth,
+                                ...styles.button,
+                            }}
+                            fontSize={15}
+                            text={t`Chords`}
+                            icon={
+                                <FIcon
+                                    name="itunes-note"
+                                    size={18}
+                                    color={theme.colors.text}
                                 />
-                                <View style={{ width: 10 }} />
-                            </>
-                        )}
+                            }
+                        />
+                        <SelectList
+                            setSelected={setSelectedChord}
+                            data={data}
+                            save="value"
+                            search={false}
+                            // @ts-ignore
+                            defaultOption={
+                                data.find(
+                                    (item) => item.value === song.initialChord
+                                ) || {}
+                            }
+                            onSelect={() => {
+                                const selectedChordValue =
+                                    typeof selectedChord === "string"
+                                        ? selectedChord
+                                        : "";
+
+                                const initialChordIndex = data.findIndex(
+                                    (item) => item.value === song.initialChord
+                                );
+                                const selectedChordIndex = data.findIndex(
+                                    (item) => item.value === selectedChordValue
+                                );
+
+                                if (
+                                    initialChordIndex !== -1 &&
+                                    selectedChordIndex !== -1
+                                ) {
+                                    const calculatedSteps =
+                                        (selectedChordIndex -
+                                            initialChordIndex +
+                                            data.length) %
+                                        data.length;
+                                    setSteps(calculatedSteps);
+                                } else setSteps(0);
+                            }}
+                            boxStyles={{
+                                borderWidth: 0,
+                                position: "absolute",
+                                top: -5,
+                            }}
+                            inputStyles={{
+                                fontWeight: "bold",
+                                fontSize: 18,
+                            }}
+                            dropdownTextStyles={{
+                                fontWeight: "bold",
+                                fontSize: 16,
+                            }}
+                            dropdownStyles={{
+                                position: "absolute",
+                                top: 30,
+                                zIndex: 100,
+                            }}
+                        />
                     </View>
                 )}
+
                 <View
                     style={{
                         width: "100%",
@@ -182,7 +285,13 @@ const Song = ({ route, navigation }: SongProps) => {
                     )}
                     {value === "chords" && song.lyrics && (
                         <ScrollView style={styles.lyrics} bottom={37} top={10}>
-                            {renderLyrics(song.lyrics, true, theme, lyricsSize)}
+                            {renderLyrics(
+                                song.lyrics,
+                                true,
+                                theme,
+                                lyricsSize,
+                                steps
+                            )}
                         </ScrollView>
                     )}
                 </View>
