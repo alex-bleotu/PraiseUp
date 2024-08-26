@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/wrapers/dataBottomSheet.tsx:143
+#: src/components/wrapers/dataBottomSheet.tsx:145
 msgid "Add to playlist"
 msgstr "Add to playlist"
 
@@ -22,11 +22,11 @@ msgstr "Add to playlist"
 msgid "Alphabetical"
 msgstr "Alphabetical"
 
-#: src/components/wrapers/dataBottomSheet.tsx:159
+#: src/components/wrapers/dataBottomSheet.tsx:161
 msgid "Check out this"
 msgstr "Check out this"
 
-#: src/pages/song.tsx:154
+#: src/pages/song.tsx:155
 msgid "Chords"
 msgstr "Chords"
 
@@ -38,15 +38,23 @@ msgstr "Clear recent searches"
 msgid "Create album"
 msgstr "Create album"
 
-#: src/pages/settings.tsx:175
+#: src/pages/settings.tsx:180
 msgid "Creator"
 msgstr "Creator"
+
+#: src/utils/slides.ts:7
+msgid "Discover available parking spots near you with real-time updates. Say goodbye to endless circling in search of a spot!"
+msgstr "Discover available parking spots near you with real-time updates. Say goodbye to endless circling in search of a spot!"
 
 #: src/pages/settings.tsx:36
 msgid "Display settings"
 msgstr "Display settings"
 
-#: src/components/wrapers/dataBottomSheet.tsx:128
+#: src/utils/slides.ts:12
+msgid "Drive"
+msgstr "Drive"
+
+#: src/components/wrapers/dataBottomSheet.tsx:130
 msgid "Favorite"
 msgstr "Favorite"
 
@@ -54,7 +62,7 @@ msgstr "Favorite"
 msgid "Favorite albums"
 msgstr "Favorite albums"
 
-#: src/pages/settings.tsx:197
+#: src/pages/settings.tsx:205
 msgid "Help"
 msgstr "Help"
 
@@ -62,9 +70,13 @@ msgstr "Help"
 msgid "Language"
 msgstr "Language"
 
-#: src/pages/song.tsx:128
+#: src/pages/song.tsx:129
 msgid "Lyrics"
 msgstr "Lyrics"
+
+#: src/utils/slides.ts:13
+msgid "Navigate to your destination hassle-free. Our app ensures you reach your spot quickly and efficiently."
+msgstr "Navigate to your destination hassle-free. Our app ensures you reach your spot quickly and efficiently."
 
 #: src/pages/discover.tsx:151
 msgid "No recent searches"
@@ -82,6 +94,10 @@ msgstr "No song or album matches your search"
 msgid "Other info"
 msgstr "Other info"
 
+#: src/utils/slides.ts:18
+msgid "Park"
+msgstr "Park"
+
 #: src/pages/album.tsx:117
 #: src/pages/library.tsx:107
 msgid "Recent"
@@ -91,11 +107,16 @@ msgstr "Recent"
 msgid "Recent Searches"
 msgstr "Recent Searches"
 
-#: src/pages/settings.tsx:186
+#: src/pages/settings.tsx:194
 msgid "Report"
 msgstr "Report"
 
+#: src/utils/slides.ts:19
+msgid "Reserve your parking spot in advance for a worry-free experience. No more last-minute hunting for a space."
+msgstr "Reserve your parking spot in advance for a worry-free experience. No more last-minute hunting for a space."
+
 #: src/pages/discover.tsx:73
+#: src/utils/slides.ts:6
 msgid "Search"
 msgstr "Search"
 
@@ -103,7 +124,7 @@ msgstr "Search"
 msgid "Settings"
 msgstr "Settings"
 
-#: src/components/wrapers/dataBottomSheet.tsx:172
+#: src/components/wrapers/dataBottomSheet.tsx:174
 msgid "Share"
 msgstr "Share"
 
@@ -127,6 +148,6 @@ msgstr "Version"
 msgid "Your library"
 msgstr "Your library"
 
-#: src/components/wrapers/dataBottomSheet.tsx:81
+#: src/components/wrapers/dataBottomSheet.tsx:83
 msgid "Zoom"
 msgstr "Zoom"

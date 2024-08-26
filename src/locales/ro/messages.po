@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/wrapers/dataBottomSheet.tsx:143
+#: src/components/wrapers/dataBottomSheet.tsx:145
 msgid "Add to playlist"
 msgstr "Adaugă in playlist"
 
@@ -22,11 +22,11 @@ msgstr "Adaugă in playlist"
 msgid "Alphabetical"
 msgstr "Alfabetic"
 
-#: src/components/wrapers/dataBottomSheet.tsx:159
+#: src/components/wrapers/dataBottomSheet.tsx:161
 msgid "Check out this"
 msgstr "Verifică asta"
 
-#: src/pages/song.tsx:154
+#: src/pages/song.tsx:155
 msgid "Chords"
 msgstr "Acorduri"
 
@@ -38,15 +38,23 @@ msgstr "Șterge căutările recente"
 msgid "Create album"
 msgstr "Creează album"
 
-#: src/pages/settings.tsx:175
+#: src/pages/settings.tsx:180
 msgid "Creator"
 msgstr "Creator"
+
+#: src/utils/slides.ts:7
+msgid "Discover available parking spots near you with real-time updates. Say goodbye to endless circling in search of a spot!"
+msgstr ""
 
 #: src/pages/settings.tsx:36
 msgid "Display settings"
 msgstr "Setări de afișare"
 
-#: src/components/wrapers/dataBottomSheet.tsx:128
+#: src/utils/slides.ts:12
+msgid "Drive"
+msgstr ""
+
+#: src/components/wrapers/dataBottomSheet.tsx:130
 msgid "Favorite"
 msgstr "Favorite"
 
@@ -54,7 +62,7 @@ msgstr "Favorite"
 msgid "Favorite albums"
 msgstr "Albume favorite"
 
-#: src/pages/settings.tsx:197
+#: src/pages/settings.tsx:205
 msgid "Help"
 msgstr "Ajutor"
 
@@ -62,9 +70,13 @@ msgstr "Ajutor"
 msgid "Language"
 msgstr "Limbă"
 
-#: src/pages/song.tsx:128
+#: src/pages/song.tsx:129
 msgid "Lyrics"
 msgstr "Versuri"
+
+#: src/utils/slides.ts:13
+msgid "Navigate to your destination hassle-free. Our app ensures you reach your spot quickly and efficiently."
+msgstr ""
 
 #: src/pages/discover.tsx:151
 msgid "No recent searches"
@@ -82,6 +94,10 @@ msgstr "Nicio melodie sau album nu se potrivește căutării dvs"
 msgid "Other info"
 msgstr "Alte informații"
 
+#: src/utils/slides.ts:18
+msgid "Park"
+msgstr ""
+
 #: src/pages/album.tsx:117
 #: src/pages/library.tsx:107
 msgid "Recent"
@@ -91,11 +107,16 @@ msgstr "Recent"
 msgid "Recent Searches"
 msgstr "Căutări recente"
 
-#: src/pages/settings.tsx:186
+#: src/pages/settings.tsx:194
 msgid "Report"
 msgstr "Raportează"
 
+#: src/utils/slides.ts:19
+msgid "Reserve your parking spot in advance for a worry-free experience. No more last-minute hunting for a space."
+msgstr ""
+
 #: src/pages/discover.tsx:73
+#: src/utils/slides.ts:6
 msgid "Search"
 msgstr "Caută"
 
@@ -103,7 +124,7 @@ msgstr "Caută"
 msgid "Settings"
 msgstr "Setări"
 
-#: src/components/wrapers/dataBottomSheet.tsx:172
+#: src/components/wrapers/dataBottomSheet.tsx:174
 msgid "Share"
 msgstr "Distribuie"
 
@@ -127,6 +148,6 @@ msgstr "Versiune"
 msgid "Your library"
 msgstr "Biblioteca ta"
 
-#: src/components/wrapers/dataBottomSheet.tsx:81
+#: src/components/wrapers/dataBottomSheet.tsx:83
 msgid "Zoom"
 msgstr "Zoom"

@@ -4,7 +4,7 @@ import { ThemeContext } from "../../context/theme";
 
 interface TextProps {
     children: ReactNode;
-    size?: number;
+    fontSize?: number;
     bold?: boolean;
     color?: string;
     style?: ViewStyle | ViewStyle[];
@@ -13,7 +13,7 @@ interface TextProps {
 
 const Text = ({
     children,
-    size = 16,
+    fontSize = 16,
     bold,
     color,
     style,
@@ -25,7 +25,7 @@ const Text = ({
         <Ts
             style={{
                 ...style,
-                fontSize: size,
+                fontSize,
                 fontWeight: bold ? "bold" : "normal",
                 color: color ? color : theme.colors.text,
                 textAlign: center ? "center" : "left",

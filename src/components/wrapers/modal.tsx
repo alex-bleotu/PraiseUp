@@ -62,7 +62,10 @@ const Modal = ({
                                 width !== undefined ? { width } : {},
                             ]}>
                             <View style={styles.top}>
-                                <Text size={20} bold style={{ width: "100%" }}>
+                                <Text
+                                    fontSize={20}
+                                    bold
+                                    style={{ width: "100%" }}>
                                     {title}
                                 </Text>
                                 <View

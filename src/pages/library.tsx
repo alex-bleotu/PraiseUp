@@ -228,7 +228,7 @@ const Library = ({ navigation }: { navigation: any }) => {
                                                                 }
                                                             />
                                                             <Text
-                                                                size={14}
+                                                                fontSize={14}
                                                                 bold
                                                                 style={{
                                                                     marginLeft: 28,

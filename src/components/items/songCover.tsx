@@ -70,11 +70,11 @@ const SongCover = ({
                             styles.textContainer,
                             { marginTop: vertical ? 5 : 0 },
                         ]}>
-                        <Text bold size={14} center={vertical}>
+                        <Text bold fontSize={14} center={vertical}>
                             {song.title}
                         </Text>
                         {artist && (
-                            <Text size={12} center={vertical}>
+                            <Text fontSize={12} center={vertical}>
                                 {song.artist}
                             </Text>
                         )}

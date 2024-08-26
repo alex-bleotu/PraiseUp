@@ -29,7 +29,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     bottom={10}
                     showScroll={false}>
                     <Text
-                        size={16}
+                        fontSize={16}
                         color={theme.colors.grey}
                         style={{
                             marginBottom: 20,
@@ -42,7 +42,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                             color={theme.colors.text}
                             style={{ marginRight: 10, marginTop: 3 }}
                         />
-                        <Text size={18} bold>{t`Theme`}</Text>
+                        <Text fontSize={18} bold>{t`Theme`}</Text>
                     </View>
 
                     <View style={styles.choices}>
@@ -56,7 +56,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                     },
                                 ]}>
                                 <Text
-                                    size={30}
+                                    fontSize={30}
                                     bold
                                     color={lightTheme.colors.primary}
                                     style={{ marginTop: -5 }}>
@@ -85,7 +85,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                     },
                                 ]}>
                                 <Text
-                                    size={30}
+                                    fontSize={30}
                                     bold
                                     color={darkTheme.colors.primary}
                                     style={{ marginTop: -5 }}>
@@ -113,7 +113,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                             color={theme.colors.text}
                             style={{ marginRight: 10, marginTop: 3 }}
                         />
-                        <Text size={18} bold>{t`Language`}</Text>
+                        <Text fontSize={18} bold>{t`Language`}</Text>
                     </View>
 
                     <View style={styles.choices}>
@@ -154,7 +154,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     </View>
 
                     <Text
-                        size={16}
+                        fontSize={16}
                         color={theme.colors.grey}
                         style={{
                             marginBottom: 20,
@@ -162,22 +162,30 @@ const Settings = ({ navigation }: { navigation: any }) => {
                         }}>{t`Other info`}</Text>
 
                     <View style={styles.text}>
-                        <Text size={18} bold>
+                        <Text fontSize={18} bold>
                             {t`Version`}
                         </Text>
-                        <Text size={18} style={{ marginHorizontal: 20 }} bold>
+                        <Text
+                            fontSize={18}
+                            style={{ marginHorizontal: 20 }}
+                            bold>
                             -
                         </Text>
-                        <Text size={18}>{Constants.expoConfig?.version}</Text>
+                        <Text fontSize={18}>
+                            {Constants.expoConfig?.version}
+                        </Text>
                     </View>
                     <View style={styles.text}>
-                        <Text size={18} bold>
+                        <Text fontSize={18} bold>
                             {t`Creator`}
                         </Text>
-                        <Text size={18} style={{ marginHorizontal: 20 }} bold>
+                        <Text
+                            fontSize={18}
+                            style={{ marginHorizontal: 20 }}
+                            bold>
                             -
                         </Text>
-                        <Text size={18}>Bleotu Alex</Text>
+                        <Text fontSize={18}>Bleotu Alex</Text>
                     </View>
 
                     <View style={styles.buttonContainer}>

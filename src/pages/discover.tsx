@@ -81,7 +81,7 @@ const Discover = ({ navigation }: { navigation: any }) => {
                         <View style={styles.container}>
                             <ScrollView bottom={15}>
                                 <View style={{ marginTop: 15 }}>
-                                    <Text size={20} bold>
+                                    <Text fontSize={20} bold>
                                         {t`Recent Searches`}
                                     </Text>
                                 </View>
@@ -147,10 +147,10 @@ const Discover = ({ navigation }: { navigation: any }) => {
                         </View>
                     ) : (
                         <View style={styles.placeHolderContainer}>
-                            <Text size={20} bold>
+                            <Text fontSize={20} bold>
                                 {t`No recent searches`}
                             </Text>
-                            <Text size={16} style={{ marginTop: 10 }}>
+                            <Text fontSize={16} style={{ marginTop: 10 }}>
                                 {t`Start searching for your favorite songs`}
                             </Text>
                         </View>
@@ -239,11 +239,11 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                 </View>
                             ) : (
                                 <View style={styles.placeHolderContainer}>
-                                    <Text size={20} bold center>
+                                    <Text fontSize={20} bold center>
                                         {t`No search result`}
                                     </Text>
                                     <Text
-                                        size={16}
+                                        fontSize={16}
                                         style={{ marginTop: 10 }}
                                         center>
                                         {t`No song or album matches your search`}

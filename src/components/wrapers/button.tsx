@@ -49,7 +49,7 @@ const Button = ({
                         {icon}
                     </View>
                     <Text
-                        size={fontSize ? fontSize : 16}
+                        fontSize={fontSize ? fontSize : 16}
                         bold={bold ? bold : false}>
                         {text}
                     </Text>

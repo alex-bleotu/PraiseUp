@@ -56,10 +56,12 @@ const DataBottomSheet = ({
                         <AlbumImage cover={data.cover} />
                     )}
                     <View>
-                        <Text bold size={18}>
+                        <Text bold fontSize={18}>
                             {data.title}
                         </Text>
-                        {isSong(data) && <Text size={15}>{data.artist}</Text>}
+                        {isSong(data) && (
+                            <Text fontSize={15}>{data.artist}</Text>
+                        )}
                     </View>
                 </View>
                 <View
@@ -77,7 +79,7 @@ const DataBottomSheet = ({
                                     size={30}
                                     color={theme.colors.text}
                                 />
-                                <Text size={17} style={styles.text}>
+                                <Text fontSize={17} style={styles.text}>
                                     {t`Zoom`}
                                 </Text>
                                 <View style={styles.zoomButtons}>
@@ -124,7 +126,7 @@ const DataBottomSheet = ({
                                 size={30}
                                 color={theme.colors.text}
                             />
-                            <Text size={17} style={styles.text}>
+                            <Text fontSize={17} style={styles.text}>
                                 {t`Favorite`}
                             </Text>
                         </View>
@@ -139,7 +141,7 @@ const DataBottomSheet = ({
                                     size={30}
                                     color={theme.colors.text}
                                 />
-                                <Text size={17} style={styles.text}>
+                                <Text fontSize={17} style={styles.text}>
                                     {t`Add to playlist`}
                                 </Text>
                             </View>
@@ -168,7 +170,7 @@ const DataBottomSheet = ({
                                 size={30}
                                 color={theme.colors.text}
                             />
-                            <Text size={17} style={styles.text}>
+                            <Text fontSize={17} style={styles.text}>
                                 {t`Share`}
                             </Text>
                         </View>

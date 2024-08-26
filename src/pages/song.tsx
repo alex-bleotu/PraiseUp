@@ -61,10 +61,10 @@ const renderLyrics = (
                         ]}
                         bold
                         color={theme.colors.danger}
-                        size={fontSize}>
+                        fontSize={fontSize}>
                         {chordsLine}
                     </Text>
-                    <Text style={styles.lyricsLine} size={fontSize}>
+                    <Text style={styles.lyricsLine} fontSize={fontSize}>
                         {lyricsLine}
                     </Text>
                 </View>
@@ -72,7 +72,7 @@ const renderLyrics = (
         } else {
             const cleanedLine = line.replace(/\[.*?\]/g, "");
             return (
-                <Text key={index} style={styles.lyricsLine} size={fontSize}>
+                <Text key={index} style={styles.lyricsLine} fontSize={fontSize}>
                     {cleanedLine}
                 </Text>
             );

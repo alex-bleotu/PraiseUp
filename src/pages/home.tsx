@@ -121,7 +121,7 @@ const Home = ({ navigation }: { navigation: any }) => {
 
                 {randomSongs.length !== 0 && (
                     <View style={styles.container}>
-                        <Text size={20} bold style={{ marginLeft: 20 }}>
+                        <Text fontSize={20} bold style={{ marginLeft: 20 }}>
                             {t`Suggested for you`}
                         </Text>
                         <View style={styles.songsContainer}>
@@ -152,7 +152,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                 )}
                 {favoriteAlbums.length !== 0 && (
                     <View style={styles.container}>
-                        <Text size={20} bold style={{ marginLeft: 20 }}>
+                        <Text fontSize={20} bold style={{ marginLeft: 20 }}>
                             {t`Favorite albums`}
                         </Text>
                         <View style={styles.songsContainer}>

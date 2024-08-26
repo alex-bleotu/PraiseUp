@@ -12,7 +12,7 @@ const OnboardItem = ({ item }: { item: any }) => {
             <Image source={item.image} style={styles.image} />
             <View>
                 <Text
-                    size={30}
+                    fontSize={30}
                     bold
                     color={theme.colors.primary}
                     center
