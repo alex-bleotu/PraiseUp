@@ -13,20 +13,20 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/wrapers/dataBottomSheet.tsx:92
+#: src/components/wrapers/dataBottomSheet.tsx:143
 msgid "Add to playlist"
 msgstr "Add to playlist"
 
-#: src/pages/album.tsx:117
-#: src/pages/library.tsx:107
+#: src/pages/album.tsx:118
+#: src/pages/library.tsx:108
 msgid "Alphabetical"
 msgstr "Alphabetical"
 
-#: src/components/wrapers/dataBottomSheet.tsx:107
+#: src/components/wrapers/dataBottomSheet.tsx:159
 msgid "Check out this"
 msgstr "Check out this"
 
-#: src/pages/song.tsx:136
+#: src/pages/song.tsx:154
 msgid "Chords"
 msgstr "Chords"
 
@@ -34,7 +34,7 @@ msgstr "Chords"
 msgid "Clear recent searches"
 msgstr "Clear recent searches"
 
-#: src/pages/library.tsx:235
+#: src/pages/library.tsx:236
 msgid "Create album"
 msgstr "Create album"
 
@@ -46,7 +46,7 @@ msgstr "Creator"
 msgid "Display settings"
 msgstr "Display settings"
 
-#: src/components/wrapers/dataBottomSheet.tsx:78
+#: src/components/wrapers/dataBottomSheet.tsx:128
 msgid "Favorite"
 msgstr "Favorite"
 
@@ -62,7 +62,7 @@ msgstr "Help"
 msgid "Language"
 msgstr "Language"
 
-#: src/pages/song.tsx:110
+#: src/pages/song.tsx:128
 msgid "Lyrics"
 msgstr "Lyrics"
 
@@ -82,8 +82,8 @@ msgstr "No song or album matches your search"
 msgid "Other info"
 msgstr "Other info"
 
-#: src/pages/album.tsx:116
-#: src/pages/library.tsx:106
+#: src/pages/album.tsx:117
+#: src/pages/library.tsx:107
 msgid "Recent"
 msgstr "Recent"
 
@@ -103,7 +103,7 @@ msgstr "Search"
 msgid "Settings"
 msgstr "Settings"
 
-#: src/components/wrapers/dataBottomSheet.tsx:120
+#: src/components/wrapers/dataBottomSheet.tsx:172
 msgid "Share"
 msgstr "Share"
 
@@ -123,6 +123,10 @@ msgstr "Theme"
 msgid "Version"
 msgstr "Version"
 
-#: src/pages/library.tsx:84
+#: src/pages/library.tsx:85
 msgid "Your library"
 msgstr "Your library"
+
+#: src/components/wrapers/dataBottomSheet.tsx:81
+msgid "Zoom"
+msgstr "Zoom"

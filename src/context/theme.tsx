@@ -9,6 +9,7 @@ export const ThemeProvider = ({
 }: {
     children: ReactNode | ReactNode[];
 }) => {
+    const [loading, setLoading] = useState(true);
     const [theme, setTheme] = useState<any>(lightTheme);
 
     useEffect(() => {
@@ -17,12 +18,16 @@ export const ThemeProvider = ({
 
             if (themeLoaded === "dark") setTheme(darkTheme);
             else setTheme(lightTheme);
+
+            setLoading(false);
         };
 
         load();
     }, []);
 
     useEffect(() => {
+        if (loading) return;
+
         if (theme === lightTheme) AsyncStorage.setItem("theme", "light");
         else AsyncStorage.setItem("theme", "dark");
     }, [theme]);

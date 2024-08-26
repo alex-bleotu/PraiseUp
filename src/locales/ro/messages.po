@@ -13,20 +13,20 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/wrapers/dataBottomSheet.tsx:92
+#: src/components/wrapers/dataBottomSheet.tsx:143
 msgid "Add to playlist"
 msgstr "Adaugă in playlist"
 
-#: src/pages/album.tsx:117
-#: src/pages/library.tsx:107
+#: src/pages/album.tsx:118
+#: src/pages/library.tsx:108
 msgid "Alphabetical"
 msgstr "Alfabetic"
 
-#: src/components/wrapers/dataBottomSheet.tsx:107
+#: src/components/wrapers/dataBottomSheet.tsx:159
 msgid "Check out this"
 msgstr "Verifică asta"
 
-#: src/pages/song.tsx:136
+#: src/pages/song.tsx:154
 msgid "Chords"
 msgstr "Acorduri"
 
@@ -34,7 +34,7 @@ msgstr "Acorduri"
 msgid "Clear recent searches"
 msgstr "Șterge căutările recente"
 
-#: src/pages/library.tsx:235
+#: src/pages/library.tsx:236
 msgid "Create album"
 msgstr "Creează album"
 
@@ -46,7 +46,7 @@ msgstr "Creator"
 msgid "Display settings"
 msgstr "Setări de afișare"
 
-#: src/components/wrapers/dataBottomSheet.tsx:78
+#: src/components/wrapers/dataBottomSheet.tsx:128
 msgid "Favorite"
 msgstr "Favorite"
 
@@ -62,7 +62,7 @@ msgstr "Ajutor"
 msgid "Language"
 msgstr "Limbă"
 
-#: src/pages/song.tsx:110
+#: src/pages/song.tsx:128
 msgid "Lyrics"
 msgstr "Versuri"
 
@@ -82,8 +82,8 @@ msgstr "Nicio melodie sau album nu se potrivește căutării dvs"
 msgid "Other info"
 msgstr "Alte informații"
 
-#: src/pages/album.tsx:116
-#: src/pages/library.tsx:106
+#: src/pages/album.tsx:117
+#: src/pages/library.tsx:107
 msgid "Recent"
 msgstr "Recent"
 
@@ -103,7 +103,7 @@ msgstr "Caută"
 msgid "Settings"
 msgstr "Setări"
 
-#: src/components/wrapers/dataBottomSheet.tsx:120
+#: src/components/wrapers/dataBottomSheet.tsx:172
 msgid "Share"
 msgstr "Distribuie"
 
@@ -123,6 +123,10 @@ msgstr "Temă"
 msgid "Version"
 msgstr "Versiune"
 
-#: src/pages/library.tsx:84
+#: src/pages/library.tsx:85
 msgid "Your library"
 msgstr "Biblioteca ta"
+
+#: src/components/wrapers/dataBottomSheet.tsx:81
+msgid "Zoom"
+msgstr "Zoom"

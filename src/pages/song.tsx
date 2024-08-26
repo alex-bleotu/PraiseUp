@@ -59,6 +59,7 @@ const renderLyrics = (
                                 marginTop: -19 + fontSize,
                             },
                         ]}
+                        bold
                         color={theme.colors.danger}
                         size={fontSize}>
                         {chordsLine}
