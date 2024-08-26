@@ -11,7 +11,7 @@ const HomeStack = ({ navigation }: { navigation: any }) => {
         <S.Navigator
             screenOptions={{
                 headerShown: false,
-                gestureEnabled: true,
+                // gestureEnabled: true,
                 presentation: "transparentModal",
             }}>
             <S.Screen name="HomePage" component={Home} />

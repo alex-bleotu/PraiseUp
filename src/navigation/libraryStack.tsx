@@ -13,7 +13,7 @@ const LibraryStack = ({ navigation }: { navigation: any }) => {
             screenOptions={{
                 headerShown: false,
                 presentation: "transparentModal",
-                gestureEnabled: true,
+                // gestureEnabled: true,
             }}>
             <S.Screen name="LibraryPage" component={Library} />
             <S.Screen name="SettingsPage" component={Settings} />
