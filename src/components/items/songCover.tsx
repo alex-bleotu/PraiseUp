@@ -5,7 +5,7 @@ import { DataContext, SongType } from "../../context/data";
 import { HistoryContext } from "../../context/history";
 import { RecentContext } from "../../context/recent";
 import { ThemeContext } from "../../context/theme";
-import { getImage } from "../../utils/images";
+import { getImage } from "../../utils/covers";
 import AnimatedTouchable from "../wrapers/animatedTouchable";
 import Text from "../wrapers/text";
 

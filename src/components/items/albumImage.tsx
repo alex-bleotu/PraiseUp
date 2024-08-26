@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { getImage } from "../../utils/images";
+import { getImage } from "../../utils/covers";
 
 interface AlbumImageProps {
     cover: string | null | string[];

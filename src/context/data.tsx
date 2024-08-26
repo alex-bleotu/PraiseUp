@@ -54,7 +54,11 @@ export const DataProvider = ({
                 "albumIds",
                 "recent",
                 "history",
+                "onboard",
+                "token",
             ]);
+
+            updateRefresh();
         };
 
         const firstLoad = async () => {

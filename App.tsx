@@ -1,4 +1,3 @@
-import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { PaperProvider } from "react-native-paper";
@@ -7,52 +6,36 @@ import { HistoryProvider } from "./src/context/history";
 import { RecentProvider } from "./src/context/recent";
 import { RefreshProvider } from "./src/context/refresh";
 import { ThemeProvider } from "./src/context/theme";
-import Tabs from "./src/navigation/tabs";
 import { darkTheme } from "./src/utils/theme";
 
+import { AuthProvider } from "./src/context/auth";
 import { ConstantsProvider } from "./src/context/constants";
 import { LanguageProvider } from "./src/context/language";
-
-const linking: LinkingOptions<any> = {
-    prefixes: ["app://"],
-    config: {
-        screens: {
-            Home: {
-                screens: {
-                    HomePage: "home",
-                    SongPage: "song/:id",
-                    AlbumPage: "album/:id",
-                },
-            },
-            Discover: "discover",
-            User: "user",
-        },
-    },
-};
+import AppNavigation from "./src/navigation/appNavigation";
 
 export default function App() {
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
-            <NavigationContainer linking={linking}>
-                <LanguageProvider>
-                    <PaperProvider theme={darkTheme}>
-                        <ConstantsProvider>
-                            <RefreshProvider>
+            <LanguageProvider>
+                <PaperProvider theme={darkTheme}>
+                    <ConstantsProvider>
+                        <RefreshProvider>
+                            <AuthProvider>
                                 <ThemeProvider>
                                     <DataProvider>
                                         <HistoryProvider>
                                             <RecentProvider>
-                                                <Tabs />
+                                                <AppNavigation />
                                                 <StatusBar style="auto" />
                                             </RecentProvider>
                                         </HistoryProvider>
                                     </DataProvider>
                                 </ThemeProvider>
-                            </RefreshProvider>
-                        </ConstantsProvider>
-                    </PaperProvider>
-                </LanguageProvider>
-            </NavigationContainer>
+                            </AuthProvider>
+                        </RefreshProvider>
+                    </ConstantsProvider>
+                </PaperProvider>
+            </LanguageProvider>
         </GestureHandlerRootView>
     );
 }

@@ -6,7 +6,7 @@ import { Image, Share, StyleSheet, TouchableOpacity, View } from "react-native";
 import { AlbumType, DataContext, isSong, SongType } from "../../context/data";
 import { RefreshContext } from "../../context/refresh";
 import { ThemeContext } from "../../context/theme";
-import { getImage } from "../../utils/images";
+import { getImage } from "../../utils/covers";
 import AlbumImage from "../items/albumImage";
 import BottomSheetModal from "./bottomSheetModal";
 import Text from "./text";

@@ -7,11 +7,15 @@ const Background = ({
     noPadding,
     color,
     center,
+    noBottom = false,
+    style,
 }: {
     children: ReactNode | ReactNode[];
     noPadding?: boolean;
     color?: string;
     center?: boolean;
+    noBottom?: boolean;
+    style?: any;
 }) => {
     const { theme } = useContext(ThemeContext);
 
@@ -32,11 +36,11 @@ const Background = ({
                 style={{
                     flex: 1,
                     width: "100%",
-                    marginBottom: 80,
+                    marginBottom: noBottom ? 0 : 80,
                     overflow: "hidden",
                     display: "flex",
                     justifyContent: center ? "center" : "flex-start",
-                    // alignItems: "center",
+                    ...style,
                 }}>
                 {children}
             </View>
