@@ -16,7 +16,7 @@ import { darkTheme, lightTheme } from "../utils/theme";
 const Settings = ({ navigation }: { navigation: any }) => {
     const { theme, setTheme } = useContext(ThemeContext);
     const { language, setLanguage } = useContext(LanguageContext);
-    const { setUserToken } = useContext(AuthContext);
+    const { logout } = useContext(AuthContext);
 
     return (
         <StackPage title={t`Settings`} navigation={navigation}>
@@ -195,7 +195,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                             mode="contained"
                             text={t`Report`}
                             onPress={() => {
-                                setUserToken(null);
+                                logout();
                             }}
                             icon={
                                 <MCIcons

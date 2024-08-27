@@ -13,23 +13,15 @@ import { validateEmail } from "../utils/util";
 import Loading from "./loading";
 
 const Login = ({ navigation, route }: { navigation: any; route: any }) => {
-    const { login, setUserToken } = useContext(AuthContext);
+    const { login, loading } = useContext(AuthContext);
     const { theme } = useContext(ThemeContext);
 
-    const [registered, setRegistered] = useState<boolean>(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
+    const [emailValid, setEmailValid] = useState(true);
 
     const [showError, setShowError] = useState(false);
-
-    if (registered == false) {
-        try {
-            const { registered: register } = route.params;
-            setRegistered(true);
-        } catch {}
-    }
 
     if (loading) return <Loading />;
 
@@ -50,11 +42,8 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                         style={{
                             width: 240,
                         }}>
-                        {registered && (
-                            <ErrorText
-                                succesful
-                                text={t`Registered successfully!`}
-                            />
+                        {showError && !emailValid && (
+                            <ErrorText text={t`Email is not valid.`} />
                         )}
                         {showError && error && <ErrorText text={error} />}
                         {showError && error && (
@@ -68,6 +57,7 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                         value={email}
                         onChange={setEmail}
                         validate={validateEmail}
+                        onValidateChange={setEmailValid}
                         errorEmpty={showError && !email}
                     />
                     <IconInput
@@ -100,27 +90,25 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                             fullWidth
                             bold
                             onPress={() => {
-                                if (!email || !password) setShowError(true);
+                                if (!email || !password || !emailValid)
+                                    setShowError(true);
                                 else {
-                                    setLoading(true);
-                                    setUserToken("token");
-                                    setLoading(false);
-                                    // login(email.trim(), password)
-                                    //     .then(() => {
-                                    //         setLoading(false);
-                                    //     })
-                                    //     .catch((error: any) => {
-                                    //         if (
-                                    //             error.message ===
-                                    //             "Request failed with status code 400"
-                                    //         )
-                                    //             setError(
-                                    //                 "Invalid email or password"
-                                    //             );
-                                    //         else setError(error.message);
-                                    //         setShowError(true);
-                                    //         setLoading(false);
-                                    //     });
+                                    login(email.trim(), password)
+                                        .then(() => {
+                                            setShowError(false);
+                                        })
+                                        .catch((error: any) => {
+                                            if (
+                                                error.message.includes(
+                                                    "auth/invalid-credential"
+                                                )
+                                            )
+                                                setError(
+                                                    t`Invalid email or password.`
+                                                );
+                                            else setError(error.message);
+                                            setShowError(true);
+                                        });
                                 }
                             }}
                         />

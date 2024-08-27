@@ -14,7 +14,7 @@ import { validateEmail } from "../utils/util";
 import Loading from "./loading";
 
 const Register = ({ navigation }: { navigation: any }) => {
-    const { register }: any = useContext(AuthContext);
+    const { register, loading }: any = useContext(AuthContext);
     const { theme } = useContext(ThemeContext);
 
     const [firstName, setFirstName] = useState("");
@@ -22,7 +22,6 @@ const Register = ({ navigation }: { navigation: any }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [loading, setLoading] = useState(false);
 
     const [emailValid, setEmailValid] = useState(true);
 
@@ -137,28 +136,21 @@ const Register = ({ navigation }: { navigation: any }) => {
                                 password === confirmPassword &&
                                 password.length > 4
                             ) {
-                                setLoading(true);
-                                register(
-                                    firstName.trim(),
-                                    lastName.trim(),
-                                    email.trim(),
-                                    password
-                                )
+                                register(email.trim(), password)
                                     .then(() => {
-                                        setLoading(false);
-                                        navigation.navigate("Login", {
-                                            registered: true,
-                                        });
+                                        setShowError(false);
                                     })
                                     .catch((error: any) => {
-                                        setError(error.response.data.message);
                                         if (
-                                            error.response.data.message ===
-                                            undefined
+                                            error.message.includes(
+                                                "auth/email-already-in-use"
+                                            )
                                         )
+                                            setError(t`Email already in use.`);
+                                        else if (error.message === undefined)
                                             setError(t`Something went wrong.`);
+                                        else setError(error.message);
                                         setShowError(true);
-                                        setLoading(false);
                                     });
                             } else setShowError(true);
                         }}

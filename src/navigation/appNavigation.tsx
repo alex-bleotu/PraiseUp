@@ -22,11 +22,11 @@ const linking: LinkingOptions<any> = {
 };
 
 const AppNavigation = () => {
-    const { userToken } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
     return (
         <NavigationContainer linking={linking}>
-            {userToken !== null ? <Tabs /> : <AuthStack />}
+            {user !== null ? <Tabs /> : <AuthStack />}
         </NavigationContainer>
     );
 };
