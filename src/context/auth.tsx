@@ -15,7 +15,7 @@ export const AuthProvider = ({
 }: {
     children: ReactNode | ReactNode[];
 }) => {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<User | null | undefined>(undefined);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {

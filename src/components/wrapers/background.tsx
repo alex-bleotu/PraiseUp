@@ -3,7 +3,7 @@ import { Dimensions, View } from "react-native";
 import { ThemeContext } from "../../context/theme";
 
 interface BackgroundProps {
-    children: ReactNode | ReactNode[];
+    children?: ReactNode | ReactNode[];
     noPadding?: boolean;
     color?: string;
     center?: boolean;

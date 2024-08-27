@@ -31,7 +31,7 @@ export const lightTheme = {
         primaryVariant: "#c7d6fc",
         secondary: "#CCE490",
 
-        background: "#f6f6f6",
+        background: "#f4f4f4",
         paper: "#ffffff",
         darkPaper: "#dcdcdc",
 
