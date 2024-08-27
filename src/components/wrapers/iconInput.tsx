@@ -43,7 +43,7 @@ const IconInput = ({
                 styles.container,
                 style,
                 {
-                    backgroundColor: theme.colors.background,
+                    backgroundColor: theme.colors.darkPaper,
                     borderWidth: 2,
                     borderColor: "transparent",
                 },
@@ -57,7 +57,7 @@ const IconInput = ({
                     name={icon}
                     color={theme.colors.grey}
                     style={{ marginLeft: 5 }}
-                    size={24}
+                    size={26}
                 />
             </View>
             <TextInput
@@ -65,8 +65,9 @@ const IconInput = ({
                     styles.input,
                     hidden && styles.password,
                     { letterSpacing, color: theme.colors.text },
-                    value.length > 20 && { fontSize: 14 },
-                    value.length > 25 && { fontSize: 13 },
+                    {
+                        fontSize: value.length > 25 ? 15 : 16,
+                    },
                 ]}
                 secureTextEntry={isHidden}
                 onChangeText={(text) => {
@@ -86,7 +87,13 @@ const IconInput = ({
                 autoCapitalize={autoCapitalize ? "words" : "none"}
             />
             {hidden && (
-                <View style={styles.iconContainer}>
+                <View
+                    style={[
+                        styles.iconContainer,
+                        {
+                            marginLeft: "auto",
+                        },
+                    ]}>
                     <TouchableOpacity
                         activeOpacity={theme.activeOpacity}
                         onPress={() => {
@@ -95,7 +102,7 @@ const IconInput = ({
                         <MCIcons
                             name={isHidden ? "eye" : "eye-off"}
                             color={theme.colors.grey}
-                            size={24}
+                            size={26}
                         />
                     </TouchableOpacity>
                 </View>
@@ -109,13 +116,14 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        borderRadius: 20,
-        width: 250,
-        height: 40,
+        borderRadius: 12,
+        width: "100%",
+        height: 50,
     },
     input: {
         fontSize: 15,
-        width: 200,
+        width: "100%",
+        paddingLeft: 5,
         paddingRight: 2,
         backgroundColor: "transparent",
         letterSpacing: 0,

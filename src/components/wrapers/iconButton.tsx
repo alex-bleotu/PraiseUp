@@ -1,6 +1,4 @@
-import { useContext } from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { ThemeContext } from "../../context/theme";
 import AnimatedTouchable from "./animatedTouchable";
 import Text from "./text";
 
@@ -21,26 +19,25 @@ const IconButton = ({
     style,
     onPress,
 }: IconButtonProps) => {
-    const { theme } = useContext(ThemeContext);
-
     return (
-        <AnimatedTouchable onPress={onPress}>
+        <AnimatedTouchable
+            onPress={onPress}
+            style={{
+                width: "100%",
+            }}>
             <View
                 style={[{ backgroundColor: bgcolor }, styles.container, style]}>
-                <View style={styles.gridContainer}>
-                    <View
-                        style={[
-                            { backgroundColor: color },
-                            styles.iconContainer,
-                        ]}>
-                        <Image style={styles.image} source={src} />
-                    </View>
-                    <View style={styles.textContainer}>
-                        <Text color={theme.colors.white} fontSize={15}>
-                            {text}
-                        </Text>
-                    </View>
-                </View>
+                <Image style={styles.image} source={src} />
+                <Text
+                    color={color}
+                    fontSize={14}
+                    bold
+                    upper
+                    style={{
+                        marginLeft: 15,
+                    }}>
+                    {text}
+                </Text>
             </View>
         </AnimatedTouchable>
     );
@@ -48,39 +45,13 @@ const IconButton = ({
 
 const styles = StyleSheet.create({
     container: {
-        borderRadius: 20,
-        width: 250,
-        height: 40,
+        borderRadius: 12,
+        paddingVertical: 12,
         display: "flex",
-        alignItems: "center",
-        cursor: "pointer",
-    },
-    textContainer: {
-        justifyContent: "center",
-        marginLeft: 10,
-    },
-    gridContainer: {
-        width: 250,
-        height: 40,
-        flex: 1,
+        width: "100%",
         flexDirection: "row",
-        flexWrap: "wrap",
-        justifyContent: "flex-start",
-        margin: 0,
-        display: "flex",
-        alignItems: "center",
-    },
-    iconContainer: {
-        height: 40,
-        width: 40,
-        borderTopLeftRadius: 20,
-        borderBottomLeftRadius: 20,
-        borderTopRightRadius: 0,
-        borderBottomRightRadius: 0,
-        display: "flex",
-        alignItems: "center",
         justifyContent: "center",
-        marginLeft: -1,
+        alignItems: "center",
     },
     image: {
         width: 25,

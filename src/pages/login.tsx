@@ -1,11 +1,11 @@
 import { t } from "@lingui/macro";
 import { useContext, useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import Background from "../components/wrapers/background";
 import Button from "../components/wrapers/button";
 import ErrorText from "../components/wrapers/errorText";
 import IconButton from "../components/wrapers/iconButton";
 import IconInput from "../components/wrapers/iconInput";
+import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
 import { AuthContext } from "../context/auth";
 import { ThemeContext } from "../context/theme";
@@ -24,7 +24,6 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
     const [showError, setShowError] = useState(false);
 
     useEffect(() => {
-        // Only set registered to true if it's currently false and route param exists
         if (!registered && route.params?.registered) {
             setRegistered(true);
         }
@@ -33,18 +32,28 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
     if (loading) return <Loading />;
 
     return (
-        <Background center>
-            <View>
-                <View
-                    style={[
-                        styles.background,
-                        {
-                            backgroundColor: theme.colors.paper,
-                        },
-                    ]}>
-                    <Text fontSize={26} bold style={{ marginBottom: 20 }}>
-                        {t`Log in`}
-                    </Text>
+        <StackPage title={""} navigation={navigation} noBottom>
+            <View style={styles.container}>
+                <View style={styles.top}>
+                    <View
+                        style={{
+                            alignSelf: "flex-start",
+                            marginTop: 10,
+                            marginBottom: 20,
+                        }}>
+                        <Text bold fontSize={30}>{t`Sign In`}</Text>
+                    </View>
+                    <View
+                        style={{
+                            alignSelf: "flex-start",
+                            marginBottom: 20,
+                        }}>
+                        <Text
+                            fontSize={18}
+                            color={
+                                theme.colors.textVariant
+                            }>{t`Type in the email and password you used to create your account.`}</Text>
+                    </View>
                     <View
                         style={{
                             width: 240,
@@ -83,24 +92,38 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                         errorEmpty={showError && !password}
                     />
 
-                    <TouchableOpacity
-                        activeOpacity={0.5}
-                        style={styles.textContainer}>
-                        <Text
-                            style={{
-                                marginVertical: 2,
-                            }}>
-                            {t`Don't remember your password?`}
-                        </Text>
-                    </TouchableOpacity>
                     <View
                         style={{
-                            width: 250,
+                            marginLeft: "auto",
+                        }}>
+                        <TouchableOpacity
+                            activeOpacity={0.5}
+                            style={styles.textContainer}>
+                            <Text
+                                color={theme.colors.lightBlue}
+                                bold
+                                fontSize={16}
+                                style={{
+                                    marginVertical: 2,
+                                    textDecorationLine: "underline",
+                                }}>
+                                {t`Forgot your password?`}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
+                <View style={styles.bottom}>
+                    <View
+                        style={{
+                            width: "100%",
                         }}>
                         <Button
                             mode="contained"
                             text={t`Log in`}
+                            upper
                             fullWidth
+                            fontSize={14}
                             bold
                             onPress={() => {
                                 setRegistered(false);
@@ -129,66 +152,67 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                         />
                     </View>
 
-                    <View style={styles.textContainer}>
-                        <Text bold>{t`or`}</Text>
+                    <View
+                        style={[
+                            styles.textContainer,
+                            {
+                                marginVertical: 30,
+                            },
+                        ]}>
+                        <Text bold fontSize={18} upper>{t`or`}</Text>
                     </View>
 
-                    <IconButton
-                        src={require("../../assets/images/auth/google.png")}
-                        bgcolor={theme.colors.tomato}
-                        color={theme.colors.darkWhite}
-                        text={t`Continue with Google`}
-                    />
-                    <IconButton
-                        src={require("../../assets/images/auth/facebook.png")}
-                        bgcolor={theme.colors.blue}
-                        color={theme.colors.darkWhite}
-                        text={t`Continue with Facebook`}
-                        style={{ marginTop: 10 }}
-                    />
-
-                    <View style={styles.textContainer}>
-                        <Text color={theme.colors.dark}>
-                            {t`Don't have an account?`}
-                        </Text>
-                        <TouchableOpacity
-                            activeOpacity={theme.activeOpacity}
-                            onPress={() => {
-                                navigation.navigate("Register");
-                                setShowError(false);
-                            }}>
-                            <Text
-                                bold={true}
-                                color={theme.colors.lightBlue}
-                                style={{
-                                    marginLeft: 5,
-                                }}>
-                                {t`Register`}
-                            </Text>
-                        </TouchableOpacity>
+                    <View style={{ width: "100%" }}>
+                        <IconButton
+                            src={require("../../assets/images/auth/google.png")}
+                            bgcolor={theme.colors.white}
+                            color={"black"}
+                            text={t`Continue with Google`}
+                        />
+                    </View>
+                    <View style={{ width: "100%" }}>
+                        <IconButton
+                            src={require("../../assets/images/auth/facebook.png")}
+                            bgcolor={theme.colors.blue}
+                            color={"white"}
+                            text={t`Continue with Facebook`}
+                            style={{ marginTop: 15 }}
+                        />
                     </View>
                 </View>
             </View>
-        </Background>
+        </StackPage>
     );
 };
 
 const styles = StyleSheet.create({
+    container: {
+        paddingHorizontal: 20,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flex: 1,
+    },
     textContainer: {
-        marginTop: 10,
-        marginBottom: 10,
+        marginVertical: 10,
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
     },
-    background: {
-        paddingHorizontal: 25,
-        paddingVertical: 10,
-        borderRadius: 30,
+    top: {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        width: "100%",
+    },
+    bottom: {
+        marginTop: "auto",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+        marginBottom: 20,
     },
 });
 

@@ -15,6 +15,7 @@ interface StackPageProps {
     title: string;
     icon?: keyof typeof MCIcons.glyphMap;
     back?: boolean;
+    noBottom?: boolean;
     action?: () => void;
 }
 
@@ -25,13 +26,14 @@ const StackPage = ({
     icon,
     action,
     back = true,
+    noBottom = false,
 }: StackPageProps) => {
     const { theme } = useContext(ThemeContext);
 
     const iconSize = 30;
 
     return (
-        <Background noPadding>
+        <Background noPadding noBottom={noBottom}>
             <View style={styles.topBar}>
                 {back && (
                     <AnimatedTouchable

@@ -27,14 +27,17 @@ export const lightTheme = {
     ...defaultTheme,
     colors: {
         ...defaultTheme.colors,
-        primary: "#6e67ff",
+        primary: "#499ed4",
         primaryVariant: "#c7d6fc",
         secondary: "#CCE490",
 
-        background: "#f2f2f2",
+        background: "#f6f6f6",
         paper: "#ffffff",
+        darkPaper: "#e6e6e6",
+
         text: "#1a1a1a",
         textInverted: "#f2f2f2",
+        textVariant: "#9f9f9f",
     },
 };
 

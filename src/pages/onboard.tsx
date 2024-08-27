@@ -1,34 +1,20 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useRef, useState } from "react";
-import { Animated, FlatList } from "react-native";
-
+import { t } from "@lingui/macro";
+import { useContext, useRef } from "react";
+import { Animated, FlatList, StyleSheet, View } from "react-native";
 import OnboardItem from "../components/items/onboardItem";
 import Background from "../components/wrapers/background";
-import NextButton from "../components/wrapers/nextButton";
+import Button from "../components/wrapers/button";
 import Paginator from "../components/wrapers/paginator";
+import { ThemeContext } from "../context/theme";
 import slides from "../utils/slides";
 
 function Onboard({ navigation }: { navigation: any }) {
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const { theme } = useContext(ThemeContext);
+
     const scrollX = useRef(new Animated.Value(0)).current;
     const slidesRef = useRef(null);
 
-    const viewableItemsChanged = useRef(({ viewableItems }: any) => {
-        setCurrentIndex(viewableItems[0].index);
-    }).current;
-
     const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
-
-    const scrollTo = async () => {
-        if (currentIndex < slides.length - 1) {
-            (slidesRef.current as any).scrollToIndex({
-                index: currentIndex + 1,
-            });
-        } else {
-            AsyncStorage.setItem("onboard", "true");
-            navigation.navigate("Login");
-        }
-    };
 
     return (
         <Background
@@ -50,21 +36,54 @@ function Onboard({ navigation }: { navigation: any }) {
                     { useNativeDriver: false }
                 )}
                 scrollEventThrottle={32}
-                onViewableItemsChanged={viewableItemsChanged}
                 viewabilityConfig={viewConfig}
                 ref={slidesRef}
                 showsHorizontalScrollIndicator={false}
             />
 
-            <Paginator data={slides} scrollX={scrollX} />
+            <View style={styles.paginator}>
+                <Paginator data={slides} scrollX={scrollX} />
+            </View>
 
-            <NextButton
-                scrollTo={scrollTo}
-                percentage={(currentIndex + 1) * (100 / slides.length)}
-                style={{ marginBottom: 60 }}
-            />
+            <View style={styles.buttons}>
+                <Button
+                    mode="contained"
+                    text={t`Join App`}
+                    upper
+                    fullWidth
+                    fontSize={14}
+                    bold
+                    onPress={() => {
+                        navigation.navigate("Register");
+                    }}
+                />
+                <Button
+                    mode="none"
+                    text={t`Already have an account?`}
+                    upper
+                    fullWidth
+                    fontSize={14}
+                    bold
+                    style={{ marginTop: 10 }}
+                    color={theme.colors.grey}
+                    onPress={() => {
+                        navigation.navigate("Login");
+                    }}
+                />
+            </View>
         </Background>
     );
 }
 
 export default Onboard;
+
+const styles = StyleSheet.create({
+    paginator: {
+        position: "absolute",
+    },
+    buttons: {
+        marginBottom: 20,
+        width: "100%",
+        paddingHorizontal: 20,
+    },
+});

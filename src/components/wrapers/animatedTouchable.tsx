@@ -22,7 +22,7 @@ const AnimatedTouchable = ({
 
     const handlePressIn = () => {
         Animated.spring(scale, {
-            toValue: 0.9,
+            toValue: 0.95,
             useNativeDriver: true,
         }).start();
     };

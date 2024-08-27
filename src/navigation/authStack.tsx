@@ -28,9 +28,7 @@ const AuthStack = () => {
 
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-            {onboard ? null : (
-                <Stack.Screen name="Onboard" component={Onboard} />
-            )}
+            <Stack.Screen name="Onboard" component={Onboard} />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />
         </Stack.Navigator>

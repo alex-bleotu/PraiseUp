@@ -10,16 +10,20 @@ const OnboardItem = ({ item }: { item: any }) => {
     return (
         <View style={[styles.container, { width }]}>
             <Image source={item.image} style={styles.image} />
-            <View>
+            <View
+                style={{
+                    marginTop: 10,
+                }}>
                 <Text
-                    fontSize={30}
+                    fontSize={36}
                     bold
-                    color={theme.colors.primary}
                     center
-                    style={{ marginTop: 40, marginBottom: 10 }}>
+                    style={{ marginTop: 40, marginBottom: 20 }}>
                     {item.title}
                 </Text>
-                <Text center>{item.description}</Text>
+                <Text center color={theme.colors.textVariant} fontSize={17}>
+                    {item.description}
+                </Text>
             </View>
         </View>
     );
@@ -32,12 +36,14 @@ const styles = StyleSheet.create({
         alignItems: "center",
         width: 300,
         paddingHorizontal: 30,
+        marginTop: -100,
     },
     image: {
         width: 300,
         height: 275,
         resizeMode: "contain",
         justifyContent: "center",
+        marginBottom: 50,
     },
 });
 

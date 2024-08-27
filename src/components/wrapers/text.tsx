@@ -1,5 +1,5 @@
 import React, { ReactNode, useContext } from "react";
-import { StyleSheet, Text as Ts, ViewStyle } from "react-native";
+import { StyleSheet, Text as Ts } from "react-native";
 import { ThemeContext } from "../../context/theme";
 
 interface TextProps {
@@ -7,8 +7,9 @@ interface TextProps {
     fontSize?: number;
     bold?: boolean;
     color?: string;
-    style?: ViewStyle | ViewStyle[];
+    style?: any;
     center?: boolean;
+    upper?: boolean;
 }
 
 const Text = ({
@@ -18,6 +19,7 @@ const Text = ({
     color,
     style,
     center,
+    upper = false,
 }: TextProps) => {
     const { theme } = useContext(ThemeContext);
 
@@ -29,6 +31,7 @@ const Text = ({
                 fontWeight: bold ? "bold" : "normal",
                 color: color ? color : theme.colors.text,
                 textAlign: center ? "center" : "left",
+                textTransform: upper ? "uppercase" : "none",
             }}>
             {children}
         </Ts>
