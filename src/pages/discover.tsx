@@ -137,6 +137,7 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                         text={t`Clear recent searches`}
                                         fontSize={14}
                                         mode="outlined"
+                                        color={theme.colors.text}
                                         bold
                                         onPress={async () => {
                                             deleteHistory();

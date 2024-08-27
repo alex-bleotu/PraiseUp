@@ -16,9 +16,9 @@ const DiscoverStack = ({ navigation }: { navigation: any }) => {
                 headerShown: false,
                 cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
             }}>
-            <S.Screen name="DiscoverPage" component={Discover} />
-            <S.Screen name="SongPage" component={Song} />
-            <S.Screen name="AlbumPage" component={Album} />
+            <S.Screen name="Discover" component={Discover} />
+            <S.Screen name="Song" component={Song} />
+            <S.Screen name="Album" component={Album} />
         </S.Navigator>
     );
 };

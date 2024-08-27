@@ -29,7 +29,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
-        <StackPage title={t`Settings`} navigation={navigation}>
+        <StackPage title={t`Settings`} navigation={navigation} noBottom>
             <ScrollView
                 style={styles.scroll}
                 top={10}

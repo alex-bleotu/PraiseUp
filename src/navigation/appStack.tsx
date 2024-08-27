@@ -3,24 +3,23 @@ import {
     createStackNavigator,
 } from "@react-navigation/stack";
 import React from "react";
-import Album from "../pages/album";
-import Home from "../pages/home";
-import Song from "../pages/song";
+import Settings from "../pages/settings";
+import Tabs from "./tabs";
 
 const S = createStackNavigator();
 
-const HomeStack = ({ navigation }: { navigation: any }) => {
+const AppStack = () => {
     return (
         <S.Navigator
+            initialRouteName="Tabs"
             screenOptions={{
                 headerShown: false,
                 cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
             }}>
-            <S.Screen name="Home" component={Home} />
-            <S.Screen name="Song" component={Song} />
-            <S.Screen name="Album" component={Album} />
+            <S.Screen name="Tabs" component={Tabs} />
+            <S.Screen name="Settings" component={Settings} />
         </S.Navigator>
     );
 };
 
-export default HomeStack;
+export default AppStack;

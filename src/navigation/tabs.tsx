@@ -28,11 +28,11 @@ const Tabs = () => {
         routeName: string
     ): keyof typeof FontAwesome6.glyphMap => {
         switch (routeName) {
-            case "Home":
+            case "HomeStack":
                 return "house";
-            case "Discover":
+            case "DiscoverStack":
                 return "magnifying-glass";
-            case "Library":
+            case "LibraryStack":
                 return "bookshelf";
             default:
                 return "question";
@@ -92,9 +92,9 @@ const Tabs = () => {
                     tabBarShowLabel: false,
                     headerShown: false,
                 })}>
-                <Tab.Screen name="Home" component={HomeStack} />
-                <Tab.Screen name="Discover" component={DiscoverStack} />
-                <Tab.Screen name="Library" component={LibraryStack} />
+                <Tab.Screen name="HomeStack" component={HomeStack} />
+                <Tab.Screen name="DiscoverStack" component={DiscoverStack} />
+                <Tab.Screen name="LibraryStack" component={LibraryStack} />
             </Tab.Navigator>
         </View>
     );

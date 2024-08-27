@@ -86,7 +86,7 @@ const Library = ({ navigation }: { navigation: any }) => {
             back={false}
             icon={"cog"}
             action={() => {
-                navigation.navigate("SettingsPage");
+                navigation.navigate("Settings");
             }}>
             <View style={styles.container}>
                 <View style={styles.top}>
