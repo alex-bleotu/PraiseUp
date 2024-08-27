@@ -1,6 +1,7 @@
 import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth";
+import Loading from "../pages/loading";
 import AuthStack from "./authStack";
 import Tabs from "./tabs";
 
@@ -23,6 +24,8 @@ const linking: LinkingOptions<any> = {
 
 const AppNavigation = () => {
     const { user } = useContext(AuthContext);
+
+    if (user === undefined) return <Loading />;
 
     return (
         <NavigationContainer linking={linking}>

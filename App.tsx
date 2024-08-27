@@ -17,11 +17,11 @@ export default function App() {
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <LanguageProvider>
-                <PaperProvider theme={darkTheme}>
-                    <ConstantsProvider>
-                        <RefreshProvider>
-                            <AuthProvider>
-                                <ThemeProvider>
+                <ThemeProvider>
+                    <PaperProvider theme={darkTheme}>
+                        <ConstantsProvider>
+                            <RefreshProvider>
+                                <AuthProvider>
                                     <DataProvider>
                                         <HistoryProvider>
                                             <RecentProvider>
@@ -30,11 +30,11 @@ export default function App() {
                                             </RecentProvider>
                                         </HistoryProvider>
                                     </DataProvider>
-                                </ThemeProvider>
-                            </AuthProvider>
-                        </RefreshProvider>
-                    </ConstantsProvider>
-                </PaperProvider>
+                                </AuthProvider>
+                            </RefreshProvider>
+                        </ConstantsProvider>
+                    </PaperProvider>
+                </ThemeProvider>
             </LanguageProvider>
         </GestureHandlerRootView>
     );

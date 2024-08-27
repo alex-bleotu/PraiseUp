@@ -11,7 +11,7 @@ import { ThemeContext } from "../context/theme";
 import { validateEmail } from "../utils/util";
 import Loading from "./loading";
 
-const Login = ({ navigation, route }: { navigation: any; route: any }) => {
+const Login = ({ navigation }: { navigation: any }) => {
     const { login, loading } = useContext(AuthContext);
     const { theme } = useContext(ThemeContext);
 

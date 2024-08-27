@@ -16,7 +16,7 @@ const defaultTheme = {
         lightBlue: "#586eb2",
         lightGrey: "#bababa",
         darkGrey: "#2d2d2d",
-        danger: "#e83635",
+        danger: "#f65857",
         tomato: "#f5593d",
         succes: "#00b16a",
         gold: "#f5a623",
@@ -33,7 +33,7 @@ export const lightTheme = {
 
         background: "#f6f6f6",
         paper: "#ffffff",
-        darkPaper: "#ececec",
+        darkPaper: "#e5e9f2",
 
         text: "#1a1a1a",
         textInverted: "#f2f2f2",

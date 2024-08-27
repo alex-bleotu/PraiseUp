@@ -2,7 +2,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
-    signOut,
     updateProfile,
     User,
 } from "firebase/auth";
@@ -16,7 +15,7 @@ export const AuthProvider = ({
 }: {
     children: ReactNode | ReactNode[];
 }) => {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<User | null | undefined>(undefined);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -96,8 +95,7 @@ export const AuthProvider = ({
         setLoading(true);
 
         try {
-            await signOut(auth);
-            await AsyncStorage.removeItem("user");
+            await auth.signOut();
             setUser(null);
         } catch {
             console.log("Failed to logout");
