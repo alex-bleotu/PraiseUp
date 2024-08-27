@@ -1,5 +1,5 @@
 import { t } from "@lingui/macro";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Background from "../components/wrapers/background";
 import Button from "../components/wrapers/button";
@@ -16,12 +16,19 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
     const { login, loading } = useContext(AuthContext);
     const { theme } = useContext(ThemeContext);
 
+    const [registered, setRegistered] = useState<boolean>(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [emailValid, setEmailValid] = useState(true);
-
     const [showError, setShowError] = useState(false);
+
+    useEffect(() => {
+        // Only set registered to true if it's currently false and route param exists
+        if (!registered && route.params?.registered) {
+            setRegistered(true);
+        }
+    }, [route.params?.registered]);
 
     if (loading) return <Loading />;
 
@@ -42,6 +49,12 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                         style={{
                             width: 240,
                         }}>
+                        {registered && (
+                            <ErrorText
+                                succesful
+                                text={t`Registered successfully!`}
+                            />
+                        )}
                         {showError && !emailValid && (
                             <ErrorText text={t`Email is not valid.`} />
                         )}
@@ -90,9 +103,11 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                             fullWidth
                             bold
                             onPress={() => {
-                                if (!email || !password || !emailValid)
+                                setRegistered(false);
+
+                                if (!email || !password || !emailValid) {
                                     setShowError(true);
-                                else {
+                                } else {
                                     login(email.trim(), password)
                                         .then(() => {
                                             setShowError(false);

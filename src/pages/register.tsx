@@ -6,7 +6,6 @@ import Button from "../components/wrapers/button";
 import ErrorText from "../components/wrapers/errorText";
 import IconButton from "../components/wrapers/iconButton";
 import IconInput from "../components/wrapers/iconInput";
-import Input from "../components/wrapers/input";
 import Text from "../components/wrapers/text";
 import { AuthContext } from "../context/auth";
 import { ThemeContext } from "../context/theme";
@@ -17,8 +16,7 @@ const Register = ({ navigation }: { navigation: any }) => {
     const { register, loading }: any = useContext(AuthContext);
     const { theme } = useContext(ThemeContext);
 
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
+    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -59,31 +57,14 @@ const Register = ({ navigation }: { navigation: any }) => {
                     {showError && <View style={{ marginBottom: 5 }} />}
                 </View>
 
-                <View
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                    }}>
-                    <Input
-                        placeholder={t`First name`}
-                        value={firstName}
-                        onChange={setFirstName}
-                        style={{ width: 120 }}
-                        errorEmpty={showError && !firstName}
-                        autoCapitalize
-                        maxLength={15}
-                    />
-                    <Input
-                        placeholder={t`Last name`}
-                        value={lastName}
-                        onChange={setLastName}
-                        style={{ width: 120, marginLeft: 10 }}
-                        errorEmpty={showError && !lastName}
-                        autoCapitalize
-                        maxLength={15}
-                    />
-                </View>
+                <IconInput
+                    icon="account"
+                    placeholder={t`Username`}
+                    value={username}
+                    onChange={setUsername}
+                    style={{ marginTop: 10 }}
+                    errorEmpty={showError && !username}
+                />
 
                 <IconInput
                     icon="email"
@@ -127,8 +108,7 @@ const Register = ({ navigation }: { navigation: any }) => {
                         bold
                         onPress={() => {
                             if (
-                                firstName &&
-                                lastName &&
+                                username &&
                                 email &&
                                 password &&
                                 confirmPassword &&
@@ -139,6 +119,9 @@ const Register = ({ navigation }: { navigation: any }) => {
                                 register(email.trim(), password)
                                     .then(() => {
                                         setShowError(false);
+                                        navigation.navigate("Login", {
+                                            registered: true,
+                                        });
                                     })
                                     .catch((error: any) => {
                                         if (

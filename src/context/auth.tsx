@@ -1,7 +1,11 @@
+import { t } from "@lingui/macro";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
     createUserWithEmailAndPassword,
+    sendEmailVerification,
     signInWithEmailAndPassword,
+    signOut,
+    updateProfile,
     User,
 } from "firebase/auth";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
@@ -42,10 +46,17 @@ export const AuthProvider = ({
                     email,
                     password
                 );
+
+                if (!response.user.emailVerified) {
+                    await signOut(auth);
+                    reject(new Error(t`Email not verified.`));
+                    return;
+                }
+
                 setUser(response.user);
                 resolve(response);
             } catch (error) {
-                console.log("Failed to login");
+                console.log("Failed to login", error);
                 reject(error);
             } finally {
                 setLoading(false);
@@ -53,7 +64,11 @@ export const AuthProvider = ({
         });
     };
 
-    const register = async (email: string, password: string): Promise<any> => {
+    const register = async (
+        email: string,
+        password: string,
+        username: string
+    ): Promise<any> => {
         setLoading(true);
 
         return new Promise(async (resolve, reject) => {
@@ -63,10 +78,18 @@ export const AuthProvider = ({
                     email,
                     password
                 );
-                setUser(response.user);
+
+                if (response.user) {
+                    await updateProfile(response.user, {
+                        displayName: username,
+                    });
+
+                    await sendEmailVerification(response.user);
+                }
+
                 resolve(response);
             } catch (error) {
-                console.log("Failed to register");
+                console.log("Failed to register", error);
                 reject(error);
             } finally {
                 setLoading(false);
@@ -78,6 +101,7 @@ export const AuthProvider = ({
         setLoading(true);
 
         try {
+            await signOut(auth);
             await AsyncStorage.removeItem("user");
             setUser(null);
         } catch {
