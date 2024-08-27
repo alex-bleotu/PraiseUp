@@ -8,6 +8,7 @@ import Button from "../components/wrapers/button";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
+import { AuthContext } from "../context/auth";
 import { LanguageContext } from "../context/language";
 import { ThemeContext } from "../context/theme";
 import { darkTheme, lightTheme } from "../utils/theme";
@@ -15,6 +16,7 @@ import { darkTheme, lightTheme } from "../utils/theme";
 const Settings = ({ navigation }: { navigation: any }) => {
     const { theme, setTheme } = useContext(ThemeContext);
     const { language, setLanguage } = useContext(LanguageContext);
+    const { setUserToken } = useContext(AuthContext);
 
     return (
         <StackPage title={t`Settings`} navigation={navigation}>
@@ -192,6 +194,9 @@ const Settings = ({ navigation }: { navigation: any }) => {
                         <Button
                             mode="contained"
                             text={t`Report`}
+                            onPress={() => {
+                                setUserToken(null);
+                            }}
                             icon={
                                 <MCIcons
                                     name="bug"

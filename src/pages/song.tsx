@@ -249,8 +249,6 @@ const Song = ({ route, navigation }: SongProps) => {
                             }}
                             boxStyles={{
                                 borderWidth: 0,
-                                position: "absolute",
-                                top: -5,
                             }}
                             inputStyles={{
                                 fontWeight: "bold",
@@ -260,11 +258,7 @@ const Song = ({ route, navigation }: SongProps) => {
                                 fontWeight: "bold",
                                 fontSize: 16,
                             }}
-                            dropdownStyles={{
-                                position: "absolute",
-                                top: 30,
-                                zIndex: 100,
-                            }}
+                            dropdownStyles={{}}
                         />
                     </View>
                 )}
