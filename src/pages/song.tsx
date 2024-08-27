@@ -3,7 +3,7 @@ import {
     MaterialIcons as MIcon,
 } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Button from "../components/wrapers/button";
 import DataBottomSheet from "../components/wrapers/dataBottomSheet";
@@ -11,7 +11,6 @@ import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
 import { ConstantsContext } from "../context/constants";
-import { DataContext, SongType } from "../context/data";
 import { ThemeContext } from "../context/theme";
 import Loading from "./loading";
 
@@ -134,29 +133,18 @@ const data = [
 ];
 
 const Song = ({ route, navigation }: SongProps) => {
-    const { id } = route.params;
+    const { song } = route.params;
 
     const { theme } = useContext(ThemeContext);
-    const { getSongById } = useContext(DataContext);
     const { lyricsSize, setLyricsSize } = useContext(ConstantsContext);
 
     const [value, setValue] = useState("lyrics");
-    const [song, setSong] = useState<SongType | null>(null);
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
     const [steps, setSteps] = useState(0);
     const [selectedChord, setSelectedChord] = useState([]);
 
     const buttonWidth = Dimensions.get("screen").width / 2 - 25;
     const buttonsContainerWidth = buttonWidth * 2 + 25;
-
-    useEffect(() => {
-        const load = async () => {
-            const song = await getSongById(id);
-            setSong(song);
-        };
-
-        load();
-    }, []);
 
     if (song === null) return <Loading />;
 

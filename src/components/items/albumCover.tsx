@@ -47,7 +47,7 @@ const AlbumCover = ({
         <AnimatedTouchable
             onLongPress={onLongPress}
             onPress={() => {
-                navigation.navigate("Album", { id: album.id });
+                navigation.navigate("Album", { album });
 
                 if (album.id !== "F") addToRecent(album);
 
