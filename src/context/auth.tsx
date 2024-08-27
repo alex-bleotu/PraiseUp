@@ -23,6 +23,7 @@ export const AuthProvider = ({
             const user = await AsyncStorage.getItem("user");
 
             if (user) setUser(JSON.parse(user));
+            else setUser(null);
 
             setLoading(false);
         };

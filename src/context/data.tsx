@@ -56,7 +56,7 @@ export const DataProvider = ({
                 "recent",
                 "history",
                 "onboard",
-                "token",
+                "user",
             ]);
 
             updateRefresh();
