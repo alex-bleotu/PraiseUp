@@ -36,11 +36,10 @@ const styles = StyleSheet.create({
         alignItems: "center",
         width: 300,
         paddingHorizontal: 30,
-        marginTop: -100,
+        marginTop: -75,
     },
     image: {
-        width: 300,
-        height: 275,
+        height: 250,
         resizeMode: "contain",
         justifyContent: "center",
         marginBottom: 50,

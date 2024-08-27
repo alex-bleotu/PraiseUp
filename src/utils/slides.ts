@@ -5,18 +5,18 @@ export default [
         id: 1,
         title: t`Lorem Ipsum`,
         description: t`Lorem Ipsum is simply dummy text of the printing and typesetting`,
-        image: require("../../assets/images/onboard/search.png"),
+        image: require("../../assets/images/onboard/image.png"),
     },
     {
         id: 2,
         title: t`Lorem Ipsum`,
         description: t`Lorem Ipsum is simply dummy text of the printing and typesetting`,
-        image: require("../../assets/images/onboard/drive.png"),
+        image: require("../../assets/images/onboard/image2.png"),
     },
     {
         id: 3,
         title: t`Lorem Ipsum`,
         description: t`Lorem Ipsum is simply dummy text of the printing and typesetting`,
-        image: require("../../assets/images/onboard/park.png"),
+        image: require("../../assets/images/onboard/image3.png"),
     },
 ];

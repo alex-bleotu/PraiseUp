@@ -15,7 +15,7 @@ export const AuthProvider = ({
 }: {
     children: ReactNode | ReactNode[];
 }) => {
-    const [user, setUser] = useState<User | null | undefined>(undefined);
+    const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -96,6 +96,7 @@ export const AuthProvider = ({
 
         try {
             await auth.signOut();
+            await AsyncStorage.removeItem("user");
             setUser(null);
         } catch {
             console.log("Failed to logout");

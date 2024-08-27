@@ -1,6 +1,6 @@
 import { t } from "@lingui/macro";
 import { useContext, useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 import Button from "../components/wrapers/button";
 import IconButton from "../components/wrapers/iconButton";
 import IconInput from "../components/wrapers/iconInput";
@@ -110,7 +110,21 @@ const Register = ({ navigation }: { navigation: any }) => {
                             fontSize={14}
                             bold
                             disabled={!email || !password || !emailValid}
+                            style={{
+                                paddingVertical: loading ? 13 : 14.5,
+                            }}
+                            icon={
+                                loading && (
+                                    <ActivityIndicator
+                                        animating={true}
+                                        size={22}
+                                        color={theme.colors.textInverted}
+                                    />
+                                )
+                            }
                             onPress={() => {
+                                if (loading) return;
+
                                 setError("");
                                 if (password.length > 5) {
                                     register(email.trim(), password)

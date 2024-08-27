@@ -1,6 +1,11 @@
 import { t } from "@lingui/macro";
 import { useContext, useEffect, useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+    ActivityIndicator,
+    StyleSheet,
+    TouchableOpacity,
+    View,
+} from "react-native";
 import Button from "../components/wrapers/button";
 import IconButton from "../components/wrapers/iconButton";
 import IconInput from "../components/wrapers/iconInput";
@@ -9,7 +14,6 @@ import Text from "../components/wrapers/text";
 import { AuthContext } from "../context/auth";
 import { ThemeContext } from "../context/theme";
 import { validateEmail } from "../utils/util";
-import Loading from "./loading";
 
 const Login = ({ navigation }: { navigation: any }) => {
     const { login, loading } = useContext(AuthContext);
@@ -24,8 +28,6 @@ const Login = ({ navigation }: { navigation: any }) => {
     useEffect(() => {
         setError("");
     }, [email, password]);
-
-    if (loading) return <Loading />;
 
     return (
         <StackPage title={""} navigation={navigation} noBottom>
@@ -113,7 +115,21 @@ const Login = ({ navigation }: { navigation: any }) => {
                             fontSize={14}
                             bold
                             disabled={!email || !password || !emailValid}
+                            style={{
+                                paddingVertical: loading ? 13 : 14.5,
+                            }}
+                            icon={
+                                loading && (
+                                    <ActivityIndicator
+                                        animating={true}
+                                        size={22}
+                                        color={theme.colors.textInverted}
+                                    />
+                                )
+                            }
                             onPress={() => {
+                                if (loading) return;
+
                                 login(email.trim(), password)
                                     .then(() => {
                                         setError("");
