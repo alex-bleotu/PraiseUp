@@ -2,7 +2,6 @@ import { t } from "@lingui/macro";
 import { useContext, useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Button from "../components/wrapers/button";
-import ErrorText from "../components/wrapers/errorText";
 import IconButton from "../components/wrapers/iconButton";
 import IconInput from "../components/wrapers/iconInput";
 import StackPage from "../components/wrapers/stackPage";
@@ -16,18 +15,15 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
     const { login, loading } = useContext(AuthContext);
     const { theme } = useContext(ThemeContext);
 
-    const [registered, setRegistered] = useState<boolean>(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
     const [emailValid, setEmailValid] = useState(true);
-    const [showError, setShowError] = useState(false);
+
+    const [error, setError] = useState<string>("");
 
     useEffect(() => {
-        if (!registered && route.params?.registered) {
-            setRegistered(true);
-        }
-    }, [route.params?.registered]);
+        setError("");
+    }, [email, password]);
 
     if (loading) return <Loading />;
 
@@ -54,24 +50,6 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                                 theme.colors.textVariant
                             }>{t`Type in the email and password you used to create your account.`}</Text>
                     </View>
-                    <View
-                        style={{
-                            width: 240,
-                        }}>
-                        {registered && (
-                            <ErrorText
-                                succesful
-                                text={t`Registered successfully!`}
-                            />
-                        )}
-                        {showError && !emailValid && (
-                            <ErrorText text={t`Email is not valid.`} />
-                        )}
-                        {showError && error && <ErrorText text={error} />}
-                        {showError && error && (
-                            <View style={{ marginBottom: 5 }} />
-                        )}
-                    </View>
 
                     <IconInput
                         icon="email"
@@ -80,7 +58,8 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                         onChange={setEmail}
                         validate={validateEmail}
                         onValidateChange={setEmailValid}
-                        errorEmpty={showError && !email}
+                        keyboardType={"email-address"}
+                        error={error.length > 0}
                     />
                     <IconInput
                         icon="lock"
@@ -89,8 +68,16 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                         onChange={setPassword}
                         style={{ marginTop: 10 }}
                         hidden={true}
-                        errorEmpty={showError && !password}
+                        error={error.length > 0}
                     />
+
+                    {error.length > 0 && (
+                        <View style={styles.error}>
+                            <Text color={theme.colors.danger} fontSize={14}>
+                                {error}
+                            </Text>
+                        </View>
+                    )}
 
                     <View
                         style={{
@@ -125,29 +112,23 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                             fullWidth
                             fontSize={14}
                             bold
+                            disabled={!email || !password || !emailValid}
                             onPress={() => {
-                                setRegistered(false);
-
-                                if (!email || !password || !emailValid) {
-                                    setShowError(true);
-                                } else {
-                                    login(email.trim(), password)
-                                        .then(() => {
-                                            setShowError(false);
-                                        })
-                                        .catch((error: any) => {
-                                            if (
-                                                error.message.includes(
-                                                    "auth/invalid-credential"
-                                                )
+                                login(email.trim(), password)
+                                    .then(() => {
+                                        setError("");
+                                    })
+                                    .catch((error: any) => {
+                                        if (
+                                            error.message.includes(
+                                                "auth/invalid-credential"
                                             )
-                                                setError(
-                                                    t`Invalid email or password.`
-                                                );
-                                            else setError(error.message);
-                                            setShowError(true);
-                                        });
-                                }
+                                        )
+                                            setError(
+                                                t`Invalid email or password.`
+                                            );
+                                        else setError(error.message);
+                                    });
                             }}
                         />
                     </View>
@@ -212,7 +193,12 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         width: "100%",
-        marginBottom: 20,
+        marginBottom: 15,
+    },
+    error: {
+        alignSelf: "flex-start",
+        marginTop: 5,
+        marginLeft: 15,
     },
 });
 

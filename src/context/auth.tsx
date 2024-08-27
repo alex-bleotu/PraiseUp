@@ -1,8 +1,6 @@
-import { t } from "@lingui/macro";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
     createUserWithEmailAndPassword,
-    sendEmailVerification,
     signInWithEmailAndPassword,
     signOut,
     updateProfile,
@@ -47,12 +45,6 @@ export const AuthProvider = ({
                     password
                 );
 
-                if (!response.user.emailVerified) {
-                    await signOut(auth);
-                    reject(new Error(t`Email not verified.`));
-                    return;
-                }
-
                 setUser(response.user);
                 resolve(response);
             } catch (error) {
@@ -84,7 +76,10 @@ export const AuthProvider = ({
                         displayName: username,
                     });
 
-                    await sendEmailVerification(response.user);
+                    await login(email, password).catch((error) => {
+                        console.log("Failed to login after register", error);
+                        reject(error);
+                    });
                 }
 
                 resolve(response);

@@ -1,11 +1,10 @@
 import { t } from "@lingui/macro";
-import { useContext, useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import Background from "../components/wrapers/background";
+import { useContext, useEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
 import Button from "../components/wrapers/button";
-import ErrorText from "../components/wrapers/errorText";
 import IconButton from "../components/wrapers/iconButton";
 import IconInput from "../components/wrapers/iconInput";
+import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
 import { AuthContext } from "../context/auth";
 import { ThemeContext } from "../context/theme";
@@ -19,183 +18,191 @@ const Register = ({ navigation }: { navigation: any }) => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
 
     const [emailValid, setEmailValid] = useState(true);
 
-    const [showError, setShowError] = useState(false);
+    const [showEmailError, setShowEmailError] = useState(false);
+    const [showPasswordError, setShowPasswordError] = useState(false);
     const [error, setError] = useState("");
+
+    useEffect(() => {
+        setShowPasswordError(false);
+    }, [password]);
+
+    useEffect(() => {
+        setShowEmailError(false);
+    }, [email]);
 
     if (loading) return <Loading />;
 
     return (
-        <Background center>
-            <View
-                style={[
-                    styles.background,
-                    {
-                        backgroundColor: theme.colors.paper,
-                    },
-                ]}>
-                <Text fontSize={26} bold style={{ marginBottom: 20 }}>
-                    {t`Register`}
-                </Text>
-                <View
-                    style={{
-                        width: 240,
-                    }}>
-                    {showError && !emailValid && (
-                        <ErrorText text={t`Email is not valid.`} />
-                    )}
-                    {showError && password !== confirmPassword && (
-                        <ErrorText text={t`Passwords don't match`} />
-                    )}
-                    {showError && password && password.length < 8 && (
-                        <ErrorText text={t`Password is too short`} />
-                    )}
-                    {showError && error && <ErrorText text={error} />}
-                    {showError && <View style={{ marginBottom: 5 }} />}
-                </View>
-
-                <IconInput
-                    icon="account"
-                    placeholder={t`Username`}
-                    value={username}
-                    onChange={setUsername}
-                    style={{ marginTop: 10 }}
-                    errorEmpty={showError && !username}
-                />
-
-                <IconInput
-                    icon="email"
-                    placeholder={t`Email`}
-                    value={email}
-                    onChange={setEmail}
-                    validate={validateEmail}
-                    onValidateChange={setEmailValid}
-                    style={{ marginTop: 10 }}
-                    errorEmpty={showError && !email}
-                />
-
-                <IconInput
-                    icon="lock"
-                    placeholder={t`Password`}
-                    value={password}
-                    onChange={setPassword}
-                    style={{ marginTop: 10 }}
-                    hidden={true}
-                    errorEmpty={showError && !password}
-                />
-
-                <IconInput
-                    icon="lock"
-                    placeholder={t`Confirm Password`}
-                    value={confirmPassword}
-                    onChange={setConfirmPassword}
-                    style={{ marginVertical: 10 }}
-                    hidden={true}
-                    errorEmpty={showError && !confirmPassword}
-                />
-
-                <View
-                    style={{
-                        width: 250,
-                    }}>
-                    <Button
-                        mode="contained"
-                        text={t`Register`}
-                        fullWidth
-                        bold
-                        onPress={() => {
-                            if (
-                                username &&
-                                email &&
-                                password &&
-                                confirmPassword &&
-                                emailValid &&
-                                password === confirmPassword &&
-                                password.length > 4
-                            ) {
-                                register(email.trim(), password)
-                                    .then(() => {
-                                        setShowError(false);
-                                        navigation.navigate("Login", {
-                                            registered: true,
-                                        });
-                                    })
-                                    .catch((error: any) => {
-                                        if (
-                                            error.message.includes(
-                                                "auth/email-already-in-use"
-                                            )
-                                        )
-                                            setError(t`Email already in use.`);
-                                        else if (error.message === undefined)
-                                            setError(t`Something went wrong.`);
-                                        else setError(error.message);
-                                        setShowError(true);
-                                    });
-                            } else setShowError(true);
-                        }}
-                    />
-                </View>
-
-                <View style={styles.textContainer}>
-                    <Text bold>{t`or`}</Text>
-                </View>
-
-                <IconButton
-                    src={require("../../assets/images/auth/google.png")}
-                    bgcolor={theme.colors.tomato}
-                    color={theme.colors.darkWhite}
-                    text={t`Continue with Google`}
-                />
-                <IconButton
-                    src={require("../../assets/images/auth/facebook.png")}
-                    bgcolor={theme.colors.blue}
-                    color={theme.colors.darkWhite}
-                    text={t`Continue with Facebook`}
-                    style={{ marginTop: 10 }}
-                />
-
-                <View style={styles.textContainer}>
-                    <Text>{t`Already have an account?`}</Text>
-                    <TouchableOpacity
-                        activeOpacity={theme.activeOpacity}
-                        onPress={() => {
-                            navigation.navigate("Login");
+        <StackPage title={""} navigation={navigation} noBottom>
+            <View style={styles.container}>
+                <View style={styles.top}>
+                    <View
+                        style={{
+                            alignSelf: "flex-start",
+                            marginTop: 10,
+                            marginBottom: 20,
+                        }}>
+                        <Text bold fontSize={30}>{t`Join Us`}</Text>
+                    </View>
+                    <View
+                        style={{
+                            alignSelf: "flex-start",
+                            marginBottom: 20,
                         }}>
                         <Text
-                            bold={true}
-                            color={theme.colors.lightBlue}
-                            style={{
-                                marginLeft: 5,
-                            }}>
-                            {t`Log in`}
-                        </Text>
-                    </TouchableOpacity>
+                            fontSize={18}
+                            color={
+                                theme.colors.textVariant
+                            }>{t`Lorem Ipsum is simply dummy text of the printing and typesetting industry.`}</Text>
+                    </View>
+                    <IconInput
+                        icon="account"
+                        placeholder={t`Your Name`}
+                        value={username}
+                        onChange={setUsername}
+                        style={{ marginTop: 10 }}
+                        autoCapitalize
+                    />
+                    <IconInput
+                        icon="email"
+                        placeholder={t`Personal Email`}
+                        value={email}
+                        onChange={setEmail}
+                        validate={validateEmail}
+                        onValidateChange={setEmailValid}
+                        style={{ marginTop: 10 }}
+                        error={showEmailError}
+                        keyboardType={"email-address"}
+                    />
+                    <IconInput
+                        icon="lock"
+                        placeholder={t`Password`}
+                        value={password}
+                        onChange={setPassword}
+                        style={{ marginTop: 10 }}
+                        hidden={true}
+                        error={showPasswordError}
+                        errorText={t`Password is too short`}
+                    />
+
+                    {error.length > 0 && (
+                        <View style={styles.error}>
+                            <Text color={theme.colors.danger} fontSize={14}>
+                                {error}
+                            </Text>
+                        </View>
+                    )}
+                </View>
+
+                <View style={styles.bottom}>
+                    <View
+                        style={{
+                            width: "100%",
+                        }}>
+                        <Button
+                            mode="contained"
+                            text={t`Join App`}
+                            upper
+                            fullWidth
+                            fontSize={14}
+                            bold
+                            disabled={!email || !password || !emailValid}
+                            onPress={() => {
+                                setError("");
+                                if (password.length > 5) {
+                                    register(email.trim(), password)
+                                        .then(() => {
+                                            setError("");
+                                        })
+                                        .catch((error: any) => {
+                                            if (
+                                                error.message.includes(
+                                                    "auth/email-already-in-use"
+                                                )
+                                            ) {
+                                                setShowEmailError(true);
+                                                setError(
+                                                    t`Email is already in use`
+                                                );
+                                            } else
+                                                setError(
+                                                    t`Something went wrong`
+                                                );
+                                        });
+                                } else setShowPasswordError(true);
+                            }}
+                        />
+                    </View>
+
+                    <View
+                        style={[
+                            styles.textContainer,
+                            {
+                                marginVertical: 30,
+                            },
+                        ]}>
+                        <Text bold fontSize={18} upper>{t`or`}</Text>
+                    </View>
+
+                    <View style={{ width: "100%" }}>
+                        <IconButton
+                            src={require("../../assets/images/auth/google.png")}
+                            bgcolor={theme.colors.white}
+                            color={"black"}
+                            text={t`Continue with Google`}
+                        />
+                    </View>
+                    <View style={{ width: "100%" }}>
+                        <IconButton
+                            src={require("../../assets/images/auth/facebook.png")}
+                            bgcolor={theme.colors.blue}
+                            color={"white"}
+                            text={t`Continue with Facebook`}
+                            style={{ marginTop: 15 }}
+                        />
+                    </View>
                 </View>
             </View>
-        </Background>
+        </StackPage>
     );
 };
 
 const styles = StyleSheet.create({
     textContainer: {
-        marginTop: 10,
-        marginBottom: 10,
+        marginHorizontal: 10,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "row",
     },
-    background: {
-        paddingHorizontal: 25,
-        paddingVertical: 10,
-        borderRadius: 30,
+    container: {
+        paddingHorizontal: 20,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        flex: 1,
+    },
+    top: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+    },
+    bottom: {
+        marginTop: "auto",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+        marginBottom: 15,
+    },
+    error: {
+        alignSelf: "flex-start",
+        marginTop: 5,
+        marginLeft: 15,
     },
 });
 

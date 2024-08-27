@@ -33,7 +33,7 @@ export const lightTheme = {
 
         background: "#f6f6f6",
         paper: "#ffffff",
-        darkPaper: "#e6e6e6",
+        darkPaper: "#ececec",
 
         text: "#1a1a1a",
         textInverted: "#f2f2f2",

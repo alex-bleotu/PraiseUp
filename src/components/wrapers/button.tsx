@@ -15,6 +15,7 @@ interface ButtonProps {
     upper?: boolean;
     color?: string;
     onPress?: () => void;
+    disabled?: boolean;
 }
 
 const Button = ({
@@ -28,11 +29,12 @@ const Button = ({
     upper = false,
     color,
     onPress,
+    disabled,
 }: ButtonProps) => {
     const { theme } = useContext(ThemeContext);
 
     return (
-        <AnimatedTouchable onPress={onPress}>
+        <AnimatedTouchable onPress={onPress} disabled={disabled}>
             <View
                 style={[
                     styles.container,
