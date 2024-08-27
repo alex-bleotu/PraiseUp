@@ -103,25 +103,6 @@ const Settings = ({ navigation }: { navigation: any }) => {
                         />
                     }
                 />
-                <Button
-                    mode="contained"
-                    fullWidth
-                    bold
-                    backgroundColor={theme.colors.paper}
-                    text={t`Notifications`}
-                    onPress={() => {}}
-                    color={theme.colors.text}
-                    center={false}
-                    fontSize={17}
-                    style={{ marginBottom: 10 }}
-                    icon={
-                        <FIcons
-                            name="bell"
-                            size={30}
-                            color={theme.colors.text}
-                        />
-                    }
-                />
 
                 <Text
                     fontSize={16}
@@ -374,6 +355,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                             onPress={() => {
                                 setIsModalOpen(false);
                             }}
+                            activeOpacity={theme.activeOpacity}
                             style={[
                                 styles.button,
                                 {
@@ -390,6 +372,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                             onPress={() => {
                                 logout();
                             }}
+                            activeOpacity={theme.activeOpacity}
                             style={[
                                 styles.button,
                                 {

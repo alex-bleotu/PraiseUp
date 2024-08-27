@@ -76,7 +76,15 @@ const StackPage = ({
                     </AnimatedTouchable>
                 )}
             </View>
-            <View style={styles.container}>{children}</View>
+            <View
+                style={[
+                    styles.container,
+                    {
+                        marginBottom: noBottom ? 0 : 5,
+                    },
+                ]}>
+                {children}
+            </View>
         </Background>
     );
 };
@@ -98,7 +106,6 @@ const styles = StyleSheet.create({
         width: "100%",
         display: "flex",
         flex: 1,
-        marginBottom: 5,
     },
     cornerButton: {
         marginRight: 10,
