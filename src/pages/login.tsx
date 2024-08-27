@@ -1,10 +1,5 @@
 import { useContext, useState } from "react";
-import {
-    KeyboardAvoidingView,
-    StyleSheet,
-    TouchableOpacity,
-    View,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Background from "../components/wrapers/background";
 import Button from "../components/wrapers/button";
 import ErrorText from "../components/wrapers/errorText";
@@ -38,8 +33,8 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
     if (loading) return <Loading />;
 
     return (
-        <Background>
-            <KeyboardAvoidingView behavior="height">
+        <Background center>
+            <View>
                 <View
                     style={[
                         styles.background,
@@ -47,6 +42,9 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                             backgroundColor: theme.colors.paper,
                         },
                     ]}>
+                    <Text fontSize={26} bold style={{ marginBottom: 20 }}>
+                        Login
+                    </Text>
                     <View
                         style={{
                             width: 240,
@@ -120,19 +118,19 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                     />
 
                     <View style={styles.textContainer}>
-                        <Text bold={true}>or</Text>
+                        <Text bold>or</Text>
                     </View>
 
                     <IconButton
                         src={require("../../assets/images/auth/google.png")}
                         bgcolor={theme.colors.tomato}
-                        color={theme.colors.white}
+                        color={theme.colors.darkWhite}
                         text="Continue with Google"
                     />
                     <IconButton
                         src={require("../../assets/images/auth/facebook.png")}
                         bgcolor={theme.colors.blue}
-                        color={theme.colors.white}
+                        color={theme.colors.darkWhite}
                         text="Continue with Facebook"
                         style={{ marginTop: 10 }}
                     />
@@ -158,7 +156,7 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-            </KeyboardAvoidingView>
+            </View>
         </Background>
     );
 };
@@ -176,6 +174,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 25,
         paddingVertical: 10,
         borderRadius: 30,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
     },
 });
 

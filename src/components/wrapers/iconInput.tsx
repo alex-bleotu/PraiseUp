@@ -4,7 +4,7 @@ import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import { ThemeContext } from "../../context/theme";
 
 interface IconInputProps {
-    icon: string;
+    icon: any;
     placeholder: string;
     value: string;
     onChange: (value: string) => void;
@@ -43,7 +43,7 @@ const IconInput = ({
                 styles.container,
                 style,
                 {
-                    backgroundColor: theme.colors.white,
+                    backgroundColor: theme.colors.background,
                     borderWidth: 2,
                     borderColor: "transparent",
                 },
@@ -54,7 +54,7 @@ const IconInput = ({
             ]}>
             <View style={styles.iconContainer}>
                 <MCIcons
-                    text={icon}
+                    name={icon}
                     color={theme.colors.grey}
                     style={{ marginLeft: 5 }}
                     size={24}
@@ -93,7 +93,7 @@ const IconInput = ({
                             setIsHidden(!isHidden);
                         }}>
                         <MCIcons
-                            text={isHidden ? "eye" : "eye-off"}
+                            name={isHidden ? "eye" : "eye-off"}
                             color={theme.colors.grey}
                             size={24}
                         />

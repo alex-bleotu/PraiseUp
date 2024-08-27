@@ -9,6 +9,7 @@ const defaultTheme = {
         ...MD3LightTheme.colors,
 
         white: "#ffffff",
+        darkWhite: "#f6f6f6",
         black: "#1a1a1a",
         grey: "#7f7f7f",
         blue: "#0a58d1",

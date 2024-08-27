@@ -4,10 +4,10 @@ import { ThemeContext } from "../../context/theme";
 
 const Background = ({
     children,
-    noPadding,
     color,
-    center,
+    center = false,
     noBottom = false,
+    noPadding = false,
     style,
 }: {
     children: ReactNode | ReactNode[];
