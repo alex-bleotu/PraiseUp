@@ -5,7 +5,6 @@ import {
 import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
-import { SelectList } from "react-native-dropdown-select-list";
 import Button from "../components/wrapers/button";
 import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
@@ -147,8 +146,8 @@ const Song = ({ route, navigation }: SongProps) => {
     const [steps, setSteps] = useState(0);
     const [selectedChord, setSelectedChord] = useState([]);
 
-    const buttonWidth = Dimensions.get("screen").width / 2 - 50;
-    const buttonsContainerWidth = buttonWidth * 2 + 75;
+    const buttonWidth = Dimensions.get("screen").width / 2 - 25;
+    const buttonsContainerWidth = buttonWidth * 2 + 25;
 
     useEffect(() => {
         const load = async () => {
@@ -180,21 +179,32 @@ const Song = ({ route, navigation }: SongProps) => {
                             },
                         ]}>
                         <Button
+                            bold
                             mode={value === "lyrics" ? "contained" : "none"}
                             onPress={() => setValue("lyrics")}
                             text={t`Lyrics`}
                             style={{ ...styles.button, width: buttonWidth }}
                             fontSize={15}
+                            color={
+                                value === "lyrics"
+                                    ? theme.colors.textInverted
+                                    : theme.colors.text
+                            }
                             icon={
                                 <MIcon
                                     name="lyrics"
                                     size={18}
-                                    color={theme.colors.text}
+                                    color={
+                                        value === "lyrics"
+                                            ? theme.colors.textInverted
+                                            : theme.colors.text
+                                    }
                                 />
                             }
                         />
                         <View style={{ width: 10 }} />
                         <Button
+                            bold
                             mode={value === "chords" ? "contained" : "none"}
                             onPress={() => setValue("chords")}
                             style={{
@@ -203,15 +213,24 @@ const Song = ({ route, navigation }: SongProps) => {
                             }}
                             fontSize={15}
                             text={t`Chords`}
+                            color={
+                                value === "chords"
+                                    ? theme.colors.textInverted
+                                    : theme.colors.text
+                            }
                             icon={
                                 <FIcon
                                     name="itunes-note"
                                     size={18}
-                                    color={theme.colors.text}
+                                    color={
+                                        value === "chords"
+                                            ? theme.colors.textInverted
+                                            : theme.colors.text
+                                    }
                                 />
                             }
                         />
-                        <SelectList
+                        {/* <SelectList
                             setSelected={setSelectedChord}
                             data={data}
                             save="value"
@@ -259,7 +278,7 @@ const Song = ({ route, navigation }: SongProps) => {
                                 fontSize: 16,
                             }}
                             dropdownStyles={{}}
-                        />
+                        /> */}
                     </View>
                 )}
 

@@ -38,7 +38,6 @@ const Button = ({
             <View
                 style={[
                     styles.container,
-                    style,
                     {
                         width: fullWidth ? "100%" : "auto",
                         backgroundColor:
@@ -46,6 +45,7 @@ const Button = ({
                                 ? theme.colors.primary
                                 : "transparent",
                     },
+                    style,
                     mode === "outlined"
                         ? [styles.border, { borderColor: theme.colors.text }]
                         : [styles.border, { borderColor: "transparent" }],

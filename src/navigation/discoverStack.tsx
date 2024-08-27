@@ -1,4 +1,7 @@
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+    CardStyleInterpolators,
+    createStackNavigator,
+} from "@react-navigation/stack";
 import React from "react";
 import Album from "../pages/album";
 import Discover from "../pages/discover";
@@ -11,8 +14,7 @@ const DiscoverStack = ({ navigation }: { navigation: any }) => {
         <S.Navigator
             screenOptions={{
                 headerShown: false,
-                // gestureEnabled: true,
-                presentation: "transparentModal",
+                cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
             }}>
             <S.Screen name="DiscoverPage" component={Discover} />
             <S.Screen name="SongPage" component={Song} />

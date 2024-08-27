@@ -1,4 +1,7 @@
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+    CardStyleInterpolators,
+    createStackNavigator,
+} from "@react-navigation/stack";
 import React from "react";
 import Album from "../pages/album";
 import Library from "../pages/library";
@@ -12,8 +15,7 @@ const LibraryStack = ({ navigation }: { navigation: any }) => {
         <S.Navigator
             screenOptions={{
                 headerShown: false,
-                presentation: "transparentModal",
-                // gestureEnabled: true,
+                cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
             }}>
             <S.Screen name="LibraryPage" component={Library} />
             <S.Screen name="SettingsPage" component={Settings} />
