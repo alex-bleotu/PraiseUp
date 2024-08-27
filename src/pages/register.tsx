@@ -2,8 +2,8 @@ import { t } from "@lingui/macro";
 import { useContext, useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import Button from "../components/wrapers/button";
-import IconButton from "../components/wrapers/iconButton";
 import IconInput from "../components/wrapers/iconInput";
+import ImageButton from "../components/wrapers/imaegButton";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
 import { AuthContext } from "../context/auth";
@@ -162,7 +162,7 @@ const Register = ({ navigation }: { navigation: any }) => {
                     </View>
 
                     <View style={{ width: "100%" }}>
-                        <IconButton
+                        <ImageButton
                             src={require("../../assets/images/auth/google.png")}
                             bgcolor={theme.colors.white}
                             color={"black"}
@@ -170,7 +170,7 @@ const Register = ({ navigation }: { navigation: any }) => {
                         />
                     </View>
                     <View style={{ width: "100%" }}>
-                        <IconButton
+                        <ImageButton
                             src={require("../../assets/images/auth/facebook.png")}
                             bgcolor={theme.colors.blue}
                             color={"white"}

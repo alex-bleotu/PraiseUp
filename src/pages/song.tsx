@@ -5,6 +5,7 @@ import {
 import { t } from "@lingui/macro";
 import React, { useContext, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
+import { SelectList } from "react-native-dropdown-select-list";
 import Button from "../components/wrapers/button";
 import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
@@ -143,8 +144,8 @@ const Song = ({ route, navigation }: SongProps) => {
     const [steps, setSteps] = useState(0);
     const [selectedChord, setSelectedChord] = useState([]);
 
-    const buttonWidth = Dimensions.get("screen").width / 2 - 25;
-    const buttonsContainerWidth = buttonWidth * 2 + 25;
+    const buttonWidth = Dimensions.get("screen").width / 2 - 50;
+    const buttonsContainerWidth = buttonWidth * 2 + 75;
 
     if (song === null) return <Loading />;
 
@@ -218,7 +219,7 @@ const Song = ({ route, navigation }: SongProps) => {
                                 />
                             }
                         />
-                        {/* <SelectList
+                        <SelectList
                             setSelected={setSelectedChord}
                             data={data}
                             save="value"
@@ -266,7 +267,7 @@ const Song = ({ route, navigation }: SongProps) => {
                                 fontSize: 16,
                             }}
                             dropdownStyles={{}}
-                        /> */}
+                        />
                     </View>
                 )}
 
@@ -301,8 +302,10 @@ const Song = ({ route, navigation }: SongProps) => {
                 data={song}
                 isOpen={isBottomSheetOpen}
                 zoom={(zoomIn: boolean) => {
-                    if (zoomIn) setLyricsSize(lyricsSize + 1);
-                    else setLyricsSize(lyricsSize - 1);
+                    if (zoomIn && lyricsSize < 21)
+                        setLyricsSize(lyricsSize + 1);
+                    else if (!zoomIn && lyricsSize > 12)
+                        setLyricsSize(lyricsSize - 1);
                 }}
                 onClose={() => {
                     setBottomSheetOpen(false);

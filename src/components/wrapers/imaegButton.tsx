@@ -11,7 +11,7 @@ interface IconButtonProps {
     onPress?: any;
 }
 
-const IconButton = ({
+const ImageButton = ({
     src,
     bgcolor,
     color,
@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default IconButton;
+export default ImageButton;

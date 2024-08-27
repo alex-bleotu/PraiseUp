@@ -16,6 +16,7 @@ const { height: windowHeight } = Dimensions.get("window");
 interface BottomSheetModalProps {
     isOpen: boolean;
     children: React.ReactNode | React.ReactNode[];
+    height?: number;
     numberOfButtons?: number;
     onClose?: () => void;
 }
@@ -25,6 +26,7 @@ const BottomSheetModal = ({
     onClose,
     children,
     numberOfButtons = 3,
+    height,
 }: BottomSheetModalProps) => {
     const [modalVisible, setModalVisible] = useState(isOpen);
     const translateY = useRef(new Animated.Value(windowHeight)).current;
@@ -113,7 +115,9 @@ const BottomSheetModal = ({
                         {
                             transform: [{ translateY }],
                             backgroundColor: theme.colors.paper,
-                            height: 125 + 50 * numberOfButtons,
+                            height: height
+                                ? height
+                                : 125 + 50 * numberOfButtons,
                         },
                     ]}
                     {...panResponder.panHandlers}>

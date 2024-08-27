@@ -1,6 +1,7 @@
 import {
     Entypo as EIcons,
     Feather as FIcons,
+    MaterialCommunityIcons as MCIcons,
     MaterialIcons as MIcons,
 } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
@@ -15,6 +16,7 @@ import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
 import { AuthContext } from "../context/auth";
+import { ConstantsContext } from "../context/constants";
 import { LanguageContext } from "../context/language";
 import { ThemeContext } from "../context/theme";
 import { darkTheme, lightTheme } from "../utils/theme";
@@ -22,9 +24,12 @@ import { darkTheme, lightTheme } from "../utils/theme";
 const Settings = ({ navigation }: { navigation: any }) => {
     const { theme, setTheme } = useContext(ThemeContext);
     const { language, setLanguage } = useContext(LanguageContext);
+    const { lyricsSize, setLyricsSize } = useContext(ConstantsContext);
     const { logout } = useContext(AuthContext);
 
-    const [settings, setSettings] = useState<"theme" | "language" | null>(null);
+    const [settings, setSettings] = useState<
+        "theme" | "language" | "zoom" | null
+    >(null);
     const [isOpen, setIsOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -36,7 +41,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                 bottom={10}
                 showScroll={false}>
                 <Text
-                    fontSize={16}
+                    fontSize={15}
                     color={theme.colors.textVariant}
                     style={{
                         marginBottom: 20,
@@ -53,12 +58,12 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     }}
                     color={theme.colors.text}
                     center={false}
-                    fontSize={17}
+                    fontSize={15}
                     style={{ marginBottom: 10 }}
                     icon={
                         <EIcons
                             name="adjust"
-                            size={30}
+                            size={26}
                             color={theme.colors.text}
                         />
                     }
@@ -74,12 +79,58 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     }}
                     color={theme.colors.text}
                     center={false}
-                    fontSize={17}
+                    fontSize={15}
                     style={{ marginBottom: 10 }}
                     icon={
                         <EIcons
                             name="language"
-                            size={30}
+                            size={26}
+                            color={theme.colors.text}
+                        />
+                    }
+                />
+                <Button
+                    mode="contained"
+                    fullWidth
+                    bold
+                    backgroundColor={theme.colors.paper}
+                    text={t`Zoom level`}
+                    onPress={() => {
+                        setSettings("zoom"), setIsOpen(true);
+                    }}
+                    color={theme.colors.text}
+                    center={false}
+                    fontSize={15}
+                    style={{ marginBottom: 10 }}
+                    icon={
+                        <MCIcons
+                            name="magnify"
+                            size={26}
+                            color={theme.colors.text}
+                        />
+                    }
+                />
+
+                <Text
+                    fontSize={15}
+                    color={theme.colors.textVariant}
+                    style={styles.spacer}>{t`App`}</Text>
+
+                <Button
+                    mode="contained"
+                    fullWidth
+                    bold
+                    backgroundColor={theme.colors.paper}
+                    text={t`About Us`}
+                    onPress={() => {}}
+                    color={theme.colors.text}
+                    center={false}
+                    fontSize={15}
+                    style={{ marginBottom: 10 }}
+                    icon={
+                        <FIcons
+                            name="smile"
+                            size={26}
                             color={theme.colors.text}
                         />
                     }
@@ -93,44 +144,19 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     onPress={() => {}}
                     color={theme.colors.text}
                     center={false}
-                    fontSize={17}
+                    fontSize={15}
                     style={{ marginBottom: 10 }}
                     icon={
                         <FIcons
                             name="users"
-                            size={30}
+                            size={26}
                             color={theme.colors.text}
                         />
                     }
                 />
 
                 <Text
-                    fontSize={16}
-                    color={theme.colors.textVariant}
-                    style={styles.spacer}>{t`About App`}</Text>
-
-                <Button
-                    mode="contained"
-                    fullWidth
-                    bold
-                    backgroundColor={theme.colors.paper}
-                    text={t`About Us`}
-                    onPress={() => {}}
-                    color={theme.colors.text}
-                    center={false}
-                    fontSize={17}
-                    style={{ marginBottom: 10 }}
-                    icon={
-                        <FIcons
-                            name="smile"
-                            size={30}
-                            color={theme.colors.text}
-                        />
-                    }
-                />
-
-                <Text
-                    fontSize={16}
+                    fontSize={15}
                     color={theme.colors.textVariant}
                     style={styles.spacer}>{t`Get in Touch`}</Text>
 
@@ -143,12 +169,12 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     onPress={() => {}}
                     color={theme.colors.text}
                     center={false}
-                    fontSize={17}
+                    fontSize={15}
                     style={{ marginBottom: 10 }}
                     icon={
                         <MIcons
                             name="chat-bubble-outline"
-                            size={28}
+                            size={26}
                             color={theme.colors.text}
                         />
                     }
@@ -162,12 +188,12 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     onPress={() => {}}
                     color={theme.colors.text}
                     center={false}
-                    fontSize={17}
+                    fontSize={15}
                     style={{ marginBottom: 10 }}
                     icon={
                         <FIcons
                             name="send"
-                            size={28}
+                            size={26}
                             color={theme.colors.text}
                         />
                     }
@@ -202,7 +228,13 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     onClose={() => {
                         setIsOpen(false), setSettings(null);
                     }}
-                    numberOfButtons={1}>
+                    height={
+                        settings === "theme"
+                            ? 170
+                            : settings === "language"
+                            ? 150
+                            : 300
+                    }>
                     <View style={styles.bottomSheetContainer}>
                         {settings === "theme" ? (
                             <View style={styles.choices}>
@@ -272,8 +304,14 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                     />
                                 </TouchableOpacity>
                             </View>
-                        ) : (
-                            <View style={styles.choices}>
+                        ) : settings === "language" ? (
+                            <View
+                                style={[
+                                    styles.choices,
+                                    {
+                                        marginTop: -5,
+                                    },
+                                ]}>
                                 <TouchableOpacity
                                     activeOpacity={1}
                                     style={styles.choiceContainer}
@@ -318,6 +356,65 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                         onPress={() => setLanguage("ro")}
                                     />
                                 </TouchableOpacity>
+                            </View>
+                        ) : (
+                            <View style={styles.zoomContainer}>
+                                <View style={styles.topBar}>
+                                    <TouchableOpacity
+                                        activeOpacity={theme.activeOpacity}
+                                        style={{ marginRight: 10 }}
+                                        onPress={() => {
+                                            if (lyricsSize < 21)
+                                                setLyricsSize(lyricsSize + 1);
+                                        }}>
+                                        <MCIcons
+                                            name={"plus-circle-outline"}
+                                            size={30}
+                                            color={theme.colors.text}
+                                        />
+                                    </TouchableOpacity>
+                                    <View
+                                        style={{
+                                            flexDirection: "row",
+                                        }}>
+                                        <Text
+                                            bold
+                                            fontSize={17}
+                                            style={{
+                                                marginRight: 10,
+                                            }}>
+                                            {t`Zoom level: `}
+                                        </Text>
+                                        <Text bold fontSize={17}>
+                                            {lyricsSize - 11}
+                                        </Text>
+                                    </View>
+                                    <TouchableOpacity
+                                        activeOpacity={theme.activeOpacity}
+                                        onPress={() => {
+                                            if (lyricsSize > 12)
+                                                setLyricsSize(lyricsSize - 1);
+                                        }}>
+                                        <MCIcons
+                                            name={"minus-circle-outline"}
+                                            size={30}
+                                            color={theme.colors.text}
+                                        />
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={styles.lyrics}>
+                                    <Text
+                                        fontSize={lyricsSize}
+                                        color={theme.colors.text}
+                                        style={{
+                                            marginTop: 10,
+                                        }}>
+                                        {t`I took a step into the night,  
+With dreams that glimmered in the light,  
+A path unknown, a heart so bold,  
+Seeking stories yet untold.`}
+                                    </Text>
+                                </View>
                             </View>
                         )}
                     </View>
@@ -463,5 +560,25 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         borderRadius: 12,
         justifyContent: "center",
+    },
+    topBar: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginBottom: 15,
+        width: "90%",
+    },
+    zoomContainer: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    lyrics: {
+        width: "90%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: 160,
     },
 });
