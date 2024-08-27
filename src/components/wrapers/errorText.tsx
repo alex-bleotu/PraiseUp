@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { StyleSheet, View } from "react-native";
-import { AuthContext } from "../../context/auth";
+import { ThemeContext } from "../../context/theme";
 import Text from "./text";
 
 const ErrorText = ({
@@ -12,7 +12,7 @@ const ErrorText = ({
     style?: any;
     succesful?: boolean;
 }) => {
-    const { theme } = useContext(AuthContext);
+    const { theme } = useContext(ThemeContext);
 
     return (
         <View style={[styles.container, style]}>

@@ -11,6 +11,7 @@ interface ButtonProps {
     style?: ViewStyle;
     mode: "contained" | "outlined" | "none";
     icon?: ReactNode;
+    fullWidth?: boolean;
     onPress?: () => void;
 }
 
@@ -21,6 +22,7 @@ const Button = ({
     fontSize,
     mode,
     icon,
+    fullWidth = false,
     onPress,
 }: ButtonProps) => {
     const { theme } = useContext(ThemeContext);
@@ -32,6 +34,7 @@ const Button = ({
                     styles.container,
                     style,
                     {
+                        width: fullWidth ? "100%" : "auto",
                         backgroundColor:
                             mode === "contained"
                                 ? theme.colors.primaryVariant
@@ -65,8 +68,8 @@ const styles = StyleSheet.create({
     container: {
         alignSelf: "flex-start",
         paddingHorizontal: 20,
-        paddingVertical: 10,
-        borderRadius: 20,
+        paddingVertical: 7,
+        borderRadius: 25,
         alignItems: "center",
         justifyContent: "center",
     },

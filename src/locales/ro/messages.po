@@ -22,11 +22,15 @@ msgstr "Adaugă in playlist"
 msgid "Alphabetical"
 msgstr "Alfabetic"
 
+#: src/pages/register.tsx:187
+msgid "Already have an account?"
+msgstr "Ai deja un cont?"
+
 #: src/components/wrapers/dataBottomSheet.tsx:161
 msgid "Check out this"
 msgstr "Verifică asta"
 
-#: src/pages/song.tsx:155
+#: src/pages/song.tsx:205
 msgid "Chords"
 msgstr "Acorduri"
 
@@ -34,11 +38,25 @@ msgstr "Acorduri"
 msgid "Clear recent searches"
 msgstr "Șterge căutările recente"
 
+#: src/pages/register.tsx:112
+msgid "Confirm Password"
+msgstr "Confirmă parola"
+
+#: src/pages/login.tsx:143
+#: src/pages/register.tsx:182
+msgid "Continue with Facebook"
+msgstr "Continuă cu Facebook"
+
+#: src/pages/login.tsx:137
+#: src/pages/register.tsx:176
+msgid "Continue with Google"
+msgstr "Continuă cu Google"
+
 #: src/pages/library.tsx:236
 msgid "Create album"
 msgstr "Creează album"
 
-#: src/pages/settings.tsx:180
+#: src/pages/settings.tsx:182
 msgid "Creator"
 msgstr "Creator"
 
@@ -46,13 +64,30 @@ msgstr "Creator"
 msgid "Discover available parking spots near you with real-time updates. Say goodbye to endless circling in search of a spot!"
 msgstr ""
 
-#: src/pages/settings.tsx:36
+#: src/pages/settings.tsx:38
 msgid "Display settings"
 msgstr "Setări de afișare"
+
+#: src/pages/login.tsx:149
+msgid "Don't have an account?"
+msgstr "Nu ai un cont?"
+
+#: src/pages/login.tsx:90
+msgid "Don't remember your password?"
+msgstr "Nu îți amintești parola?"
 
 #: src/utils/slides.ts:12
 msgid "Drive"
 msgstr ""
+
+#: src/pages/login.tsx:67
+#: src/pages/register.tsx:91
+msgid "Email"
+msgstr "Email"
+
+#: src/pages/register.tsx:51
+msgid "Email is not valid."
+msgstr "Emailul nu este valid."
 
 #: src/components/wrapers/dataBottomSheet.tsx:130
 msgid "Favorite"
@@ -62,15 +97,29 @@ msgstr "Favorite"
 msgid "Favorite albums"
 msgstr "Albume favorite"
 
-#: src/pages/settings.tsx:205
+#: src/pages/register.tsx:70
+msgid "First name"
+msgstr "Prenume"
+
+#: src/pages/settings.tsx:210
 msgid "Help"
 msgstr "Ajutor"
 
-#: src/pages/settings.tsx:116
+#: src/pages/settings.tsx:118
 msgid "Language"
 msgstr "Limbă"
 
-#: src/pages/song.tsx:129
+#: src/pages/register.tsx:79
+msgid "Last name"
+msgstr "Nume"
+
+#: src/pages/login.tsx:47
+#: src/pages/login.tsx:99
+#: src/pages/register.tsx:199
+msgid "Log in"
+msgstr "Conectare"
+
+#: src/pages/song.tsx:185
 msgid "Lyrics"
 msgstr "Versuri"
 
@@ -90,13 +139,31 @@ msgstr "Niciun rezultat de căutare"
 msgid "No song or album matches your search"
 msgstr "Nicio melodie sau album nu se potrivește căutării dvs"
 
-#: src/pages/settings.tsx:162
+#: src/pages/login.tsx:130
+#: src/pages/register.tsx:169
+msgid "or"
+msgstr "sau"
+
+#: src/pages/settings.tsx:164
 msgid "Other info"
 msgstr "Alte informații"
 
 #: src/utils/slides.ts:18
 msgid "Park"
 msgstr ""
+
+#: src/pages/login.tsx:75
+#: src/pages/register.tsx:102
+msgid "Password"
+msgstr "Parolă"
+
+#: src/pages/register.tsx:57
+msgid "Password is too short"
+msgstr "Parola este prea scurtă"
+
+#: src/pages/register.tsx:54
+msgid "Passwords don't match"
+msgstr "Parolele nu se potrivesc"
 
 #: src/pages/album.tsx:117
 #: src/pages/library.tsx:107
@@ -107,7 +174,17 @@ msgstr "Recent"
 msgid "Recent Searches"
 msgstr "Căutări recente"
 
-#: src/pages/settings.tsx:194
+#: src/pages/login.tsx:163
+#: src/pages/register.tsx:44
+#: src/pages/register.tsx:126
+msgid "Register"
+msgstr "Înregistrare"
+
+#: src/pages/login.tsx:56
+msgid "Registered successfully!"
+msgstr "Înregistrare cu succes!"
+
+#: src/pages/settings.tsx:196
 msgid "Report"
 msgstr "Raportează"
 
@@ -120,13 +197,17 @@ msgstr ""
 msgid "Search"
 msgstr "Caută"
 
-#: src/pages/settings.tsx:20
+#: src/pages/settings.tsx:22
 msgid "Settings"
 msgstr "Setări"
 
 #: src/components/wrapers/dataBottomSheet.tsx:174
 msgid "Share"
 msgstr "Distribuie"
+
+#: src/pages/register.tsx:159
+msgid "Something went wrong."
+msgstr "Ceva nu a mers bine."
 
 #: src/pages/discover.tsx:154
 msgid "Start searching for your favorite songs"
@@ -136,11 +217,11 @@ msgstr "Începeți să căutați melodiile preferate"
 msgid "Suggested for you"
 msgstr "Recomandat pentru tine"
 
-#: src/pages/settings.tsx:45
+#: src/pages/settings.tsx:47
 msgid "Theme"
 msgstr "Temă"
 
-#: src/pages/settings.tsx:166
+#: src/pages/settings.tsx:168
 msgid "Version"
 msgstr "Versiune"
 

@@ -1,6 +1,7 @@
 import { useContext } from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { ThemeContext } from "../../context/theme";
+import AnimatedTouchable from "./animatedTouchable";
 import Text from "./text";
 
 interface IconButtonProps {
@@ -23,22 +24,25 @@ const IconButton = ({
     const { theme } = useContext(ThemeContext);
 
     return (
-        <TouchableOpacity
-            activeOpacity={0.8}
-            style={[{ backgroundColor: bgcolor }, styles.container, style]}
-            onPress={onPress}>
-            <View style={styles.gridContainer}>
-                <View
-                    style={[{ backgroundColor: color }, styles.iconContainer]}>
-                    <Image style={styles.image} source={src} />
-                </View>
-                <View style={styles.textContainer}>
-                    <Text color={theme.colors.white} fontSize={15}>
-                        {text}
-                    </Text>
+        <AnimatedTouchable onPress={onPress}>
+            <View
+                style={[{ backgroundColor: bgcolor }, styles.container, style]}>
+                <View style={styles.gridContainer}>
+                    <View
+                        style={[
+                            { backgroundColor: color },
+                            styles.iconContainer,
+                        ]}>
+                        <Image style={styles.image} source={src} />
+                    </View>
+                    <View style={styles.textContainer}>
+                        <Text color={theme.colors.white} fontSize={15}>
+                            {text}
+                        </Text>
+                    </View>
                 </View>
             </View>
-        </TouchableOpacity>
+        </AnimatedTouchable>
     );
 };
 
