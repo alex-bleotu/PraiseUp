@@ -13,24 +13,45 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/pages/settings.tsx:125
+msgid "About Us"
+msgstr "Despre noi"
+
 #: src/components/wrapers/dataBottomSheet.tsx:145
 msgid "Add to playlist"
 msgstr "Adaugă in playlist"
 
-#: src/pages/album.tsx:118
+#: src/pages/album.tsx:112
 #: src/pages/library.tsx:108
 msgid "Alphabetical"
 msgstr "Alfabetic"
 
-#: src/pages/register.tsx:187
+#: src/pages/onboard.tsx:62
 msgid "Already have an account?"
 msgstr "Ai deja un cont?"
+
+#: src/pages/settings.tsx:118
+msgid "App"
+msgstr "App"
+
+#: src/pages/settings.tsx:540
+msgid "Are you sure you want to exit guest mode?"
+msgstr "Ești sigur că vrei să ieși din modul oaspete?"
+
+#: src/pages/settings.tsx:472
+msgid "Are you sure you want to leave?"
+msgstr "Ești sigur că vrei să pleci?"
+
+#: src/pages/settings.tsx:496
+#: src/pages/settings.tsx:572
+msgid "Cancel"
+msgstr "Anulează"
 
 #: src/components/wrapers/dataBottomSheet.tsx:161
 msgid "Check out this"
 msgstr "Verifică asta"
 
-#: src/pages/song.tsx:205
+#: src/pages/song.tsx:204
 msgid "Chords"
 msgstr "Acorduri"
 
@@ -39,16 +60,26 @@ msgid "Clear recent searches"
 msgstr "Șterge căutările recente"
 
 #: src/pages/register.tsx:112
-msgid "Confirm Password"
-msgstr "Confirmă parola"
+#~ msgid "Confirm Password"
+#~ msgstr "Confirmă parola"
+
+#: src/pages/settings.tsx:188
+msgid "Contact Us"
+msgstr "Contactează-ne"
+
+#: src/pages/login.tsx:179
+#: src/pages/register.tsx:184
+msgid "Continue as Guest"
+msgstr "Continuă ca oaspete"
 
 #: src/pages/login.tsx:143
 #: src/pages/register.tsx:182
-msgid "Continue with Facebook"
-msgstr "Continuă cu Facebook"
+#~ msgid "Continue with Facebook"
+#~ msgstr "Continuă cu Facebook"
 
-#: src/pages/login.tsx:137
-#: src/pages/register.tsx:176
+#: src/pages/link.tsx:174
+#: src/pages/login.tsx:168
+#: src/pages/register.tsx:173
 msgid "Continue with Google"
 msgstr "Continuă cu Google"
 
@@ -56,38 +87,46 @@ msgstr "Continuă cu Google"
 msgid "Create album"
 msgstr "Creează album"
 
-#: src/pages/settings.tsx:182
-msgid "Creator"
-msgstr "Creator"
+#: src/pages/register.tsx:58
+msgid "Create an account to save your progress and access your data on multiple devices."
+msgstr "Crează un cont pentru a-ți salva progresul și a accesa datele tale de pe mai multe dispozitive."
 
-#: src/utils/slides.ts:7
-msgid "Discover available parking spots near you with real-time updates. Say goodbye to endless circling in search of a spot!"
-msgstr ""
+#: src/pages/settings.tsx:182
+#~ msgid "Creator"
+#~ msgstr "Creator"
 
 #: src/pages/settings.tsx:38
-msgid "Display settings"
-msgstr "Setări de afișare"
+#~ msgid "Display settings"
+#~ msgstr "Setări de afișare"
 
 #: src/pages/login.tsx:149
-msgid "Don't have an account?"
-msgstr "Nu ai un cont?"
+#~ msgid "Don't have an account?"
+#~ msgstr "Nu ai un cont?"
 
 #: src/pages/login.tsx:90
-msgid "Don't remember your password?"
-msgstr "Nu îți amintești parola?"
+#~ msgid "Don't remember your password?"
+#~ msgstr "Nu îți amintești parola?"
 
-#: src/utils/slides.ts:12
-msgid "Drive"
-msgstr ""
-
-#: src/pages/login.tsx:67
-#: src/pages/register.tsx:91
+#: src/pages/login.tsx:59
 msgid "Email"
 msgstr "Email"
 
+#: src/pages/link.tsx:147
+#: src/pages/register.tsx:146
+msgid "Email is already in use"
+msgstr "Emailul este deja folosit"
+
 #: src/pages/register.tsx:51
-msgid "Email is not valid."
-msgstr "Emailul nu este valid."
+#~ msgid "Email is not valid."
+#~ msgstr "Emailul nu este valid."
+
+#: src/pages/settings.tsx:594
+msgid "Exit"
+msgstr "Ieșire"
+
+#: src/pages/settings.tsx:225
+msgid "Exit Guest Mode"
+msgstr "Ieșire din modul oaspete"
 
 #: src/components/wrapers/dataBottomSheet.tsx:130
 msgid "Favorite"
@@ -98,74 +137,140 @@ msgid "Favorite albums"
 msgstr "Albume favorite"
 
 #: src/pages/register.tsx:70
-msgid "First name"
-msgstr "Prenume"
+#~ msgid "First name"
+#~ msgstr "Prenume"
+
+#: src/pages/login.tsx:100
+msgid "Forgot your password?"
+msgstr "Ți-ai uitat parola?"
+
+#: src/pages/settings.tsx:49
+msgid "General Settings"
+msgstr "Setări generale"
+
+#: src/pages/settings.tsx:162
+msgid "Get in Touch"
+msgstr "Intră în contact"
+
+#: src/pages/settings.tsx:169
+msgid "Give us Feedback"
+msgstr "Oferă-ne feedback"
 
 #: src/pages/settings.tsx:210
-msgid "Help"
-msgstr "Ajutor"
+#~ msgid "Help"
+#~ msgstr "Ajutor"
 
-#: src/pages/settings.tsx:118
+#: src/pages/settings.tsx:444
+msgid ""
+"I took a step into the night,  \n"
+"With dreams that glimmered in the light,  \n"
+"A path unknown, a heart so bold,  \n"
+"Seeking stories yet untold."
+msgstr ""
+
+#: src/pages/login.tsx:145
+msgid "Invalid email or password."
+msgstr "Email sau parolă incorectă."
+
+#: src/pages/settings.tsx:144
+msgid "Invite Friends"
+msgstr "Invită prietenii"
+
+#: src/pages/onboard.tsx:51
+#: src/pages/register.tsx:106
+msgid "Join App"
+msgstr "Alătură-te aplicației"
+
+#: src/pages/register.tsx:47
+msgid "Join Us"
+msgstr "Alătură-te nouă"
+
+#: src/pages/settings.tsx:77
 msgid "Language"
 msgstr "Limbă"
 
 #: src/pages/register.tsx:79
-msgid "Last name"
-msgstr "Nume"
+#~ msgid "Last name"
+#~ msgstr "Nume"
 
-#: src/pages/login.tsx:47
-#: src/pages/login.tsx:99
-#: src/pages/register.tsx:199
+#: src/pages/link.tsx:46
+#: src/pages/link.tsx:105
+#: src/pages/settings.tsx:211
+msgid "Link Account"
+msgstr "Conectează contul"
+
+#: src/pages/link.tsx:57
+msgid "Link your account to save your data and access it from any device."
+msgstr "Conectează-ți contul pentru a-ți salva datele și a le accesa de pe orice dispozitiv."
+
+#: src/pages/login.tsx:113
 msgid "Log in"
 msgstr "Conectare"
 
-#: src/pages/song.tsx:185
+#: src/pages/settings.tsx:241
+#: src/pages/settings.tsx:518
+msgid "Log Out"
+msgstr "Deconectare"
+
+#: src/utils/slides.ts:6
+#: src/utils/slides.ts:12
+#: src/utils/slides.ts:18
+msgid "Lorem Ipsum"
+msgstr ""
+
+#: src/utils/slides.ts:7
+#: src/utils/slides.ts:13
+#: src/utils/slides.ts:19
+msgid "Lorem Ipsum is simply dummy text of the printing and typesetting"
+msgstr ""
+
+#: src/pages/song.tsx:174
 msgid "Lyrics"
 msgstr "Versuri"
 
-#: src/utils/slides.ts:13
-msgid "Navigate to your destination hassle-free. Our app ensures you reach your spot quickly and efficiently."
-msgstr ""
-
-#: src/pages/discover.tsx:151
+#: src/pages/discover.tsx:152
 msgid "No recent searches"
 msgstr "Nicio căutare recentă"
 
-#: src/pages/discover.tsx:243
+#: src/pages/discover.tsx:244
 msgid "No search result"
 msgstr "Niciun rezultat de căutare"
 
-#: src/pages/discover.tsx:249
+#: src/pages/discover.tsx:250
 msgid "No song or album matches your search"
 msgstr "Nicio melodie sau album nu se potrivește căutării dvs"
 
-#: src/pages/login.tsx:130
-#: src/pages/register.tsx:169
+#: src/pages/link.tsx:166
+#: src/pages/login.tsx:160
+#: src/pages/register.tsx:165
 msgid "or"
 msgstr "sau"
 
 #: src/pages/settings.tsx:164
-msgid "Other info"
-msgstr "Alte informații"
+#~ msgid "Other info"
+#~ msgstr "Alte informații"
 
-#: src/utils/slides.ts:18
-msgid "Park"
-msgstr ""
-
-#: src/pages/login.tsx:75
-#: src/pages/register.tsx:102
+#: src/pages/link.tsx:80
+#: src/pages/login.tsx:69
+#: src/pages/register.tsx:81
 msgid "Password"
 msgstr "Parolă"
 
-#: src/pages/register.tsx:57
+#: src/pages/link.tsx:86
+#: src/pages/register.tsx:87
 msgid "Password is too short"
 msgstr "Parola este prea scurtă"
 
 #: src/pages/register.tsx:54
-msgid "Passwords don't match"
-msgstr "Parolele nu se potrivesc"
+#~ msgid "Passwords don't match"
+#~ msgstr "Parolele nu se potrivesc"
 
-#: src/pages/album.tsx:117
+#: src/pages/link.tsx:69
+#: src/pages/register.tsx:70
+msgid "Personal Email"
+msgstr "Emailul personal"
+
+#: src/pages/album.tsx:111
 #: src/pages/library.tsx:107
 msgid "Recent"
 msgstr "Recent"
@@ -177,27 +282,22 @@ msgstr "Căutări recente"
 #: src/pages/login.tsx:163
 #: src/pages/register.tsx:44
 #: src/pages/register.tsx:126
-msgid "Register"
-msgstr "Înregistrare"
+#~ msgid "Register"
+#~ msgstr "Înregistrare"
 
 #: src/pages/login.tsx:56
-msgid "Registered successfully!"
-msgstr "Înregistrare cu succes!"
+#~ msgid "Registered successfully!"
+#~ msgstr "Înregistrare cu succes!"
 
 #: src/pages/settings.tsx:196
-msgid "Report"
-msgstr "Raportează"
-
-#: src/utils/slides.ts:19
-msgid "Reserve your parking spot in advance for a worry-free experience. No more last-minute hunting for a space."
-msgstr ""
+#~ msgid "Report"
+#~ msgstr "Raportează"
 
 #: src/pages/discover.tsx:73
-#: src/utils/slides.ts:6
 msgid "Search"
 msgstr "Caută"
 
-#: src/pages/settings.tsx:22
+#: src/pages/settings.tsx:38
 msgid "Settings"
 msgstr "Setări"
 
@@ -205,11 +305,22 @@ msgstr "Setări"
 msgid "Share"
 msgstr "Distribuie"
 
-#: src/pages/register.tsx:159
-msgid "Something went wrong."
-msgstr "Ceva nu a mers bine."
+#: src/pages/login.tsx:43
+msgid "Sign In"
+msgstr "Conectare"
 
-#: src/pages/discover.tsx:154
+#: src/pages/link.tsx:151
+#: src/pages/login.tsx:199
+#: src/pages/register.tsx:150
+#: src/pages/register.tsx:204
+msgid "Something went wrong"
+msgstr "Ceva nu a mers bine"
+
+#: src/pages/register.tsx:159
+#~ msgid "Something went wrong."
+#~ msgstr "Ceva nu a mers bine."
+
+#: src/pages/discover.tsx:155
 msgid "Start searching for your favorite songs"
 msgstr "Începeți să căutați melodiile preferate"
 
@@ -217,18 +328,43 @@ msgstr "Începeți să căutați melodiile preferate"
 msgid "Suggested for you"
 msgstr "Recomandat pentru tine"
 
-#: src/pages/settings.tsx:47
+#: src/pages/settings.tsx:56
 msgid "Theme"
 msgstr "Temă"
 
+#: src/pages/login.tsx:54
+msgid "Type in the email and password you used to create your account."
+msgstr "Introduceți emailul și parola pe care le-ați folosit pentru a vă crea contul."
+
 #: src/pages/settings.tsx:168
-msgid "Version"
-msgstr "Versiune"
+#~ msgid "Version"
+#~ msgstr "Versiune"
+
+#: src/pages/settings.tsx:252
+msgid "Version:"
+msgstr "Versiune:"
+
+#: src/pages/settings.tsx:548
+msgid "Your data will be lost."
+msgstr "Datele tale vor fi pierdute."
 
 #: src/pages/library.tsx:85
 msgid "Your library"
 msgstr "Biblioteca ta"
 
+#: src/pages/link.tsx:61
+#: src/pages/register.tsx:62
+msgid "Your Name"
+msgstr "Numele tău"
+
 #: src/components/wrapers/dataBottomSheet.tsx:83
 msgid "Zoom"
 msgstr "Zoom"
+
+#: src/pages/settings.tsx:98
+msgid "Zoom level"
+msgstr "Nivel de zoom"
+
+#: src/pages/settings.tsx:418
+msgid "Zoom level:"
+msgstr "Nivel de zoom:"

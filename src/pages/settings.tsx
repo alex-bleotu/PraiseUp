@@ -256,204 +256,201 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     </Text>
                 </View>
             </ScrollView>
-            {settings && (
-                <BottomSheetModal
-                    isOpen={isSettingsOpen}
-                    onClose={() => {
-                        setIsSettingsOpen(false), setSettings(null);
-                    }}
-                    height={
-                        settings === "theme"
-                            ? 170
-                            : settings === "language"
-                            ? 150
-                            : 300
-                    }>
-                    <View style={styles.bottomSheetContainer}>
-                        {settings === "theme" ? (
-                            <View style={styles.choices}>
-                                <TouchableOpacity
-                                    style={styles.choiceContainer}
-                                    activeOpacity={1}
-                                    onPress={() => setTheme(lightTheme)}>
-                                    <View
-                                        style={[
-                                            styles.theme,
-                                            {
-                                                backgroundColor:
-                                                    lightTheme.colors
-                                                        .background,
-                                            },
-                                        ]}>
-                                        <Text
-                                            fontSize={30}
-                                            bold
-                                            color={lightTheme.colors.primary}
-                                            style={{ marginTop: -5 }}>
-                                            A
-                                        </Text>
-                                    </View>
-                                    <RadioButton
-                                        value="light"
-                                        color={theme.colors.primary}
-                                        uncheckedColor={theme.colors.grey}
-                                        status={
-                                            theme === lightTheme
-                                                ? "checked"
-                                                : "unchecked"
-                                        }
-                                        onPress={() => setTheme(lightTheme)}
-                                    />
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={styles.choiceContainer}
-                                    activeOpacity={1}
-                                    onPress={() => setTheme(darkTheme)}>
-                                    <View
-                                        style={[
-                                            styles.theme,
-                                            {
-                                                backgroundColor:
-                                                    darkTheme.colors.background,
-                                            },
-                                        ]}>
-                                        <Text
-                                            fontSize={30}
-                                            bold
-                                            color={darkTheme.colors.primary}
-                                            style={{ marginTop: -5 }}>
-                                            A
-                                        </Text>
-                                    </View>
-                                    <RadioButton
-                                        value="dark"
-                                        color={theme.colors.primary}
-                                        uncheckedColor={theme.colors.grey}
-                                        status={
-                                            theme === darkTheme
-                                                ? "checked"
-                                                : "unchecked"
-                                        }
-                                        onPress={() => setTheme(darkTheme)}
-                                    />
-                                </TouchableOpacity>
-                            </View>
-                        ) : settings === "language" ? (
-                            <View
-                                style={[
-                                    styles.choices,
-                                    {
-                                        marginTop: -5,
-                                    },
-                                ]}>
-                                <TouchableOpacity
-                                    activeOpacity={1}
-                                    style={styles.choiceContainer}
-                                    onPress={() => setLanguage("en")}>
-                                    <View>
-                                        <Image
-                                            source={require("../../assets/flags/en.png")}
-                                            style={styles.image}
-                                        />
-                                    </View>
-                                    <RadioButton
-                                        value="english"
-                                        color={theme.colors.primary}
-                                        uncheckedColor={theme.colors.grey}
-                                        status={
-                                            language === "en"
-                                                ? "checked"
-                                                : "unchecked"
-                                        }
-                                        onPress={() => setLanguage("en")}
-                                    />
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={styles.choiceContainer}
-                                    activeOpacity={1}
-                                    onPress={() => setLanguage("ro")}>
-                                    <View>
-                                        <Image
-                                            source={require("../../assets/flags/ro.png")}
-                                            style={styles.image}
-                                        />
-                                    </View>
-                                    <RadioButton
-                                        value="romanian"
-                                        color={theme.colors.primary}
-                                        uncheckedColor={theme.colors.grey}
-                                        status={
-                                            language === "ro"
-                                                ? "checked"
-                                                : "unchecked"
-                                        }
-                                        onPress={() => setLanguage("ro")}
-                                    />
-                                </TouchableOpacity>
-                            </View>
-                        ) : (
-                            <View style={styles.zoomContainer}>
-                                <View style={styles.topBar}>
-                                    <TouchableOpacity
-                                        activeOpacity={theme.activeOpacity}
-                                        style={{ marginRight: 10 }}
-                                        onPress={() => {
-                                            if (lyricsSize < 21)
-                                                setLyricsSize(lyricsSize + 1);
-                                        }}>
-                                        <MCIcons
-                                            name={"plus-circle-outline"}
-                                            size={30}
-                                            color={theme.colors.text}
-                                        />
-                                    </TouchableOpacity>
-                                    <View
-                                        style={{
-                                            flexDirection: "row",
-                                        }}>
-                                        <Text
-                                            bold
-                                            fontSize={17}
-                                            style={{
-                                                marginRight: 10,
-                                            }}>
-                                            {t`Zoom level: `}
-                                        </Text>
-                                        <Text bold fontSize={17}>
-                                            {lyricsSize - 11}
-                                        </Text>
-                                    </View>
-                                    <TouchableOpacity
-                                        activeOpacity={theme.activeOpacity}
-                                        onPress={() => {
-                                            if (lyricsSize > 12)
-                                                setLyricsSize(lyricsSize - 1);
-                                        }}>
-                                        <MCIcons
-                                            name={"minus-circle-outline"}
-                                            size={30}
-                                            color={theme.colors.text}
-                                        />
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={styles.lyrics}>
+            <BottomSheetModal
+                isOpen={isSettingsOpen}
+                onClose={() => {
+                    setIsSettingsOpen(false), setSettings(null);
+                }}
+                height={
+                    settings === "theme"
+                        ? 170
+                        : settings === "language"
+                        ? 150
+                        : 290
+                }>
+                <View style={styles.bottomSheetContainer}>
+                    {settings === "theme" ? (
+                        <View style={styles.choices}>
+                            <TouchableOpacity
+                                style={styles.choiceContainer}
+                                activeOpacity={1}
+                                onPress={() => setTheme(lightTheme)}>
+                                <View
+                                    style={[
+                                        styles.theme,
+                                        {
+                                            backgroundColor:
+                                                lightTheme.colors.background,
+                                        },
+                                    ]}>
                                     <Text
-                                        fontSize={lyricsSize}
+                                        fontSize={30}
+                                        bold
+                                        color={lightTheme.colors.primary}
+                                        style={{ marginTop: -5 }}>
+                                        A
+                                    </Text>
+                                </View>
+                                <RadioButton
+                                    value="light"
+                                    color={theme.colors.primary}
+                                    uncheckedColor={theme.colors.grey}
+                                    status={
+                                        theme === lightTheme
+                                            ? "checked"
+                                            : "unchecked"
+                                    }
+                                    onPress={() => setTheme(lightTheme)}
+                                />
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.choiceContainer}
+                                activeOpacity={1}
+                                onPress={() => setTheme(darkTheme)}>
+                                <View
+                                    style={[
+                                        styles.theme,
+                                        {
+                                            backgroundColor:
+                                                darkTheme.colors.background,
+                                        },
+                                    ]}>
+                                    <Text
+                                        fontSize={30}
+                                        bold
+                                        color={darkTheme.colors.primary}
+                                        style={{ marginTop: -5 }}>
+                                        A
+                                    </Text>
+                                </View>
+                                <RadioButton
+                                    value="dark"
+                                    color={theme.colors.primary}
+                                    uncheckedColor={theme.colors.grey}
+                                    status={
+                                        theme === darkTheme
+                                            ? "checked"
+                                            : "unchecked"
+                                    }
+                                    onPress={() => setTheme(darkTheme)}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    ) : settings === "language" ? (
+                        <View
+                            style={[
+                                styles.choices,
+                                {
+                                    marginTop: -5,
+                                },
+                            ]}>
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                style={styles.choiceContainer}
+                                onPress={() => setLanguage("en")}>
+                                <View>
+                                    <Image
+                                        source={require("../../assets/flags/en.png")}
+                                        style={styles.image}
+                                    />
+                                </View>
+                                <RadioButton
+                                    value="english"
+                                    color={theme.colors.primary}
+                                    uncheckedColor={theme.colors.grey}
+                                    status={
+                                        language === "en"
+                                            ? "checked"
+                                            : "unchecked"
+                                    }
+                                    onPress={() => setLanguage("en")}
+                                />
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.choiceContainer}
+                                activeOpacity={1}
+                                onPress={() => setLanguage("ro")}>
+                                <View>
+                                    <Image
+                                        source={require("../../assets/flags/ro.png")}
+                                        style={styles.image}
+                                    />
+                                </View>
+                                <RadioButton
+                                    value="romanian"
+                                    color={theme.colors.primary}
+                                    uncheckedColor={theme.colors.grey}
+                                    status={
+                                        language === "ro"
+                                            ? "checked"
+                                            : "unchecked"
+                                    }
+                                    onPress={() => setLanguage("ro")}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    ) : (
+                        <View style={styles.zoomContainer}>
+                            <View style={styles.topBar}>
+                                <TouchableOpacity
+                                    activeOpacity={theme.activeOpacity}
+                                    style={{ marginRight: 10 }}
+                                    onPress={() => {
+                                        if (lyricsSize < 21)
+                                            setLyricsSize(lyricsSize + 1);
+                                    }}>
+                                    <MCIcons
+                                        name={"plus-circle-outline"}
+                                        size={30}
                                         color={theme.colors.text}
+                                    />
+                                </TouchableOpacity>
+                                <View
+                                    style={{
+                                        flexDirection: "row",
+                                    }}>
+                                    <Text
+                                        bold
+                                        fontSize={17}
                                         style={{
-                                            marginTop: 10,
+                                            marginRight: 10,
                                         }}>
-                                        {t`I took a step into the night,  
+                                        {t`Zoom level: `}
+                                    </Text>
+                                    <Text bold fontSize={17}>
+                                        {lyricsSize - 11}
+                                    </Text>
+                                </View>
+                                <TouchableOpacity
+                                    activeOpacity={theme.activeOpacity}
+                                    onPress={() => {
+                                        if (lyricsSize > 12)
+                                            setLyricsSize(lyricsSize - 1);
+                                    }}>
+                                    <MCIcons
+                                        name={"minus-circle-outline"}
+                                        size={30}
+                                        color={theme.colors.text}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.lyrics}>
+                                <Text
+                                    fontSize={lyricsSize}
+                                    color={theme.colors.text}
+                                    style={{
+                                        marginTop: 10,
+                                    }}>
+                                    {t`I took a step into the night,  
 With dreams that glimmered in the light,  
 A path unknown, a heart so bold,  
 Seeking stories yet untold.`}
-                                    </Text>
-                                </View>
+                                </Text>
                             </View>
-                        )}
-                    </View>
-                </BottomSheetModal>
-            )}
+                        </View>
+                    )}
+                </View>
+            </BottomSheetModal>
 
             <Modal
                 visible={isLogoutModalOpen}
@@ -500,7 +497,7 @@ Seeking stories yet untold.`}
                             </Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={{ width: "47%" }}>
+                    <View style={{ width: "48%" }}>
                         <TouchableOpacity
                             onPress={() => {
                                 logout();
