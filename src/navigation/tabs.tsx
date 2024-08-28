@@ -4,8 +4,9 @@ import {
 } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React, { useContext, useMemo } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import AnimatedTouchable from "../components/wrapers/animatedTouchable";
+import { ConstantsContext } from "../context/constants";
 import { ThemeContext } from "../context/theme";
 import DiscoverStack from "./discoverStack";
 import HomeStack from "./homeStack";
@@ -15,14 +16,7 @@ const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
     const { theme } = useContext(ThemeContext);
-
-    const { height: windowHeight } = Dimensions.get("window");
-    const { height: screenHeight } = Dimensions.get("screen");
-
-    // TODO: Fix tabs height
-    let tabsHeight;
-    if (screenHeight - windowHeight < 70) tabsHeight = screenHeight - 15;
-    else tabsHeight = screenHeight - 48;
+    const { appHeight } = useContext(ConstantsContext);
 
     const getIconName = (
         routeName: string
@@ -40,7 +34,7 @@ const Tabs = () => {
     };
 
     return (
-        <View style={{ height: tabsHeight }}>
+        <View style={{ height: appHeight }}>
             <Tab.Navigator
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ focused, color, size }) => {

@@ -2,7 +2,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
     createUserWithEmailAndPassword,
     EmailAuthProvider,
+    sendPasswordResetEmail as firebaseSendPasswordResetEmail,
     linkWithCredential,
+    reauthenticateWithCredential,
     signInAnonymously,
     signInWithEmailAndPassword,
     updateProfile,
@@ -51,7 +53,6 @@ export const AuthProvider = ({
                 setUser(response.user);
                 resolve(response);
             } catch (error) {
-                console.log("Failed to login", error);
                 reject(error);
             } finally {
                 setLoading(false);
@@ -80,14 +81,12 @@ export const AuthProvider = ({
                     });
 
                     await login(email, password).catch((error) => {
-                        console.log("Failed to login after register", error);
                         reject(error);
                     });
                 }
 
                 resolve(response);
             } catch (error) {
-                console.log("Failed to register", error);
                 reject(error);
             } finally {
                 setLoading(false);
@@ -102,7 +101,6 @@ export const AuthProvider = ({
                 setUser(userCredential.user);
                 resolve(userCredential);
             } catch (error) {
-                console.log("Failed to login as guest", error);
                 reject(error);
             }
         });
@@ -115,8 +113,6 @@ export const AuthProvider = ({
             await auth.signOut();
             await AsyncStorage.removeItem("user");
             setUser(null);
-        } catch {
-            console.log("Failed to logout");
         } finally {
             setLoading(false);
         }
@@ -129,8 +125,6 @@ export const AuthProvider = ({
             await auth.currentUser?.delete();
             await AsyncStorage.removeItem("user");
             setUser(null);
-        } catch {
-            console.log("Failed to exit guest");
         } finally {
             setLoading(false);
         }
@@ -165,7 +159,48 @@ export const AuthProvider = ({
                     throw new Error("No user is currently signed in.");
                 }
             } catch (error) {
-                console.log("Failed to link guest", error);
+                reject(error);
+            } finally {
+                setLoading(false);
+            }
+        });
+    };
+
+    const sendPasswordResetEmail = async (email: string): Promise<any> => {
+        setLoading(true);
+
+        return new Promise(async (resolve, reject) => {
+            try {
+                await firebaseSendPasswordResetEmail(auth, email);
+                resolve("Password reset email sent successfully");
+            } catch (error) {
+                reject(error);
+            } finally {
+                setLoading(false);
+            }
+        });
+    };
+
+    const deleteAccount = async (password: string): Promise<any> => {
+        setLoading(true);
+
+        return new Promise(async (resolve, reject) => {
+            try {
+                const user = auth.currentUser;
+                if (!user) throw new Error("No user is currently logged in.");
+
+                const credential = EmailAuthProvider.credential(
+                    user.email!,
+                    password
+                );
+                await reauthenticateWithCredential(user, credential);
+
+                await user.delete();
+                await AsyncStorage.removeItem("user");
+                setUser(null);
+
+                resolve("Account deleted successfully");
+            } catch (error) {
                 reject(error);
             } finally {
                 setLoading(false);
@@ -184,6 +219,8 @@ export const AuthProvider = ({
                 loginAsGuest,
                 exitGuest,
                 linkGuest,
+                sendPasswordResetEmail,
+                deleteAccount,
             }}>
             {children}
         </AuthContext.Provider>

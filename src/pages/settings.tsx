@@ -6,11 +6,12 @@ import {
 } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
 import Constants from "expo-constants";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { RadioButton } from "react-native-paper";
 import BottomSheetModal from "../components/wrapers/bottomSheetModal";
 import Button from "../components/wrapers/button";
+import Input from "../components/wrapers/input";
 import Modal from "../components/wrapers/modal";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
@@ -25,7 +26,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
     const { theme, setTheme } = useContext(ThemeContext);
     const { language, setLanguage } = useContext(LanguageContext);
     const { lyricsSize, setLyricsSize } = useContext(ConstantsContext);
-    const { user, logout, exitGuest } = useContext(AuthContext);
+    const { user, logout, exitGuest, deleteAccount } = useContext(AuthContext);
 
     const [settings, setSettings] = useState<
         "theme" | "language" | "zoom" | null
@@ -33,6 +34,15 @@ const Settings = ({ navigation }: { navigation: any }) => {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
     const [isExitModalOpen, setIsExitModalOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [password, setPassword] = useState<string>("");
+    const [passwordError, setPasswordError] = useState<boolean>(false);
+    const [error, setError] = useState<string>("");
+
+    useEffect(() => {
+        setError("");
+        setPasswordError(false);
+    }, [password]);
 
     return (
         <StackPage title={t`Settings`} navigation={navigation} noBottom>
@@ -232,20 +242,36 @@ const Settings = ({ navigation }: { navigation: any }) => {
                         />
                     </View>
                 ) : (
-                    <Button
-                        mode="contained"
-                        fullWidth
-                        bold
-                        backgroundColor={theme.colors.darkPaper}
-                        upper
-                        text={t`Log Out`}
-                        onPress={() => {
-                            setIsLogoutModalOpen(true);
-                        }}
-                        color={theme.colors.text}
-                        fontSize={14}
-                        style={{ marginBottom: 10, marginTop: 30 }}
-                    />
+                    <View>
+                        <Button
+                            mode="contained"
+                            fullWidth
+                            bold
+                            backgroundColor={theme.colors.darkPaper}
+                            upper
+                            text={t`Log Out`}
+                            onPress={() => {
+                                setIsLogoutModalOpen(true);
+                            }}
+                            color={theme.colors.text}
+                            fontSize={14}
+                            style={{ marginBottom: 10, marginTop: 30 }}
+                        />
+                        <Button
+                            mode="contained"
+                            fullWidth
+                            bold
+                            backgroundColor={theme.colors.darkPaper}
+                            upper
+                            text={t`Delete Account`}
+                            onPress={() => {
+                                setIsDeleteModalOpen(true);
+                            }}
+                            color={theme.colors.text}
+                            fontSize={14}
+                            style={{ marginBottom: 10, marginTop: 10 }}
+                        />
+                    </View>
                 )}
 
                 <View style={styles.version}>
@@ -468,7 +494,7 @@ Seeking stories yet untold.`}
                             color={theme.colors.textVariant}
                             center
                             style={{
-                                width: 150,
+                                width: 250,
                             }}>{t`Are you sure you want to leave?`}</Text>
                     </View>
                 </View>
@@ -536,16 +562,16 @@ Seeking stories yet untold.`}
                             color={theme.colors.textVariant}
                             center
                             style={{
-                                width: 200,
+                                width: 250,
                             }}>{t`Are you sure you want to exit guest mode?`}</Text>
                         <Text
                             fontSize={18}
                             color={theme.colors.textVariant}
                             center
                             style={{
-                                width: 200,
+                                width: 250,
                                 marginTop: 5,
-                            }}>{t`Your data will be lost.`}</Text>
+                            }}>{t`All your data will be lost.`}</Text>
                     </View>
                 </View>
                 <View
@@ -592,6 +618,131 @@ Seeking stories yet untold.`}
                                 center
                                 color={theme.colors.white}>
                                 {t`Exit`}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
+
+            <Modal
+                visible={isDeleteModalOpen}
+                setVisible={setIsDeleteModalOpen}>
+                <View>
+                    <View
+                        style={{
+                            width: "100%",
+                            alignItems: "center",
+                            paddingHorizontal: 20,
+                            paddingVertical: 10,
+                        }}>
+                        <Text
+                            fontSize={18}
+                            color={theme.colors.textVariant}
+                            center
+                            style={{
+                                width: 250,
+                            }}>{t`Deleting your account will lose all your data.`}</Text>
+                        <Text
+                            fontSize={18}
+                            color={theme.colors.textVariant}
+                            center
+                            style={{
+                                width: 250,
+                                marginTop: 20,
+                            }}>
+                            {t`Type your`}
+                            <Text fontSize={18} bold>
+                                {" "}
+                                {t`password`}{" "}
+                            </Text>
+                            {t` to proceed.`}
+                        </Text>
+                    </View>
+                </View>
+                <View>
+                    <Input
+                        placeholder={""}
+                        value={password}
+                        onChange={setPassword}
+                        error={passwordError}
+                        errorText={t`The password is incorrect.`}
+                    />
+                    {error.length > 0 && (
+                        <View style={styles.error}>
+                            <Text color={theme.colors.danger} fontSize={14}>
+                                {error}
+                            </Text>
+                        </View>
+                    )}
+                </View>
+                <View
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        marginTop: 30,
+                    }}>
+                    <View style={{ width: "47%" }}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                setIsDeleteModalOpen(false);
+                            }}
+                            activeOpacity={theme.activeOpacity}
+                            style={[
+                                styles.button,
+                                {
+                                    backgroundColor: theme.colors.darkPaper,
+                                },
+                            ]}>
+                            <Text fontSize={14} bold upper center>
+                                {t`Cancel`}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ width: "47%" }}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                setError("");
+
+                                deleteAccount(password)
+                                    .then(() => {
+                                        setPasswordError(false);
+                                    })
+                                    .catch((error: any) => {
+                                        console.log(error.message);
+                                        if (
+                                            error.message.includes(
+                                                "auth/invalid-credential"
+                                            )
+                                        )
+                                            setPasswordError(true);
+                                        else if (
+                                            error.message.includes(
+                                                "Access to this account has been temporarily disabled"
+                                            )
+                                        )
+                                            setError(
+                                                t`Access to this account has been temporarily disabled`
+                                            );
+                                    });
+                            }}
+                            activeOpacity={theme.activeOpacity}
+                            disabled={password.length === 0}
+                            style={[
+                                styles.button,
+                                {
+                                    backgroundColor: theme.colors.danger,
+                                    opacity: password.length > 0 ? 1 : 0.5,
+                                },
+                            ]}>
+                            <Text
+                                fontSize={14}
+                                bold
+                                upper
+                                center
+                                color={theme.colors.white}>
+                                {t`Delete`}
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -689,5 +840,10 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         height: 160,
+    },
+    error: {
+        alignSelf: "flex-start",
+        marginTop: 5,
+        marginLeft: 15,
     },
 });

@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
+import { Dimensions } from "react-native";
 
 export const ConstantsContext = createContext<any>(null);
 
@@ -11,6 +12,7 @@ export const ConstantsProvider = ({
     const [sortBy, setSortBy] = useState<"date" | "name" | null>(null);
     const [display, setDisplay] = useState<"grid" | "list" | null>(null);
     const [lyricsSize, setLyricsSize] = useState<number | null>(null);
+    const [appHeight, setAppHeight] = useState(0);
 
     useEffect(() => {
         const load = async () => {
@@ -24,6 +26,16 @@ export const ConstantsProvider = ({
             else setDisplay("grid");
             if (lyricsSize) setLyricsSize(parseInt(lyricsSize));
             else setLyricsSize(16);
+
+            const { height: windowHeight } = Dimensions.get("window");
+            const { height: screenHeight } = Dimensions.get("screen");
+
+            // TODO: Fix tabs height
+            let appHeight;
+            if (screenHeight - windowHeight < 70) appHeight = screenHeight - 15;
+            else appHeight = screenHeight - 48;
+
+            setAppHeight(appHeight);
         };
 
         load();
@@ -51,6 +63,7 @@ export const ConstantsProvider = ({
                 setDisplay,
                 lyricsSize,
                 setLyricsSize,
+                appHeight,
             }}>
             {children}
         </ConstantsContext.Provider>

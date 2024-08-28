@@ -12,12 +12,14 @@ import ImageButton from "../components/wrapers/imaegButton";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
 import { AuthContext } from "../context/auth";
+import { ConstantsContext } from "../context/constants";
 import { ThemeContext } from "../context/theme";
 import { validateEmail } from "../utils/util";
 
-const Login = ({ navigation }: { navigation: any }) => {
+const Login = ({ navigation, route }: { navigation: any; route: any }) => {
     const { login, loading, loginAsGuest } = useContext(AuthContext);
     const { theme } = useContext(ThemeContext);
+    const { appHeight } = useContext(ConstantsContext);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -29,6 +31,16 @@ const Login = ({ navigation }: { navigation: any }) => {
     useEffect(() => {
         setError("");
     }, [email, password]);
+
+    useEffect(() => {
+        if (email === "") {
+            try {
+                const { email } = route.params;
+                setEmail(email);
+                setEmailValid(validateEmail(email));
+            } catch {}
+        }
+    }, [route.params]);
 
     return (
         <StackPage title={""} navigation={navigation} noBottom>
@@ -87,8 +99,11 @@ const Login = ({ navigation }: { navigation: any }) => {
                             marginLeft: "auto",
                         }}>
                         <TouchableOpacity
-                            activeOpacity={0.5}
-                            style={styles.textContainer}>
+                            activeOpacity={theme.activeOpacity}
+                            style={styles.textContainer}
+                            onPress={() => {
+                                navigation.navigate("Password");
+                            }}>
                             <Text
                                 color={theme.colors.lightBlue}
                                 bold
@@ -222,7 +237,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "space-between",
         flex: 1,
     },
     textContainer: {
@@ -239,7 +254,6 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     bottom: {
-        marginTop: "auto",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

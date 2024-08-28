@@ -223,19 +223,19 @@ const Register = ({ navigation }: { navigation: any }) => {
 };
 
 const styles = StyleSheet.create({
-    textContainer: {
-        marginHorizontal: 10,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "row",
-    },
     container: {
         paddingHorizontal: 20,
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "space-between",
         flex: 1,
+    },
+    textContainer: {
+        marginVertical: 10,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
     },
     top: {
         display: "flex",
@@ -244,7 +244,6 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     bottom: {
-        marginTop: "auto",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
