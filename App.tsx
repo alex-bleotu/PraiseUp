@@ -16,8 +16,8 @@ import AppNavigation from "./src/navigation/appNavigation";
 export default function App() {
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
-            <LanguageProvider>
-                <ThemeProvider>
+            <ThemeProvider>
+                <LanguageProvider>
                     <PaperProvider theme={darkTheme}>
                         <ConstantsProvider>
                             <RefreshProvider>
@@ -34,8 +34,8 @@ export default function App() {
                             </RefreshProvider>
                         </ConstantsProvider>
                     </PaperProvider>
-                </ThemeProvider>
-            </LanguageProvider>
+                </LanguageProvider>
+            </ThemeProvider>
         </GestureHandlerRootView>
     );
 }

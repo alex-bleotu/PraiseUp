@@ -57,6 +57,7 @@ export const DataProvider = ({
                 "history",
                 "onboard",
                 "user",
+                "language",
             ]);
 
             updateRefresh();
