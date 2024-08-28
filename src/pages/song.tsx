@@ -5,7 +5,7 @@ import {
 import { t } from "@lingui/macro";
 import React, { useContext, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
-import { SelectList } from "react-native-dropdown-select-list";
+// import { SelectList } from "react-native-dropdown-select-list";
 import Button from "../components/wrapers/button";
 import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
@@ -219,7 +219,7 @@ const Song = ({ route, navigation }: SongProps) => {
                                 />
                             }
                         />
-                        <SelectList
+                        {/* <SelectList
                             setSelected={setSelectedChord}
                             data={data}
                             save="value"
@@ -267,7 +267,7 @@ const Song = ({ route, navigation }: SongProps) => {
                                 fontSize: 16,
                             }}
                             dropdownStyles={{}}
-                        />
+                        /> */}
                     </View>
                 )}
 
