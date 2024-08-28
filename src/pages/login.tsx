@@ -16,12 +16,13 @@ import { ThemeContext } from "../context/theme";
 import { validateEmail } from "../utils/util";
 
 const Login = ({ navigation }: { navigation: any }) => {
-    const { login, loading } = useContext(AuthContext);
+    const { login, loading, loginAsGuest } = useContext(AuthContext);
     const { theme } = useContext(ThemeContext);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [emailValid, setEmailValid] = useState(true);
+    const [guestLoading, setGuestLoading] = useState(false);
 
     const [error, setError] = useState<string>("");
 
@@ -166,14 +167,48 @@ const Login = ({ navigation }: { navigation: any }) => {
                             color={"black"}
                             text={t`Continue with Google`}
                         />
-                    </View>
-                    <View style={{ width: "100%" }}>
-                        <ImageButton
+                        {/* <ImageButton
                             src={require("../../assets/images/auth/facebook.png")}
                             bgcolor={theme.colors.blue}
                             color={"white"}
                             text={t`Continue with Facebook`}
                             style={{ marginTop: 15 }}
+                        /> */}
+                        <Button
+                            mode="contained"
+                            text={t`Continue as Guest`}
+                            upper
+                            fullWidth
+                            fontSize={14}
+                            bold
+                            style={{
+                                paddingVertical: guestLoading ? 13 : 14.5,
+                                marginTop: 15,
+                            }}
+                            onPress={() => {
+                                if (loading || guestLoading) return;
+
+                                setError("");
+                                setGuestLoading(true);
+                                loginAsGuest()
+                                    .then(() => {
+                                        setError("");
+                                        setGuestLoading(false);
+                                    })
+                                    .catch((error: any) => {
+                                        setError(t`Something went wrong`);
+                                        setGuestLoading(false);
+                                    });
+                            }}
+                            icon={
+                                guestLoading && (
+                                    <ActivityIndicator
+                                        animating={true}
+                                        size={22}
+                                        color={theme.colors.textInverted}
+                                    />
+                                )
+                            }
                         />
                     </View>
                 </View>

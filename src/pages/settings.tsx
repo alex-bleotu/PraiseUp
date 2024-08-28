@@ -25,13 +25,14 @@ const Settings = ({ navigation }: { navigation: any }) => {
     const { theme, setTheme } = useContext(ThemeContext);
     const { language, setLanguage } = useContext(LanguageContext);
     const { lyricsSize, setLyricsSize } = useContext(ConstantsContext);
-    const { logout } = useContext(AuthContext);
+    const { user, logout, exitGuest } = useContext(AuthContext);
 
     const [settings, setSettings] = useState<
         "theme" | "language" | "zoom" | null
     >(null);
-    const [isOpen, setIsOpen] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+    const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+    const [isExitModalOpen, setIsExitModalOpen] = useState(false);
 
     return (
         <StackPage title={t`Settings`} navigation={navigation} noBottom>
@@ -54,7 +55,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     backgroundColor={theme.colors.paper}
                     text={t`Theme`}
                     onPress={() => {
-                        setSettings("theme"), setIsOpen(true);
+                        setSettings("theme"), setIsSettingsOpen(true);
                     }}
                     color={theme.colors.text}
                     center={false}
@@ -75,7 +76,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     backgroundColor={theme.colors.paper}
                     text={t`Language`}
                     onPress={() => {
-                        setSettings("language"), setIsOpen(true);
+                        setSettings("language"), setIsSettingsOpen(true);
                     }}
                     color={theme.colors.text}
                     center={false}
@@ -96,7 +97,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     backgroundColor={theme.colors.paper}
                     text={t`Zoom level`}
                     onPress={() => {
-                        setSettings("zoom"), setIsOpen(true);
+                        setSettings("zoom"), setIsSettingsOpen(true);
                     }}
                     color={theme.colors.text}
                     center={false}
@@ -199,20 +200,53 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     }
                 />
 
-                <Button
-                    mode="contained"
-                    fullWidth
-                    bold
-                    backgroundColor={theme.colors.darkPaper}
-                    upper
-                    text={t`Log Out`}
-                    onPress={() => {
-                        setIsModalOpen(true);
-                    }}
-                    color={theme.colors.text}
-                    fontSize={14}
-                    style={{ marginBottom: 10, marginTop: 30 }}
-                />
+                {user.isAnonymous ? (
+                    <View>
+                        <Button
+                            mode="contained"
+                            fullWidth
+                            bold
+                            backgroundColor={theme.colors.primary}
+                            upper
+                            text={t`Link Account`}
+                            onPress={() => {
+                                navigation.navigate("Link");
+                            }}
+                            color={theme.colors.textInverted}
+                            fontSize={14}
+                            style={{ marginBottom: 10, marginTop: 30 }}
+                        />
+                        <Button
+                            mode="contained"
+                            fullWidth
+                            bold
+                            backgroundColor={theme.colors.darkPaper}
+                            upper
+                            text={t`Exit Guest Mode`}
+                            onPress={() => {
+                                setIsExitModalOpen(true);
+                            }}
+                            color={theme.colors.text}
+                            fontSize={14}
+                            style={{ marginBottom: 10, marginTop: 10 }}
+                        />
+                    </View>
+                ) : (
+                    <Button
+                        mode="contained"
+                        fullWidth
+                        bold
+                        backgroundColor={theme.colors.darkPaper}
+                        upper
+                        text={t`Log Out`}
+                        onPress={() => {
+                            setIsLogoutModalOpen(true);
+                        }}
+                        color={theme.colors.text}
+                        fontSize={14}
+                        style={{ marginBottom: 10, marginTop: 30 }}
+                    />
+                )}
 
                 <View style={styles.version}>
                     <Text color={theme.colors.textVariant}>{t`Version: `}</Text>
@@ -224,9 +258,9 @@ const Settings = ({ navigation }: { navigation: any }) => {
             </ScrollView>
             {settings && (
                 <BottomSheetModal
-                    isOpen={isOpen}
+                    isOpen={isSettingsOpen}
                     onClose={() => {
-                        setIsOpen(false), setSettings(null);
+                        setIsSettingsOpen(false), setSettings(null);
                     }}
                     height={
                         settings === "theme"
@@ -421,7 +455,9 @@ Seeking stories yet untold.`}
                 </BottomSheetModal>
             )}
 
-            <Modal visible={isModalOpen} setVisible={setIsModalOpen}>
+            <Modal
+                visible={isLogoutModalOpen}
+                setVisible={setIsLogoutModalOpen}>
                 <View>
                     <View
                         style={{
@@ -450,7 +486,7 @@ Seeking stories yet untold.`}
                     <View style={{ width: "47%" }}>
                         <TouchableOpacity
                             onPress={() => {
-                                setIsModalOpen(false);
+                                setIsLogoutModalOpen(false);
                             }}
                             activeOpacity={theme.activeOpacity}
                             style={[
@@ -483,6 +519,82 @@ Seeking stories yet untold.`}
                                 center
                                 color={theme.colors.white}>
                                 {t`Log Out`}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
+
+            <Modal visible={isExitModalOpen} setVisible={setIsExitModalOpen}>
+                <View>
+                    <View
+                        style={{
+                            width: "100%",
+                            alignItems: "center",
+                            paddingHorizontal: 20,
+                            paddingVertical: 10,
+                        }}>
+                        <Text
+                            fontSize={18}
+                            color={theme.colors.textVariant}
+                            center
+                            style={{
+                                width: 200,
+                            }}>{t`Are you sure you want to exit guest mode?`}</Text>
+                        <Text
+                            fontSize={18}
+                            color={theme.colors.textVariant}
+                            center
+                            style={{
+                                width: 200,
+                                marginTop: 5,
+                            }}>{t`Your data will be lost.`}</Text>
+                    </View>
+                </View>
+                <View
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        marginTop: 30,
+                    }}>
+                    <View style={{ width: "47%" }}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                setIsExitModalOpen(false);
+                            }}
+                            activeOpacity={theme.activeOpacity}
+                            style={[
+                                styles.button,
+                                {
+                                    backgroundColor: theme.colors.darkPaper,
+                                },
+                            ]}>
+                            <Text fontSize={14} bold upper center>
+                                {t`Cancel`}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ width: "47%" }}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                exitGuest();
+                            }}
+                            activeOpacity={theme.activeOpacity}
+                            style={[
+                                styles.button,
+                                {
+                                    backgroundColor: theme.colors.danger,
+                                },
+                            ]}>
+                            <Text
+                                fontSize={14}
+                                bold
+                                upper
+                                center
+                                color={theme.colors.white}>
+                                {t`Exit`}
                             </Text>
                         </TouchableOpacity>
                     </View>

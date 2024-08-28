@@ -3,6 +3,7 @@ import {
     createStackNavigator,
 } from "@react-navigation/stack";
 import React from "react";
+import Link from "../pages/link";
 import Settings from "../pages/settings";
 import Tabs from "./tabs";
 
@@ -18,6 +19,7 @@ const AppStack = () => {
             }}>
             <S.Screen name="Tabs" component={Tabs} />
             <S.Screen name="Settings" component={Settings} />
+            <S.Screen name="Link" component={Link} />
         </S.Navigator>
     );
 };

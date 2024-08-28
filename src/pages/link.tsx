@@ -10,14 +10,13 @@ import { AuthContext } from "../context/auth";
 import { ThemeContext } from "../context/theme";
 import { validateEmail } from "../utils/util";
 
-const Register = ({ navigation }: { navigation: any }) => {
-    const { register, loading, loginAsGuest }: any = useContext(AuthContext);
+const Link = ({ navigation }: { navigation: any }) => {
+    const { linkGuest, loading }: any = useContext(AuthContext);
     const { theme } = useContext(ThemeContext);
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [guestLoading, setGuestLoading] = useState(false);
 
     const [emailValid, setEmailValid] = useState(true);
 
@@ -44,7 +43,7 @@ const Register = ({ navigation }: { navigation: any }) => {
                             marginTop: 10,
                             marginBottom: 20,
                         }}>
-                        <Text bold fontSize={30}>{t`Join Us`}</Text>
+                        <Text bold fontSize={30}>{t`Link Account`}</Text>
                     </View>
                     <View
                         style={{
@@ -55,7 +54,7 @@ const Register = ({ navigation }: { navigation: any }) => {
                             fontSize={18}
                             color={
                                 theme.colors.textVariant
-                            }>{t`Create an account to save your progress and access your data on multiple devices.`}</Text>
+                            }>{t`Link your account to save your data and access it from any device.`}</Text>
                     </View>
                     <IconInput
                         icon="account"
@@ -103,7 +102,7 @@ const Register = ({ navigation }: { navigation: any }) => {
                         }}>
                         <Button
                             mode="contained"
-                            text={t`Join App`}
+                            text={t`Link Account`}
                             upper
                             fullWidth
                             fontSize={14}
@@ -125,14 +124,16 @@ const Register = ({ navigation }: { navigation: any }) => {
                                 if (loading) return;
 
                                 setError("");
-
                                 if (password.length > 5) {
-                                    register(
+                                    linkGuest(
                                         email.trim(),
                                         password,
                                         username.trim()
                                     )
-                                        .then(() => {
+                                        .then((response: any) => {
+                                            navigation.navigate("Tabs", {
+                                                screen: "HomeStack",
+                                            });
                                             setError("");
                                         })
                                         .catch((error: any) => {
@@ -179,42 +180,6 @@ const Register = ({ navigation }: { navigation: any }) => {
                             text={t`Continue with Facebook`}
                             style={{ marginTop: 15 }}
                         /> */}
-                        <Button
-                            mode="contained"
-                            text={t`Continue as Guest`}
-                            upper
-                            fullWidth
-                            fontSize={14}
-                            bold
-                            style={{
-                                paddingVertical: guestLoading ? 13 : 14.5,
-                                marginTop: 15,
-                            }}
-                            onPress={() => {
-                                if (loading || guestLoading) return;
-
-                                setError("");
-                                setGuestLoading(true);
-                                loginAsGuest()
-                                    .then(() => {
-                                        setError("");
-                                        setGuestLoading(false);
-                                    })
-                                    .catch((error: any) => {
-                                        setError(t`Something went wrong`);
-                                        setGuestLoading(false);
-                                    });
-                            }}
-                            icon={
-                                guestLoading && (
-                                    <ActivityIndicator
-                                        animating={true}
-                                        size={22}
-                                        color={theme.colors.textInverted}
-                                    />
-                                )
-                            }
-                        />
                     </View>
                 </View>
             </View>
@@ -258,4 +223,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Register;
+export default Link;

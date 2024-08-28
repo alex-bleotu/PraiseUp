@@ -1,6 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
     createUserWithEmailAndPassword,
+    EmailAuthProvider,
+    linkWithCredential,
+    signInAnonymously,
     signInWithEmailAndPassword,
     updateProfile,
     User,
@@ -92,6 +95,19 @@ export const AuthProvider = ({
         });
     };
 
+    const loginAsGuest = async (): Promise<any> => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const userCredential = await signInAnonymously(auth);
+                setUser(userCredential.user);
+                resolve(userCredential);
+            } catch (error) {
+                console.log("Failed to login as guest", error);
+                reject(error);
+            }
+        });
+    };
+
     const logout = async () => {
         setLoading(true);
 
@@ -106,6 +122,57 @@ export const AuthProvider = ({
         }
     };
 
+    const exitGuest = async () => {
+        setLoading(true);
+
+        try {
+            await auth.currentUser?.delete();
+            await AsyncStorage.removeItem("user");
+            setUser(null);
+        } catch {
+            console.log("Failed to exit guest");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const linkGuest = async (
+        email: string,
+        password: string,
+        username: string
+    ): Promise<any> => {
+        setLoading(true);
+
+        return new Promise(async (resolve, reject) => {
+            try {
+                const credential = EmailAuthProvider.credential(
+                    email,
+                    password
+                );
+                const user = auth.currentUser;
+
+                if (user) {
+                    const response = await linkWithCredential(user, credential);
+
+                    await updateProfile(response.user, {
+                        displayName: username,
+                    });
+
+                    setUser(response.user);
+
+                    resolve(response);
+                } else {
+                    throw new Error("No user is currently signed in.");
+                }
+            } catch (error) {
+                console.log("Failed to link guest", error);
+                reject(error);
+            } finally {
+                setLoading(false);
+            }
+        });
+    };
+
     return (
         <AuthContext.Provider
             value={{
@@ -114,6 +181,9 @@ export const AuthProvider = ({
                 login,
                 register,
                 logout,
+                loginAsGuest,
+                exitGuest,
+                linkGuest,
             }}>
             {children}
         </AuthContext.Provider>
