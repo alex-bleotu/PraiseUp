@@ -10,29 +10,31 @@ import { darkTheme } from "./src/utils/theme";
 
 import { AuthProvider } from "./src/context/auth";
 import { ConstantsProvider } from "./src/context/constants";
+import { LanguageProvider } from "./src/context/language";
+import AppNavigation from "./src/navigation/appNavigation";
 
 export default function App() {
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <ThemeProvider>
-                {/* <LanguageProvider> */}
-                <PaperProvider theme={darkTheme}>
-                    <ConstantsProvider>
-                        <RefreshProvider>
-                            <AuthProvider>
-                                <DataProvider>
-                                    <HistoryProvider>
-                                        <RecentProvider>
-                                            {/* <AppNavigation /> */}
-                                            <StatusBar style="auto" />
-                                        </RecentProvider>
-                                    </HistoryProvider>
-                                </DataProvider>
-                            </AuthProvider>
-                        </RefreshProvider>
-                    </ConstantsProvider>
-                </PaperProvider>
-                {/* </LanguageProvider> */}
+                <LanguageProvider>
+                    <PaperProvider theme={darkTheme}>
+                        <ConstantsProvider>
+                            <RefreshProvider>
+                                <AuthProvider>
+                                    <DataProvider>
+                                        <HistoryProvider>
+                                            <RecentProvider>
+                                                <AppNavigation />
+                                                <StatusBar style="auto" />
+                                            </RecentProvider>
+                                        </HistoryProvider>
+                                    </DataProvider>
+                                </AuthProvider>
+                            </RefreshProvider>
+                        </ConstantsProvider>
+                    </PaperProvider>
+                </LanguageProvider>
             </ThemeProvider>
         </GestureHandlerRootView>
     );

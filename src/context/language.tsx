@@ -55,7 +55,7 @@ export const LanguageProvider = ({
         setKey((prevKey) => prevKey + 1);
     }, [language]);
 
-    if (!language || !i18n) return <Background />;
+    if (!language) return <Background />;
 
     return (
         <LanguageContext.Provider value={{ language, setLanguage }}>
