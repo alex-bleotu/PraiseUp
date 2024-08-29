@@ -744,7 +744,6 @@ Seeking stories yet untold.`}
                                         setPasswordError(false);
                                     })
                                     .catch((error: any) => {
-                                        console.log(error.message);
                                         if (
                                             error.message.includes(
                                                 "auth/invalid-credential"

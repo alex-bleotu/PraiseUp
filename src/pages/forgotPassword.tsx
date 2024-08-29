@@ -120,7 +120,6 @@ const ForgotPassword = ({ navigation }: { navigation: any }) => {
                                         );
                                     })
                                     .catch((error: any) => {
-                                        console.log(error);
                                         setError(t`Something went wrong.`);
                                     });
                             }}
