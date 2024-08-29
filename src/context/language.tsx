@@ -1,11 +1,11 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getLocales } from "expo-localization";
+// import { getLocales } from "expo-localization";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
-import { messages as enMessages } from "../../src/locales/en/messages";
-import { messages as roMessages } from "../../src/locales/ro/messages";
 import Background from "../components/wrapers/background";
+import { messages as enMessages } from "../locales/en/messages";
+import { messages as roMessages } from "../locales/ro/messages";
 
 i18n.load({
     en: enMessages,
@@ -19,7 +19,7 @@ export const LanguageProvider = ({
 }: {
     children: ReactNode | ReactNode[];
 }) => {
-    const [language, setLanguage] = useState<"en" | "ro">("ro");
+    const [language, setLanguage] = useState<"en" | "ro">("en");
     const [key, setKey] = useState(0);
 
     useEffect(() => {
@@ -29,20 +29,19 @@ export const LanguageProvider = ({
                 if (storedLanguage === "en" || storedLanguage === "ro") {
                     setLanguage(storedLanguage);
                 } else {
-                    if (getLocales()[0].languageCode === "en") {
-                        await AsyncStorage.setItem("language", "en");
-                        setLanguage("en");
-                    } else {
-                        await AsyncStorage.setItem("language", "ro");
-                        setLanguage("ro");
-                    }
+                    // if (getLocales()[0].languageCode === "en") {
+                    //     await AsyncStorage.setItem("language", "en");
+                    //     setLanguage("en");
+                    // } else {
+                    //     await AsyncStorage.setItem("language", "ro");
+                    //     setLanguage("ro");
+                    // }
                 }
             } catch (error) {
                 console.error(
                     "Failed to load language from AsyncStorage:",
                     error
                 );
-                setLanguage("en");
             }
         };
 
