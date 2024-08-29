@@ -60,6 +60,7 @@ export const DataProvider = ({
                 "onboard",
                 "user",
                 "language",
+                "personalAlbumsIds",
             ]);
 
             updateRefresh();
@@ -502,23 +503,23 @@ export const DataProvider = ({
     };
 
     const getPersonalAlbums = async () => {
-        const personalAlbums: AlbumType[] = [];
+        const personalAlbumsArray: AlbumType[] = [];
 
         for (let i = 0; i < personalAlbumsIds.length; i++) {
-            const album = await getAlbumById(personalAlbumsIds[i]);
+            const album = await getPersonalAlbumsById(personalAlbumsIds[i]);
 
-            personalAlbums.push(album);
+            personalAlbumsArray.push(album);
         }
 
-        return personalAlbums;
+        return personalAlbumsArray;
     };
 
     const deletePersonalAlbum = async (id: string) => {
         try {
             await AsyncStorage.removeItem(id);
 
-            setPersonalAlbumsIds((prevArray) =>
-                prevArray.filter((albumId) => albumId !== id)
+            setPersonalAlbumsIds(
+                personalAlbumsIds.filter((albumId: any) => albumId !== id)
             );
         } catch (error) {
             console.error("Error deleting personal album file:", error);

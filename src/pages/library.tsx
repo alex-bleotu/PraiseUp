@@ -17,13 +17,14 @@ import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
 import { ConstantsContext } from "../context/constants";
 import { AlbumType, DataContext, SongType } from "../context/data";
+import { RecentContext } from "../context/recent";
 import { RefreshContext } from "../context/refresh";
 import { ThemeContext } from "../context/theme";
 import Loading from "./loading";
 
 const Library = ({ navigation }: { navigation: any }) => {
     const { theme } = useContext(ThemeContext);
-    const { refresh } = useContext(RefreshContext);
+    const { refresh, updateRefresh } = useContext(RefreshContext);
     const {
         loading,
         getFavoriteSongsAlbum,
@@ -33,6 +34,7 @@ const Library = ({ navigation }: { navigation: any }) => {
     } = useContext(DataContext);
     const { sortBy, setSortBy, display, setDisplay } =
         useContext(ConstantsContext);
+    const { addToRecent } = useContext(RecentContext);
 
     const [albums, setAlbums] = useState<any>(null);
 
@@ -354,8 +356,10 @@ const Library = ({ navigation }: { navigation: any }) => {
                                             navigation.navigate("Album", {
                                                 album: newAlbum,
                                             });
+                                            addToRecent(newAlbum);
                                             setIsCreateBottomSheetOpen(false);
                                             setName("");
+                                            updateRefresh();
                                         }
                                     );
                                 }}

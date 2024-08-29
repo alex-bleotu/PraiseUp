@@ -4,6 +4,7 @@ import * as Linking from "expo-linking";
 import React, { useContext, useEffect, useState } from "react";
 import { Image, Share, StyleSheet, TouchableOpacity, View } from "react-native";
 import { AlbumType, DataContext, isSong, SongType } from "../../context/data";
+import { RecentContext } from "../../context/recent";
 import { RefreshContext } from "../../context/refresh";
 import { ThemeContext } from "../../context/theme";
 import { getImage } from "../../utils/covers";
@@ -31,6 +32,7 @@ const DataBottomSheet = ({
     const { setFavorite, getById, deletePersonalAlbum } =
         useContext(DataContext);
     const { updateRefresh } = useContext(RefreshContext);
+    const { updateFavorite } = useContext(RecentContext);
 
     const [data, setData] = useState<SongType | AlbumType | null>(null);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -284,9 +286,12 @@ const DataBottomSheet = ({
                         <TouchableOpacity
                             onPress={() => {
                                 if (data !== null) {
-                                    deletePersonalAlbum(data.id);
-                                    setIsDeleteModalOpen(false);
-                                    extraActions && extraActions();
+                                    deletePersonalAlbum(data.id).then(() => {
+                                        updateFavorite();
+                                        updateRefresh();
+                                        setIsDeleteModalOpen(false);
+                                        extraActions && extraActions();
+                                    });
                                 }
                             }}
                             activeOpacity={theme.activeOpacity}

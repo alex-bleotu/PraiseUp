@@ -112,7 +112,13 @@ export const AuthProvider = ({
 
         try {
             await auth.signOut();
-            await AsyncStorage.removeItem("user");
+            await AsyncStorage.multiRemove([
+                "recent",
+                "history",
+                "user",
+                "language",
+                "personalAlbumsIds",
+            ]);
             setUser(null);
         } finally {
             setLoading(false);

@@ -13,7 +13,8 @@ export const RecentProvider = ({
         null
     );
 
-    const { getRandom, loading } = useContext(DataContext);
+    const { getRandom, loading, getPersonalAlbumsById } =
+        useContext(DataContext);
 
     useEffect(() => {
         if (loading) return;
@@ -64,6 +65,30 @@ export const RecentProvider = ({
         setRecent([]);
     };
 
+    const updateFavorite = async () => {
+        if (recent === null) return;
+
+        const newRecent = await Promise.all(
+            recent.map(async (item) => {
+                if (item.id.startsWith("P")) {
+                    const album = await getPersonalAlbumsById(item.id);
+
+                    if (album === null) return null;
+
+                    return album;
+                }
+
+                return item;
+            })
+        ).then((items) => items.filter((item) => item !== null));
+
+        while (newRecent.length < 6) newRecent.push((await getRandom(1))[0]);
+
+        console.log(newRecent);
+
+        setRecent(newRecent);
+    };
+
     return (
         <RecentContext.Provider
             value={{
@@ -71,6 +96,7 @@ export const RecentProvider = ({
                 addToRecent,
                 removeFromRecent,
                 deleteRecent,
+                updateFavorite,
             }}>
             {children}
         </RecentContext.Provider>
