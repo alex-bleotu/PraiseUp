@@ -1,18 +1,27 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import {
     createUserWithEmailAndPassword,
     EmailAuthProvider,
     sendPasswordResetEmail as firebaseSendPasswordResetEmail,
     updatePassword as firebaseUpdatePassword,
+    GoogleAuthProvider,
     linkWithCredential,
     reauthenticateWithCredential,
     signInAnonymously,
+    signInWithCredential,
     signInWithEmailAndPassword,
     updateProfile,
     User,
 } from "firebase/auth";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 import { auth } from "../../firebaseConfig";
+
+GoogleSignin.configure({
+    webClientId:
+        "742969818984-ha1ji8a7bfjig6qdcqishkinprmhamee.apps.googleusercontent.com",
+    scopes: ["profile", "email"],
+});
 
 export const AuthContext = createContext<any>(null);
 
@@ -237,6 +246,39 @@ export const AuthProvider = ({
         });
     };
 
+    const signInWithGoogle = async (): Promise<any> => {
+        setLoading(true);
+
+        return new Promise(async (resolve, reject) => {
+            try {
+                await GoogleSignin.hasPlayServices();
+                const { idToken } = await GoogleSignin.signIn();
+
+                const googleCredential = GoogleAuthProvider.credential(idToken);
+
+                if (auth.currentUser?.isAnonymous) {
+                    const linkedUser = await linkWithCredential(
+                        auth.currentUser,
+                        googleCredential
+                    );
+                    setUser(linkedUser.user);
+                    resolve(linkedUser);
+                } else {
+                    const userCredential = await signInWithCredential(
+                        auth,
+                        googleCredential
+                    );
+                    setUser(userCredential.user);
+                    resolve(userCredential);
+                }
+            } catch (error) {
+                reject(error);
+            } finally {
+                setLoading(false);
+            }
+        });
+    };
+
     return (
         <AuthContext.Provider
             value={{
@@ -251,6 +293,7 @@ export const AuthProvider = ({
                 sendPasswordResetEmail,
                 deleteAccount,
                 updatePassword,
+                signInWithGoogle,
             }}>
             {children}
         </AuthContext.Provider>

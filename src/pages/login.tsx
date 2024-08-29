@@ -12,14 +12,13 @@ import ImageButton from "../components/wrapers/imaegButton";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
 import { AuthContext } from "../context/auth";
-import { ConstantsContext } from "../context/constants";
 import { ThemeContext } from "../context/theme";
 import { validateEmail } from "../utils/util";
 
 const Login = ({ navigation, route }: { navigation: any; route: any }) => {
-    const { login, loading, loginAsGuest } = useContext(AuthContext);
+    const { login, loading, loginAsGuest, signInWithGoogle } =
+        useContext(AuthContext);
     const { theme } = useContext(ThemeContext);
-    const { appHeight } = useContext(ConstantsContext);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -181,6 +180,18 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                             bgcolor={theme.colors.white}
                             color={"black"}
                             text={t`Continue with Google`}
+                            onPress={() => {
+                                signInWithGoogle()
+                                    .then(() => {
+                                        console.log("Google sign in success");
+                                    })
+                                    .catch((error: any) => {
+                                        console.log(
+                                            "Google sign in error",
+                                            error
+                                        );
+                                    });
+                            }}
                         />
                         {/* <ImageButton
                             src={require("../../assets/images/auth/facebook.png")}
