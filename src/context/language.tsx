@@ -1,7 +1,7 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import { getLocales } from "expo-localization";
+import { getLocales } from "expo-localization";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 import Background from "../components/wrapers/background";
 import { messages as enMessages } from "../locales/en/messages";
@@ -29,13 +29,13 @@ export const LanguageProvider = ({
                 if (storedLanguage === "en" || storedLanguage === "ro") {
                     setLanguage(storedLanguage);
                 } else {
-                    // if (getLocales()[0].languageCode === "en") {
-                    //     await AsyncStorage.setItem("language", "en");
-                    //     setLanguage("en");
-                    // } else {
-                    //     await AsyncStorage.setItem("language", "ro");
-                    //     setLanguage("ro");
-                    // }
+                    if (getLocales()[0].languageCode === "en") {
+                        await AsyncStorage.setItem("language", "en");
+                        setLanguage("en");
+                    } else {
+                        await AsyncStorage.setItem("language", "ro");
+                        setLanguage("ro");
+                    }
                 }
             } catch (error) {
                 console.error(
