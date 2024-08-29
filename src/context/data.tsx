@@ -40,6 +40,7 @@ export const DataProvider = ({
 
     const [songIds, setSongIds] = useState<string[]>([]);
     const [albumIds, setAlbumIds] = useState<string[]>([]);
+    const [personalAlbumsIds, setPersonalAlbumsIds] = useState<string[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
@@ -48,6 +49,7 @@ export const DataProvider = ({
         const clear = async () => {
             setSongIds([]);
             setAlbumIds([]);
+            setPersonalAlbumsIds([]);
 
             await AsyncStorage.clear();
             await AsyncStorage.multiRemove([
@@ -82,6 +84,9 @@ export const DataProvider = ({
         const readLists = async () => {
             const storedSongs = await AsyncStorage.getItem("songIds");
             const storedAlbums = await AsyncStorage.getItem("albumIds");
+            const storedPersonalAlbums = await AsyncStorage.getItem(
+                "personalAlbumsIds"
+            );
 
             if (storedSongs !== null) {
                 setSongIds(
@@ -102,6 +107,19 @@ export const DataProvider = ({
 
                         return aNum - bNum;
                     })
+                );
+            }
+
+            if (storedPersonalAlbums !== null) {
+                setPersonalAlbumsIds(
+                    JSON.parse(storedPersonalAlbums).sort(
+                        (a: string, b: string) => {
+                            const aNum = parseInt(a.slice(1));
+                            const bNum = parseInt(b.slice(1));
+
+                            return aNum - bNum;
+                        }
+                    )
                 );
             }
         };
@@ -128,10 +146,16 @@ export const DataProvider = ({
                     "albumIds",
                     JSON.stringify(albumIds)
                 );
+
+            if (personalAlbumsIds.length !== 0)
+                await AsyncStorage.setItem(
+                    "personalAlbumsIds",
+                    JSON.stringify(personalAlbumsIds)
+                );
         };
 
         writeLists();
-    }, [songIds, albumIds]);
+    }, [songIds, albumIds, personalAlbumsIds]);
 
     const writeSong = async (song: SongType) => {
         try {
@@ -177,6 +201,37 @@ export const DataProvider = ({
         }
     };
 
+    const writePersonalAlbum = async (album: AlbumType) => {
+        try {
+            await AsyncStorage.setItem(album.id, JSON.stringify(album));
+
+            if (album.songs.length > 2 && !Array.isArray(album.cover)) {
+                const songs = album.songs.slice(0, 4);
+
+                const songPromises = await Promise.all(
+                    songs.map(async (id) => {
+                        const song = await readSong(id);
+
+                        if (!song) return null;
+
+                        return song;
+                    })
+                );
+
+                const covers = songPromises.map((song) => song.cover);
+
+                album.cover = covers;
+            }
+
+            if (!personalAlbumsIds.find((id) => id === album.id))
+                setPersonalAlbumsIds((prevArray) => [...prevArray, album.id]);
+
+            console.log("Wrote personal album file", album.id);
+        } catch (error) {
+            console.error("Error writing personal album file:", error);
+        }
+    };
+
     const updateDate = async (id: string) => {
         if (id.includes("S")) {
             const song = await readSong(id);
@@ -211,6 +266,7 @@ export const DataProvider = ({
     const getById = async (id: string) => {
         if (id.includes("S")) return getSongById(id);
         if (id.includes("A")) return getAlbumById(id);
+        if (id.includes("P")) return getPersonalAlbumsById(id);
 
         return null;
     };
@@ -222,6 +278,12 @@ export const DataProvider = ({
     };
 
     const getAlbumById = async (id: string) => {
+        const album = await readAlbum(id);
+
+        return album;
+    };
+
+    const getPersonalAlbumsById = async (id: string) => {
         const album = await readAlbum(id);
 
         return album;
@@ -418,6 +480,51 @@ export const DataProvider = ({
         return album;
     };
 
+    const createPersonalPlaylist = async (name: string) => {
+        return new Promise<AlbumType>(async (resolve) => {
+            try {
+                const playlist: AlbumType = {
+                    id: `P${personalAlbumsIds.length}`,
+                    title: name,
+                    songs: [],
+                    favorite: false,
+                    date: new Date().toISOString(),
+                    cover: null,
+                };
+
+                await writePersonalAlbum(playlist);
+
+                resolve(playlist);
+            } catch (error) {
+                console.error("Error creating personal playlist:", error);
+            }
+        });
+    };
+
+    const getPersonalAlbums = async () => {
+        const personalAlbums: AlbumType[] = [];
+
+        for (let i = 0; i < personalAlbumsIds.length; i++) {
+            const album = await getAlbumById(personalAlbumsIds[i]);
+
+            personalAlbums.push(album);
+        }
+
+        return personalAlbums;
+    };
+
+    const deletePersonalAlbum = async (id: string) => {
+        try {
+            await AsyncStorage.removeItem(id);
+
+            setPersonalAlbumsIds((prevArray) =>
+                prevArray.filter((albumId) => albumId !== id)
+            );
+        } catch (error) {
+            console.error("Error deleting personal album file:", error);
+        }
+    };
+
     return (
         <DataContext.Provider
             value={{
@@ -441,6 +548,11 @@ export const DataProvider = ({
                 getFavoriteAlbums,
                 setFavorite,
                 getFavoriteSongsAlbum,
+                createPersonalPlaylist,
+                writePersonalAlbum,
+                getPersonalAlbums,
+                getPersonalAlbumsById,
+                deletePersonalAlbum,
             }}>
             {children}
         </DataContext.Provider>

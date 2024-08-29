@@ -5,6 +5,7 @@ import { StyleSheet, ScrollView as SV, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import SongCover from "../components/items/songCover";
 import AnimatedTouchable from "../components/wrapers/animatedTouchable";
+import Button from "../components/wrapers/button";
 import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
@@ -24,7 +25,7 @@ interface AlbumProps {
 const Album = ({ route, navigation }: AlbumProps) => {
     const { album } = route.params;
 
-    const { refresh } = useContext(RefreshContext);
+    const { refresh, updateRefresh } = useContext(RefreshContext);
     const { getSongById } = useContext(DataContext);
     const { language } = useContext(LanguageContext);
     const { theme } = useContext(ThemeContext);
@@ -75,7 +76,7 @@ const Album = ({ route, navigation }: AlbumProps) => {
         }
     }, [sortBy]);
 
-    if (album === null) return <Loading />;
+    if (album === null || album === undefined) return <Loading />;
 
     return (
         <StackPage
@@ -135,67 +136,110 @@ const Album = ({ route, navigation }: AlbumProps) => {
                     </AnimatedTouchable>
                 </View>
                 {songs ? (
-                    display === "grid" ? (
-                        <View style={styles.scrollContainer}>
-                            <SV
-                                contentContainerStyle={styles.grid}
-                                showsVerticalScrollIndicator={false}>
-                                {songs.map((data: SongType, index: number) => {
-                                    return (
-                                        <View
-                                            key={data.id}
-                                            style={[
-                                                styles.item,
-                                                {
-                                                    marginHorizontal:
-                                                        (index - 1) % 3 == 0
-                                                            ? 15
-                                                            : 0,
-                                                },
-                                            ]}>
-                                            <SongCover
+                    songs.length > 0 ? (
+                        display === "grid" ? (
+                            <View style={styles.scrollContainer}>
+                                <SV
+                                    contentContainerStyle={styles.grid}
+                                    showsVerticalScrollIndicator={false}>
+                                    {songs.map(
+                                        (data: SongType, index: number) => {
+                                            return (
+                                                <View
+                                                    key={data.id}
+                                                    style={[
+                                                        styles.item,
+                                                        {
+                                                            marginHorizontal:
+                                                                (index - 1) %
+                                                                    3 ==
+                                                                0
+                                                                    ? 15
+                                                                    : 0,
+                                                        },
+                                                    ]}>
+                                                    <SongCover
+                                                        key={data.id}
+                                                        song={data}
+                                                        navigation={navigation}
+                                                        vertical
+                                                        artist={false}
+                                                        onLongPress={() => {
+                                                            setCurrentData(
+                                                                data
+                                                            );
+                                                            setBottomSheetOpen(
+                                                                true
+                                                            );
+                                                        }}
+                                                    />
+                                                </View>
+                                            );
+                                        }
+                                    )}
+                                </SV>
+                            </View>
+                        ) : (
+                            <View style={styles.container}>
+                                <ScrollView bottom={5} showScroll={false}>
+                                    {songs.map((data: SongType) => {
+                                        return (
+                                            <View
                                                 key={data.id}
-                                                song={data}
-                                                navigation={navigation}
-                                                vertical
-                                                artist={false}
-                                                onLongPress={() => {
-                                                    setCurrentData(data);
-                                                    setBottomSheetOpen(true);
-                                                }}
-                                            />
-                                        </View>
-                                    );
-                                })}
-                            </SV>
-                        </View>
+                                                style={{ marginBottom: 15 }}>
+                                                <SongCover
+                                                    key={data.id}
+                                                    song={data}
+                                                    navigation={navigation}
+                                                    fullWidth
+                                                    icon={"dots-vertical"}
+                                                    onLongPress={() => {
+                                                        setCurrentData(data);
+                                                        setBottomSheetOpen(
+                                                            true
+                                                        );
+                                                    }}
+                                                    action={() => {
+                                                        setCurrentData(data);
+                                                        setBottomSheetOpen(
+                                                            true
+                                                        );
+                                                    }}
+                                                />
+                                            </View>
+                                        );
+                                    })}
+                                </ScrollView>
+                            </View>
+                        )
                     ) : (
-                        <View style={styles.container}>
-                            <ScrollView bottom={5} showScroll={false}>
-                                {songs.map((data: SongType) => {
-                                    return (
-                                        <View
-                                            key={data.id}
-                                            style={{ marginBottom: 15 }}>
-                                            <SongCover
-                                                key={data.id}
-                                                song={data}
-                                                navigation={navigation}
-                                                fullWidth
-                                                icon={"dots-vertical"}
-                                                onLongPress={() => {
-                                                    setCurrentData(data);
-                                                    setBottomSheetOpen(true);
-                                                }}
-                                                action={() => {
-                                                    setCurrentData(data);
-                                                    setBottomSheetOpen(true);
-                                                }}
-                                            />
-                                        </View>
-                                    );
-                                })}
-                            </ScrollView>
+                        <View style={styles.noSongs}>
+                            {album.id.startsWith("P") ? (
+                                <>
+                                    <Text
+                                        bold
+                                        center>{t`Let's start building this ablum`}</Text>
+                                    <Button
+                                        mode="contained"
+                                        fullWidth
+                                        bold
+                                        backgroundColor={theme.colors.primary}
+                                        upper
+                                        text={t`Add songs`}
+                                        onPress={() => {}}
+                                        color={theme.colors.textInverted}
+                                        fontSize={14}
+                                        style={{
+                                            marginBottom: 10,
+                                            marginTop: 20,
+                                        }}
+                                    />
+                                </>
+                            ) : (
+                                <Text
+                                    bold
+                                    center>{t`There are no songs in this album.`}</Text>
+                            )}
                         </View>
                     )
                 ) : (
@@ -219,6 +263,10 @@ const Album = ({ route, navigation }: AlbumProps) => {
                 isOpen={isBottomSheetOpen}
                 onClose={() => {
                     setBottomSheetOpen(false);
+                }}
+                extraActions={() => {
+                    updateRefresh();
+                    navigation.goBack();
                 }}
             />
         </StackPage>
@@ -269,5 +317,11 @@ const styles = StyleSheet.create({
     item: {
         marginBottom: 15,
         width: "30%",
+    },
+    noSongs: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: -100,
     },
 });

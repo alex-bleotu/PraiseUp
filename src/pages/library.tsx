@@ -1,10 +1,17 @@
 import { FontAwesome6 as FAIcons } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useState } from "react";
-import { StyleSheet, ScrollView as SV, View } from "react-native";
+import {
+    StyleSheet,
+    ScrollView as SV,
+    TouchableOpacity,
+    View,
+} from "react-native";
 import AlbumCover from "../components/items/albumCover";
 import AnimatedTouchable from "../components/wrapers/animatedTouchable";
+import BottomSheetModal from "../components/wrapers/bottomSheetModal";
 import DataBottomSheet from "../components/wrapers/dataBottomSheet";
+import Input from "../components/wrapers/input";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
@@ -17,8 +24,13 @@ import Loading from "./loading";
 const Library = ({ navigation }: { navigation: any }) => {
     const { theme } = useContext(ThemeContext);
     const { refresh } = useContext(RefreshContext);
-    const { loading, getFavoriteSongsAlbum, getFavoriteAlbums } =
-        useContext(DataContext);
+    const {
+        loading,
+        getFavoriteSongsAlbum,
+        getFavoriteAlbums,
+        createPersonalPlaylist,
+        getPersonalAlbums,
+    } = useContext(DataContext);
     const { sortBy, setSortBy, display, setDisplay } =
         useContext(ConstantsContext);
 
@@ -28,12 +40,16 @@ const Library = ({ navigation }: { navigation: any }) => {
     const [currentData, setCurrentData] = useState<SongType | AlbumType | null>(
         null
     );
+    const [isCreateBottomSheetOpen, setIsCreateBottomSheetOpen] =
+        useState(false);
+    const [name, setName] = useState("");
 
     useEffect(() => {
         if (!loading) {
             const loadAndSort = async () => {
                 const favoriteAlbum = await getFavoriteSongsAlbum();
                 const albums = await getFavoriteAlbums();
+                const personal = await getPersonalAlbums();
 
                 const buttonAlbum = {
                     id: "B",
@@ -44,8 +60,8 @@ const Library = ({ navigation }: { navigation: any }) => {
 
                 let combinedAlbums =
                     favoriteAlbum.songs.length > 0
-                        ? [favoriteAlbum, ...albums, buttonAlbum]
-                        : [...albums, buttonAlbum];
+                        ? [favoriteAlbum, ...personal, ...albums, buttonAlbum]
+                        : [...personal, ...albums, buttonAlbum];
 
                 combinedAlbums = sortAlbums(combinedAlbums);
 
@@ -152,7 +168,11 @@ const Library = ({ navigation }: { navigation: any }) => {
                                                 ]}>
                                                 {data.id === "B" ? (
                                                     <AnimatedTouchable
-                                                        onPress={() => {}}
+                                                        onPress={() => {
+                                                            setIsCreateBottomSheetOpen(
+                                                                true
+                                                            );
+                                                        }}
                                                         style={[
                                                             styles.addGrid,
                                                             {
@@ -288,6 +308,79 @@ const Library = ({ navigation }: { navigation: any }) => {
                     setBottomSheetOpen(false);
                 }}
             />
+            <BottomSheetModal
+                isOpen={isCreateBottomSheetOpen}
+                onClose={() => {
+                    setIsCreateBottomSheetOpen(false);
+                    setName("");
+                }}
+                height={225}>
+                <View style={styles.bottomSheet}>
+                    <Text bold fontSize={20}>
+                        {t`Give your album a name`}
+                    </Text>
+                    <Input
+                        placeholder={t`Album Name`}
+                        value={name}
+                        onChange={setName}
+                        style={{ marginTop: 20 }}
+                        maxLength={32}
+                        autoCapitalize
+                    />
+                    <View style={styles.buttonContainer}>
+                        <View style={{ width: "47%" }}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    setIsCreateBottomSheetOpen(false);
+                                    setName("");
+                                }}
+                                activeOpacity={theme.activeOpacity}
+                                style={[
+                                    styles.button,
+                                    {
+                                        backgroundColor: theme.colors.darkPaper,
+                                    },
+                                ]}>
+                                <Text fontSize={14} bold upper center>
+                                    {t`Cancel`}
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{ width: "47%" }}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    createPersonalPlaylist(name.trim()).then(
+                                        (newAlbum: AlbumType) => {
+                                            navigation.navigate("Album", {
+                                                album: newAlbum,
+                                            });
+                                            setIsCreateBottomSheetOpen(false);
+                                            setName("");
+                                        }
+                                    );
+                                }}
+                                activeOpacity={theme.activeOpacity}
+                                disabled={name.length === 0}
+                                style={[
+                                    styles.button,
+                                    {
+                                        backgroundColor: theme.colors.primary,
+                                        opacity: name.length > 0 ? 1 : 0.5,
+                                    },
+                                ]}>
+                                <Text
+                                    fontSize={14}
+                                    bold
+                                    upper
+                                    center
+                                    color={theme.colors.textInverted}>
+                                    {t`Create`}
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </BottomSheetModal>
         </StackPage>
     );
 };
@@ -356,5 +449,20 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         marginTop: -3,
+    },
+    bottomSheet: {
+        marginHorizontal: 20,
+    },
+    button: {
+        paddingHorizontal: 20,
+        paddingVertical: 15,
+        borderRadius: 12,
+        justifyContent: "center",
+    },
+    buttonContainer: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginTop: 20,
     },
 });

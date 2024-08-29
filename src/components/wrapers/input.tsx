@@ -18,6 +18,7 @@ interface InputProps {
     editable?: boolean;
     autoCapitalize?: boolean;
     keyboardType?: any;
+    maxLength?: number;
 }
 
 const Input = ({
@@ -34,6 +35,7 @@ const Input = ({
     editable = true,
     autoCapitalize = false,
     keyboardType,
+    maxLength,
 }: InputProps) => {
     const { theme } = useContext(ThemeContext);
 
@@ -79,6 +81,7 @@ const Input = ({
                     selectionColor={theme.colors.grey}
                     editable={editable}
                     autoCapitalize={autoCapitalize ? "words" : "none"}
+                    maxLength={maxLength}
                 />
                 {hidden && (
                     <View style={styles.eyeIconContainer}>

@@ -147,7 +147,7 @@ const Song = ({ route, navigation }: SongProps) => {
     const buttonWidth = Dimensions.get("screen").width / 2 - 50;
     const buttonsContainerWidth = buttonWidth * 2 + 75;
 
-    if (song === null) return <Loading />;
+    if (song === null || song === undefined) return <Loading />;
 
     const hasChords = song.lyrics && song.lyrics.match(/\[.*?\]/);
 
