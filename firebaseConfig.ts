@@ -4,13 +4,13 @@ import { getReactNativePersistence, initializeAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCgtB2MaWXNf9uDACKYKCiPnguO8oN73AE",
-    authDomain: "musicapp-26bf5.firebaseapp.com",
-    projectId: "musicapp-26bf5",
-    storageBucket: "musicapp-26bf5.appspot.com",
-    messagingSenderId: "573744627786",
-    appId: "1:573744627786:web:7db777d403d30ee67a66b3",
-    measurementId: "G-EDWBT24WRZ",
+    apiKey: "AIzaSyARM9TMtALzUPscjZYtLlMcCNgrIz1roHw",
+    authDomain: "praiseup-37c47.firebaseapp.com",
+    projectId: "praiseup-37c47",
+    storageBucket: "praiseup-37c47.appspot.com",
+    messagingSenderId: "742969818984",
+    appId: "1:742969818984:web:414308e856683bce1560dd",
+    measurementId: "G-W2JXKPS0MR",
 };
 
 export const app = initializeApp(firebaseConfig);
