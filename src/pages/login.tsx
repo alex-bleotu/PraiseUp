@@ -102,7 +102,7 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                             activeOpacity={theme.activeOpacity}
                             style={styles.textContainer}
                             onPress={() => {
-                                navigation.navigate("Password");
+                                navigation.navigate("ForgotPassword");
                             }}>
                             <Text
                                 color={theme.colors.lightBlue}
@@ -211,7 +211,7 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                                         setGuestLoading(false);
                                     })
                                     .catch((error: any) => {
-                                        setError(t`Something went wrong`);
+                                        setError(t`Something went wrong.`);
                                         setGuestLoading(false);
                                     });
                             }}

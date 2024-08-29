@@ -84,7 +84,7 @@ const Register = ({ navigation }: { navigation: any }) => {
                         style={{ marginTop: 10 }}
                         hidden={true}
                         error={showPasswordError}
-                        errorText={t`Password is too short`}
+                        errorText={t`Password is too short.`}
                     />
 
                     {error.length > 0 && (
@@ -143,11 +143,11 @@ const Register = ({ navigation }: { navigation: any }) => {
                                             ) {
                                                 setShowEmailError(true);
                                                 setError(
-                                                    t`Email is already in use`
+                                                    t`Email is already in use.`
                                                 );
                                             } else
                                                 setError(
-                                                    t`Something went wrong`
+                                                    t`Something went wrong.`
                                                 );
                                         });
                                 } else setShowPasswordError(true);
@@ -201,7 +201,7 @@ const Register = ({ navigation }: { navigation: any }) => {
                                         setGuestLoading(false);
                                     })
                                     .catch((error: any) => {
-                                        setError(t`Something went wrong`);
+                                        setError(t`Something went wrong.`);
                                         setGuestLoading(false);
                                     });
                             }}

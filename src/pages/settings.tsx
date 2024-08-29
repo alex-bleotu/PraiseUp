@@ -44,6 +44,14 @@ const Settings = ({ navigation }: { navigation: any }) => {
         setPasswordError(false);
     }, [password]);
 
+    useEffect(() => {
+        if (error.includes("temporarily disabled")) {
+            setTimeout(() => {
+                setError("");
+            }, 5000);
+        }
+    }, [error]);
+
     return (
         <StackPage title={t`Settings`} navigation={navigation} noBottom>
             <ScrollView
@@ -125,22 +133,24 @@ const Settings = ({ navigation }: { navigation: any }) => {
                 <Text
                     fontSize={15}
                     color={theme.colors.textVariant}
-                    style={styles.spacer}>{t`App`}</Text>
+                    style={styles.spacer}>{t`Account`}</Text>
 
                 <Button
                     mode="contained"
                     fullWidth
                     bold
                     backgroundColor={theme.colors.paper}
-                    text={t`About Us`}
-                    onPress={() => {}}
+                    text={t`Reset your password`}
+                    onPress={() => {
+                        navigation.navigate("ResetPassword");
+                    }}
                     color={theme.colors.text}
                     center={false}
                     fontSize={15}
                     style={{ marginBottom: 10 }}
                     icon={
-                        <FIcons
-                            name="smile"
+                        <MIcons
+                            name="password"
                             size={26}
                             color={theme.colors.text}
                         />
@@ -170,7 +180,25 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     fontSize={15}
                     color={theme.colors.textVariant}
                     style={styles.spacer}>{t`Get in Touch`}</Text>
-
+                <Button
+                    mode="contained"
+                    fullWidth
+                    bold
+                    backgroundColor={theme.colors.paper}
+                    text={t`About Us`}
+                    onPress={() => {}}
+                    color={theme.colors.text}
+                    center={false}
+                    fontSize={15}
+                    style={{ marginBottom: 10 }}
+                    icon={
+                        <FIcons
+                            name="smile"
+                            size={26}
+                            color={theme.colors.text}
+                        />
+                    }
+                />
                 <Button
                     mode="contained"
                     fullWidth
@@ -441,7 +469,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                         style={{
                                             marginRight: 10,
                                         }}>
-                                        {t`Zoom level: `}
+                                        {t`Zoom Level: `}
                                     </Text>
                                     <Text bold fontSize={17}>
                                         {lyricsSize - 11}
@@ -626,6 +654,10 @@ Seeking stories yet untold.`}
 
             <Modal
                 visible={isDeleteModalOpen}
+                onClose={() => {
+                    setPassword("");
+                    setError("");
+                }}
                 setVisible={setIsDeleteModalOpen}>
                 <View>
                     <View
@@ -687,6 +719,8 @@ Seeking stories yet untold.`}
                         <TouchableOpacity
                             onPress={() => {
                                 setIsDeleteModalOpen(false);
+                                setPassword("");
+                                setError("");
                             }}
                             activeOpacity={theme.activeOpacity}
                             style={[
@@ -723,7 +757,7 @@ Seeking stories yet untold.`}
                                             )
                                         )
                                             setError(
-                                                t`Access to this account has been temporarily disabled`
+                                                t`Access to this account has been temporarily disabled due to many failed attempts. Please try again later.`
                                             );
                                     });
                             }}

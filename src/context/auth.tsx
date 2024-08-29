@@ -3,6 +3,7 @@ import {
     createUserWithEmailAndPassword,
     EmailAuthProvider,
     sendPasswordResetEmail as firebaseSendPasswordResetEmail,
+    updatePassword as firebaseUpdatePassword,
     linkWithCredential,
     reauthenticateWithCredential,
     signInAnonymously,
@@ -181,6 +182,34 @@ export const AuthProvider = ({
         });
     };
 
+    const updatePassword = async (
+        oldPassword: string,
+        newPassword: string
+    ): Promise<any> => {
+        setLoading(true);
+
+        return new Promise(async (resolve, reject) => {
+            try {
+                const user = auth.currentUser;
+                if (!user) throw new Error("No user is currently logged in.");
+
+                const credential = EmailAuthProvider.credential(
+                    user.email!,
+                    oldPassword
+                );
+                await reauthenticateWithCredential(user, credential);
+
+                await firebaseUpdatePassword(user, newPassword);
+
+                resolve("Password reset email sent successfully");
+            } catch (error) {
+                reject(error);
+            } finally {
+                setLoading(false);
+            }
+        });
+    };
+
     const deleteAccount = async (password: string): Promise<any> => {
         setLoading(true);
 
@@ -221,6 +250,7 @@ export const AuthProvider = ({
                 linkGuest,
                 sendPasswordResetEmail,
                 deleteAccount,
+                updatePassword,
             }}>
             {children}
         </AuthContext.Provider>

@@ -9,7 +9,7 @@ import { AuthContext } from "../context/auth";
 import { ThemeContext } from "../context/theme";
 import { validateEmail } from "../utils/util";
 
-const Password = ({ navigation }: { navigation: any }) => {
+const ForgotPassword = ({ navigation }: { navigation: any }) => {
     const { loading, sendPasswordResetEmail } = useContext(AuthContext);
     const { theme } = useContext(ThemeContext);
 
@@ -121,9 +121,7 @@ const Password = ({ navigation }: { navigation: any }) => {
                                     })
                                     .catch((error: any) => {
                                         console.log(error);
-                                        setError(
-                                            "The email you entered is not associated with any account."
-                                        );
+                                        setError(t`Something went wrong.`);
                                     });
                             }}
                         />
@@ -169,4 +167,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Password;
+export default ForgotPassword;

@@ -152,7 +152,7 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                 {t`No recent searches`}
                             </Text>
                             <Text fontSize={16} style={{ marginTop: 10 }}>
-                                {t`Start searching for your favorite songs`}
+                                {t`Start searching for your favorite songs.`}
                             </Text>
                         </View>
                     )}
@@ -247,7 +247,7 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                         fontSize={16}
                                         style={{ marginTop: 10 }}
                                         center>
-                                        {t`No song or album matches your search`}
+                                        {t`No song or album matches your search.`}
                                     </Text>
                                 </View>
                             )}
