@@ -2,7 +2,8 @@ import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import { useContext } from "react";
 import Background from "../components/wrapers/background";
 import { AuthContext } from "../context/auth";
-import HomeStack from "./homeStack";
+import AppStack from "./appStack";
+import AuthStack from "./authStack";
 
 const linking: LinkingOptions<any> = {
     prefixes: ["app://"],
@@ -28,8 +29,7 @@ const AppNavigation = () => {
 
     return (
         <NavigationContainer linking={linking}>
-            {/* {user !== null ? <AppStack /> : <AuthStack /> */}
-            <HomeStack />
+            {user !== null ? <AppStack /> : <AuthStack />}
         </NavigationContainer>
     );
 };
