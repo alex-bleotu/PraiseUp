@@ -172,7 +172,6 @@ const ResetPassword = ({ navigation }: { navigation: any }) => {
                                             );
                                         })
                                         .catch((error: any) => {
-                                            console.log(error);
                                             if (
                                                 error.message.includes(
                                                     "auth/invalid-credential"
