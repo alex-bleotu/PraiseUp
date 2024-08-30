@@ -9,7 +9,7 @@ import Song from "../pages/song";
 
 const S = createStackNavigator();
 
-const LibraryStack = ({ navigation }: { navigation: any }) => {
+const LibraryStack = () => {
     return (
         <S.Navigator
             screenOptions={{

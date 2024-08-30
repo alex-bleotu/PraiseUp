@@ -3,6 +3,7 @@ import {
     createStackNavigator,
 } from "@react-navigation/stack";
 import React from "react";
+import AddSong from "../pages/addSong";
 import ForgotPassword from "../pages/forgotPassword";
 import Link from "../pages/link";
 import ResetPassword from "../pages/resetPassword";
@@ -24,6 +25,7 @@ const AppStack = () => {
             <S.Screen name="Link" component={Link} />
             <S.Screen name="ResetPassword" component={ResetPassword} />
             <S.Screen name="ForgotPassword" component={ForgotPassword} />
+            <S.Screen name="AddSong" component={AddSong} />
         </S.Navigator>
     );
 };

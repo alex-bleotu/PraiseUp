@@ -38,17 +38,36 @@ const Album = ({ route, navigation }: AlbumProps) => {
     const [currentData, setCurrentData] = useState<AlbumType | SongType | null>(
         null
     );
+    const [updatedAlbum, setUpdatedAlbum] = useState<AlbumType | null>(null);
 
     useEffect(() => {
         const load = async () => {
             let loaded: SongType[] = [];
 
-            for (let i = 0; i < album.songs.length; i++) {
-                const song = await getSongById(album.songs[i]);
-                if (song) loaded.push(song);
+            if (updatedAlbum === null) {
+                for (let i = 0; i < album.songs.length; i++) {
+                    const song = await getSongById(album.songs[i]);
+                    if (song) loaded.push(song);
+                }
+            } else {
+                for (let i = 0; i < updatedAlbum.songs.length; i++) {
+                    const song = await getSongById(updatedAlbum.songs[i]);
+                    if (song) loaded.push(song);
+                }
             }
 
-            const sortedSongs = sortSongs(loaded);
+            const buttonSong: SongType = {
+                id: "B",
+                title: "",
+                artist: "",
+                cover: null,
+                lyrics: "",
+                favorite: false,
+                date: "",
+                initialChord: null,
+            };
+
+            const sortedSongs = sortSongs([...loaded, buttonSong]);
 
             setSongs(sortedSongs);
         };
@@ -57,16 +76,19 @@ const Album = ({ route, navigation }: AlbumProps) => {
     }, [refresh]);
 
     const sortSongs = (songsList: SongType[]) => {
+        const button = songsList.find((song) => song.id === "B");
+        const rest = songsList.filter((song) => song.id !== "B");
+
         if (sortBy === "date") {
-            songsList.sort(
+            rest.sort(
                 (a, b) =>
                     new Date(b.date).getTime() - new Date(a.date).getTime()
             );
         } else {
-            songsList.sort((a, b) => a.title.localeCompare(b.title));
+            rest.sort((a, b) => a.title.localeCompare(b.title));
         }
 
-        return songsList;
+        return [...rest, button];
     };
 
     useEffect(() => {
@@ -82,11 +104,11 @@ const Album = ({ route, navigation }: AlbumProps) => {
         <StackPage
             navigation={navigation}
             title={
-                album.id !== "F"
-                    ? album.title
-                    : language === "en"
-                    ? album.title
-                    : "Cântece favorite"
+                album.id === "F" && language === "ro"
+                    ? "Cântece favorite"
+                    : updatedAlbum
+                    ? updatedAlbum.title
+                    : album.title
             }
             icon={album.id !== "F" ? "dots-vertical" : undefined}
             action={() => {
@@ -136,7 +158,7 @@ const Album = ({ route, navigation }: AlbumProps) => {
                     </AnimatedTouchable>
                 </View>
                 {songs ? (
-                    songs.length > 0 ? (
+                    songs.length > 1 ? (
                         display === "grid" ? (
                             <View style={styles.scrollContainer}>
                                 <SV
@@ -158,21 +180,53 @@ const Album = ({ route, navigation }: AlbumProps) => {
                                                                     : 0,
                                                         },
                                                     ]}>
-                                                    <SongCover
-                                                        key={data.id}
-                                                        song={data}
-                                                        navigation={navigation}
-                                                        vertical
-                                                        artist={false}
-                                                        onLongPress={() => {
-                                                            setCurrentData(
-                                                                data
-                                                            );
-                                                            setBottomSheetOpen(
-                                                                true
-                                                            );
-                                                        }}
-                                                    />
+                                                    {data.id === "B" ? (
+                                                        <AnimatedTouchable
+                                                            onPress={() => {
+                                                                navigation.navigate(
+                                                                    "AddSong",
+                                                                    {
+                                                                        album,
+                                                                    }
+                                                                );
+                                                            }}
+                                                            style={[
+                                                                styles.addGrid,
+                                                                {
+                                                                    backgroundColor:
+                                                                        theme
+                                                                            .colors
+                                                                            .paper,
+                                                                },
+                                                            ]}>
+                                                            <FAIcons
+                                                                name="plus"
+                                                                size={30}
+                                                                color={
+                                                                    theme.colors
+                                                                        .text
+                                                                }
+                                                            />
+                                                        </AnimatedTouchable>
+                                                    ) : (
+                                                        <SongCover
+                                                            key={data.id}
+                                                            song={data}
+                                                            navigation={
+                                                                navigation
+                                                            }
+                                                            vertical
+                                                            artist={false}
+                                                            onLongPress={() => {
+                                                                setCurrentData(
+                                                                    data
+                                                                );
+                                                                setBottomSheetOpen(
+                                                                    true
+                                                                );
+                                                            }}
+                                                        />
+                                                    )}
                                                 </View>
                                             );
                                         }
@@ -187,25 +241,87 @@ const Album = ({ route, navigation }: AlbumProps) => {
                                             <View
                                                 key={data.id}
                                                 style={{ marginBottom: 15 }}>
-                                                <SongCover
-                                                    key={data.id}
-                                                    song={data}
-                                                    navigation={navigation}
-                                                    fullWidth
-                                                    icon={"dots-vertical"}
-                                                    onLongPress={() => {
-                                                        setCurrentData(data);
-                                                        setBottomSheetOpen(
-                                                            true
-                                                        );
-                                                    }}
-                                                    action={() => {
-                                                        setCurrentData(data);
-                                                        setBottomSheetOpen(
-                                                            true
-                                                        );
-                                                    }}
-                                                />
+                                                {data.id === "B" ? (
+                                                    <AnimatedTouchable
+                                                        onPress={() => {
+                                                            navigation.navigate(
+                                                                "AddSong",
+                                                                {
+                                                                    album,
+                                                                }
+                                                            );
+                                                        }}>
+                                                        <View
+                                                            style={[
+                                                                styles.addList,
+                                                                {
+                                                                    backgroundColor:
+                                                                        theme
+                                                                            .colors
+                                                                            .paper,
+                                                                },
+                                                            ]}>
+                                                            <View
+                                                                style={
+                                                                    styles.textContainer
+                                                                }>
+                                                                <FAIcons
+                                                                    name="plus"
+                                                                    size={30}
+                                                                    color={
+                                                                        theme
+                                                                            .colors
+                                                                            .text
+                                                                    }
+                                                                />
+                                                                <Text
+                                                                    fontSize={
+                                                                        14
+                                                                    }
+                                                                    bold
+                                                                    style={{
+                                                                        marginLeft: 28,
+                                                                    }}>
+                                                                    {t`Add songs`}
+                                                                </Text>
+                                                            </View>
+                                                        </View>
+                                                    </AnimatedTouchable>
+                                                ) : (
+                                                    <View
+                                                        key={data.id}
+                                                        style={{
+                                                            marginBottom: 15,
+                                                        }}>
+                                                        <SongCover
+                                                            key={data.id}
+                                                            song={data}
+                                                            navigation={
+                                                                navigation
+                                                            }
+                                                            fullWidth
+                                                            icon={
+                                                                "dots-vertical"
+                                                            }
+                                                            onLongPress={() => {
+                                                                setCurrentData(
+                                                                    data
+                                                                );
+                                                                setBottomSheetOpen(
+                                                                    true
+                                                                );
+                                                            }}
+                                                            action={() => {
+                                                                setCurrentData(
+                                                                    data
+                                                                );
+                                                                setBottomSheetOpen(
+                                                                    true
+                                                                );
+                                                            }}
+                                                        />
+                                                    </View>
+                                                )}
                                             </View>
                                         );
                                     })}
@@ -226,7 +342,11 @@ const Album = ({ route, navigation }: AlbumProps) => {
                                         backgroundColor={theme.colors.primary}
                                         upper
                                         text={t`Add songs`}
-                                        onPress={() => {}}
+                                        onPress={() => {
+                                            navigation.navigate("AddSong", {
+                                                album,
+                                            });
+                                        }}
                                         color={theme.colors.textInverted}
                                         fontSize={14}
                                         style={{
@@ -267,6 +387,9 @@ const Album = ({ route, navigation }: AlbumProps) => {
                 extraActions={() => {
                     updateRefresh();
                     navigation.goBack();
+                }}
+                updateData={(newAlbum: AlbumType) => {
+                    setUpdatedAlbum(newAlbum);
                 }}
             />
         </StackPage>
@@ -323,5 +446,28 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         marginTop: -75,
+    },
+    addList: {
+        borderRadius: 15,
+        width: "100%",
+        height: 70,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        paddingLeft: 22,
+    },
+    textContainer: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: -3,
+    },
+    addGrid: {
+        borderRadius: 15,
+        width: 94,
+        height: 125,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
     },
 });

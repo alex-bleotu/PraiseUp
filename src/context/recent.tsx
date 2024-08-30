@@ -65,7 +65,7 @@ export const RecentProvider = ({
         setRecent([]);
     };
 
-    const updateFavorite = async () => {
+    const updateRecent = async () => {
         if (recent === null) return;
 
         const newRecent = await Promise.all(
@@ -84,8 +84,6 @@ export const RecentProvider = ({
 
         while (newRecent.length < 6) newRecent.push((await getRandom(1))[0]);
 
-        console.log(newRecent);
-
         setRecent(newRecent);
     };
 
@@ -96,7 +94,7 @@ export const RecentProvider = ({
                 addToRecent,
                 removeFromRecent,
                 deleteRecent,
-                updateFavorite,
+                updateRecent,
             }}>
             {children}
         </RecentContext.Provider>

@@ -526,6 +526,26 @@ export const DataProvider = ({
         }
     };
 
+    const updatePersonalAlbum = async (
+        album: AlbumType,
+        name: string,
+        cover: string | null = null
+    ) => {
+        return new Promise<AlbumType>(async (resolve) => {
+            try {
+                album.title = name;
+                album.cover = cover;
+                album.date = new Date().toISOString();
+
+                await writePersonalAlbum(album);
+
+                resolve(album);
+            } catch (error) {
+                console.error("Error updating personal album:", error);
+            }
+        });
+    };
+
     return (
         <DataContext.Provider
             value={{
@@ -554,6 +574,7 @@ export const DataProvider = ({
                 getPersonalAlbums,
                 getPersonalAlbumsById,
                 deletePersonalAlbum,
+                updatePersonalAlbum,
             }}>
             {children}
         </DataContext.Provider>
