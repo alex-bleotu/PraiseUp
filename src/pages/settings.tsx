@@ -474,6 +474,16 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                     <Text bold fontSize={17}>
                                         {lyricsSize - 11}
                                     </Text>
+                                    {lyricsSize - 11 === 5 && (
+                                        <Text
+                                            bold
+                                            fontSize={17}
+                                            style={{
+                                                marginLeft: 5,
+                                            }}>
+                                            {t`(normal)`}
+                                        </Text>
+                                    )}
                                 </View>
                                 <TouchableOpacity
                                     activeOpacity={theme.activeOpacity}

@@ -4,8 +4,10 @@ import {
 } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
 import React, { useContext, useState } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
 // import { SelectList } from "react-native-dropdown-select-list";
+import AnimatedTouchable from "../components/wrapers/animatedTouchable";
+import BottomSheetModal from "../components/wrapers/bottomSheetModal";
 import Button from "../components/wrapers/button";
 import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
@@ -20,23 +22,30 @@ interface SongProps {
     navigation: any;
 }
 
-const chordChanger = (text: string, steps: number): string => {
-    const chords = [
-        "C",
-        "C#",
-        "D",
-        "Eb",
-        "E",
-        "F",
-        "F#",
-        "G",
-        "G#",
-        "A",
-        "Bb",
-        "B",
-    ];
+const chords = [
+    "C",
+    "C#",
+    "D",
+    "Eb",
+    "E",
+    "F",
+    "F#",
+    "G",
+    "G#",
+    "A",
+    "Bb",
+    "B",
+];
 
-    const match = text.match(/^\[([A-G]#?[a-zA-Z0-9]*)\]$/);
+const chordChanger = (
+    text: string,
+    steps: number,
+    useBrackets: boolean = true
+): string => {
+    const regex = useBrackets
+        ? /^\[([A-G]#?[a-zA-Z0-9]*)\]$/
+        : /^([A-G]#?[a-zA-Z0-9]*)$/;
+    const match = text.match(regex);
     if (!match) return text;
 
     const chord = match[1];
@@ -53,7 +62,12 @@ const chordChanger = (text: string, steps: number): string => {
     const newIndex = (rootIndex + steps + chords.length) % chords.length;
     const newChord = chords[newIndex] + suffix;
 
-    return `[${newChord}]`;
+    return useBrackets ? `[${newChord}]` : newChord;
+};
+
+const getStepsFromC = (chord: string) => {
+    const steps = chords.indexOf(chord);
+    return steps !== -1 ? steps : null;
 };
 
 const renderLyrics = (
@@ -118,21 +132,6 @@ const renderLyrics = (
     });
 };
 
-const data = [
-    { key: "1", value: "C" },
-    { key: "2", value: "C#" },
-    { key: "3", value: "D" },
-    { key: "4", value: "Eb" },
-    { key: "5", value: "E" },
-    { key: "6", value: "F" },
-    { key: "7", value: "F#" },
-    { key: "8", value: "G" },
-    { key: "9", value: "G#" },
-    { key: "10", value: "A" },
-    { key: "11", value: "Bb" },
-    { key: "12", value: "B" },
-];
-
 const Song = ({ route, navigation }: SongProps) => {
     const { song } = route.params;
 
@@ -141,11 +140,13 @@ const Song = ({ route, navigation }: SongProps) => {
 
     const [value, setValue] = useState("lyrics");
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
+    const [isChordBottomSheetOpen, setChordBottomSheetOpen] = useState(false);
     const [steps, setSteps] = useState(0);
-    const [selectedChord, setSelectedChord] = useState([]);
 
-    const buttonWidth = Dimensions.get("screen").width / 2 - 50;
-    const buttonsContainerWidth = buttonWidth * 2 + 75;
+    const buttonWidth = Dimensions.get("screen").width / 2 - 45;
+    const buttonsContainerWidth = buttonWidth * 2 + 65;
+
+    const initialSteps = getStepsFromC(song.initialChord) || 0;
 
     if (song === null || song === undefined) return <Loading />;
 
@@ -219,55 +220,25 @@ const Song = ({ route, navigation }: SongProps) => {
                                 />
                             }
                         />
-                        {/* <SelectList
-                            setSelected={setSelectedChord}
-                            data={data}
-                            save="value"
-                            search={false}
-                            // @ts-ignore
-                            defaultOption={
-                                data.find(
-                                    (item) => item.value === song.initialChord
-                                ) || {}
-                            }
-                            onSelect={() => {
-                                const selectedChordValue =
-                                    typeof selectedChord === "string"
-                                        ? selectedChord
-                                        : "";
-
-                                const initialChordIndex = data.findIndex(
-                                    (item) => item.value === song.initialChord
-                                );
-                                const selectedChordIndex = data.findIndex(
-                                    (item) => item.value === selectedChordValue
-                                );
-
-                                if (
-                                    initialChordIndex !== -1 &&
-                                    selectedChordIndex !== -1
-                                ) {
-                                    const calculatedSteps =
-                                        (selectedChordIndex -
-                                            initialChordIndex +
-                                            data.length) %
-                                        data.length;
-                                    setSteps(calculatedSteps);
-                                } else setSteps(0);
-                            }}
-                            boxStyles={{
-                                borderWidth: 0,
-                            }}
-                            inputStyles={{
-                                fontWeight: "bold",
-                                fontSize: 18,
-                            }}
-                            dropdownTextStyles={{
-                                fontWeight: "bold",
-                                fontSize: 16,
-                            }}
-                            dropdownStyles={{}}
-                        /> */}
+                        <AnimatedTouchable
+                            style={[
+                                styles.chordButton,
+                                {
+                                    width: 40,
+                                },
+                            ]}
+                            onPress={() => {
+                                setChordBottomSheetOpen(true);
+                            }}>
+                            <Text
+                                bold
+                                fontSize={20}
+                                style={{
+                                    marginTop: -1,
+                                }}>
+                                {chordChanger(song.initialChord, steps, false)}
+                            </Text>
+                        </AnimatedTouchable>
                     </View>
                 )}
 
@@ -276,7 +247,10 @@ const Song = ({ route, navigation }: SongProps) => {
                         width: "100%",
                     }}>
                     {value === "lyrics" && song.lyrics && (
-                        <ScrollView style={styles.lyrics} bottom={40} top={7}>
+                        <ScrollView
+                            style={styles.lyrics}
+                            bottom={hasChords ? 40 : 5}
+                            top={7}>
                             {renderLyrics(
                                 song.lyrics,
                                 false,
@@ -298,6 +272,317 @@ const Song = ({ route, navigation }: SongProps) => {
                     )}
                 </View>
             </View>
+            <BottomSheetModal
+                isOpen={isChordBottomSheetOpen}
+                onClose={() => {
+                    setChordBottomSheetOpen(false);
+                }}
+                height={175}>
+                <View style={styles.chordButtonsLine}>
+                    <TouchableOpacity
+                        activeOpacity={theme.activeOpacity}
+                        style={[
+                            styles.chordButton,
+                            {
+                                backgroundColor:
+                                    steps + initialSteps === 0
+                                        ? theme.colors.primary
+                                        : "transparent",
+                            },
+                        ]}
+                        onPress={() => {
+                            setSteps(0 - initialSteps);
+                        }}>
+                        <Text
+                            bold
+                            fontSize={20}
+                            color={
+                                steps + initialSteps === 0
+                                    ? theme.colors.textInverted
+                                    : theme.colors.text
+                            }>
+                            C
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        activeOpacity={theme.activeOpacity}
+                        style={[
+                            styles.chordButton,
+                            {
+                                backgroundColor:
+                                    steps + initialSteps === 1
+                                        ? theme.colors.primary
+                                        : "transparent",
+                            },
+                        ]}
+                        onPress={() => {
+                            setSteps(1 - initialSteps);
+                        }}>
+                        <Text
+                            bold
+                            fontSize={20}
+                            color={
+                                steps + initialSteps === 1
+                                    ? theme.colors.textInverted
+                                    : theme.colors.text
+                            }>
+                            C#
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        activeOpacity={theme.activeOpacity}
+                        style={[
+                            styles.chordButton,
+                            {
+                                backgroundColor:
+                                    steps + initialSteps === 2
+                                        ? theme.colors.primary
+                                        : "transparent",
+                            },
+                        ]}
+                        onPress={() => {
+                            setSteps(2 - initialSteps);
+                        }}>
+                        <Text
+                            bold
+                            fontSize={20}
+                            color={
+                                steps + initialSteps === 2
+                                    ? theme.colors.textInverted
+                                    : theme.colors.text
+                            }>
+                            D
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        activeOpacity={theme.activeOpacity}
+                        style={[
+                            styles.chordButton,
+                            {
+                                backgroundColor:
+                                    steps + initialSteps === 3
+                                        ? theme.colors.primary
+                                        : "transparent",
+                            },
+                        ]}
+                        onPress={() => {
+                            setSteps(3 - initialSteps);
+                        }}>
+                        <Text
+                            bold
+                            fontSize={20}
+                            color={
+                                steps + initialSteps === 3
+                                    ? theme.colors.textInverted
+                                    : theme.colors.text
+                            }>
+                            Eb
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        activeOpacity={theme.activeOpacity}
+                        style={[
+                            styles.chordButton,
+                            {
+                                backgroundColor:
+                                    steps + initialSteps === 4
+                                        ? theme.colors.primary
+                                        : "transparent",
+                            },
+                        ]}
+                        onPress={() => {
+                            setSteps(4 - initialSteps);
+                        }}>
+                        <Text
+                            bold
+                            fontSize={20}
+                            color={
+                                steps + initialSteps === 4
+                                    ? theme.colors.textInverted
+                                    : theme.colors.text
+                            }>
+                            E
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        activeOpacity={theme.activeOpacity}
+                        style={[
+                            styles.chordButton,
+                            {
+                                backgroundColor:
+                                    steps + initialSteps === 5
+                                        ? theme.colors.primary
+                                        : "transparent",
+                            },
+                        ]}
+                        onPress={() => {
+                            setSteps(5 - initialSteps);
+                        }}>
+                        <Text
+                            bold
+                            fontSize={20}
+                            color={
+                                steps + initialSteps === 5
+                                    ? theme.colors.textInverted
+                                    : theme.colors.text
+                            }>
+                            F
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.chordButtonsLine}>
+                    <TouchableOpacity
+                        activeOpacity={theme.activeOpacity}
+                        style={[
+                            styles.chordButton,
+                            {
+                                backgroundColor:
+                                    steps + initialSteps === 6
+                                        ? theme.colors.primary
+                                        : "transparent",
+                            },
+                        ]}
+                        onPress={() => {
+                            setSteps(6 - initialSteps);
+                        }}>
+                        <Text
+                            bold
+                            fontSize={20}
+                            color={
+                                steps + initialSteps === 6
+                                    ? theme.colors.textInverted
+                                    : theme.colors.text
+                            }>
+                            F#
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        activeOpacity={theme.activeOpacity}
+                        style={[
+                            styles.chordButton,
+                            {
+                                backgroundColor:
+                                    steps + initialSteps === 7
+                                        ? theme.colors.primary
+                                        : "transparent",
+                            },
+                        ]}
+                        onPress={() => {
+                            setSteps(7 - initialSteps);
+                        }}>
+                        <Text
+                            bold
+                            fontSize={20}
+                            color={
+                                steps + initialSteps === 7
+                                    ? theme.colors.textInverted
+                                    : theme.colors.text
+                            }>
+                            G
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        activeOpacity={theme.activeOpacity}
+                        style={[
+                            styles.chordButton,
+                            {
+                                backgroundColor:
+                                    steps + initialSteps === 8
+                                        ? theme.colors.primary
+                                        : "transparent",
+                            },
+                        ]}
+                        onPress={() => {
+                            setSteps(8 - initialSteps);
+                        }}>
+                        <Text
+                            bold
+                            fontSize={20}
+                            color={
+                                steps + initialSteps === 8
+                                    ? theme.colors.textInverted
+                                    : theme.colors.text
+                            }>
+                            G#
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        activeOpacity={theme.activeOpacity}
+                        style={[
+                            styles.chordButton,
+                            {
+                                backgroundColor:
+                                    steps + initialSteps === 9
+                                        ? theme.colors.primary
+                                        : "transparent",
+                            },
+                        ]}
+                        onPress={() => {
+                            setSteps(9 - initialSteps);
+                        }}>
+                        <Text
+                            bold
+                            fontSize={20}
+                            color={
+                                steps + initialSteps === 9
+                                    ? theme.colors.textInverted
+                                    : theme.colors.text
+                            }>
+                            A
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        activeOpacity={theme.activeOpacity}
+                        style={[
+                            styles.chordButton,
+                            {
+                                backgroundColor:
+                                    steps + initialSteps === 10
+                                        ? theme.colors.primary
+                                        : "transparent",
+                            },
+                        ]}
+                        onPress={() => {
+                            setSteps(10 - initialSteps);
+                        }}>
+                        <Text
+                            bold
+                            fontSize={20}
+                            color={
+                                steps + initialSteps === 10
+                                    ? theme.colors.textInverted
+                                    : theme.colors.text
+                            }>
+                            Bb
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        activeOpacity={theme.activeOpacity}
+                        style={[
+                            styles.chordButton,
+                            {
+                                backgroundColor:
+                                    steps + initialSteps === 11
+                                        ? theme.colors.primary
+                                        : "transparent",
+                            },
+                        ]}
+                        onPress={() => {
+                            setSteps(11 - initialSteps);
+                        }}>
+                        <Text
+                            bold
+                            fontSize={20}
+                            color={
+                                steps + initialSteps === 11
+                                    ? theme.colors.textInverted
+                                    : theme.colors.text
+                            }>
+                            B
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            </BottomSheetModal>
             <DataBottomSheet
                 data={song}
                 isOpen={isBottomSheetOpen}
@@ -324,13 +609,13 @@ const styles = StyleSheet.create({
     },
     selector: {
         flexDirection: "row",
-        borderRadius: 20,
+        borderRadius: 18,
         paddingVertical: 7,
         paddingHorizontal: 8,
     },
     button: {
         paddingVertical: 8,
-        borderRadius: 14,
+        borderRadius: 12,
     },
     lyrics: {
         width: "100%",
@@ -352,5 +637,20 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
         lineHeight: 24,
+    },
+    chordButton: {
+        borderRadius: 12,
+        justifyContent: "center",
+        alignItems: "center",
+        width: 45,
+        marginLeft: 3,
+        marginRight: 3,
+        height: 40,
+    },
+    chordButtonsLine: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        margin: 10,
     },
 });

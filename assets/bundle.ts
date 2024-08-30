@@ -46,6 +46,47 @@ We'll [C]find our place, and there a[F]bide.`,
         title: "Song 2",
         artist: "Artist Name",
         cover: "default2",
+        initialChord: "E",
+        lyrics: `[Am]I took a step into the [G]night,  
+With [C]dreams that glimmered in the [F]light,  
+A [Am]path unknown, a heart so [G]bold,  
+Seeking [C]stories yet un[F]told.
+
+Oh, my [C]journey, my [G]tale to [Am]weave,  
+Through the [F]darkness, I be[C]lieve,  
+With every [G]step, a new [Am]sunrise,  
+In this [F]world of endless [C]skies.
+
+[Am]Mountains high and [G]valleys low,  
+In the [C]rain and in the [F]snow,  
+Every [Am]challenge, every [G]fear,  
+Makes the [C]purpose crystal [F]clear.
+
+Oh, my [C]journey, my [G]tale to [Am]weave,  
+Through the [F]darkness, I be[C]lieve,  
+With every [G]step, a new [Am]sunrise,  
+In this [F]world of endless [C]skies.
+
+And if I [Am]fall, I'll rise a[G]gain,  
+For every [C]loss, a chance to [F]gain,  
+With [Am]courage as my [G]guiding star,  
+I'll [C]travel near, I'll travel [F]far.
+
+Oh, my [C]journey, my [G]tale to [Am]weave,  
+Through the [F]darkness, I be[C]lieve,  
+With every [G]step, a new [Am]sunrise,  
+In this [F]world of endless [C]skies.
+So here's to [Am]paths that lie a[G]head,  
+To every [C]word we've yet to [F]be said,  
+With [Am]hope and love, and [G]dreams so wide,  
+We'll [C]find our place, and there a[F]bide.`,
+    },
+    {
+        id: "S3",
+        type: "song",
+        title: "Song 3",
+        artist: "Artist Name",
+        cover: "default3",
         initialChord: null,
         lyrics: `I took a step into the night,  
 With dreams that glimmered in the light,  
@@ -81,15 +122,6 @@ To every word we've yet to be said,
 With hope and love, and dreams so wide,  
 We'll find our place, and there abide.
 `,
-    },
-    {
-        id: "S3",
-        type: "song",
-        title: "Song 3",
-        artist: "Artist Name",
-        cover: "default3",
-        initialChord: null,
-        lyrics: "",
     },
     {
         id: "S4",
