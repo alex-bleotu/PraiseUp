@@ -100,12 +100,12 @@ export default SongCover;
 
 const styles = StyleSheet.create({
     container: {
-        borderRadius: 15,
+        borderRadius: 12,
         display: "flex",
         flexDirection: "row",
     },
     containerVertical: {
-        borderRadius: 15,
+        borderRadius: 12,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     imageVertical: {
         width: 95,
         height: 95,
-        borderRadius: 15,
+        borderRadius: 12,
     },
     image: { width: 70, height: 70, borderRadius: 15, marginRight: 8 },
 });

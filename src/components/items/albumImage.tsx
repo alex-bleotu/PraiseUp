@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
         height: 95,
         borderRadius: 12,
     },
-    image: { width: 70, height: 70, borderRadius: 15, marginRight: 8 },
+    image: { width: 70, height: 70, borderRadius: 12, marginRight: 8 },
 
     smallImageVertical: {
         width: 48,

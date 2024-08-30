@@ -309,6 +309,9 @@ const Library = ({ navigation }: { navigation: any }) => {
                 onClose={() => {
                     setBottomSheetOpen(false);
                 }}
+                extraActions2={() => {
+                    navigation.navigate("AddToAlbum", { currentData });
+                }}
             />
             <BottomSheetModal
                 isOpen={isCreateBottomSheetOpen}

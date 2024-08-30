@@ -187,6 +187,9 @@ const Home = ({ navigation }: { navigation: any }) => {
                 onClose={() => {
                     setBottomSheetOpen(false);
                 }}
+                extraActions2={() => {
+                    navigation.navigate("AddToAlbum", { currentData });
+                }}
             />
         </Background>
     );

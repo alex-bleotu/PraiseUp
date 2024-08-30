@@ -21,6 +21,7 @@ interface DataBottomSheetProps {
     onClose: () => void;
     extraActions?: () => void;
     extraData?: any;
+    extraActions2?: () => void;
     removeSong?: boolean;
     updateData?: any;
 }
@@ -31,6 +32,7 @@ const DataBottomSheet = ({
     zoom,
     onClose,
     extraActions,
+    extraActions2,
     removeSong,
     extraData,
     updateData,
@@ -213,7 +215,9 @@ const DataBottomSheet = ({
                             <>
                                 <TouchableOpacity
                                     activeOpacity={theme.activeOpacity}
-                                    onPress={() => {}}>
+                                    onPress={() => {
+                                        extraActions2 && extraActions2();
+                                    }}>
                                     <View style={styles.button}>
                                         <MCIcons
                                             name="plus-circle-outline"

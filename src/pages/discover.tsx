@@ -279,6 +279,9 @@ const Discover = ({ navigation }: { navigation: any }) => {
                 onClose={() => {
                     setBottomSheetOpen(false);
                 }}
+                extraActions2={() => {
+                    navigation.navigate("AddToAlbum", { currentData });
+                }}
             />
         </Background>
     );
@@ -291,9 +294,9 @@ const styles = StyleSheet.create({
         width: "100%",
         display: "flex",
         flex: 1,
-        paddingLeft: 25,
+        paddingLeft: 15,
     },
-    songs: { marginTop: 15, paddingRight: 25 },
+    songs: { marginTop: 15, paddingRight: 15 },
     placeHolderContainer: {
         display: "flex",
         flex: 1,

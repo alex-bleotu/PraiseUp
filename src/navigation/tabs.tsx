@@ -73,7 +73,7 @@ const Tabs = () => {
                     },
                     tabBarStyle: {
                         backgroundColor: theme.colors.paper,
-                        borderRadius: 20,
+                        borderRadius: 12,
                         height: 80,
                         position: "absolute",
                         marginBottom: 10,
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         width: 60,
         height: 60,
-        borderRadius: 15,
+        borderRadius: 12,
         marginTop: 0.5,
         overflow: "hidden",
     },

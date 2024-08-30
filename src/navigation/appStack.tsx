@@ -4,6 +4,7 @@ import {
 } from "@react-navigation/stack";
 import React from "react";
 import AddSong from "../pages/addSong";
+import AddToAlbum from "../pages/addToAlbum";
 import ForgotPassword from "../pages/forgotPassword";
 import Link from "../pages/link";
 import ResetPassword from "../pages/resetPassword";
@@ -26,6 +27,7 @@ const AppStack = () => {
             <S.Screen name="ResetPassword" component={ResetPassword} />
             <S.Screen name="ForgotPassword" component={ForgotPassword} />
             <S.Screen name="AddSong" component={AddSong} />
+            <S.Screen name="AddToAlbum" component={AddToAlbum} />
         </S.Navigator>
     );
 };

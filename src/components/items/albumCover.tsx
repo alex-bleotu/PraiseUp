@@ -17,6 +17,7 @@ interface AlbumCoverProps {
     wasSearched?: boolean;
     vertical?: boolean;
     icon?: keyof typeof MCIcons.glyphMap;
+    disabled?: boolean;
     action?: () => void;
     onLongPress?: () => void;
 }
@@ -28,6 +29,7 @@ const AlbumCover = ({
     wasSearched,
     vertical = false,
     icon,
+    disabled,
     action,
     onLongPress,
 }: AlbumCoverProps) => {
@@ -47,6 +49,8 @@ const AlbumCover = ({
         <AnimatedTouchable
             onLongPress={onLongPress}
             onPress={() => {
+                if (disabled) return;
+
                 navigation.navigate("Album", { album });
 
                 if (album.id !== "F") addToRecent(album);
@@ -96,12 +100,12 @@ export default AlbumCover;
 
 const styles = StyleSheet.create({
     container: {
-        borderRadius: 15,
+        borderRadius: 12,
         display: "flex",
         flexDirection: "row",
     },
     containerVertical: {
-        borderRadius: 15,
+        borderRadius: 12,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

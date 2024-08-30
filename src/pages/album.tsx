@@ -384,6 +384,9 @@ const Album = ({ route, navigation }: AlbumProps) => {
                     setAlbum(newAlbum);
                 }}
                 extraData={album}
+                extraActions2={() => {
+                    navigation.navigate("AddToAlbum", { currentData });
+                }}
             />
         </StackPage>
     );
