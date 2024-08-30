@@ -9,7 +9,7 @@ import Button from "../components/wrapers/button";
 import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
 import Text from "../components/wrapers/text";
-import { AlbumType, DataContext, isSong, SongType } from "../context/data";
+import { AlbumType, DataContext, SongType } from "../context/data";
 import { HistoryContext } from "../context/history";
 import { ThemeContext } from "../context/theme";
 
@@ -93,7 +93,7 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                                 <View
                                                     key={index}
                                                     style={styles.songs}>
-                                                    {isSong(data) ? (
+                                                    {data.type === "song" ? (
                                                         <SongCover
                                                             key={index}
                                                             song={data}
@@ -196,7 +196,7 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                                 <View
                                                     key={index}
                                                     style={styles.songs}>
-                                                    {isSong(data) ? (
+                                                    {data.type === "song" ? (
                                                         <SongCover
                                                             key={index}
                                                             song={data}

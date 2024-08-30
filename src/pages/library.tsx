@@ -53,11 +53,14 @@ const Library = ({ navigation }: { navigation: any }) => {
                 const albums = await getFavoriteAlbums();
                 const personal = await getPersonalAlbums();
 
-                const buttonAlbum = {
+                const buttonAlbum: AlbumType = {
                     id: "B",
+                    type: "extra",
                     title: "",
                     songs: [],
                     favorite: false,
+                    date: "",
+                    cover: null,
                 };
 
                 let combinedAlbums =
@@ -75,10 +78,10 @@ const Library = ({ navigation }: { navigation: any }) => {
     }, [loading, refresh, sortBy]);
 
     const sortAlbums = (albumsList: AlbumType[]) => {
-        const favorite = albumsList.find((album) => album.id === "F");
-        const button = albumsList.find((album) => album.id === "B");
+        const favorite = albumsList.find((album) => album.type === "favorite");
+        const button = albumsList.find((album) => album.type === "extra");
         const rest = albumsList.filter(
-            (album) => album.id !== "F" && album.id !== "B"
+            (album) => album.type !== "favorite" && album.type !== "extra"
         );
 
         if (sortBy === "date") {
@@ -168,7 +171,7 @@ const Library = ({ navigation }: { navigation: any }) => {
                                                                 : 0,
                                                     },
                                                 ]}>
-                                                {data.id === "B" ? (
+                                                {data.type === "extra" ? (
                                                     <AnimatedTouchable
                                                         onPress={() => {
                                                             setIsCreateBottomSheetOpen(
@@ -225,7 +228,7 @@ const Library = ({ navigation }: { navigation: any }) => {
                                         <View
                                             key={data.id}
                                             style={{ marginBottom: 15 }}>
-                                            {data.id === "B" ? (
+                                            {data.type === "extra" ? (
                                                 <AnimatedTouchable
                                                     onPress={() => {}}>
                                                     <View

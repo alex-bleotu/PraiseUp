@@ -13,6 +13,7 @@ export const DataContext = createContext<any>(null);
 
 export interface AlbumType {
     id: string;
+    type: "album" | "personal" | "favorite" | "extra";
     title: string;
     songs: string[];
     favorite: boolean;
@@ -22,6 +23,7 @@ export interface AlbumType {
 
 export interface SongType {
     id: string;
+    type: "song" | "extra";
     title: string;
     artist: string;
     cover: string | null;
@@ -501,6 +503,7 @@ export const DataProvider = ({
 
         const album: AlbumType = {
             id: "F",
+            type: "favorite",
             title: "Favorite Songs",
             songs: favoriteSongs.map((song) => song.id),
             favorite: true,
@@ -516,6 +519,7 @@ export const DataProvider = ({
             try {
                 const playlist: AlbumType = {
                     id: `P${personalAlbumsIds.length}`,
+                    type: "personal",
                     title: name,
                     songs: [],
                     favorite: false,
@@ -731,8 +735,4 @@ export const DataProvider = ({
             {children}
         </DataContext.Provider>
     );
-};
-
-export const isSong = (data: SongType | AlbumType | null): data is SongType => {
-    return (data as SongType).artist !== undefined;
 };

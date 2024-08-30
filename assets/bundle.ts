@@ -1,6 +1,7 @@
 export const songs: any[] = [
     {
         id: "S1",
+        type: "song",
         title: "Song 1",
         artist: "Artist Name",
         cover: "default1",
@@ -41,6 +42,7 @@ We'll [C]find our place, and there a[F]bide.`,
     },
     {
         id: "S2",
+        type: "song",
         title: "Song 2",
         artist: "Artist Name",
         cover: "default2",
@@ -82,6 +84,7 @@ We'll find our place, and there abide.
     },
     {
         id: "S3",
+        type: "song",
         title: "Song 3",
         artist: "Artist Name",
         cover: "default3",
@@ -90,6 +93,7 @@ We'll find our place, and there abide.
     },
     {
         id: "S4",
+        type: "song",
         title: "Song 4",
         artist: "Artist Name",
         cover: "default4",
@@ -98,6 +102,7 @@ We'll find our place, and there abide.
     },
     {
         id: "S5",
+        type: "song",
         title: "Song 5",
         artist: "Artist Name",
         cover: null,
@@ -106,6 +111,7 @@ We'll find our place, and there abide.
     },
     {
         id: "S6",
+        type: "song",
         title: "Song 6",
         artist: "Artist Name",
         cover: null,
@@ -114,6 +120,7 @@ We'll find our place, and there abide.
     },
     {
         id: "S7",
+        type: "song",
         title: "Song 7",
         artist: "Artist Name",
         cover: null,
@@ -122,6 +129,7 @@ We'll find our place, and there abide.
     },
     {
         id: "S8",
+        type: "song",
         title: "Song 8",
         artist: "Artist Name",
         cover: null,
@@ -130,6 +138,7 @@ We'll find our place, and there abide.
     },
     {
         id: "S9",
+        type: "song",
         title: "Song 9",
         artist: "Artist Name",
         cover: null,
@@ -138,6 +147,7 @@ We'll find our place, and there abide.
     },
     {
         id: "S10",
+        type: "song",
         title: "Song 10",
         artist: "Artist Name",
         cover: null,
@@ -149,60 +159,70 @@ We'll find our place, and there abide.
 export const albums: any[] = [
     {
         id: "A1",
+        type: "album",
         title: "Album 1",
         songs: ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S10"],
         cover: null,
     },
     {
         id: "A2",
+        type: "album",
         title: "Album 2",
         songs: ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S10"],
         cover: null,
     },
     {
         id: "A3",
+        type: "album",
         title: "Album 3",
         songs: ["S1"],
         cover: null,
     },
     {
         id: "A4",
+        type: "album",
         title: "Album 4",
         songs: ["S1"],
         cover: null,
     },
     {
         id: "A5",
+        type: "album",
         title: "Album 5",
         songs: ["S1"],
         cover: null,
     },
     {
         id: "A6",
+        type: "album",
         title: "Album 6",
         songs: ["S1"],
         cover: null,
     },
     {
         id: "A7",
+        type: "album",
         title: "Album 7",
         songs: ["S1"],
         cover: null,
     },
     {
         id: "A8",
+        type: "album",
         title: "Album 8",
         songs: ["S1"],
         cover: null,
     },
     {
         id: "A9",
+        type: "album",
         title: "Album 9",
         songs: ["S1"],
         cover: null,
     },
     {
         id: "A10",
+        type: "album",
         title: "Album 10",
         songs: ["S1"],
         cover: null,

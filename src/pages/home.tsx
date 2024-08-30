@@ -7,7 +7,7 @@ import Background from "../components/wrapers/background";
 import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
 import Text from "../components/wrapers/text";
-import { AlbumType, DataContext, isSong, SongType } from "../context/data";
+import { AlbumType, DataContext, SongType } from "../context/data";
 import { RecentContext } from "../context/recent";
 import { RefreshContext } from "../context/refresh";
 import Loading from "./loading";
@@ -70,7 +70,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                         return (
                             <View key={index} style={styles.row}>
                                 <View>
-                                    {isSong(data) ? (
+                                    {data.type === "song" ? (
                                         <SongCover
                                             song={data}
                                             navigation={navigation}
@@ -93,7 +93,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                                 <View style={{ width: 10 }} />
                                 {data2 && (
                                     <View key={index + 1}>
-                                        {isSong(data2) ? (
+                                        {data2.type === "song" ? (
                                             <SongCover
                                                 song={data2}
                                                 navigation={navigation}

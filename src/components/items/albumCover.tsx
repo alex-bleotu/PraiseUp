@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
 import React, { useContext } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
-import { AlbumType, DataContext } from "../../context/data";
+import { DataContext } from "../../context/data";
 import { HistoryContext } from "../../context/history";
 import { LanguageContext } from "../../context/language";
 import { RecentContext } from "../../context/recent";
@@ -11,7 +11,7 @@ import Text from "../wrapers/text";
 import AlbumImage from "./albumImage";
 
 interface AlbumCoverProps {
-    album: AlbumType;
+    album: any;
     navigation: any;
     fullWidth?: boolean;
     wasSearched?: boolean;

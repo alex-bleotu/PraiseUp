@@ -44,7 +44,7 @@ const Album = ({ route, navigation }: AlbumProps) => {
         const load = async () => {
             let loaded: SongType[] = [];
 
-            if (album?.id.startsWith("P")) {
+            if (album?.type === "personal") {
                 const personalAlbum = await getPersonalAlbumsById(album.id);
                 setAlbum(personalAlbum);
 
@@ -61,6 +61,7 @@ const Album = ({ route, navigation }: AlbumProps) => {
 
             const buttonSong: SongType = {
                 id: "B",
+                type: "extra",
                 title: "",
                 artist: "",
                 cover: null,
@@ -79,8 +80,8 @@ const Album = ({ route, navigation }: AlbumProps) => {
     }, [refresh]);
 
     const sortSongs = (songsList: SongType[]) => {
-        const button = songsList.find((song) => song.id === "B");
-        const rest = songsList.filter((song) => song.id !== "B");
+        const button = songsList.find((song) => song.type === "extra");
+        const rest = songsList.filter((song) => song.type !== "extra");
 
         if (sortBy === "date") {
             rest.sort(
@@ -181,7 +182,7 @@ const Album = ({ route, navigation }: AlbumProps) => {
                                                                     : 0,
                                                         },
                                                     ]}>
-                                                    {data.id === "B" ? (
+                                                    {data.type === "extra" ? (
                                                         <AnimatedTouchable
                                                             onPress={() => {
                                                                 navigation.navigate(
@@ -242,7 +243,7 @@ const Album = ({ route, navigation }: AlbumProps) => {
                                             <View
                                                 key={data.id}
                                                 style={{ marginBottom: 15 }}>
-                                                {data.id === "B" ? (
+                                                {data.type === "extra" ? (
                                                     <AnimatedTouchable
                                                         onPress={() => {
                                                             navigation.navigate(
@@ -327,7 +328,7 @@ const Album = ({ route, navigation }: AlbumProps) => {
                         )
                     ) : (
                         <View style={styles.noSongs}>
-                            {album.id.startsWith("P") ? (
+                            {album.type === "personal" ? (
                                 <>
                                     <Text
                                         bold
@@ -378,7 +379,7 @@ const Album = ({ route, navigation }: AlbumProps) => {
             <DataBottomSheet
                 data={currentData}
                 isOpen={isBottomSheetOpen}
-                removeSong={album.id.startsWith("P")}
+                removeSong={album.type === "personal"}
                 onClose={() => {
                     setBottomSheetOpen(false);
                 }}

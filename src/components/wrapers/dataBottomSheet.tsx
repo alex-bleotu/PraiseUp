@@ -3,7 +3,7 @@ import { t } from "@lingui/macro";
 import * as Linking from "expo-linking";
 import React, { useContext, useEffect, useState } from "react";
 import { Image, Share, StyleSheet, TouchableOpacity, View } from "react-native";
-import { AlbumType, DataContext, isSong, SongType } from "../../context/data";
+import { AlbumType, DataContext, SongType } from "../../context/data";
 import { RecentContext } from "../../context/recent";
 import { RefreshContext } from "../../context/refresh";
 import { ThemeContext } from "../../context/theme";
@@ -72,7 +72,7 @@ const DataBottomSheet = ({
                 isOpen={isOpen && !editAlbum}
                 onClose={onClose}
                 numberOfButtons={
-                    data.id.startsWith("P") || isSong(data)
+                    data.type === "personal" || data.type === "song"
                         ? zoom || removeSong
                             ? 4
                             : 3
@@ -80,7 +80,7 @@ const DataBottomSheet = ({
                 }>
                 <View>
                     <View style={styles.top}>
-                        {isSong(data) ? (
+                        {data.type === "song" ? (
                             <Image
                                 source={getImage(data.cover)}
                                 style={styles.image}
@@ -92,7 +92,7 @@ const DataBottomSheet = ({
                             <Text bold fontSize={18}>
                                 {data.title}
                             </Text>
-                            {isSong(data) && (
+                            {data.type === "song" && (
                                 <Text fontSize={15}>{data.artist}</Text>
                             )}
                         </View>
@@ -144,7 +144,7 @@ const DataBottomSheet = ({
                             </View>
                         )}
 
-                        {!data.id.startsWith("P") ? (
+                        {data.type !== "personal" ? (
                             <TouchableOpacity
                                 activeOpacity={theme.activeOpacity}
                                 onPress={async () => {
@@ -211,7 +211,7 @@ const DataBottomSheet = ({
                                 </TouchableOpacity>
                             </>
                         )}
-                        {isSong(data) && (
+                        {data.type === "song" && (
                             <>
                                 <TouchableOpacity
                                     activeOpacity={theme.activeOpacity}
@@ -267,10 +267,14 @@ const DataBottomSheet = ({
                             onPress={async () => {
                                 let url;
 
-                                if (isSong(data))
+                                if (data.type === "song")
                                     url = Linking.createURL(`song/${data.id}`);
-                                else
+                                else if (data.type === "album")
                                     url = Linking.createURL(`album/${data.id}`);
+                                else if (data.type === "personal")
+                                    url = Linking.createURL(
+                                        `personal/${data.id}`
+                                    );
 
                                 try {
                                     await Share.share({

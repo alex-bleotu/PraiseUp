@@ -12,14 +12,12 @@ import ImageButton from "../components/wrapers/imageButton";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
 import { AuthContext } from "../context/auth";
-import { ConstantsContext } from "../context/constants";
 import { ThemeContext } from "../context/theme";
 import { validateEmail } from "../utils/util";
 
 const Login = ({ navigation, route }: { navigation: any; route: any }) => {
     const { login, loading, loginAsGuest } = useContext(AuthContext);
     const { theme } = useContext(ThemeContext);
-    const { appHeight } = useContext(ConstantsContext);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
