@@ -220,16 +220,14 @@ export const DataProvider = ({
                 const covers = songPromises.map((song) => song.cover);
 
                 album.cover = covers;
-
-                console.log(album.cover);
             } else if (album.songs.length > 0) {
                 const song = await readSong(
                     album.songs[album.songs.length - 1]
                 );
 
                 if (song) album.cover = song.cover;
-
-                console.log(album.cover);
+            } else if (album.songs.length === 0) {
+                album.cover = null;
             }
 
             await AsyncStorage.setItem(album.id, JSON.stringify(album));
@@ -254,6 +252,11 @@ export const DataProvider = ({
             album.date = new Date().toISOString();
 
             await writeAlbum(album);
+        } else if (id.includes("P")) {
+            const album = await readAlbum(id);
+            album.date = new Date().toISOString();
+
+            await writePersonalAlbum(album);
         }
 
         updateRefresh();
@@ -654,13 +657,6 @@ export const DataProvider = ({
         });
     };
 
-    const updateSongDate = async (song: SongType) => {
-        const songData = await readSong(song.id);
-        songData.date = new Date().toISOString();
-
-        await writeSong(songData);
-    };
-
     const clearData = async () => {
         setLoading(true);
 
@@ -678,6 +674,23 @@ export const DataProvider = ({
         for (let i = 0; i < albums.length; i++) await writeAlbum(albums[i]);
 
         setLoading(false);
+    };
+
+    const getPersonalAlbumsBySong = async (song: SongType) => {
+        const albumsThatContainSong: AlbumType[] = [];
+        const albumsThatDontContainSong: AlbumType[] = [];
+
+        for (let i = 0; i < personalAlbumsIds.length; i++) {
+            const album = await getPersonalAlbumsById(personalAlbumsIds[i]);
+
+            if (album.songs.includes(song.id)) {
+                albumsThatContainSong.push(album);
+            } else {
+                albumsThatDontContainSong.push(album);
+            }
+        }
+
+        return { albumsThatContainSong, albumsThatDontContainSong };
     };
 
     return (
@@ -712,8 +725,8 @@ export const DataProvider = ({
                 filterSongsNotInAlbum,
                 addSongToPersonalAlbum,
                 removeSongFromPersonalAlbum,
-                updateSongDate,
                 clearData,
+                getPersonalAlbumsBySong,
             }}>
             {children}
         </DataContext.Provider>

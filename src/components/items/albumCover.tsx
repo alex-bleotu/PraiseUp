@@ -47,6 +47,7 @@ const AlbumCover = ({
 
     return (
         <AnimatedTouchable
+            disabledWithoutOpacity={disabled}
             onLongPress={onLongPress}
             onPress={() => {
                 if (disabled) return;

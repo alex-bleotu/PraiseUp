@@ -9,6 +9,7 @@ interface AnimatedTouchableProps {
     onPress?: () => void;
     onLongPress?: () => void;
     disabled?: boolean;
+    disabledWithoutOpacity?: boolean;
 }
 
 const AnimatedTouchable = ({
@@ -17,6 +18,7 @@ const AnimatedTouchable = ({
     onPress,
     onLongPress,
     disabled = false,
+    disabledWithoutOpacity = false,
 }: AnimatedTouchableProps) => {
     const { theme } = useContext(ThemeContext);
 
@@ -40,15 +42,17 @@ const AnimatedTouchable = ({
         <Animated.View
             style={{ transform: [{ scale }], opacity: disabled ? 0.5 : 1 }}>
             <TouchableOpacity
-                disabled={disabled}
+                disabled={disabled || disabledWithoutOpacity}
                 delayLongPress={400}
                 style={[style]}
                 activeOpacity={theme.activeOpacity}
                 onPress={() => {
-                    if (onPress && !disabled) onPress();
+                    if (onPress && !disabled && !disabledWithoutOpacity)
+                        onPress();
                 }}
                 onLongPress={() => {
-                    if (onLongPress && !disabled) onLongPress();
+                    if (onLongPress && !disabled && !disabledWithoutOpacity)
+                        onLongPress();
                 }}
                 onPressIn={handlePressIn}
                 onPressOut={handlePressOut}>

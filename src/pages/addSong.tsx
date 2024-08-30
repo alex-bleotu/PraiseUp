@@ -13,7 +13,7 @@ import { ThemeContext } from "../context/theme";
 const AddSong = ({ navigation, route }: { navigation: any; route: any }) => {
     const { album: a } = route.params;
     const { theme } = useContext(ThemeContext);
-    const { filterSongsNotInAlbum, addSongToPersonalAlbum, updateSongDate } =
+    const { filterSongsNotInAlbum, addSongToPersonalAlbum, updateDate } =
         useContext(DataContext);
     const { updateRecent } = useContext(RecentContext);
     const { updateRefresh } = useContext(RefreshContext);
@@ -98,7 +98,7 @@ const AddSong = ({ navigation, route }: { navigation: any; route: any }) => {
                                                     data
                                                 ).then(
                                                     (newAlbum: AlbumType) => {
-                                                        updateSongDate(data);
+                                                        updateDate(data.id);
                                                         setAlbum(newAlbum);
                                                         updateRefresh();
                                                         updateRecent();

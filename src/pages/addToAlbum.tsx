@@ -5,67 +5,196 @@ import { ActivityIndicator } from "react-native-paper";
 import AlbumCover from "../components/items/albumCover";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
+import Text from "../components/wrapers/text";
 import { AlbumType, DataContext } from "../context/data";
+import { RecentContext } from "../context/recent";
+import { RefreshContext } from "../context/refresh";
 import { ThemeContext } from "../context/theme";
 
 const AddToAlbum = ({ navigation, route }: { navigation: any; route: any }) => {
-    const { song } = route.params;
+    const { currentData: song } = route.params;
     const { theme } = useContext(ThemeContext);
 
-    const { getPersonalAlbums } = useContext(DataContext);
+    const {
+        getPersonalAlbumsBySong,
+        removeSongFromPersonalAlbum,
+        addSongToPersonalAlbum,
+    } = useContext(DataContext);
+    const { updateRecent } = useContext(RecentContext);
+    const { updateRefresh } = useContext(RefreshContext);
 
-    const [albums, setAlbums] = useState<AlbumType[] | null>(null);
+    const [albumsWithSong, setAlbumsWithSong] = useState<AlbumType[] | null>(
+        null
+    );
+    const [albumsWithoutSong, setAlbumsWithoutSong] = useState<
+        AlbumType[] | null
+    >(null);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const loadAlbums = async () => {
             setLoading(true);
-            const albums = await getPersonalAlbums();
-            setAlbums(albums);
+
+            const albums = await getPersonalAlbumsBySong(song);
+
+            setAlbumsWithSong(albums["albumsThatContainSong"]);
+            setAlbumsWithoutSong(albums["albumsThatDontContainSong"]);
+
             setLoading(false);
         };
 
         loadAlbums();
     }, []);
 
+    const removeFromFirstAddToSecond = (album: AlbumType) => {
+        if (!albumsWithSong || !albumsWithoutSong) return;
+
+        const newAlbumsWithSong = albumsWithSong.filter(
+            (a) => a.id !== album.id
+        );
+
+        const newAlbumsWithoutSong = [album, ...albumsWithoutSong];
+
+        setAlbumsWithSong(newAlbumsWithSong);
+        setAlbumsWithoutSong(newAlbumsWithoutSong);
+    };
+
+    const removeFromSecondAddToFirst = (album: AlbumType) => {
+        if (!albumsWithSong || !albumsWithoutSong) return;
+
+        const newAlbumsWithoutSong = albumsWithoutSong.filter(
+            (a) => a.id !== album.id
+        );
+
+        const newAlbumsWithSong = [album, ...albumsWithSong];
+
+        setAlbumsWithSong(newAlbumsWithSong);
+        setAlbumsWithoutSong(newAlbumsWithoutSong);
+    };
+
     return (
         <StackPage title={t`Add to album`} navigation={navigation} noBottom>
             <View style={styles.container}>
-                <View style={styles.scrollContainer}>
-                    {!loading && albums ? (
-                        <ScrollView bottom={10}>
-                            {albums.map((data: AlbumType, index: any) => {
-                                return (
-                                    <View key={index} style={styles.songs}>
-                                        <AlbumCover
-                                            key={index}
-                                            album={data}
-                                            disabled
-                                            navigation={navigation}
-                                            fullWidth
-                                            icon="plus-circle-outline"
-                                            action={() => {}}
-                                        />
+                <View
+                    style={{
+                        width: "100%",
+                        display: "flex",
+                    }}>
+                    {!loading && albumsWithSong && albumsWithoutSong && (
+                        <View>
+                            {albumsWithSong.length > 0 && (
+                                <>
+                                    <View style={styles.title}>
+                                        <Text fontSize={20} bold>
+                                            {t`Saved in`}
+                                        </Text>
                                     </View>
-                                );
-                            })}
-                        </ScrollView>
-                    ) : (
-                        <View
-                            style={{
-                                marginTop: -50,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                flex: 1,
-                            }}>
-                            <ActivityIndicator
-                                size="large"
-                                color={theme.colors.primary}
-                            />
+                                    <ScrollView bottom={10}>
+                                        {albumsWithSong.map(
+                                            (data: AlbumType, index: any) => {
+                                                return (
+                                                    <View
+                                                        key={index}
+                                                        style={styles.albums}>
+                                                        <AlbumCover
+                                                            key={index}
+                                                            album={data}
+                                                            disabled
+                                                            navigation={
+                                                                navigation
+                                                            }
+                                                            fullWidth
+                                                            icon="plus-circle"
+                                                            action={() => {
+                                                                removeSongFromPersonalAlbum(
+                                                                    data,
+                                                                    song
+                                                                ).then(
+                                                                    (
+                                                                        newAlbum: AlbumType
+                                                                    ) => {
+                                                                        updateRefresh();
+                                                                        updateRecent();
+                                                                        removeFromFirstAddToSecond(
+                                                                            newAlbum
+                                                                        );
+                                                                    }
+                                                                );
+                                                            }}
+                                                        />
+                                                    </View>
+                                                );
+                                            }
+                                        )}
+                                    </ScrollView>
+                                </>
+                            )}
+                            {albumsWithoutSong.length > 0 && (
+                                <>
+                                    <View style={styles.title}>
+                                        <Text fontSize={20} bold>
+                                            {t`Add to`}
+                                        </Text>
+                                    </View>
+                                    <ScrollView bottom={10}>
+                                        {albumsWithoutSong.map(
+                                            (data: AlbumType, index: any) => {
+                                                return (
+                                                    <View
+                                                        key={index}
+                                                        style={styles.albums}>
+                                                        <AlbumCover
+                                                            key={index}
+                                                            album={data}
+                                                            disabled
+                                                            navigation={
+                                                                navigation
+                                                            }
+                                                            fullWidth
+                                                            icon="plus-circle-outline"
+                                                            action={() => {
+                                                                addSongToPersonalAlbum(
+                                                                    data,
+                                                                    song
+                                                                ).then(
+                                                                    (
+                                                                        newAlbum: AlbumType
+                                                                    ) => {
+                                                                        updateRefresh();
+                                                                        updateRecent();
+                                                                        removeFromSecondAddToFirst(
+                                                                            newAlbum
+                                                                        );
+                                                                    }
+                                                                );
+                                                            }}
+                                                        />
+                                                    </View>
+                                                );
+                                            }
+                                        )}
+                                    </ScrollView>
+                                </>
+                            )}
                         </View>
                     )}
                 </View>
+                {(loading || !albumsWithSong || !albumsWithoutSong) && (
+                    <View
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            height: "100%",
+                            marginTop: -75,
+                            flex: 1,
+                        }}>
+                        <ActivityIndicator
+                            size="large"
+                            color={theme.colors.primary}
+                        />
+                    </View>
+                )}
             </View>
         </StackPage>
     );
@@ -78,12 +207,11 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         flex: 1,
     },
-    scrollContainer: {
-        width: "100%",
-        display: "flex",
-        flex: 1,
+    albums: { marginTop: 15, paddingHorizontal: 20 },
+    title: {
+        marginTop: 15,
+        paddingHorizontal: 20,
     },
-    songs: { marginTop: 15, paddingHorizontal: 20 },
 });
 
 export default AddToAlbum;

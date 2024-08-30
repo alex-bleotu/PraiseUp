@@ -25,8 +25,8 @@ interface AlbumProps {
 const Album = ({ route, navigation }: AlbumProps) => {
     const { album: a } = route.params;
 
-    const { refresh, updateRefresh } = useContext(RefreshContext);
-    const { getSongById } = useContext(DataContext);
+    const { refresh } = useContext(RefreshContext);
+    const { getSongById, getPersonalAlbumsById } = useContext(DataContext);
     const { language } = useContext(LanguageContext);
     const { theme } = useContext(ThemeContext);
     const { sortBy, setSortBy, display, setDisplay } =
@@ -44,7 +44,16 @@ const Album = ({ route, navigation }: AlbumProps) => {
         const load = async () => {
             let loaded: SongType[] = [];
 
-            if (album !== null)
+            if (album?.id.startsWith("P")) {
+                const personalAlbum = await getPersonalAlbumsById(album.id);
+                setAlbum(personalAlbum);
+
+                if (personalAlbum !== null)
+                    for (let i = 0; i < personalAlbum.songs.length; i++) {
+                        const song = await getSongById(personalAlbum.songs[i]);
+                        if (song) loaded.push(song);
+                    }
+            } else if (album !== null)
                 for (let i = 0; i < album.songs.length; i++) {
                     const song = await getSongById(album.songs[i]);
                     if (song) loaded.push(song);
@@ -280,11 +289,7 @@ const Album = ({ route, navigation }: AlbumProps) => {
                                                         </View>
                                                     </AnimatedTouchable>
                                                 ) : (
-                                                    <View
-                                                        key={data.id}
-                                                        style={{
-                                                            marginBottom: 15,
-                                                        }}>
+                                                    <View key={data.id}>
                                                         <SongCover
                                                             key={data.id}
                                                             song={data}
@@ -385,7 +390,9 @@ const Album = ({ route, navigation }: AlbumProps) => {
                 }}
                 extraData={album}
                 extraActions2={() => {
-                    navigation.navigate("AddToAlbum", { currentData });
+                    navigation.navigate("AddToAlbum", {
+                        currentData,
+                    });
                 }}
             />
         </StackPage>

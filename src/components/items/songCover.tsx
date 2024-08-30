@@ -45,6 +45,7 @@ const SongCover = ({
 
     return (
         <AnimatedTouchable
+            disabledWithoutOpacity={disabled}
             onLongPress={onLongPress}
             onPress={() => {
                 if (disabled) return;
