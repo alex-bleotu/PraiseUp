@@ -8,10 +8,12 @@ interface AlbumImageProps {
 }
 
 const AlbumImage = ({ vertical = false, cover }: AlbumImageProps) => {
-    if (!Array.isArray(cover))
+    if (!Array.isArray(cover) || cover.length < 3)
         return (
             <Image
-                source={getImage(cover)}
+                source={
+                    !Array.isArray(cover) ? getImage(cover) : getImage(null)
+                }
                 style={vertical ? styles.imageVertical : styles.image}
             />
         );
@@ -84,8 +86,8 @@ const styles = StyleSheet.create({
     image: { width: 70, height: 70, borderRadius: 15, marginRight: 8 },
 
     smallImageVertical: {
-        width: 47.5,
-        height: 47.5,
+        width: 48,
+        height: 48,
     },
     smallImage: { width: 35, height: 35 },
     row: {

@@ -23,7 +23,7 @@ interface AlbumProps {
 }
 
 const Album = ({ route, navigation }: AlbumProps) => {
-    const { album } = route.params;
+    const { album: a } = route.params;
 
     const { refresh, updateRefresh } = useContext(RefreshContext);
     const { getSongById } = useContext(DataContext);
@@ -38,23 +38,17 @@ const Album = ({ route, navigation }: AlbumProps) => {
     const [currentData, setCurrentData] = useState<AlbumType | SongType | null>(
         null
     );
-    const [updatedAlbum, setUpdatedAlbum] = useState<AlbumType | null>(null);
+    const [album, setAlbum] = useState<AlbumType | null>(a);
 
     useEffect(() => {
         const load = async () => {
             let loaded: SongType[] = [];
 
-            if (updatedAlbum === null) {
+            if (album !== null)
                 for (let i = 0; i < album.songs.length; i++) {
                     const song = await getSongById(album.songs[i]);
                     if (song) loaded.push(song);
                 }
-            } else {
-                for (let i = 0; i < updatedAlbum.songs.length; i++) {
-                    const song = await getSongById(updatedAlbum.songs[i]);
-                    if (song) loaded.push(song);
-                }
-            }
 
             const buttonSong: SongType = {
                 id: "B",
@@ -106,8 +100,6 @@ const Album = ({ route, navigation }: AlbumProps) => {
             title={
                 album.id === "F" && language === "ro"
                     ? "Cântece favorite"
-                    : updatedAlbum
-                    ? updatedAlbum.title
                     : album.title
             }
             icon={album.id !== "F" ? "dots-vertical" : undefined}
@@ -381,16 +373,17 @@ const Album = ({ route, navigation }: AlbumProps) => {
             <DataBottomSheet
                 data={currentData}
                 isOpen={isBottomSheetOpen}
+                removeSong={album.id.startsWith("P")}
                 onClose={() => {
                     setBottomSheetOpen(false);
                 }}
                 extraActions={() => {
-                    updateRefresh();
                     navigation.goBack();
                 }}
                 updateData={(newAlbum: AlbumType) => {
-                    setUpdatedAlbum(newAlbum);
+                    setAlbum(newAlbum);
                 }}
+                extraData={album}
             />
         </StackPage>
     );

@@ -20,16 +20,16 @@ export default function App() {
                     <PaperProvider theme={darkTheme}>
                         <ConstantsProvider>
                             <RefreshProvider>
-                                <AuthProvider>
-                                    <DataProvider>
+                                <DataProvider>
+                                    <AuthProvider>
                                         <HistoryProvider>
                                             <RecentProvider>
                                                 <AppNavigation />
                                                 <StatusBar style="auto" />
                                             </RecentProvider>
                                         </HistoryProvider>
-                                    </DataProvider>
-                                </AuthProvider>
+                                    </AuthProvider>
+                                </DataProvider>
                             </RefreshProvider>
                         </ConstantsProvider>
                     </PaperProvider>

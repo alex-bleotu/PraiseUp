@@ -19,6 +19,7 @@ interface SongCoverProps {
     icon?: keyof typeof MCIcons.glyphMap;
     action?: () => void;
     onLongPress?: () => void;
+    disabled?: boolean;
 }
 
 const SongCover = ({
@@ -29,6 +30,7 @@ const SongCover = ({
     artist = true,
     vertical = false,
     icon,
+    disabled,
     action,
     onLongPress,
 }: SongCoverProps) => {
@@ -45,6 +47,8 @@ const SongCover = ({
         <AnimatedTouchable
             onLongPress={onLongPress}
             onPress={() => {
+                if (disabled) return;
+
                 navigation.navigate("Song", { song });
                 addToRecent(song);
 

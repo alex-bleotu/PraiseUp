@@ -1,188 +1,131 @@
 import { t } from "@lingui/macro";
-import { useContext, useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
-import Button from "../components/wrapers/button";
-import IconInput from "../components/wrapers/iconInput";
-import ImageButton from "../components/wrapers/imaegButton";
+import { useContext, useEffect, useRef, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import { ActivityIndicator, Searchbar as SearchBar } from "react-native-paper";
+import SongCover from "../components/items/songCover";
+import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
-import Text from "../components/wrapers/text";
-import { AuthContext } from "../context/auth";
+import { AlbumType, DataContext, SongType } from "../context/data";
+import { RecentContext } from "../context/recent";
+import { RefreshContext } from "../context/refresh";
 import { ThemeContext } from "../context/theme";
-import { validateEmail } from "../utils/util";
 
-const AddSong = ({ navigation }: { navigation: any }) => {
-    const { linkGuest, loading }: any = useContext(AuthContext);
+const AddSong = ({ navigation, route }: { navigation: any; route: any }) => {
+    const { album: a } = route.params;
     const { theme } = useContext(ThemeContext);
+    const { filterSongsNotInAlbum, addSongToPersonalAlbum, updateSongDate } =
+        useContext(DataContext);
+    const { updateRecent } = useContext(RecentContext);
+    const { updateRefresh } = useContext(RefreshContext);
 
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [searchQuery, setSearchQuery] = useState("");
+    const [songs, setSongs] = useState<SongType[] | null>(null);
+    const [loading, setLoading] = useState(false);
+    const [album, setAlbum] = useState<AlbumType>(a);
 
-    const [emailValid, setEmailValid] = useState(true);
-
-    const [showEmailError, setShowEmailError] = useState(false);
-    const [showPasswordError, setShowPasswordError] = useState(false);
-    const [error, setError] = useState("");
-
-    useEffect(() => {
-        setShowPasswordError(false);
-    }, [password]);
+    const searchRef = useRef(0);
 
     useEffect(() => {
-        setShowEmailError(false);
-        setError("");
-    }, [email]);
+        const currentSearch = ++searchRef.current;
+
+        const loadSongs = async () => {
+            setLoading(true);
+
+            if (currentSearch !== searchRef.current) return;
+
+            if (searchQuery.length === 0) {
+                const filtered = await filterSongsNotInAlbum(album, "");
+                setSongs(filtered);
+                setLoading(false);
+                return;
+            }
+
+            const filtered = await filterSongsNotInAlbum(album, searchQuery);
+            setSongs(filtered);
+
+            setLoading(false);
+        };
+
+        loadSongs();
+
+        return () => {
+            searchRef.current++;
+        };
+    }, [searchQuery]);
+
+    const removeSongFromList = async (song: SongType) => {
+        if (!songs) return;
+
+        const newSongs = songs.filter((s) => s.id !== song.id);
+        setSongs(newSongs);
+    };
 
     return (
-        <StackPage title={""} navigation={navigation} noBottom>
+        <StackPage title={t`Add songs`} navigation={navigation} noBottom>
             <View style={styles.container}>
-                <View style={styles.top}>
-                    <View
+                <View style={{ width: "100%" }}>
+                    <SearchBar
                         style={{
-                            alignSelf: "flex-start",
-                            marginTop: 10,
-                            marginBottom: 20,
-                        }}>
-                        <Text
-                            bold
-                            fontSize={30}>{t`Add songs to the album`}</Text>
-                    </View>
-                    <View
-                        style={{
-                            alignSelf: "flex-start",
-                            marginBottom: 20,
-                        }}>
-                        <Text
-                            fontSize={18}
-                            color={
-                                theme.colors.textVariant
-                            }>{t`Link your account to save your data and access it from any device.`}</Text>
-                    </View>
-                    <IconInput
-                        icon="account"
-                        placeholder={t`Your Name`}
-                        value={username}
-                        onChange={setUsername}
-                        style={{ marginTop: 10 }}
-                        autoCapitalize
+                            backgroundColor: theme.colors.paper,
+                            borderRadius: 12,
+                            marginHorizontal: 20,
+                        }}
+                        placeholderTextColor={theme.colors.text}
+                        iconColor={theme.colors.text}
+                        inputStyle={{ color: theme.colors.text }}
+                        placeholder={t`Search`}
+                        onChangeText={(query) => setSearchQuery(query)}
+                        value={searchQuery}
                     />
-                    <IconInput
-                        icon="email"
-                        placeholder={t`Personal Email`}
-                        value={email}
-                        onChange={setEmail}
-                        validate={validateEmail}
-                        onValidateChange={setEmailValid}
-                        style={{ marginTop: 10 }}
-                        error={showEmailError}
-                        keyboardType={"email-address"}
-                    />
-                    <IconInput
-                        icon="lock"
-                        placeholder={t`Password`}
-                        value={password}
-                        onChange={setPassword}
-                        style={{ marginTop: 10 }}
-                        hidden={true}
-                        error={showPasswordError}
-                        errorText={t`Password is too short.`}
-                    />
-
-                    {error.length > 0 && (
-                        <View style={styles.error}>
-                            <Text color={theme.colors.danger} fontSize={14}>
-                                {error}
-                            </Text>
-                        </View>
-                    )}
                 </View>
 
-                <View style={styles.bottom}>
-                    <View
-                        style={{
-                            width: "100%",
-                        }}>
-                        <Button
-                            mode="contained"
-                            text={t`Link Account`}
-                            upper
-                            fullWidth
-                            fontSize={14}
-                            bold
-                            disabled={!email || !password || !emailValid}
+                <View style={styles.scrollContainer}>
+                    {!loading && songs ? (
+                        <ScrollView bottom={10}>
+                            {songs.map((data: SongType, index: any) => {
+                                return (
+                                    <View key={index} style={styles.songs}>
+                                        <SongCover
+                                            key={index}
+                                            song={data}
+                                            disabled
+                                            navigation={navigation}
+                                            fullWidth
+                                            icon="plus-circle-outline"
+                                            action={() => {
+                                                addSongToPersonalAlbum(
+                                                    album,
+                                                    data
+                                                ).then(
+                                                    (newAlbum: AlbumType) => {
+                                                        updateSongDate(data);
+                                                        setAlbum(newAlbum);
+                                                        updateRefresh();
+                                                        updateRecent();
+                                                    }
+                                                );
+                                                removeSongFromList(data);
+                                            }}
+                                        />
+                                    </View>
+                                );
+                            })}
+                        </ScrollView>
+                    ) : (
+                        <View
                             style={{
-                                paddingVertical: loading ? 13 : 14.5,
-                            }}
-                            icon={
-                                loading && (
-                                    <ActivityIndicator
-                                        animating={true}
-                                        size={22}
-                                        color={theme.colors.textInverted}
-                                    />
-                                )
-                            }
-                            onPress={() => {
-                                if (loading) return;
-
-                                setError("");
-                                if (password.length > 5) {
-                                    linkGuest(
-                                        email.trim(),
-                                        password,
-                                        username.trim()
-                                    )
-                                        .then((response: any) => {
-                                            navigation.navigate("Tabs", {
-                                                screen: "HomeStack",
-                                            });
-                                            setError("");
-                                        })
-                                        .catch((error: any) => {
-                                            if (
-                                                error.message.includes(
-                                                    "auth/email-already-in-use"
-                                                )
-                                            ) {
-                                                setShowEmailError(true);
-                                                setError(
-                                                    t`Email is already in use.`
-                                                );
-                                            } else
-                                                setError(
-                                                    t`Something went wrong.`
-                                                );
-                                        });
-                                } else setShowPasswordError(true);
-                            }}
-                        />
-                    </View>
-
-                    <View
-                        style={[
-                            styles.textContainer,
-                            {
-                                marginVertical: 30,
-                            },
-                        ]}>
-                        <Text bold fontSize={18} upper>{t`or`}</Text>
-                    </View>
-
-                    <View style={{ width: "100%" }}>
-                        <ImageButton
-                            src={require("../../assets/images/auth/google.png")}
-                            bgcolor={theme.colors.white}
-                            color={"black"}
-                            text={t`Continue with Google`}
-                        />
-                        {/* <ImageButton
-                            src={require("../../assets/images/auth/facebook.png")}
-                            bgcolor={theme.colors.blue}
-                            color={"white"}
-                            text={t`Continue with Facebook`}
-                            style={{ marginTop: 15 }}
-                        /> */}
-                    </View>
+                                marginTop: -50,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                flex: 1,
+                            }}>
+                            <ActivityIndicator
+                                size="large"
+                                color={theme.colors.primary}
+                            />
+                        </View>
+                    )}
                 </View>
             </View>
         </StackPage>
@@ -191,38 +134,17 @@ const AddSong = ({ navigation }: { navigation: any }) => {
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 20,
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
         flex: 1,
     },
-    textContainer: {
-        marginVertical: 10,
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    top: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+    scrollContainer: {
         width: "100%",
-        marginBottom: 20,
-    },
-    bottom: {
         display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100%",
-        marginBottom: 15,
+        flex: 1,
     },
-    error: {
-        alignSelf: "flex-start",
-        marginTop: 5,
-        marginLeft: 15,
-    },
+    songs: { marginTop: 15, paddingHorizontal: 20 },
 });
 
 export default AddSong;

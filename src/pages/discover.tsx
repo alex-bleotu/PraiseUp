@@ -12,7 +12,6 @@ import Text from "../components/wrapers/text";
 import { AlbumType, DataContext, isSong, SongType } from "../context/data";
 import { HistoryContext } from "../context/history";
 import { ThemeContext } from "../context/theme";
-import Loading from "./loading";
 
 const Discover = ({ navigation }: { navigation: any }) => {
     const [searchQuery, setSearchQuery] = useState("");
@@ -58,14 +57,13 @@ const Discover = ({ navigation }: { navigation: any }) => {
         };
     }, [searchQuery]);
 
-    if (history === null) return <Loading />;
-
     return (
         <Background noPadding>
             <View style={{ paddingHorizontal: 10 }}>
                 <SearchBar
                     style={{
                         backgroundColor: theme.colors.paper,
+                        borderRadius: 12,
                     }}
                     placeholderTextColor={theme.colors.text}
                     iconColor={theme.colors.text}
@@ -77,83 +75,103 @@ const Discover = ({ navigation }: { navigation: any }) => {
             </View>
             {searchQuery.length === 0 ? (
                 <>
-                    {history.length !== 0 ? (
-                        <View style={styles.container}>
-                            <ScrollView bottom={15}>
-                                <View style={{ marginTop: 15 }}>
-                                    <Text fontSize={20} bold>
-                                        {t`Recent Searches`}
-                                    </Text>
-                                </View>
-                                {history.map(
-                                    (
-                                        data: SongType | AlbumType,
-                                        index: any
-                                    ) => {
-                                        return (
-                                            <View
-                                                key={index}
-                                                style={styles.songs}>
-                                                {isSong(data) ? (
-                                                    <SongCover
-                                                        key={index}
-                                                        song={data}
-                                                        navigation={navigation}
-                                                        fullWidth
-                                                        icon="close"
-                                                        action={() =>
-                                                            removeFromHistory(
-                                                                data
-                                                            )
-                                                        }
-                                                    />
-                                                ) : (
-                                                    <AlbumCover
-                                                        key={index}
-                                                        album={data}
-                                                        navigation={navigation}
-                                                        fullWidth
-                                                        icon="close"
-                                                        action={() =>
-                                                            removeFromHistory(
-                                                                data
-                                                            )
-                                                        }
-                                                    />
-                                                )}
-                                            </View>
-                                        );
-                                    }
-                                )}
-                                <View
-                                    style={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        marginLeft: -35,
-                                    }}>
-                                    <Button
-                                        style={{ marginTop: 20 }}
-                                        text={t`Clear recent searches`}
-                                        fontSize={14}
-                                        mode="outlined"
-                                        color={theme.colors.text}
-                                        bold
-                                        onPress={async () => {
-                                            deleteHistory();
-                                        }}
-                                    />
-                                </View>
-                            </ScrollView>
-                        </View>
+                    {history ? (
+                        history.length !== 0 ? (
+                            <View style={styles.container}>
+                                <ScrollView bottom={15}>
+                                    <View style={{ marginTop: 15 }}>
+                                        <Text fontSize={20} bold>
+                                            {t`Recent Searches`}
+                                        </Text>
+                                    </View>
+                                    {history.map(
+                                        (
+                                            data: SongType | AlbumType,
+                                            index: any
+                                        ) => {
+                                            return (
+                                                <View
+                                                    key={index}
+                                                    style={styles.songs}>
+                                                    {isSong(data) ? (
+                                                        <SongCover
+                                                            key={index}
+                                                            song={data}
+                                                            navigation={
+                                                                navigation
+                                                            }
+                                                            fullWidth
+                                                            icon="close"
+                                                            action={() =>
+                                                                removeFromHistory(
+                                                                    data
+                                                                )
+                                                            }
+                                                        />
+                                                    ) : (
+                                                        <AlbumCover
+                                                            key={index}
+                                                            album={data}
+                                                            navigation={
+                                                                navigation
+                                                            }
+                                                            fullWidth
+                                                            icon="close"
+                                                            action={() =>
+                                                                removeFromHistory(
+                                                                    data
+                                                                )
+                                                            }
+                                                        />
+                                                    )}
+                                                </View>
+                                            );
+                                        }
+                                    )}
+                                    <View
+                                        style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            marginLeft: -35,
+                                        }}>
+                                        <Button
+                                            style={{ marginTop: 20 }}
+                                            text={t`Clear recent searches`}
+                                            fontSize={14}
+                                            mode="outlined"
+                                            color={theme.colors.text}
+                                            bold
+                                            onPress={async () => {
+                                                deleteHistory();
+                                            }}
+                                        />
+                                    </View>
+                                </ScrollView>
+                            </View>
+                        ) : (
+                            <View style={styles.placeHolderContainer}>
+                                <Text fontSize={20} bold>
+                                    {t`No recent searches`}
+                                </Text>
+                                <Text fontSize={16} style={{ marginTop: 10 }}>
+                                    {t`Start searching for your favorite songs.`}
+                                </Text>
+                            </View>
+                        )
                     ) : (
-                        <View style={styles.placeHolderContainer}>
-                            <Text fontSize={20} bold>
-                                {t`No recent searches`}
-                            </Text>
-                            <Text fontSize={16} style={{ marginTop: 10 }}>
-                                {t`Start searching for your favorite songs.`}
-                            </Text>
+                        <View
+                            style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                height: "80%",
+                            }}>
+                            <ActivityIndicator
+                                animating={true}
+                                size="large"
+                                color={theme.colors.primary}
+                            />
                         </View>
                     )}
                 </>

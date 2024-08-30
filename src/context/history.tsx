@@ -24,7 +24,10 @@ export const HistoryProvider = ({
 
                 if (storedHistory !== null)
                     setHistory(JSON.parse(storedHistory));
-                else await AsyncStorage.setItem("history", JSON.stringify([]));
+                else {
+                    await AsyncStorage.setItem("history", JSON.stringify([]));
+                    setHistory([]);
+                }
             } catch (error) {
                 console.error("Failed to load history from storage", error);
             }

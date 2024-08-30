@@ -11,8 +11,15 @@ import {
     updateProfile,
     User,
 } from "firebase/auth";
-import React, { createContext, ReactNode, useEffect, useState } from "react";
+import React, {
+    createContext,
+    ReactNode,
+    useContext,
+    useEffect,
+    useState,
+} from "react";
 import { auth } from "../../firebaseConfig";
+import { DataContext } from "./data";
 
 export const AuthContext = createContext<any>(null);
 
@@ -21,6 +28,8 @@ export const AuthProvider = ({
 }: {
     children: ReactNode | ReactNode[];
 }) => {
+    const { clearData } = useContext(DataContext);
+
     const [user, setUser] = useState<User | null | undefined>(undefined);
     const [loading, setLoading] = useState(true);
 
@@ -112,13 +121,7 @@ export const AuthProvider = ({
 
         try {
             await auth.signOut();
-            await AsyncStorage.multiRemove([
-                "recent",
-                "history",
-                "user",
-                "language",
-                "personalAlbumsIds",
-            ]);
+            clearData();
             setUser(null);
         } finally {
             setLoading(false);
@@ -130,7 +133,7 @@ export const AuthProvider = ({
 
         try {
             await auth.currentUser?.delete();
-            await AsyncStorage.removeItem("user");
+            clearData();
             setUser(null);
         } finally {
             setLoading(false);

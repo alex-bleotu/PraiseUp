@@ -20,6 +20,8 @@ interface DataBottomSheetProps {
     zoom?: (zoom: boolean) => void;
     onClose: () => void;
     extraActions?: () => void;
+    extraData?: any;
+    removeSong?: boolean;
     updateData?: any;
 }
 
@@ -29,11 +31,18 @@ const DataBottomSheet = ({
     zoom,
     onClose,
     extraActions,
+    removeSong,
+    extraData,
     updateData,
 }: DataBottomSheetProps) => {
     const { theme } = useContext(ThemeContext);
-    const { setFavorite, getById, deletePersonalAlbum, updatePersonalAlbum } =
-        useContext(DataContext);
+    const {
+        setFavorite,
+        getById,
+        deletePersonalAlbum,
+        updatePersonalAlbum,
+        removeSongFromPersonalAlbum,
+    } = useContext(DataContext);
     const { updateRefresh } = useContext(RefreshContext);
     const { updateRecent } = useContext(RecentContext);
 
@@ -61,7 +70,11 @@ const DataBottomSheet = ({
                 isOpen={isOpen && !editAlbum}
                 onClose={onClose}
                 numberOfButtons={
-                    data.id.startsWith("P") || isSong(data) ? (zoom ? 4 : 3) : 2
+                    data.id.startsWith("P") || isSong(data)
+                        ? zoom || removeSong
+                            ? 4
+                            : 3
+                        : 2
                 }>
                 <View>
                     <View style={styles.top}>
@@ -197,20 +210,53 @@ const DataBottomSheet = ({
                             </>
                         )}
                         {isSong(data) && (
-                            <TouchableOpacity
-                                activeOpacity={theme.activeOpacity}
-                                onPress={() => {}}>
-                                <View style={styles.button}>
-                                    <MCIcons
-                                        name="plus-circle-outline"
-                                        size={30}
-                                        color={theme.colors.text}
-                                    />
-                                    <Text fontSize={17} style={styles.text}>
-                                        {t`Add to playlist`}
-                                    </Text>
-                                </View>
-                            </TouchableOpacity>
+                            <>
+                                <TouchableOpacity
+                                    activeOpacity={theme.activeOpacity}
+                                    onPress={() => {}}>
+                                    <View style={styles.button}>
+                                        <MCIcons
+                                            name="plus-circle-outline"
+                                            size={30}
+                                            color={theme.colors.text}
+                                        />
+                                        <Text fontSize={17} style={styles.text}>
+                                            {removeSong
+                                                ? t`Add to other playlist`
+                                                : t`Add to album`}
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+                                {removeSong && (
+                                    <TouchableOpacity
+                                        activeOpacity={theme.activeOpacity}
+                                        onPress={() => {
+                                            removeSongFromPersonalAlbum(
+                                                extraData,
+                                                data
+                                            ).then((newAlbum: AlbumType) => {
+                                                updateRefresh();
+                                                updateRecent();
+                                                onClose();
+                                                updateData &&
+                                                    updateData(newAlbum);
+                                            });
+                                        }}>
+                                        <View style={styles.button}>
+                                            <MCIcons
+                                                name="minus-circle-outline"
+                                                size={30}
+                                                color={theme.colors.text}
+                                            />
+                                            <Text
+                                                fontSize={17}
+                                                style={styles.text}>
+                                                {t`Remove from this album`}
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                )}
+                            </>
                         )}
                         <TouchableOpacity
                             activeOpacity={theme.activeOpacity}
@@ -297,6 +343,7 @@ const DataBottomSheet = ({
                                             () => {
                                                 updateRecent();
                                                 updateRefresh();
+                                                onClose();
                                                 setIsDeleteModalOpen(false);
                                                 extraActions && extraActions();
                                             }

@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import Button from "../components/wrapers/button";
 import IconInput from "../components/wrapers/iconInput";
-import ImageButton from "../components/wrapers/imaegButton";
+import ImageButton from "../components/wrapers/imageButton";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
 import { AuthContext } from "../context/auth";

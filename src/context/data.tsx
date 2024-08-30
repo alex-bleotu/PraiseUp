@@ -173,7 +173,7 @@ export const DataProvider = ({
 
     const writeAlbum = async (album: AlbumType) => {
         try {
-            if (album.songs.length > 2 && !Array.isArray(album.cover)) {
+            if (album.songs.length >= 3 && !Array.isArray(album.cover)) {
                 const songs = album.songs.slice(0, 4);
 
                 const songPromises = await Promise.all(
@@ -204,10 +204,8 @@ export const DataProvider = ({
 
     const writePersonalAlbum = async (album: AlbumType) => {
         try {
-            await AsyncStorage.setItem(album.id, JSON.stringify(album));
-
-            if (album.songs.length > 2 && !Array.isArray(album.cover)) {
-                const songs = album.songs.slice(0, 4);
+            if (album.songs.length >= 4) {
+                const songs = album.songs.slice(-4).reverse();
 
                 const songPromises = await Promise.all(
                     songs.map(async (id) => {
@@ -222,7 +220,19 @@ export const DataProvider = ({
                 const covers = songPromises.map((song) => song.cover);
 
                 album.cover = covers;
+
+                console.log(album.cover);
+            } else if (album.songs.length > 0) {
+                const song = await readSong(
+                    album.songs[album.songs.length - 1]
+                );
+
+                if (song) album.cover = song.cover;
+
+                console.log(album.cover);
             }
+
+            await AsyncStorage.setItem(album.id, JSON.stringify(album));
 
             if (!personalAlbumsIds.find((id) => id === album.id))
                 setPersonalAlbumsIds((prevArray) => [...prevArray, album.id]);
@@ -358,7 +368,24 @@ export const DataProvider = ({
             return null;
         });
 
-        const results = await Promise.all([...songPromises, ...albumPromises]);
+        const personalAlbumPromises = personalAlbumsIds.map(async (id) => {
+            const album = await readAlbum(id);
+            if (!album) return null;
+
+            const albumNameMatches = normalizeString(album.title).includes(
+                query
+            );
+            if (albumNameMatches) {
+                return album;
+            }
+            return null;
+        });
+
+        const results = await Promise.all([
+            ...songPromises,
+            ...albumPromises,
+            ...personalAlbumPromises,
+        ]);
 
         filtered = results.filter((result) => result !== null);
 
@@ -546,6 +573,113 @@ export const DataProvider = ({
         });
     };
 
+    const filterSongsNotInAlbum = async (
+        album: AlbumType,
+        searchQuery: string
+    ) => {
+        let filtered: any[] = [];
+
+        const normalizeString = (str: string) => {
+            return str
+                .toLowerCase()
+                .replace(/ă/g, "a")
+                .replace(/î/g, "i")
+                .replace(/â/g, "a")
+                .replace(/ș/g, "s")
+                .replace(/ț/g, "t");
+        };
+
+        const query = normalizeString(searchQuery);
+
+        const stripChords = (lyrics: string) => {
+            return normalizeString(lyrics.replace(/\[[^\]]+\]/g, ""));
+        };
+
+        for (let i = 0; i < songIds.length && filtered.length < 30; i++) {
+            const song = await readSong(songIds[i]);
+            if (!song) continue;
+
+            const songNameMatches = normalizeString(song.title).includes(query);
+            const artistMatches = song.artist
+                ? normalizeString(song.artist).includes(query)
+                : false;
+            const lyricsMatches = song.lyrics
+                ? stripChords(song.lyrics).includes(query)
+                : false;
+
+            if (
+                (songNameMatches || artistMatches || lyricsMatches) &&
+                !album.songs.includes(song.id)
+            ) {
+                filtered.push(song);
+            }
+        }
+
+        return filtered;
+    };
+
+    const addSongToPersonalAlbum = async (album: AlbumType, song: SongType) => {
+        return new Promise<AlbumType>(async (resolve) => {
+            try {
+                album.songs.push(song.id);
+                album.date = new Date().toISOString();
+
+                await writePersonalAlbum(album);
+
+                resolve(album);
+            } catch (error) {
+                console.error("Error adding song to personal album:", error);
+            }
+        });
+    };
+
+    const removeSongFromPersonalAlbum = async (
+        album: AlbumType,
+        song: SongType
+    ) => {
+        return new Promise<AlbumType>(async (resolve) => {
+            try {
+                album.songs = album.songs.filter((id) => id !== song.id);
+                album.date = new Date().toISOString();
+
+                await writePersonalAlbum(album);
+
+                resolve(album);
+            } catch (error) {
+                console.error(
+                    "Error removing song from personal album:",
+                    error
+                );
+            }
+        });
+    };
+
+    const updateSongDate = async (song: SongType) => {
+        const songData = await readSong(song.id);
+        songData.date = new Date().toISOString();
+
+        await writeSong(songData);
+    };
+
+    const clearData = async () => {
+        setLoading(true);
+
+        setPersonalAlbumsIds([]);
+        await AsyncStorage.multiRemove([
+            "recent",
+            "history",
+            "user",
+            "language",
+            "personalAlbumsIds",
+        ]);
+
+        for (let i = 0; i < songs.length; i++) await writeSong(songs[i]);
+
+        for (let i = 0; i < albums.length; i++) await writeAlbum(albums[i]);
+
+        setLoading(false);
+    };
+
     return (
         <DataContext.Provider
             value={{
@@ -575,6 +709,11 @@ export const DataProvider = ({
                 getPersonalAlbumsById,
                 deletePersonalAlbum,
                 updatePersonalAlbum,
+                filterSongsNotInAlbum,
+                addSongToPersonalAlbum,
+                removeSongFromPersonalAlbum,
+                updateSongDate,
+                clearData,
             }}>
             {children}
         </DataContext.Provider>

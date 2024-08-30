@@ -82,7 +82,11 @@ export const RecentProvider = ({
             })
         ).then((items) => items.filter((item) => item !== null));
 
-        while (newRecent.length < 6) newRecent.push((await getRandom(1))[0]);
+        while (newRecent.length < 6) {
+            const newSong = (await getRandom(1))[0];
+            if (newRecent.find((item) => item.id === newSong.id)) continue;
+            newRecent.push(newSong);
+        }
 
         setRecent(newRecent);
     };

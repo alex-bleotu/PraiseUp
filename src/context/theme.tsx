@@ -1,6 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
-import { Appearance } from "react-native";
 import { darkTheme, lightTheme } from "../utils/theme";
 
 export const ThemeContext = createContext<any>(null);
@@ -19,9 +18,10 @@ export const ThemeProvider = ({
 
             if (themeLoaded === "dark") setTheme(darkTheme);
             else if (themeLoaded === "light") setTheme(lightTheme);
-            else if (Appearance.getColorScheme() === "dark")
-                setTheme(darkTheme);
             else setTheme(lightTheme);
+            // else if (Appearance.getColorScheme() === "dark")
+            //     setTheme(darkTheme);
+            // else setTheme(lightTheme);
 
             setLoading(false);
         };
