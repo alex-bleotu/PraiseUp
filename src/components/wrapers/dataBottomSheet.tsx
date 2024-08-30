@@ -44,8 +44,9 @@ const DataBottomSheet = ({
         deletePersonalAlbum,
         updatePersonalAlbum,
         removeSongFromPersonalAlbum,
+        getFavoriteSongsAlbum,
     } = useContext(DataContext);
-    const { updateRefresh } = useContext(RefreshContext);
+    const { refresh, updateRefresh } = useContext(RefreshContext);
     const { updateRecent } = useContext(RecentContext);
 
     const [data, setData] = useState<SongType | AlbumType | null>(null);
@@ -62,7 +63,7 @@ const DataBottomSheet = ({
         };
 
         load();
-    }, [d]);
+    }, [d, refresh]);
 
     if (data === null) return <></>;
 
@@ -73,7 +74,7 @@ const DataBottomSheet = ({
                 onClose={onClose}
                 numberOfButtons={
                     data.type === "personal" || data.type === "song"
-                        ? zoom || removeSong
+                        ? (zoom || removeSong) && data.type === "song"
                             ? 4
                             : 3
                         : 2
@@ -153,9 +154,15 @@ const DataBottomSheet = ({
                                             data.id,
                                             !data.favorite
                                         );
+
                                         setData(await getById(data.id));
 
                                         updateRefresh();
+
+                                        const fav =
+                                            await getFavoriteSongsAlbum();
+
+                                        updateData && updateData(fav);
                                     }
                                 }}>
                                 <View style={styles.button}>

@@ -77,7 +77,7 @@ const Album = ({ route, navigation }: AlbumProps) => {
         };
 
         load();
-    }, [refresh]);
+    }, [refresh, album]);
 
     const sortSongs = (songsList: SongType[]) => {
         const button = songsList.find((song) => song.type === "extra");
@@ -168,6 +168,12 @@ const Album = ({ route, navigation }: AlbumProps) => {
                                     showsVerticalScrollIndicator={false}>
                                     {songs.map(
                                         (data: SongType, index: number) => {
+                                            if (
+                                                data.type === "extra" &&
+                                                album.type === "favorite"
+                                            )
+                                                return null;
+
                                             return (
                                                 <View
                                                     key={data.id}
@@ -239,6 +245,12 @@ const Album = ({ route, navigation }: AlbumProps) => {
                             <View style={styles.container}>
                                 <ScrollView bottom={5} showScroll={false}>
                                     {songs.map((data: SongType) => {
+                                        if (
+                                            data.type === "extra" &&
+                                            album.type === "favorite"
+                                        )
+                                            return null;
+
                                         return (
                                             <View
                                                 key={data.id}
@@ -388,6 +400,12 @@ const Album = ({ route, navigation }: AlbumProps) => {
                 }}
                 updateData={(newAlbum: AlbumType) => {
                     setAlbum(newAlbum);
+
+                    if (
+                        newAlbum.songs.length === 0 &&
+                        newAlbum.type === "favorite"
+                    )
+                        navigation.goBack();
                 }}
                 extraData={album}
                 extraActions2={() => {
