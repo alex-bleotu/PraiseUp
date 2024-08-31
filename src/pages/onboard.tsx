@@ -48,7 +48,7 @@ function Onboard({ navigation }: { navigation: any }) {
             <View style={styles.buttons}>
                 <Button
                     mode="contained"
-                    text={t`Join App`}
+                    text={t`Join PraiseUp`}
                     upper
                     fullWidth
                     fontSize={14}

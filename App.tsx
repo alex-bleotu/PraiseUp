@@ -8,6 +8,7 @@ import { HistoryProvider } from "./src/context/history";
 import { LanguageProvider } from "./src/context/language";
 import { RecentProvider } from "./src/context/recent";
 import { RefreshProvider } from "./src/context/refresh";
+import { ServerProvider } from "./src/context/server";
 import { ThemeProvider } from "./src/context/theme";
 import AppNavigation from "./src/navigation/appNavigation";
 import { darkTheme } from "./src/utils/theme";
@@ -22,12 +23,14 @@ export default function App() {
                             <RefreshProvider>
                                 <DataProvider>
                                     <AuthProvider>
-                                        <HistoryProvider>
-                                            <RecentProvider>
-                                                <AppNavigation />
-                                                <StatusBar style="auto" />
-                                            </RecentProvider>
-                                        </HistoryProvider>
+                                        <ServerProvider>
+                                            <HistoryProvider>
+                                                <RecentProvider>
+                                                    <AppNavigation />
+                                                    <StatusBar style="auto" />
+                                                </RecentProvider>
+                                            </HistoryProvider>
+                                        </ServerProvider>
                                     </AuthProvider>
                                 </DataProvider>
                             </RefreshProvider>

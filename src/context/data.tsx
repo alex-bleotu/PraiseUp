@@ -697,6 +697,24 @@ export const DataProvider = ({
         return { albumsThatContainSong, albumsThatDontContainSong };
     };
 
+    const updateFavorites = async (favoriteList: string[]) => {
+        for (let i = 0; i < favoriteList.length; i++) {
+            if (favoriteList[i].startsWith("S")) {
+                const song = await getSongById(favoriteList[i]);
+                song.favorite = true;
+
+                await writeSong(song);
+            } else if (favoriteList[i].startsWith("A")) {
+                const album = await getAlbumById(favoriteList[i]);
+                album.favorite = true;
+
+                await writeAlbum(album);
+            }
+        }
+
+        updateRefresh();
+    };
+
     return (
         <DataContext.Provider
             value={{
@@ -731,6 +749,7 @@ export const DataProvider = ({
                 removeSongFromPersonalAlbum,
                 clearData,
                 getPersonalAlbumsBySong,
+                updateFavorites,
             }}>
             {children}
         </DataContext.Provider>

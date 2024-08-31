@@ -6,6 +6,7 @@ import { Image, Share, StyleSheet, TouchableOpacity, View } from "react-native";
 import { AlbumType, DataContext, SongType } from "../../context/data";
 import { RecentContext } from "../../context/recent";
 import { RefreshContext } from "../../context/refresh";
+import { ServerContext } from "../../context/server";
 import { ThemeContext } from "../../context/theme";
 import { getImage } from "../../utils/covers";
 import AlbumImage from "../items/albumImage";
@@ -38,6 +39,7 @@ const DataBottomSheet = ({
     updateData,
 }: DataBottomSheetProps) => {
     const { theme } = useContext(ThemeContext);
+    const { addFavorite, removeFavorite } = useContext(ServerContext);
     const {
         setFavorite,
         getById,
@@ -154,6 +156,10 @@ const DataBottomSheet = ({
                                             data.id,
                                             !data.favorite
                                         );
+
+                                        if (data.favorite)
+                                            removeFavorite(data.id);
+                                        else addFavorite(data.id);
 
                                         setData(await getById(data.id));
 

@@ -103,7 +103,7 @@ const Register = ({ navigation }: { navigation: any }) => {
                         }}>
                         <Button
                             mode="contained"
-                            text={t`Join App`}
+                            text={t`Join`}
                             upper
                             fullWidth
                             fontSize={14}

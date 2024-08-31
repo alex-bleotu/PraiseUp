@@ -11,6 +11,7 @@ import {
     updateProfile,
     User,
 } from "firebase/auth";
+import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import React, {
     createContext,
     ReactNode,
@@ -18,7 +19,7 @@ import React, {
     useEffect,
     useState,
 } from "react";
-import { auth } from "../../firebaseConfig";
+import { auth, db } from "../../firebaseConfig";
 import { DataContext } from "./data";
 
 export const AuthContext = createContext<any>(null);
@@ -28,7 +29,7 @@ export const AuthProvider = ({
 }: {
     children: ReactNode | ReactNode[];
 }) => {
-    const { clearData } = useContext(DataContext);
+    const { clearData, updateFavorites } = useContext(DataContext);
 
     const [user, setUser] = useState<User | null | undefined>(undefined);
     const [loading, setLoading] = useState(true);
@@ -49,6 +50,18 @@ export const AuthProvider = ({
         if (user) AsyncStorage.setItem("user", JSON.stringify(user));
     }, [user]);
 
+    const initializeUserDocument = async (uid: string) => {
+        const userDocRef = doc(db, "users", uid);
+        await setDoc(userDocRef, {
+            favorites: [],
+        });
+    };
+
+    const deleteUserDocument = async (uid: string) => {
+        const userDocRef = doc(db, "users", uid);
+        await deleteDoc(userDocRef);
+    };
+
     const login = async (email: string, password: string): Promise<any> => {
         setLoading(true);
 
@@ -60,7 +73,27 @@ export const AuthProvider = ({
                     password
                 );
 
-                setUser(response.user);
+                const userDocRef = doc(db, "users", response.user.uid);
+                const userDoc = await getDoc(userDocRef);
+
+                let favorites: string[] = [];
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    favorites = userData.favorites || [];
+                }
+
+                const userWithFavorites = {
+                    ...response.user,
+                    favorites: favorites,
+                };
+
+                await AsyncStorage.setItem(
+                    "user",
+                    JSON.stringify(userWithFavorites)
+                );
+
+                setUser(userWithFavorites);
+                await updateFavorites(favorites);
                 resolve(response);
             } catch (error) {
                 reject(error);
@@ -90,6 +123,20 @@ export const AuthProvider = ({
                         displayName: username,
                     });
 
+                    await initializeUserDocument(response.user.uid);
+
+                    const userWithFavorites = {
+                        ...response.user,
+                        favorites: [],
+                    };
+
+                    await AsyncStorage.setItem(
+                        "user",
+                        JSON.stringify(userWithFavorites)
+                    );
+
+                    setUser(userWithFavorites);
+
                     await login(email, password).catch((error) => {
                         reject(error);
                     });
@@ -108,8 +155,21 @@ export const AuthProvider = ({
         return new Promise(async (resolve, reject) => {
             try {
                 const userCredential = await signInAnonymously(auth);
-                setUser(userCredential.user);
-                resolve(userCredential);
+
+                await initializeUserDocument(userCredential.user.uid);
+
+                const guestUserWithFavorites = {
+                    ...userCredential.user,
+                    favorites: [],
+                };
+
+                await AsyncStorage.setItem(
+                    "user",
+                    JSON.stringify(guestUserWithFavorites)
+                );
+
+                setUser(guestUserWithFavorites);
+                resolve(guestUserWithFavorites);
             } catch (error) {
                 reject(error);
             }
@@ -132,7 +192,10 @@ export const AuthProvider = ({
         setLoading(true);
 
         try {
-            await auth.currentUser?.delete();
+            if (auth.currentUser) {
+                await deleteUserDocument(auth.currentUser.uid);
+                await auth.currentUser.delete();
+            }
             clearData();
             setUser(null);
         } finally {
@@ -233,6 +296,7 @@ export const AuthProvider = ({
                 );
                 await reauthenticateWithCredential(user, credential);
 
+                await deleteUserDocument(user.uid);
                 await user.delete();
                 await AsyncStorage.removeItem("user");
                 setUser(null);
@@ -251,6 +315,7 @@ export const AuthProvider = ({
             value={{
                 user,
                 loading,
+                setUser,
                 login,
                 register,
                 logout,
