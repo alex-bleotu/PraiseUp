@@ -20,6 +20,7 @@ import React, {
 } from "react";
 import { auth, db } from "../../firebaseConfig";
 import { DataContext } from "./data";
+import { ServerContext } from "./server";
 import { UserContext } from "./user";
 
 export const AuthContext = createContext<any>(null);
@@ -29,7 +30,13 @@ export const AuthProvider = ({
 }: {
     children: ReactNode | ReactNode[];
 }) => {
-    const { clearData, updateFavorites } = useContext(DataContext);
+    const {
+        clearData,
+        syncFavorites,
+        syncPersonalAlbumsIds,
+        syncPersonalAlbums,
+    } = useContext(DataContext);
+    const { getPersonalAlbumsList } = useContext(ServerContext);
     const { user, setUser } = useContext(UserContext);
 
     const [loading, setLoading] = useState(true);
@@ -54,6 +61,8 @@ export const AuthProvider = ({
         const userDocRef = doc(db, "users", uid);
         await setDoc(userDocRef, {
             favorites: [],
+            personalAlbumsIds: [],
+            personalAlbums: {},
         });
     };
 
@@ -93,7 +102,12 @@ export const AuthProvider = ({
                 );
 
                 setUser(userWithFavorites);
-                await updateFavorites(favorites);
+
+                await syncFavorites(favorites);
+
+                const list = await getPersonalAlbumsList(userWithFavorites);
+                syncPersonalAlbums(list, userWithFavorites);
+
                 resolve(response);
             } catch (error) {
                 reject(error);

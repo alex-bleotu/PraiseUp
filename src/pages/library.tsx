@@ -29,7 +29,7 @@ const Library = ({ navigation }: { navigation: any }) => {
         loading,
         getFavoriteSongsAlbum,
         getFavoriteAlbums,
-        createPersonalPlaylist,
+        createPersonalAlbum,
         getPersonalAlbums,
     } = useContext(DataContext);
     const { sortBy, setSortBy, display, setDisplay } =
@@ -357,7 +357,7 @@ const Library = ({ navigation }: { navigation: any }) => {
                         <View style={{ width: "47%" }}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    createPersonalPlaylist(name.trim()).then(
+                                    createPersonalAlbum(name.trim()).then(
                                         (newAlbum: AlbumType) => {
                                             navigation.navigate("Album", {
                                                 album: newAlbum,

@@ -24,6 +24,7 @@ const Home = ({ navigation }: { navigation: any }) => {
 
     const [randomSongs, setRandomSongs] = useState<SongType[] | null>(null);
     const [favoriteAlbums, setFavoriteAlbums] = useState<AlbumType[]>([]);
+    const [loadingAlbums, setLoadingAlbums] = useState(true);
 
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
     const [currentData, setCurrentData] = useState<SongType | AlbumType | null>(

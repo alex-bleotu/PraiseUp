@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { User } from "firebase/auth";
 import React, {
     createContext,
     ReactNode,
@@ -6,6 +7,8 @@ import React, {
     useEffect,
     useState,
 } from "react";
+import "react-native-get-random-values";
+import { v4 as uuidv4 } from "uuid";
 import { albums, songs } from "../../assets/bundle";
 import { RefreshContext } from "./refresh";
 import { ServerContext } from "./server";
@@ -40,7 +43,15 @@ export const DataProvider = ({
     children: ReactNode | ReactNode[];
 }) => {
     const { updateRefresh } = useContext(RefreshContext);
-    const { addFavorite, removeFavorite } = useContext(ServerContext);
+    const {
+        addFavorite,
+        removeFavorite,
+        createPersonalAlbum: createPersonalAlbumServer,
+        updatePersonalAlbumsList,
+        updatePersonalAlbum: updatePersonalAlbumServer,
+        deletePersonalAlbum: deletePersonalAlbumServer,
+        getPersonalAlbum: getPersonalAlbumServer,
+    } = useContext(ServerContext);
 
     const [songIds, setSongIds] = useState<string[]>([]);
     const [albumIds, setAlbumIds] = useState<string[]>([]);
@@ -142,25 +153,46 @@ export const DataProvider = ({
     }, []);
 
     useEffect(() => {
-        const writeLists = async () => {
-            if (songIds.length !== 0)
-                await AsyncStorage.setItem("songIds", JSON.stringify(songIds));
+        if (songIds === null) return;
 
-            if (albumIds.length !== 0)
+        const writeSongIds = async () => {
+            if (songIds.length !== 0) {
+                await AsyncStorage.setItem("songIds", JSON.stringify(songIds));
+            }
+        };
+
+        writeSongIds();
+    }, [songIds]);
+
+    useEffect(() => {
+        if (albumIds === null) return;
+
+        const writeAlbumIds = async () => {
+            if (albumIds.length !== 0) {
                 await AsyncStorage.setItem(
                     "albumIds",
                     JSON.stringify(albumIds)
                 );
+            }
+        };
 
-            if (personalAlbumsIds.length !== 0)
+        writeAlbumIds();
+    }, [albumIds]);
+
+    useEffect(() => {
+        if (personalAlbumsIds === null) return;
+
+        const writePersonalAlbumsIds = async () => {
+            if (personalAlbumsIds.length !== 0) {
                 await AsyncStorage.setItem(
                     "personalAlbumsIds",
                     JSON.stringify(personalAlbumsIds)
                 );
+            }
         };
 
-        writeLists();
-    }, [songIds, albumIds, personalAlbumsIds]);
+        writePersonalAlbumsIds();
+    }, [personalAlbumsIds]);
 
     const writeSong = async (song: SongType) => {
         try {
@@ -236,8 +268,10 @@ export const DataProvider = ({
 
             await AsyncStorage.setItem(album.id, JSON.stringify(album));
 
-            if (!personalAlbumsIds.find((id) => id === album.id))
+            if (!personalAlbumsIds.find((id) => id === album.id)) {
                 setPersonalAlbumsIds((prevArray) => [...prevArray, album.id]);
+                updatePersonalAlbumsList(personalAlbumsIds);
+            }
 
             console.log("Wrote personal album file", album.id);
         } catch (error) {
@@ -522,13 +556,15 @@ export const DataProvider = ({
         return album;
     };
 
-    const createPersonalPlaylist = async (name: string) => {
+    const createPersonalAlbum = async (title: string) => {
         return new Promise<AlbumType>(async (resolve) => {
             try {
+                const uniqueId = uuidv4();
+
                 const playlist: AlbumType = {
-                    id: `P${personalAlbumsIds.length}`,
+                    id: `P${uniqueId}`,
                     type: "personal",
-                    title: name,
+                    title: title,
                     songs: [],
                     favorite: false,
                     date: new Date().toISOString(),
@@ -536,6 +572,8 @@ export const DataProvider = ({
                 };
 
                 await writePersonalAlbum(playlist);
+
+                createPersonalAlbumServer(playlist.id, title);
 
                 resolve(playlist);
             } catch (error) {
@@ -563,6 +601,8 @@ export const DataProvider = ({
             setPersonalAlbumsIds(
                 personalAlbumsIds.filter((albumId: any) => albumId !== id)
             );
+
+            deletePersonalAlbumServer(id);
         } catch (error) {
             console.error("Error deleting personal album file:", error);
         }
@@ -570,16 +610,18 @@ export const DataProvider = ({
 
     const updatePersonalAlbum = async (
         album: AlbumType,
-        name: string,
+        title: string,
         cover: string | null = null
     ) => {
         return new Promise<AlbumType>(async (resolve) => {
             try {
-                album.title = name;
+                album.title = title;
                 album.cover = cover;
                 album.date = new Date().toISOString();
 
                 await writePersonalAlbum(album);
+
+                updatePersonalAlbumServer(album.id, title, album.songs);
 
                 resolve(album);
             } catch (error) {
@@ -641,6 +683,8 @@ export const DataProvider = ({
 
                 await writePersonalAlbum(album);
 
+                updatePersonalAlbumServer(album.id, album.title, album.songs);
+
                 resolve(album);
             } catch (error) {
                 console.error("Error adding song to personal album:", error);
@@ -659,6 +703,8 @@ export const DataProvider = ({
 
                 await writePersonalAlbum(album);
 
+                updatePersonalAlbumServer(album.id, album.title, album.songs);
+
                 resolve(album);
             } catch (error) {
                 console.error(
@@ -672,7 +718,11 @@ export const DataProvider = ({
     const clearData = async () => {
         setLoading(true);
 
+        for (let i = 0; i < personalAlbumsIds.length; i++)
+            await AsyncStorage.removeItem(personalAlbumsIds[i]);
+
         setPersonalAlbumsIds([]);
+
         await AsyncStorage.multiRemove([
             "recent",
             "history",
@@ -705,7 +755,7 @@ export const DataProvider = ({
         return { albumsThatContainSong, albumsThatDontContainSong };
     };
 
-    const updateFavorites = async (favoriteList: string[]) => {
+    const syncFavorites = async (favoriteList: string[]) => {
         for (let i = 0; i < favoriteList.length; i++) {
             if (favoriteList[i].startsWith("S")) {
                 const song = await getSongById(favoriteList[i]);
@@ -721,6 +771,38 @@ export const DataProvider = ({
         }
 
         updateRefresh();
+    };
+
+    const syncPersonalAlbums = async (
+        personalAlbumsList: string[],
+        user: User
+    ) => {
+        for (let i = 0; i < personalAlbumsList.length; i++) {
+            const data = await getPersonalAlbumServer(
+                personalAlbumsList[i],
+                user
+            );
+
+            if (!data) continue;
+
+            const album: AlbumType = {
+                id: personalAlbumsList[i],
+                type: "personal",
+                title: data.title,
+                songs: data.songs,
+                favorite: false,
+                date: new Date().toISOString(),
+                cover: null,
+            };
+
+            await writePersonalAlbum(album);
+        }
+
+        updateRefresh();
+    };
+
+    const syncPersonalAlbumsIds = async (personalAlbumsList: string[]) => {
+        setPersonalAlbumsIds(personalAlbumsList);
     };
 
     return (
@@ -746,7 +828,7 @@ export const DataProvider = ({
                 getFavoriteAlbums,
                 setFavorite,
                 getFavoriteSongsAlbum,
-                createPersonalPlaylist,
+                createPersonalAlbum,
                 writePersonalAlbum,
                 getPersonalAlbums,
                 getPersonalAlbumsById,
@@ -757,7 +839,10 @@ export const DataProvider = ({
                 removeSongFromPersonalAlbum,
                 clearData,
                 getPersonalAlbumsBySong,
-                updateFavorites,
+                syncFavorites,
+                setPersonalAlbumsIds,
+                syncPersonalAlbums,
+                syncPersonalAlbumsIds,
             }}>
             {children}
         </DataContext.Provider>
