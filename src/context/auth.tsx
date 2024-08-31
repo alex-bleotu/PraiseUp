@@ -9,7 +9,6 @@ import {
     signInAnonymously,
     signInWithEmailAndPassword,
     updateProfile,
-    User,
 } from "firebase/auth";
 import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import React, {
@@ -21,6 +20,7 @@ import React, {
 } from "react";
 import { auth, db } from "../../firebaseConfig";
 import { DataContext } from "./data";
+import { UserContext } from "./user";
 
 export const AuthContext = createContext<any>(null);
 
@@ -30,8 +30,8 @@ export const AuthProvider = ({
     children: ReactNode | ReactNode[];
 }) => {
     const { clearData, updateFavorites } = useContext(DataContext);
+    const { user, setUser } = useContext(UserContext);
 
-    const [user, setUser] = useState<User | null | undefined>(undefined);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {

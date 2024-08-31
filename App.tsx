@@ -10,6 +10,7 @@ import { RecentProvider } from "./src/context/recent";
 import { RefreshProvider } from "./src/context/refresh";
 import { ServerProvider } from "./src/context/server";
 import { ThemeProvider } from "./src/context/theme";
+import { UserProvider } from "./src/context/user";
 import AppNavigation from "./src/navigation/appNavigation";
 import { darkTheme } from "./src/utils/theme";
 
@@ -19,22 +20,24 @@ export default function App() {
             <ThemeProvider>
                 <LanguageProvider>
                     <PaperProvider theme={darkTheme}>
-                        <ConstantsProvider>
-                            <RefreshProvider>
-                                <DataProvider>
-                                    <AuthProvider>
-                                        <ServerProvider>
-                                            <HistoryProvider>
-                                                <RecentProvider>
-                                                    <AppNavigation />
-                                                    <StatusBar style="auto" />
-                                                </RecentProvider>
-                                            </HistoryProvider>
-                                        </ServerProvider>
-                                    </AuthProvider>
-                                </DataProvider>
-                            </RefreshProvider>
-                        </ConstantsProvider>
+                        <UserProvider>
+                            <ConstantsProvider>
+                                <RefreshProvider>
+                                    <ServerProvider>
+                                        <DataProvider>
+                                            <AuthProvider>
+                                                <HistoryProvider>
+                                                    <RecentProvider>
+                                                        <AppNavigation />
+                                                        <StatusBar style="auto" />
+                                                    </RecentProvider>
+                                                </HistoryProvider>
+                                            </AuthProvider>
+                                        </DataProvider>
+                                    </ServerProvider>
+                                </RefreshProvider>
+                            </ConstantsProvider>
+                        </UserProvider>
                     </PaperProvider>
                 </LanguageProvider>
             </ThemeProvider>

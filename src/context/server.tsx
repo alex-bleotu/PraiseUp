@@ -1,7 +1,7 @@
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import { db } from "../../firebaseConfig";
-import { AuthContext } from "./auth";
+import { UserContext } from "./user";
 
 export const ServerContext = createContext<any>(null);
 
@@ -10,7 +10,8 @@ export const ServerProvider = ({
 }: {
     children: ReactNode | ReactNode[];
 }) => {
-    const { user, setUser } = useContext(AuthContext);
+    const { user, setUser } = useContext(UserContext);
+
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 

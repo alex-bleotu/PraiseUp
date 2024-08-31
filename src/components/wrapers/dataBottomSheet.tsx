@@ -157,10 +157,6 @@ const DataBottomSheet = ({
                                             !data.favorite
                                         );
 
-                                        if (data.favorite)
-                                            removeFavorite(data.id);
-                                        else addFavorite(data.id);
-
                                         setData(await getById(data.id));
 
                                         updateRefresh();

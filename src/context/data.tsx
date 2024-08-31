@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import { albums, songs } from "../../assets/bundle";
 import { RefreshContext } from "./refresh";
+import { ServerContext } from "./server";
 
 export const DataContext = createContext<any>(null);
 
@@ -39,6 +40,7 @@ export const DataProvider = ({
     children: ReactNode | ReactNode[];
 }) => {
     const { updateRefresh } = useContext(RefreshContext);
+    const { addFavorite, removeFavorite } = useContext(ServerContext);
 
     const [songIds, setSongIds] = useState<string[]>([]);
     const [albumIds, setAlbumIds] = useState<string[]>([]);
@@ -495,6 +497,12 @@ export const DataProvider = ({
             album.date = new Date().toISOString();
 
             await writeAlbum(album);
+        }
+
+        if (isFavorite) {
+            addFavorite(id);
+        } else {
+            removeFavorite(id);
         }
     };
 
