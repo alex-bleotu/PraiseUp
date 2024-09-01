@@ -8,23 +8,20 @@ import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
 import Text from "../components/wrapers/text";
 import { AlbumType, DataContext, SongType } from "../context/data";
+import { LoadingContext } from "../context/loading";
 import { RecentContext } from "../context/recent";
 import { RefreshContext } from "../context/refresh";
 import Loading from "./loading";
 
 const Home = ({ navigation }: { navigation: any }) => {
     const { recent } = useContext(RecentContext);
-    const {
-        loading,
-        getRandomSongs,
-        getFavoriteSongsAlbum,
-        getFavoriteAlbums,
-    } = useContext(DataContext);
+    const { getRandomSongs, getFavoriteSongsAlbum, getFavoriteAlbums } =
+        useContext(DataContext);
     const { refresh } = useContext(RefreshContext);
+    const { loading } = useContext(LoadingContext);
 
     const [randomSongs, setRandomSongs] = useState<SongType[] | null>(null);
     const [favoriteAlbums, setFavoriteAlbums] = useState<AlbumType[]>([]);
-    const [loadingAlbums, setLoadingAlbums] = useState(true);
 
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
     const [currentData, setCurrentData] = useState<SongType | AlbumType | null>(

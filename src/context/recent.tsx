@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, ReactNode, useContext, useEffect } from "react";
 import { AlbumType, DataContext, SongType } from "./data";
+import { LoadingContext } from "./loading";
 
 export const RecentContext = createContext<any>(null);
 
@@ -13,8 +14,8 @@ export const RecentProvider = ({
         null
     );
 
-    const { getRandom, loading, getPersonalAlbumsById } =
-        useContext(DataContext);
+    const { getRandom, getPersonalAlbumsById } = useContext(DataContext);
+    const { loading } = useContext(LoadingContext);
 
     useEffect(() => {
         if (loading) return;

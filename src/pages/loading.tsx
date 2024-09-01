@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { ActivityIndicator, StyleSheet } from "react-native";
+import { ActivityIndicator, Modal as RNModal, StyleSheet } from "react-native";
 import Background from "../components/wrapers/background";
 import { ThemeContext } from "../context/theme";
 
@@ -17,13 +17,19 @@ const Loading = ({ background = true }: { background?: boolean }) => {
         );
 
     return (
-        <Background center>
-            <ActivityIndicator
-                animating={true}
-                size={50}
-                color={theme.colors.primary}
-            />
-        </Background>
+        <RNModal
+            animationType="none"
+            transparent={true}
+            visible={true}
+            style={{ top: 100 }}>
+            <Background center>
+                <ActivityIndicator
+                    animating={true}
+                    size={50}
+                    color={theme.colors.primary}
+                />
+            </Background>
+        </RNModal>
     );
 };
 
