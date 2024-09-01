@@ -14,7 +14,8 @@ export const RecentProvider = ({
         null
     );
 
-    const { getRandom, getPersonalAlbumsById } = useContext(DataContext);
+    const { getRandom, getPersonalAlbumsById, getSongById, getAlbumById } =
+        useContext(DataContext);
     const { loading } = useContext(LoadingContext);
 
     useEffect(() => {
@@ -23,9 +24,12 @@ export const RecentProvider = ({
         const loadRecent = async () => {
             try {
                 const storedRecent = await AsyncStorage.getItem("recent");
+                let recent;
 
-                if (storedRecent !== null) setRecent(JSON.parse(storedRecent));
-                else setRecent(await getRandom(6));
+                if (storedRecent !== null) {
+                    recent = JSON.parse(storedRecent);
+                    await fullyUpdateRecent(recent);
+                } else setRecent(await getRandom(6));
             } catch (error) {
                 console.error("Failed to load recent from storage", error);
             }
@@ -92,6 +96,44 @@ export const RecentProvider = ({
         setRecent(newRecent);
     };
 
+    const fullyUpdateRecent = async (recent: (SongType | AlbumType)[]) => {
+        if (recent === null) return;
+
+        const newRecent = await Promise.all(
+            recent.map(async (item) => {
+                if (item.id.startsWith("P")) {
+                    const album = await getPersonalAlbumsById(item.id);
+
+                    if (album === null) return null;
+
+                    return album;
+                } else if (item.id.startsWith("S")) {
+                    const song = await getSongById(item.id);
+
+                    if (song === null) return null;
+
+                    return song;
+                } else if (item.id.startsWith("A")) {
+                    const album = await getAlbumById(item.id);
+
+                    if (album === null) return null;
+
+                    return album;
+                }
+
+                return item;
+            })
+        ).then((items) => items.filter((item: any) => item !== null));
+
+        while (newRecent.length < 6) {
+            const newSong = (await getRandom(1))[0];
+            if (newRecent.find((item: any) => item.id === newSong.id)) continue;
+            newRecent.push(newSong);
+        }
+
+        setRecent(newRecent);
+    };
+
     return (
         <RecentContext.Provider
             value={{
@@ -100,6 +142,7 @@ export const RecentProvider = ({
                 removeFromRecent,
                 deleteRecent,
                 updateRecent,
+                fullyUpdateRecent,
             }}>
             {children}
         </RecentContext.Provider>

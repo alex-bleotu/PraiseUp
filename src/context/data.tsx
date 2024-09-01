@@ -56,7 +56,7 @@ export const DataProvider = ({
         checkUpdates,
         saveCover,
     } = useContext(ServerContext);
-    const { loading, setLoading } = useContext(LoadingContext);
+    const { setLoading } = useContext(LoadingContext);
 
     const [songIds, setSongIds] = useState<string[]>([]);
     const [albumIds, setAlbumIds] = useState<string[]>([]);
@@ -357,14 +357,86 @@ export const DataProvider = ({
                                 | "personal",
                         });
                 }
+
+            for (let i = 0; i < data.updated.length; i++) {
+                if (data.updated[i].startsWith("S")) {
+                    const song = await getSongById(data.updated[i]);
+
+                    const newSong = data.songs.find(
+                        (s: SongType) => s.id === data.updated[i]
+                    );
+
+                    if (newSong.cover && !coversList.includes(newSong.cover)) {
+                        const uri = await saveCover(newSong.cover);
+
+                        await writeSong(
+                            {
+                                ...song,
+                                ...newSong,
+                                date: new Date().toISOString(),
+                                cover: uri,
+                            },
+                            false
+                        );
+                    } else
+                        await writeSong(
+                            {
+                                ...song,
+                                ...newSong,
+                                date: new Date().toISOString(),
+                            },
+                            false
+                        );
+                } else if (data.updated[i].startsWith("A")) {
+                    const album = await getAlbumById(data.updated[i]);
+
+                    const newAlbum = data.albums.find(
+                        (a: AlbumType) => a.id === data.updated[i]
+                    );
+
+                    if (
+                        newAlbum.cover &&
+                        !coversList.includes(newAlbum.cover)
+                    ) {
+                        const uri = await saveCover(newAlbum.cover);
+
+                        await writeAlbum(
+                            {
+                                ...album,
+                                ...newAlbum,
+                                date: new Date().toISOString(),
+                                cover: uri,
+                            },
+                            false
+                        );
+                    } else
+                        await writeAlbum(
+                            {
+                                ...album,
+                                ...newAlbum,
+                                date: new Date().toISOString(),
+                            },
+                            false
+                        );
+                }
+            }
+
+            for (let i = 0; i < data.deleted.length; i++) {
+                if (data.deleted[i].startsWith("S"))
+                    await removeId(data.deleted[i]);
+                else if (data.deleted[i].startsWith("A"))
+                    await removeId(data.deleted[i]);
+            }
+
+            updateRefresh();
         }
     };
 
-    const writeSong = async (song: SongType) => {
+    const writeSong = async (song: SongType, update = true) => {
         try {
             await AsyncStorage.setItem(song.id, JSON.stringify(song));
 
-            if (!songIds.find((id) => id === song.id))
+            if (update && !songIds.find((id) => id === song.id))
                 setSongIds((prevArray) => [...prevArray, song.id]);
 
             console.log("Wrote song file", song.id);
@@ -373,7 +445,7 @@ export const DataProvider = ({
         }
     };
 
-    const writeAlbum = async (album: AlbumType) => {
+    const writeAlbum = async (album: AlbumType, update = true) => {
         try {
             if (album.songs.length >= 3 && !Array.isArray(album.cover)) {
                 const songs = album.songs.slice(0, 4);
@@ -395,7 +467,7 @@ export const DataProvider = ({
 
             await AsyncStorage.setItem(album.id, JSON.stringify(album));
 
-            if (!albumIds.find((id) => id === album.id))
+            if (update && !albumIds.find((id) => id === album.id))
                 setAlbumIds((prevArray) => [...prevArray, album.id]);
 
             console.log("Wrote album file", album.id);
@@ -509,7 +581,11 @@ export const DataProvider = ({
 
     const removeId = async (id: string) => {
         try {
-            await AsyncStorage.removeItem(id);
+            try {
+                await AsyncStorage.removeItem(id);
+            } catch (error) {
+                console.error("Error deleting song file:", error);
+            }
 
             if (id.includes("S")) {
                 setSongIds((prevArray) =>
