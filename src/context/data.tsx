@@ -10,6 +10,8 @@ import React, {
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import bundle from "../../assets/bundle.json";
+import { coversList } from "../utils/covers";
+import { LoadingContext } from "./loading";
 import { RefreshContext } from "./refresh";
 import { ServerContext } from "./server";
 
@@ -52,12 +54,13 @@ export const DataProvider = ({
         deletePersonalAlbum: deletePersonalAlbumServer,
         getPersonalAlbum: getPersonalAlbumServer,
         checkUpdates,
+        saveCover,
     } = useContext(ServerContext);
+    const { loading, setLoading } = useContext(LoadingContext);
 
     const [songIds, setSongIds] = useState<string[]>([]);
     const [albumIds, setAlbumIds] = useState<string[]>([]);
     const [personalAlbumsIds, setPersonalAlbumsIds] = useState<string[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         setLoading(true);
@@ -213,25 +216,57 @@ export const DataProvider = ({
         const data = await checkUpdates();
 
         if (data) {
-            for (let i = 0; i < data.songs.length; i++)
-                await writeSong({
-                    ...data.songs[i],
-                    favorite: false,
-                    date: new Date().toISOString(),
-                    type: data.songs[i].type as "song" | "extra",
-                });
+            for (let i = 0; i < data.songs.length; i++) {
+                const cover = data.songs[i].cover;
 
-            for (let i = 0; i < data.albums.length; i++)
-                await writeAlbum({
-                    ...data.albums[i],
-                    favorite: false,
-                    date: new Date().toISOString(),
-                    type: data.albums[i].type as
-                        | "album"
-                        | "extra"
-                        | "favorite"
-                        | "personal",
-                });
+                if (cover && !coversList.includes(cover)) {
+                    const uri = await saveCover(cover);
+
+                    await writeSong({
+                        ...data.songs[i],
+                        cover: uri,
+                        favorite: false,
+                        date: new Date().toISOString(),
+                        type: data.songs[i].type as "song" | "extra",
+                    });
+                } else
+                    await writeSong({
+                        ...data.songs[i],
+                        favorite: false,
+                        date: new Date().toISOString(),
+                        type: data.songs[i].type as "song" | "extra",
+                    });
+            }
+
+            for (let i = 0; i < data.albums.length; i++) {
+                const cover = data.albums[i].cover;
+
+                if (cover && !coversList.includes(cover)) {
+                    const uri = await saveCover(cover);
+
+                    await writeAlbum({
+                        ...data.albums[i],
+                        cover: uri,
+                        favorite: false,
+                        date: new Date().toISOString(),
+                        type: data.albums[i].type as
+                            | "album"
+                            | "extra"
+                            | "favorite"
+                            | "personal",
+                    });
+                } else
+                    await writeAlbum({
+                        ...data.albums[i],
+                        favorite: false,
+                        date: new Date().toISOString(),
+                        type: data.albums[i].type as
+                            | "album"
+                            | "extra"
+                            | "favorite"
+                            | "personal",
+                    });
+            }
         } else {
             for (let i = 0; i < bundle.songs.length; i++)
                 await writeSong({
@@ -270,26 +305,58 @@ export const DataProvider = ({
 
         if (data) {
             for (let i = 0; i < data.songs.length; i++)
-                if (!songIds.find((id) => id === data.songs[i].id))
-                    await writeSong({
-                        ...data.songs[i],
-                        favorite: false,
-                        date: new Date().toISOString(),
-                        type: data.songs[i].type as "song" | "extra",
-                    });
+                if (!songIds.find((id) => id === data.songs[i].id)) {
+                    const cover = data.songs[i].cover;
+
+                    if (cover && !coversList.includes(cover)) {
+                        const uri = await saveCover(cover);
+
+                        await writeSong({
+                            ...data.songs[i],
+                            cover: uri,
+                            favorite: false,
+                            date: new Date().toISOString(),
+                            type: data.songs[i].type as "song" | "extra",
+                        });
+                    } else
+                        await writeSong({
+                            ...data.songs[i],
+                            favorite: false,
+                            date: new Date().toISOString(),
+                            type: data.songs[i].type as "song" | "extra",
+                        });
+                }
 
             for (let i = 0; i < data.albums.length; i++)
-                if (!albumIds.find((id) => id === data.albums[i].id))
-                    await writeAlbum({
-                        ...data.albums[i],
-                        favorite: false,
-                        date: new Date().toISOString(),
-                        type: data.albums[i].type as
-                            | "album"
-                            | "extra"
-                            | "favorite"
-                            | "personal",
-                    });
+                if (!albumIds.find((id) => id === data.albums[i].id)) {
+                    const cover = data.albums[i].cover;
+
+                    if (cover && !coversList.includes(cover)) {
+                        const uri = await saveCover(cover);
+
+                        await writeAlbum({
+                            ...data.albums[i],
+                            cover: uri,
+                            favorite: false,
+                            date: new Date().toISOString(),
+                            type: data.albums[i].type as
+                                | "album"
+                                | "extra"
+                                | "favorite"
+                                | "personal",
+                        });
+                    } else
+                        await writeAlbum({
+                            ...data.albums[i],
+                            favorite: false,
+                            date: new Date().toISOString(),
+                            type: data.albums[i].type as
+                                | "album"
+                                | "extra"
+                                | "favorite"
+                                | "personal",
+                        });
+                }
         }
     };
 
@@ -911,7 +978,6 @@ export const DataProvider = ({
             value={{
                 songIds,
                 albumIds,
-                loading,
                 updateDate,
                 readSong,
                 readAlbum,

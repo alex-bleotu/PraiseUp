@@ -1,3 +1,4 @@
+import * as FileSystem from "expo-file-system";
 import { User } from "firebase/auth";
 import {
     arrayRemove,
@@ -247,6 +248,25 @@ export const ServerProvider = ({
         }
     };
 
+    const saveCover = async (coverName: string) => {
+        try {
+            const storage = getStorage(app, "gs://praiseup-37c47.appspot.com");
+
+            const fileRef = ref(storage, `covers/${coverName}.png`);
+
+            const url = await getDownloadURL(fileRef);
+
+            const localPath = `${FileSystem.documentDirectory}${coverName}`;
+
+            const { uri } = await FileSystem.downloadAsync(url, localPath);
+
+            return uri;
+        } catch (err: any) {
+            console.error("Error fetching cover: ", err);
+            return null;
+        }
+    };
+
     return (
         <ServerContext.Provider
             value={{
@@ -261,6 +281,7 @@ export const ServerProvider = ({
                 deletePersonalAlbum,
                 getPersonalAlbum,
                 checkUpdates,
+                saveCover,
             }}>
             {children}
         </ServerContext.Provider>

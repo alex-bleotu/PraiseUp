@@ -6,6 +6,7 @@ import { ConstantsProvider } from "./src/context/constants";
 import { DataProvider } from "./src/context/data";
 import { HistoryProvider } from "./src/context/history";
 import { LanguageProvider } from "./src/context/language";
+import { LoadingProvider } from "./src/context/loading";
 import { RecentProvider } from "./src/context/recent";
 import { RefreshProvider } from "./src/context/refresh";
 import { ServerProvider } from "./src/context/server";
@@ -18,28 +19,30 @@ export default function App() {
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <ThemeProvider>
-                <LanguageProvider>
-                    <PaperProvider theme={darkTheme}>
-                        <UserProvider>
-                            <ConstantsProvider>
-                                <RefreshProvider>
-                                    <ServerProvider>
-                                        <DataProvider>
-                                            <AuthProvider>
-                                                <HistoryProvider>
-                                                    <RecentProvider>
-                                                        <AppNavigation />
-                                                        <StatusBar style="auto" />
-                                                    </RecentProvider>
-                                                </HistoryProvider>
-                                            </AuthProvider>
-                                        </DataProvider>
-                                    </ServerProvider>
-                                </RefreshProvider>
-                            </ConstantsProvider>
-                        </UserProvider>
-                    </PaperProvider>
-                </LanguageProvider>
+                <LoadingProvider>
+                    <LanguageProvider>
+                        <PaperProvider theme={darkTheme}>
+                            <UserProvider>
+                                <ConstantsProvider>
+                                    <RefreshProvider>
+                                        <ServerProvider>
+                                            <DataProvider>
+                                                <AuthProvider>
+                                                    <HistoryProvider>
+                                                        <RecentProvider>
+                                                            <AppNavigation />
+                                                            <StatusBar style="auto" />
+                                                        </RecentProvider>
+                                                    </HistoryProvider>
+                                                </AuthProvider>
+                                            </DataProvider>
+                                        </ServerProvider>
+                                    </RefreshProvider>
+                                </ConstantsProvider>
+                            </UserProvider>
+                        </PaperProvider>
+                    </LanguageProvider>
+                </LoadingProvider>
             </ThemeProvider>
         </GestureHandlerRootView>
     );

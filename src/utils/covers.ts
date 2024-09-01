@@ -6,8 +6,12 @@ const covers = {
     default4: require("../../assets/images/covers/4.png"),
 };
 
+export const coversList = Object.keys(covers);
+
 export const getImage = (cover: string | null) => {
     if (cover === null || cover === "none") return covers.default;
+
+    if (cover.includes("file://")) return { uri: cover };
 
     return covers[cover as keyof typeof covers] || covers.default;
 };
