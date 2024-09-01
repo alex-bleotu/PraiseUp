@@ -1,0 +1,21 @@
+import React, { createContext, ReactNode, useState } from "react";
+
+export const LoadingContext = createContext<any>(null);
+
+export const LoadingProvider = ({
+    children,
+}: {
+    children: ReactNode | ReactNode[];
+}) => {
+    const [loading, setLoading] = useState<boolean>(true);
+
+    return (
+        <LoadingContext.Provider
+            value={{
+                loading,
+                setLoading,
+            }}>
+            {children}
+        </LoadingContext.Provider>
+    );
+};
