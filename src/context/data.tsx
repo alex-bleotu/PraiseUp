@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
-import { albums, songs } from "../../assets/bundle";
+import bundle from "../../assets/bundle.json";
 import { RefreshContext } from "./refresh";
 import { ServerContext } from "./server";
 
@@ -51,6 +51,7 @@ export const DataProvider = ({
         updatePersonalAlbum: updatePersonalAlbumServer,
         deletePersonalAlbum: deletePersonalAlbumServer,
         getPersonalAlbum: getPersonalAlbumServer,
+        checkUpdates,
     } = useContext(ServerContext);
 
     const [songIds, setSongIds] = useState<string[]>([]);
@@ -87,11 +88,7 @@ export const DataProvider = ({
             if (loaded === null) {
                 await AsyncStorage.clear();
 
-                for (let i = 0; i < songs.length; i++)
-                    await writeSong(songs[i]);
-
-                for (let i = 0; i < albums.length; i++)
-                    await writeAlbum(albums[i]);
+                await addData();
 
                 await AsyncStorage.setItem("loaded", "true");
             }
@@ -104,26 +101,33 @@ export const DataProvider = ({
                 "personalAlbumsIds"
             );
 
+            let sortedSongs: string[] = [];
+            let sortedAlbums: string[] = [];
+
             if (storedSongs !== null) {
-                setSongIds(
-                    JSON.parse(storedSongs).sort((a: string, b: string) => {
+                sortedSongs = JSON.parse(storedSongs).sort(
+                    (a: string, b: string) => {
                         const aNum = parseInt(a.slice(1));
                         const bNum = parseInt(b.slice(1));
 
                         return aNum - bNum;
-                    })
+                    }
                 );
+
+                setSongIds(sortedSongs);
             }
 
             if (storedAlbums !== null) {
-                setAlbumIds(
-                    JSON.parse(storedAlbums).sort((a: string, b: string) => {
+                sortedAlbums = JSON.parse(storedAlbums).sort(
+                    (a: string, b: string) => {
                         const aNum = parseInt(a.slice(1));
                         const bNum = parseInt(b.slice(1));
 
                         return aNum - bNum;
-                    })
+                    }
                 );
+
+                setAlbumIds(sortedAlbums);
             }
 
             if (storedPersonalAlbums !== null) {
@@ -138,13 +142,24 @@ export const DataProvider = ({
                     )
                 );
             }
+
+            return { sortedSongs, sortedAlbums };
+        };
+
+        const checkForUpdates = async (
+            songs: string[] = songIds,
+            albums: string[] = albumIds
+        ) => {
+            await updateData(songs, albums);
         };
 
         const initialize = async () => {
             // await clear();
 
             await firstLoad();
-            await readLists();
+            const lists = await readLists();
+
+            await checkForUpdates(lists.sortedSongs, lists.sortedAlbums);
 
             setLoading(false);
         };
@@ -193,6 +208,90 @@ export const DataProvider = ({
 
         writePersonalAlbumsIds();
     }, [personalAlbumsIds]);
+
+    const addData = async () => {
+        const data = await checkUpdates();
+
+        if (data) {
+            for (let i = 0; i < data.songs.length; i++)
+                await writeSong({
+                    ...data.songs[i],
+                    favorite: false,
+                    date: new Date().toISOString(),
+                    type: data.songs[i].type as "song" | "extra",
+                });
+
+            for (let i = 0; i < data.albums.length; i++)
+                await writeAlbum({
+                    ...data.albums[i],
+                    favorite: false,
+                    date: new Date().toISOString(),
+                    type: data.albums[i].type as
+                        | "album"
+                        | "extra"
+                        | "favorite"
+                        | "personal",
+                });
+        } else {
+            for (let i = 0; i < bundle.songs.length; i++)
+                await writeSong({
+                    ...bundle.songs[i],
+                    favorite: false,
+                    date: new Date().toISOString(),
+                    type: bundle.songs[i].type as "song" | "extra",
+                });
+
+            for (let i = 0; i < bundle.albums.length; i++)
+                await writeAlbum({
+                    ...bundle.albums[i],
+                    favorite: false,
+                    date: new Date().toISOString(),
+                    type: bundle.albums[i].type as
+                        | "album"
+                        | "extra"
+                        | "favorite"
+                        | "personal",
+                });
+        }
+    };
+
+    const resetData = async () => {
+        for (let i = 0; i < songIds.length; i++)
+            setFavorite(songIds[i], false, false);
+        for (let i = 0; i < albumIds.length; i++)
+            setFavorite(albumIds[i], false, false);
+    };
+
+    const updateData = async (
+        songIds: string[] = [],
+        albumIds: string[] = []
+    ) => {
+        const data = await checkUpdates();
+
+        if (data) {
+            for (let i = 0; i < data.songs.length; i++)
+                if (!songIds.find((id) => id === data.songs[i].id))
+                    await writeSong({
+                        ...data.songs[i],
+                        favorite: false,
+                        date: new Date().toISOString(),
+                        type: data.songs[i].type as "song" | "extra",
+                    });
+
+            for (let i = 0; i < data.albums.length; i++)
+                if (!albumIds.find((id) => id === data.albums[i].id))
+                    await writeAlbum({
+                        ...data.albums[i],
+                        favorite: false,
+                        date: new Date().toISOString(),
+                        type: data.albums[i].type as
+                            | "album"
+                            | "extra"
+                            | "favorite"
+                            | "personal",
+                    });
+        }
+    };
 
     const writeSong = async (song: SongType) => {
         try {
@@ -518,7 +617,11 @@ export const DataProvider = ({
         return favoriteAlbums;
     };
 
-    const setFavorite = async (id: string, isFavorite: boolean) => {
+    const setFavorite = async (
+        id: string,
+        isFavorite: boolean,
+        update: boolean = true
+    ) => {
         if (id.includes("S")) {
             const song = await getSongById(id);
             song.favorite = isFavorite;
@@ -533,9 +636,9 @@ export const DataProvider = ({
             await writeAlbum(album);
         }
 
-        if (isFavorite) {
+        if (isFavorite && update) {
             addFavorite(id);
-        } else {
+        } else if (update) {
             removeFavorite(id);
         }
     };
@@ -731,9 +834,7 @@ export const DataProvider = ({
             "personalAlbumsIds",
         ]);
 
-        for (let i = 0; i < songs.length; i++) await writeSong(songs[i]);
-
-        for (let i = 0; i < albums.length; i++) await writeAlbum(albums[i]);
+        resetData();
 
         setLoading(false);
     };

@@ -7,8 +7,9 @@ import {
     getDoc,
     updateDoc,
 } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import { db } from "../../firebaseConfig";
+import { app, db } from "../../firebaseConfig";
 import { UserContext } from "./user";
 
 export const ServerContext = createContext<any>(null);
@@ -225,6 +226,27 @@ export const ServerProvider = ({
         }
     };
 
+    const checkUpdates = async () => {
+        console.log("Checking for updates...");
+
+        try {
+            const storage = getStorage(app, "gs://praiseup-37c47.appspot.com");
+
+            const fileRef = ref(storage, "bundle.json");
+
+            const url = await getDownloadURL(fileRef);
+
+            const response = await fetch(url);
+
+            const data = await response.json();
+
+            return data;
+        } catch (err: any) {
+            console.error("Error checking for updates: ", err);
+            return null;
+        }
+    };
+
     return (
         <ServerContext.Provider
             value={{
@@ -238,6 +260,7 @@ export const ServerProvider = ({
                 getPersonalAlbumsList,
                 deletePersonalAlbum,
                 getPersonalAlbum,
+                checkUpdates,
             }}>
             {children}
         </ServerContext.Provider>
