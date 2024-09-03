@@ -298,14 +298,16 @@ export const DataProvider = ({
     };
 
     const updateData = async (
-        songIds: string[] = [],
-        albumIds: string[] = []
+        songs: string[] = songIds,
+        albums: string[] = albumIds
     ) => {
+        console.log("Checking for updates...");
+
         const data = await checkUpdates();
 
         if (data) {
             for (let i = 0; i < data.songs.length; i++)
-                if (!songIds.find((id) => id === data.songs[i].id)) {
+                if (!songs.find((id) => id === data.songs[i].id)) {
                     const cover = data.songs[i].cover;
 
                     if (cover && !coversList.includes(cover)) {
@@ -328,7 +330,7 @@ export const DataProvider = ({
                 }
 
             for (let i = 0; i < data.albums.length; i++)
-                if (!albumIds.find((id) => id === data.albums[i].id)) {
+                if (!albums.find((id) => id === data.albums[i].id)) {
                     const cover = data.albums[i].cover;
 
                     if (cover && !coversList.includes(cover)) {
@@ -962,8 +964,6 @@ export const DataProvider = ({
     };
 
     const clearData = async () => {
-        setLoading(true);
-
         for (let i = 0; i < personalAlbumsIds.length; i++)
             await AsyncStorage.removeItem(personalAlbumsIds[i]);
 
@@ -977,9 +977,8 @@ export const DataProvider = ({
             "personalAlbumsIds",
         ]);
 
-        resetData();
-
-        setLoading(false);
+        await resetData();
+        await updateData();
     };
 
     const getPersonalAlbumsBySong = async (song: SongType) => {
@@ -1086,6 +1085,7 @@ export const DataProvider = ({
                 setPersonalAlbumsIds,
                 syncPersonalAlbums,
                 syncPersonalAlbumsIds,
+                updateData,
             }}>
             {children}
         </DataContext.Provider>

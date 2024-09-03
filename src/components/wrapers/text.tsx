@@ -10,6 +10,7 @@ interface TextProps {
     style?: any;
     center?: boolean;
     upper?: boolean;
+    fontFamily?: string;
 }
 
 const Text = ({
@@ -20,6 +21,7 @@ const Text = ({
     style,
     center,
     upper = false,
+    fontFamily,
 }: TextProps) => {
     const { theme } = useContext(ThemeContext);
 
@@ -32,6 +34,7 @@ const Text = ({
                 color: color ? color : theme.colors.text,
                 textAlign: center ? "center" : "left",
                 textTransform: upper ? "uppercase" : "none",
+                fontFamily: fontFamily ? fontFamily : "Roboto",
             }}>
             {children}
         </Ts>
