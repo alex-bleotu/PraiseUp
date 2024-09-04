@@ -5,7 +5,6 @@ import {
 import { t } from "@lingui/macro";
 import React, { useContext, useState } from "react";
 import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
-// import { SelectList } from "react-native-dropdown-select-list";
 import AnimatedTouchable from "../components/wrapers/animatedTouchable";
 import BottomSheetModal from "../components/wrapers/bottomSheetModal";
 import Button from "../components/wrapers/button";
@@ -42,6 +41,8 @@ const chordChanger = (
     steps: number,
     useBrackets: boolean = true
 ): string => {
+    if (text === null) return "C";
+
     const regex = useBrackets
         ? /^\[([A-G]#?[a-zA-Z0-9]*)\]$/
         : /^([A-G]#?[a-zA-Z0-9]*)$/;
@@ -77,6 +78,19 @@ const renderLyrics = (
     fontSize: number = 16,
     steps: number = 0
 ) => {
+    const length = {
+        21: 23,
+        20: 25,
+        19: 26,
+        18: 28,
+        17: 29,
+        16: 31,
+        15: 33,
+        14: 36,
+        13: 39,
+        12: 40,
+    };
+
     const lines = lyrics.split("\n");
 
     return lines.map((line, index) => {
@@ -87,16 +101,26 @@ const renderLyrics = (
 
             let chordsLine = "";
             let lyricsLine = "";
+            let lastChordLength = 0;
 
             parts.forEach((part) => {
                 if (part.startsWith("[") && part.endsWith("]")) {
                     const updatedChord = chordChanger(part, steps);
-                    chordsLine += updatedChord.padEnd(
-                        part.length + part.length - 2,
-                        " "
-                    );
+                    chordsLine += updatedChord;
+                    lastChordLength = updatedChord.length;
                 } else {
-                    chordsLine += " ".repeat(part.length);
+                    const chordLength = chordsLine.length;
+                    const lyricsLength = lyricsLine.length;
+
+                    if (chordLength < lyricsLength) {
+                        chordsLine += " ".repeat(lyricsLength - chordLength);
+                    }
+
+                    chordsLine += " ".repeat(
+                        part.length - lastChordLength > 0
+                            ? part.length - lastChordLength
+                            : 0
+                    );
                     lyricsLine += part;
                 }
             });
@@ -113,10 +137,14 @@ const renderLyrics = (
                         ]}
                         bold
                         color={theme.colors.danger}
+                        fontFamily="monospace"
                         fontSize={fontSize}>
                         {chordsLine}
                     </Text>
-                    <Text style={styles.lyricsLine} fontSize={fontSize}>
+                    <Text
+                        style={styles.lyricsLine}
+                        fontSize={fontSize}
+                        fontFamily="monospace">
                         {lyricsLine}
                     </Text>
                 </View>
