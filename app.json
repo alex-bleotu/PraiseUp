@@ -24,7 +24,18 @@
         "web": {
             "favicon": "./assets/favicon.png"
         },
-        "plugins": ["expo-localization"],
+        "plugins": [
+            "expo-localization",
+            [
+                "expo-font",
+                {
+                    "fonts": [
+                        "./assets/fonts/patrickHand.ttf",
+                        "./assets/fonts/robotoMono.ttf"
+                    ]
+                }
+            ]
+        ],
         "extra": {
             "eas": {
                 "projectId": "ca9701e5-9bb2-4a8c-9e8a-2bd54c938e0b"

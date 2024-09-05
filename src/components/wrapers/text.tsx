@@ -1,3 +1,4 @@
+import { useFonts } from "expo-font";
 import React, { ReactNode, useContext } from "react";
 import { StyleSheet, Text as Ts } from "react-native";
 import { ThemeContext } from "../../context/theme";
@@ -10,7 +11,7 @@ interface TextProps {
     style?: any;
     center?: boolean;
     upper?: boolean;
-    fontFamily?: string;
+    fontFamily?: "PatrickHand" | "monospace" | "Roboto";
 }
 
 const Text = ({
@@ -24,6 +25,10 @@ const Text = ({
     fontFamily,
 }: TextProps) => {
     const { theme } = useContext(ThemeContext);
+
+    const [loaded, error] = useFonts({
+        PatrickHand: require("../../../assets/fonts/patrickHand.ttf"),
+    });
 
     return (
         <Ts

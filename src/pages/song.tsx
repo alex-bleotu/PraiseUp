@@ -63,7 +63,7 @@ const chordChanger = (
     const newIndex = (rootIndex + steps + chords.length) % chords.length;
     const newChord = chords[newIndex] + suffix;
 
-    return useBrackets ? `[${newChord}]` : newChord;
+    return newChord;
 };
 
 const getStepsFromC = (chord: string) => {
@@ -78,75 +78,77 @@ const renderLyrics = (
     fontSize: number = 16,
     steps: number = 0
 ) => {
-    const length = {
-        21: 23,
-        20: 25,
-        19: 26,
-        18: 28,
-        17: 29,
-        16: 31,
-        15: 33,
-        14: 36,
-        13: 39,
-        12: 40,
-    };
-
     const lines = lyrics.split("\n");
 
     return lines.map((line, index) => {
         const hasChords = line.match(/\[.*?\]/);
+        const isEmptyLine = line.trim() === "";
+
+        if (isEmptyLine && showChords) {
+            console.log("empty line");
+            return <View style={styles.emptyLine} />;
+        }
 
         if (hasChords && showChords) {
             const parts = line.split(/(\[.*?\])/g);
 
-            let chordsLine = "";
-            let lyricsLine = "";
-            let lastChordLength = 0;
+            let chordsLine: string[] = ["."];
+            let lyricsLine: string[] = [];
 
             parts.forEach((part) => {
                 if (part.startsWith("[") && part.endsWith("]")) {
                     const updatedChord = chordChanger(part, steps);
-                    chordsLine += updatedChord;
-                    lastChordLength = updatedChord.length;
-                } else {
-                    const chordLength = chordsLine.length;
-                    const lyricsLength = lyricsLine.length;
-
-                    if (chordLength < lyricsLength) {
-                        chordsLine += " ".repeat(lyricsLength - chordLength);
-                    }
-
-                    chordsLine += " ".repeat(
-                        part.length - lastChordLength > 0
-                            ? part.length - lastChordLength
-                            : 0
-                    );
-                    lyricsLine += part;
-                }
+                    chordsLine.push(updatedChord);
+                } else lyricsLine.push(part);
             });
 
             return (
                 <View key={index} style={styles.line}>
-                    <Text
-                        style={[
-                            styles.chordsLine,
-                            {
-                                marginBottom: -21 + fontSize,
-                                marginTop: -19 + fontSize,
-                            },
-                        ]}
-                        bold
-                        color={theme.colors.danger}
-                        fontFamily="monospace"
-                        fontSize={fontSize}>
-                        {chordsLine}
-                    </Text>
-                    <Text
-                        style={styles.lyricsLine}
-                        fontSize={fontSize}
-                        fontFamily="monospace">
-                        {lyricsLine}
-                    </Text>
+                    <View style={styles.chordsSegmentsLine}>
+                        {lyricsLine.map((lyric, index) => {
+                            return (
+                                <View key={index}>
+                                    <View
+                                        style={
+                                            chordsLine[index] !== "."
+                                                ? [
+                                                      styles.chord,
+                                                      {
+                                                          backgroundColor:
+                                                              theme.colors
+                                                                  .primary,
+                                                      },
+                                                  ]
+                                                : {
+                                                      alignSelf: "flex-start",
+                                                  }
+                                        }>
+                                        <Text
+                                            style={styles.lyricsLine}
+                                            bold
+                                            color={
+                                                chordsLine[index] !== "."
+                                                    ? theme.colors.textInverted
+                                                    : theme.colors.background
+                                            }
+                                            fontSize={fontSize}>
+                                            {chordsLine[index]}
+                                        </Text>
+                                    </View>
+                                    <Text
+                                        style={[
+                                            styles.lyricsLine,
+                                            {
+                                                marginTop: "auto",
+                                            },
+                                        ]}
+                                        fontSize={fontSize}>
+                                        {lyric}
+                                    </Text>
+                                </View>
+                            );
+                        })}
+                    </View>
                 </View>
             );
         } else {
@@ -680,5 +682,19 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         margin: 10,
+    },
+    chordsSegmentsLine: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+    },
+    chord: {
+        borderTopRightRadius: 6,
+        borderBottomRightRadius: 6,
+        borderTopLeftRadius: 6,
+        paddingHorizontal: 6,
+        alignSelf: "flex-start",
+    },
+    emptyLine: {
+        marginTop: 50,
     },
 });
