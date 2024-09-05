@@ -6,6 +6,7 @@
             "title": "Song 1",
             "artist": "Artist Name",
             "cover": "default1",
+            "order": null,
             "initialChord": "C",
             "lyrics": "[Am]I took a step into the [G]night,\nWith [C]dreams that glimmered in the [F]light,\nA [Am]path unknown, a heart so [G]bold,\nSeeking [C]stories yet un[F]told.\n\nOh, my [C]journey, my [G]tale to [Am]weave,\nThrough the [F]darkness, I be[C]lieve,\nWith every [G]step, a new [Am]sunrise,\nIn this [F]world of endless [C]skies.\n\n[Am]Mountains high and [G]valleys low,\nIn the [C]rain and in the [F]snow,\nEvery [Am]challenge, every [G]fear,\nMakes the [C]purpose crystal [F]clear.\n\nOh, my [C]journey, my [G]tale to [Am]weave,\nThrough the [F]darkness, I be[C]lieve,\nWith every [G]step, a new [Am]sunrise,\nIn this [F]world of endless [C]skies.\n\nAnd if I [Am]fall, I'll rise a[G]gain,\nFor every [C]loss, a chance to [F]gain,\nWith [Am]courage as my [G]guiding star,\nI'll [C]travel near, I'll travel [F]far.\n\nOh, my [C]journey, my [G]tale to [Am]weave,\nThrough the [F]darkness, I be[C]lieve,\nWith every [G]step, a new [Am]sunrise,\nIn this [F]world of endless [C]skies.\nSo here's to [Am]paths that lie a[G]head,\nTo every [C]word we've yet to [F]be said,\nWith [Am]hope and love, and [G]dreams so wide,\nWe'll [C]find our place, and there a[F]bide."
         },
@@ -15,6 +16,7 @@
             "title": "Song 2",
             "artist": "Artist Name",
             "cover": "default2",
+            "order": null,
             "initialChord": "E",
             "lyrics": "[Am]I took a step into the [G]night,\nWith [C]dreams that glimmered in the [F]light,\nA [Am]path unknown, a heart so [G]bold,\nSeeking [C]stories yet un[F]told.\n\nOh, my [C]journey, my [G]tale to [Am]weave,\nThrough the [F]darkness, I be[C]lieve,\nWith every [G]step, a new [Am]sunrise,\nIn this [F]world of endless [C]skies.\n\n[Am]Mountains high and [G]valleys low,\nIn the [C]rain and in the [F]snow,\nEvery [Am]challenge, every [G]fear,\nMakes the [C]purpose crystal [F]clear.\n\nOh, my [C]journey, my [G]tale to [Am]weave,\nThrough the [F]darkness, I be[C]lieve,\nWith every [G]step, a new [Am]sunrise,\nIn this [F]world of endless [C]skies.\n\nAnd if I [Am]fall, I'll rise a[G]gain,\nFor every [C]loss, a chance to [F]gain,\nWith [Am]courage as my [G]guiding star,\nI'll [C]travel near, I'll travel [F]far.\n\nOh, my [C]journey, my [G]tale to [Am]weave,\nThrough the [F]darkness, I be[C]lieve,\nWith every [G]step, a new [Am]sunrise,\nIn this [F]world of endless [C]skies.\nSo here's to [Am]paths that lie a[G]head,\nTo every [C]word we've yet to [F]be said,\nWith [Am]hope and love, and [G]dreams so wide,\nWe'll [C]find our place, and there a[F]bide."
         },
@@ -24,6 +26,7 @@
             "title": "Song 3",
             "artist": "Artist Name",
             "cover": "default3",
+            "order": null,
             "initialChord": null,
             "lyrics": "I took a step into the night,\nWith dreams that glimmered in the light,\nA path unknown, a heart so bold,\nSeeking stories yet untold.\n\nOh, my journey, my tale to weave,\nThrough the darkness, I believe,\nWith every step, a new sunrise,\nIn this world of endless skies.\n\nMountains high and valleys low,\nIn the rain and in the snow,\nEvery challenge, every fear,\nMakes the purpose crystal clear.\n\nOh, my journey, my tale to weave,\nThrough the darkness, I believe,\nWith every step, a new sunrise,\nIn this world of endless skies.\n\nAnd if I fall, I'll rise again,\nFor every loss, a chance to gain,\nWith courage as my guiding star,\nI'll travel near, I'll travel far.\n\nOh, my journey, my tale to weave,\nThrough the darkness, I believe,\nWith every step, a new sunrise,\nIn this world of endless skies.\nSo here's to paths that lie ahead,\nTo every word we've yet to be said,\nWith hope and love, and dreams so wide,\nWe'll find our place, and there abide."
         },
@@ -33,6 +36,7 @@
             "title": "Song 4",
             "artist": "Artist Name",
             "cover": "default4",
+            "order": null,
             "initialChord": null,
             "lyrics": "[D]Nu m-ai jude[E]cat după drep[F#m][E]ta[D]te"
         },
@@ -42,6 +46,7 @@
             "title": "Song 5",
             "artist": "Artist Name",
             "cover": null,
+            "order": null,
             "initialChord": null,
             "lyrics": ""
         },
@@ -52,6 +57,7 @@
             "artist": "Artist Name",
             "cover": null,
             "initialChord": null,
+            "order": null,
             "lyrics": ""
         },
         {
@@ -61,6 +67,7 @@
             "artist": "Artist Name",
             "cover": null,
             "initialChord": null,
+            "order": null,
             "lyrics": ""
         },
         {
@@ -70,6 +77,7 @@
             "artist": "Artist Name",
             "cover": null,
             "initialChord": null,
+            "order": null,
             "lyrics": ""
         },
         {
@@ -79,6 +87,7 @@
             "artist": "Artist Name",
             "cover": null,
             "initialChord": null,
+            "order": null,
             "lyrics": ""
         },
         {
@@ -88,6 +97,7 @@
             "artist": "Artist Name",
             "cover": null,
             "initialChord": null,
+            "order": null,
             "lyrics": ""
         }
     ],

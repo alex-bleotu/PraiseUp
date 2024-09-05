@@ -36,6 +36,7 @@ export interface SongType {
     lyrics: string;
     favorite: boolean;
     date: string;
+    order: string | null;
     initialChord: string | null;
 }
 

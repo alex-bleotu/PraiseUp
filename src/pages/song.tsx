@@ -81,7 +81,7 @@ export const renderLyrics = (
 ) => {
     const lines = lyrics.split("\n");
 
-    const isSmallLyric = (lyric: string) => lyric.trim().length <= 2;
+    const isSmallLyric = (lyric: string) => lyric.trim().length <= 3;
 
     return lines.map((line, index) => {
         const hasChords = line.match(/\[.*?\]/);
@@ -90,6 +90,20 @@ export const renderLyrics = (
         if (isEmptyLine && showChords) {
             return <View key={index} style={styles.emptyLine} />;
         }
+
+        if (line.length < 4)
+            return (
+                <Text
+                    key={index}
+                    style={{
+                        marginVertical: 5,
+                    }}
+                    fontSize={fontSize}
+                    bold
+                    color={theme.colors.grey}>
+                    {line}
+                </Text>
+            );
 
         if (hasChords && showChords) {
             const parts = line.split(/(\[.*?\])/g);
@@ -181,7 +195,7 @@ export const renderLyrics = (
                                                                 : theme.colors
                                                                       .background
                                                         }
-                                                        fontSize={fontSize}>
+                                                        fontSize={fontSize - 2}>
                                                         {chord}
                                                     </Text>
                                                 </View>
@@ -226,7 +240,7 @@ const Song = ({ route, navigation }: SongProps) => {
     const [isChordBottomSheetOpen, setChordBottomSheetOpen] = useState(false);
     const [steps, setSteps] = useState(0);
 
-    const buttonWidth = Dimensions.get("screen").width / 2 - 45;
+    const buttonWidth = Dimensions.get("screen").width / 2 - 40;
     const buttonsContainerWidth = buttonWidth * 2 + 65;
 
     const initialSteps = getStepsFromC(song.initialChord) || 0;
@@ -719,8 +733,7 @@ const styles = StyleSheet.create({
     },
     lyrics: {
         width: "100%",
-        paddingLeft: 30,
-        paddingRight: 30,
+        paddingHorizontal: 25,
     },
 
     line: {
