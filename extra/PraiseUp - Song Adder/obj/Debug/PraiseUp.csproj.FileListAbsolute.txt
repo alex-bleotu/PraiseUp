@@ -1,0 +1,28 @@
+D:\Projects\GitHub\C#\PraiseUp\bin\Debug\PraiseUp.exe.config
+D:\Projects\GitHub\C#\PraiseUp\bin\Debug\PraiseUp.exe
+D:\Projects\GitHub\C#\PraiseUp\bin\Debug\PraiseUp.pdb
+D:\Projects\GitHub\C#\PraiseUp\obj\Debug\PraiseUp.csproj.AssemblyReference.cache
+D:\Projects\GitHub\C#\PraiseUp\obj\Debug\PraiseUp.Form1.resources
+D:\Projects\GitHub\C#\PraiseUp\obj\Debug\PraiseUp.Properties.Resources.resources
+D:\Projects\GitHub\C#\PraiseUp\obj\Debug\PraiseUp.csproj.GenerateResource.cache
+D:\Projects\GitHub\C#\PraiseUp\obj\Debug\PraiseUp.csproj.CoreCompileInputs.cache
+D:\Projects\GitHub\C#\PraiseUp\obj\Debug\PraiseUp.exe
+D:\Projects\GitHub\C#\PraiseUp\obj\Debug\PraiseUp.pdb
+D:\Projects\GitHub\C#\PraiseUp\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\GitHub\C#\PraiseUp\bin\Debug\Newtonsoft.Json.xml
+D:\Projects\GitHub\C#\PraiseUp\obj\Debug\PraiseUp.csproj.Up2Date
+D:\Projects\GitHub\PraiseUp\extra\PraiseUp - Song Adder\bin\Debug\PraiseUp.exe.config
+D:\Projects\GitHub\PraiseUp\extra\PraiseUp - Song Adder\bin\Debug\PraiseUp.exe
+D:\Projects\GitHub\PraiseUp\extra\PraiseUp - Song Adder\bin\Debug\PraiseUp.pdb
+D:\Projects\GitHub\PraiseUp\extra\PraiseUp - Song Adder\bin\Debug\Dropbox.Api.dll
+D:\Projects\GitHub\PraiseUp\extra\PraiseUp - Song Adder\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\GitHub\PraiseUp\extra\PraiseUp - Song Adder\bin\Debug\Dropbox.Api.xml
+D:\Projects\GitHub\PraiseUp\extra\PraiseUp - Song Adder\bin\Debug\Newtonsoft.Json.xml
+D:\Projects\GitHub\PraiseUp\extra\PraiseUp - Song Adder\obj\Debug\PraiseUp.csproj.AssemblyReference.cache
+D:\Projects\GitHub\PraiseUp\extra\PraiseUp - Song Adder\obj\Debug\PraiseUp.Form1.resources
+D:\Projects\GitHub\PraiseUp\extra\PraiseUp - Song Adder\obj\Debug\PraiseUp.Properties.Resources.resources
+D:\Projects\GitHub\PraiseUp\extra\PraiseUp - Song Adder\obj\Debug\PraiseUp.csproj.GenerateResource.cache
+D:\Projects\GitHub\PraiseUp\extra\PraiseUp - Song Adder\obj\Debug\PraiseUp.csproj.CoreCompileInputs.cache
+D:\Projects\GitHub\PraiseUp\extra\PraiseUp - Song Adder\obj\Debug\PraiseUp.csproj.Up2Date
+D:\Projects\GitHub\PraiseUp\extra\PraiseUp - Song Adder\obj\Debug\PraiseUp.exe
+D:\Projects\GitHub\PraiseUp\extra\PraiseUp - Song Adder\obj\Debug\PraiseUp.pdb

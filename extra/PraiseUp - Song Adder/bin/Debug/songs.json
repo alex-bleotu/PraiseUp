@@ -1,0 +1,22 @@
+[
+  {
+    "id": "S5a980eca-bec6-4282-8ce9-f0ce3404b615",
+    "type": "song",
+    "title": "10.000 de motive",
+    "artist": "Jonas Myrin & Matt Redman",
+    "cover": null,
+    "initialChord": "E",
+    "order": "R1 S1 R2 S2 R2 S3 R2x2",
+    "lyrics": "R1\r\nCântă suflet al meu\r\nPentru Dumnezeu\r\nCel binecuvântat\r\nAl﻿ lui Nume e Sfânt\r\nCântă acum, cum nu ai mai cântat\r\n\r\nS1\r\nE o nouă zi, soarele răsare\r\nEu vin să cânt spre slava Ta\r\nOrice-ar veni ce în față îmi apare\r\nEu vreau să-ți cânt și seara laude\r\n\r\nR2\r\nCântă suflet al meu\r\nPentru Dumnezeu\r\nCel binecuvântat\r\nAl﻿ lui Nume e Sfânt\r\nCântă acum, cum nu ai mai cântat\r\n\r\nS2\r\nÎncet Tu ești, Doamne, la mânie\r\nÎn dragoste ești bogat si ești bun\r\nGăsesc că am zece mii motive\r\nCa să Te laud și tuturor să spun\r\n\r\nS3\r\nIar când sfârșitul îmi va fi aproape\r\nPuterile când îmi vor slăbi\r\nAl meu suflet va cânta continuu\r\nO, zece mii de ani și-n veșnicii"
+  },
+  {
+    "id": "Sfe126df9-555e-48bd-b22c-338a78b93fc8",
+    "type": "song",
+    "title": "Mărețul Har",
+    "artist": "BBSO",
+    "cover": null,
+    "initialChord": "D",
+    "order": "S1 S2 R1 S3 R1 R2 Bx2 O",
+    "lyrics": "S1\r\nMă[D]rețul har m-a m[G]ântui[D]t\r\nPe mine din păc[A]at.\r\nPierd[D]ut eram, dar m[G]-a găs[D]it,\r\nDe moarte m[A]-a scăp[D]at.\r\n\r\nS2\r\nMă[D]rețul har m-a î[G]nvăț[D]at\r\nS-o rup cu orice r[A]ău.\r\nCe s[D]cump mi-e azi tot h[G]arul d[D]at;\r\nTrăiesc prin e[A]l mer[D]eu.\r\n\r\nR1\r\nLan[D]țul s-a f[G]rânt, eu liber s[D]unt,\r\nRăscumpăr[G]at prin sânge s[A]fânt\r\nȘi-n m[D]ila S[G]a, mi-a dat în d[Bm]ar,\r\nIubirea [Em]Sa, M[A]ărețul H[D]ar.\r\n\r\nS3\r\nPrin H[D]ar ajunge-v[G]oi în cer\r\nCu s[D]lavă îmbrăc[A]at\r\nȘi-L v[D]oi slăvi î[G]n veșnic[D]ii\r\nPe Cel ce H[A]ar mi-a d[D]at.\r\n\r\nR2\r\nLan[D]țul s-a f[G]rânt, eu liber s[D]unt,\r\nRăscumpăr[G]at prin sânge s[A]fânt\r\nȘi-n m[D]ila S[G]a, mi-a dat în d[Bm]ar,\r\nIubirea [Em]Sa, M[A]ărețul H[A#]ar.\r\n\r\nB\r\nLanțul s-a f[A#]rânt, eu liber s[F]unt,\r\nRăscumpăr[A#]at prin sânge s[C]fânt\r\nȘi-n mila S[A#]a, mi-a dat în d[Dm]ar,\r\nIubirea [Gm]Sa, M[C]ărețul H[F]ar.\r\n\r\nO\r\nIubirea [Gm]Sa, M[C]ărețul H[D]ar\r\nIubirea [Gm]Sa, M[F]ăre[C]țul H[F]ar."
+  }
+]
