@@ -4,7 +4,7 @@ import { ScrollView as SV } from "react-native-gesture-handler";
 
 interface ScrollViewProps {
     children: React.ReactNode | React.ReactNode[];
-    style?: ViewStyle;
+    style?: ViewStyle | ViewStyle[];
     bottom?: number;
     top?: number;
     horizontal?: boolean;

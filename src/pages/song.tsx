@@ -71,22 +71,24 @@ const getStepsFromC = (chord: string) => {
     return steps !== -1 ? steps : null;
 };
 
-const renderLyrics = (
+export const renderLyrics = (
     lyrics: string,
     showChords: boolean,
     theme: any,
     fontSize: number = 16,
-    steps: number = 0
+    steps: number = 0,
+    chords: "split" | "combined" | "separated" = "combined"
 ) => {
     const lines = lyrics.split("\n");
+
+    const isSmallLyric = (lyric: string) => lyric.trim().length <= 2;
 
     return lines.map((line, index) => {
         const hasChords = line.match(/\[.*?\]/);
         const isEmptyLine = line.trim() === "";
 
         if (isEmptyLine && showChords) {
-            console.log("empty line");
-            return <View style={styles.emptyLine} />;
+            return <View key={index} style={styles.emptyLine} />;
         }
 
         if (hasChords && showChords) {
@@ -102,38 +104,89 @@ const renderLyrics = (
                 } else lyricsLine.push(part);
             });
 
+            let combinedChords: string[] = [];
+            let combinedLyrics: string[] = [];
+            let tempChords: string[] = [];
+            let tempLyrics = "";
+
+            for (let i = 0; i < chordsLine.length; i++) {
+                const currentChord = chordsLine[i];
+                const currentLyric = lyricsLine[i] || "";
+
+                if (
+                    chords !== "split" &&
+                    isSmallLyric(currentLyric) &&
+                    currentChord !== "."
+                ) {
+                    tempChords.push(currentChord);
+                    tempLyrics += currentLyric;
+                } else {
+                    if (tempChords.length > 0) {
+                        combinedChords.push(tempChords.join("-"));
+                        combinedLyrics.push(tempLyrics);
+                        tempChords = [];
+                        tempLyrics = "";
+                    }
+                    combinedChords.push(currentChord);
+                    combinedLyrics.push(currentLyric);
+                }
+            }
+
+            if (tempChords.length > 0) {
+                combinedChords.push(tempChords.join("-"));
+                combinedLyrics.push(tempLyrics);
+            }
+
             return (
                 <View key={index} style={styles.line}>
                     <View style={styles.chordsSegmentsLine}>
-                        {lyricsLine.map((lyric, index) => {
+                        {combinedLyrics.map((lyric, idx) => {
+                            let chordsToDisplay =
+                                chords === "separated"
+                                    ? combinedChords[idx].split("-")
+                                    : [combinedChords[idx]];
+
                             return (
-                                <View key={index}>
-                                    <View
-                                        style={
-                                            chordsLine[index] !== "."
-                                                ? [
-                                                      styles.chord,
-                                                      {
-                                                          backgroundColor:
-                                                              theme.colors
-                                                                  .primary,
-                                                      },
-                                                  ]
-                                                : {
-                                                      alignSelf: "flex-start",
-                                                  }
-                                        }>
-                                        <Text
-                                            style={styles.lyricsLine}
-                                            bold
-                                            color={
-                                                chordsLine[index] !== "."
-                                                    ? theme.colors.textInverted
-                                                    : theme.colors.background
-                                            }
-                                            fontSize={fontSize}>
-                                            {chordsLine[index]}
-                                        </Text>
+                                <View key={idx}>
+                                    <View style={{ flexDirection: "row" }}>
+                                        {chordsToDisplay.map(
+                                            (chord, chordIdx) => (
+                                                <View
+                                                    key={chordIdx}
+                                                    style={
+                                                        chord !== "."
+                                                            ? [
+                                                                  styles.chord,
+                                                                  {
+                                                                      backgroundColor:
+                                                                          theme
+                                                                              .colors
+                                                                              .primary,
+                                                                  },
+                                                              ]
+                                                            : {
+                                                                  alignSelf:
+                                                                      "flex-start",
+                                                              }
+                                                    }>
+                                                    <Text
+                                                        style={
+                                                            styles.lyricsLine
+                                                        }
+                                                        bold
+                                                        color={
+                                                            chord !== "."
+                                                                ? theme.colors
+                                                                      .textInverted
+                                                                : theme.colors
+                                                                      .background
+                                                        }
+                                                        fontSize={fontSize}>
+                                                        {chord}
+                                                    </Text>
+                                                </View>
+                                            )
+                                        )}
                                     </View>
                                     <Text
                                         style={[
@@ -166,7 +219,7 @@ const Song = ({ route, navigation }: SongProps) => {
     const { song } = route.params;
 
     const { theme } = useContext(ThemeContext);
-    const { lyricsSize, setLyricsSize } = useContext(ConstantsContext);
+    const { lyricsSize, setLyricsSize, chords } = useContext(ConstantsContext);
 
     const [value, setValue] = useState("lyrics");
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
@@ -276,30 +329,47 @@ const Song = ({ route, navigation }: SongProps) => {
                     style={{
                         width: "100%",
                     }}>
-                    {value === "lyrics" && song.lyrics && (
-                        <ScrollView
-                            style={styles.lyrics}
-                            bottom={hasChords ? 40 : 5}
-                            top={7}>
-                            {renderLyrics(
-                                song.lyrics,
-                                false,
-                                theme,
-                                lyricsSize
-                            )}
-                        </ScrollView>
-                    )}
-                    {value === "chords" && song.lyrics && (
-                        <ScrollView style={styles.lyrics} bottom={37} top={10}>
-                            {renderLyrics(
-                                song.lyrics,
-                                true,
-                                theme,
-                                lyricsSize,
-                                steps
-                            )}
-                        </ScrollView>
-                    )}
+                    <ScrollView
+                        style={[
+                            styles.lyrics,
+                            {
+                                display:
+                                    value === "lyrics" && song.lyrics
+                                        ? "flex"
+                                        : "none",
+                            },
+                        ]}
+                        bottom={hasChords ? 40 : 5}
+                        top={7}>
+                        {renderLyrics(
+                            song.lyrics,
+                            false,
+                            theme,
+                            lyricsSize,
+                            steps
+                        )}
+                    </ScrollView>
+                    <ScrollView
+                        style={[
+                            styles.lyrics,
+                            {
+                                display:
+                                    value === "chords" && song.lyrics
+                                        ? "flex"
+                                        : "none",
+                            },
+                        ]}
+                        bottom={37}
+                        top={10}>
+                        {renderLyrics(
+                            song.lyrics,
+                            true,
+                            theme,
+                            lyricsSize,
+                            steps,
+                            chords
+                        )}
+                    </ScrollView>
                 </View>
             </View>
             <BottomSheetModal

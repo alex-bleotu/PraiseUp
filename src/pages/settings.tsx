@@ -1,5 +1,6 @@
 import {
     Entypo as EIcons,
+    FontAwesome6 as FAIcons,
     Feather as FIcons,
     MaterialCommunityIcons as MCIcons,
     MaterialIcons as MIcons,
@@ -21,15 +22,17 @@ import { ConstantsContext } from "../context/constants";
 import { LanguageContext } from "../context/language";
 import { ThemeContext } from "../context/theme";
 import { darkTheme, lightTheme } from "../utils/theme";
+import { renderLyrics } from "./song";
 
 const Settings = ({ navigation }: { navigation: any }) => {
     const { theme, setTheme } = useContext(ThemeContext);
     const { language, setLanguage } = useContext(LanguageContext);
-    const { lyricsSize, setLyricsSize } = useContext(ConstantsContext);
+    const { lyricsSize, setLyricsSize, chords, setChords } =
+        useContext(ConstantsContext);
     const { user, logout, exitGuest, deleteAccount } = useContext(AuthContext);
 
     const [settings, setSettings] = useState<
-        "theme" | "language" | "zoom" | null
+        "theme" | "language" | "zoom" | "chords" | null
     >(null);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
@@ -38,6 +41,8 @@ const Settings = ({ navigation }: { navigation: any }) => {
     const [password, setPassword] = useState<string>("");
     const [passwordError, setPasswordError] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
+
+    const lyricToRender = t`glo[F#m][E]ri[D]fy`;
 
     useEffect(() => {
         setError("");
@@ -125,6 +130,27 @@ const Settings = ({ navigation }: { navigation: any }) => {
                         <MCIcons
                             name="magnify"
                             size={26}
+                            color={theme.colors.text}
+                        />
+                    }
+                />
+                <Button
+                    mode="contained"
+                    fullWidth
+                    bold
+                    backgroundColor={theme.colors.paper}
+                    text={t`Chords`}
+                    onPress={() => {
+                        setSettings("chords"), setIsSettingsOpen(true);
+                    }}
+                    color={theme.colors.text}
+                    center={false}
+                    fontSize={15}
+                    style={{ marginBottom: 10 }}
+                    icon={
+                        <FAIcons
+                            name="itunes-note"
+                            size={25}
                             color={theme.colors.text}
                         />
                     }
@@ -320,7 +346,11 @@ const Settings = ({ navigation }: { navigation: any }) => {
                         ? 170
                         : settings === "language"
                         ? 150
-                        : 290
+                        : settings === "zoom"
+                        ? 290
+                        : settings === "chords"
+                        ? 275
+                        : 0
                 }>
                 <View style={styles.bottomSheetContainer}>
                     {settings === "theme" ? (
@@ -443,7 +473,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                 />
                             </TouchableOpacity>
                         </View>
-                    ) : (
+                    ) : settings === "zoom" ? (
                         <View style={styles.zoomContainer}>
                             <View style={styles.topBar}>
                                 <TouchableOpacity
@@ -512,6 +542,110 @@ Seeking stories yet untold.`}
                                 </Text>
                             </View>
                         </View>
+                    ) : settings === "chords" ? (
+                        <View style={styles.choices2}>
+                            <TouchableOpacity
+                                style={styles.choiceContainer2}
+                                activeOpacity={1}
+                                onPress={() => {
+                                    setChords("combined");
+                                }}>
+                                <View
+                                    style={{
+                                        marginRight: "auto",
+                                    }}>
+                                    {renderLyrics(
+                                        lyricToRender,
+                                        true,
+                                        theme,
+                                        16,
+                                        0,
+                                        "combined"
+                                    )}
+                                </View>
+                                <RadioButton
+                                    value="dark"
+                                    color={theme.colors.primary}
+                                    uncheckedColor={theme.colors.grey}
+                                    status={
+                                        chords === "combined"
+                                            ? "checked"
+                                            : "unchecked"
+                                    }
+                                    onPress={() => {
+                                        setChords("combined");
+                                    }}
+                                />
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.choiceContainer2}
+                                activeOpacity={1}
+                                onPress={() => {
+                                    setChords("separated");
+                                }}>
+                                <View
+                                    style={{
+                                        marginRight: "auto",
+                                    }}>
+                                    {renderLyrics(
+                                        lyricToRender,
+                                        true,
+                                        theme,
+                                        16,
+                                        0,
+                                        "separated"
+                                    )}
+                                </View>
+                                <RadioButton
+                                    value="dark"
+                                    color={theme.colors.primary}
+                                    uncheckedColor={theme.colors.grey}
+                                    status={
+                                        chords === "separated"
+                                            ? "checked"
+                                            : "unchecked"
+                                    }
+                                    onPress={() => {
+                                        setChords("separated");
+                                    }}
+                                />
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.choiceContainer2}
+                                activeOpacity={1}
+                                onPress={() => {
+                                    setChords("split");
+                                }}>
+                                <View
+                                    style={{
+                                        marginRight: "auto",
+                                    }}>
+                                    {renderLyrics(
+                                        lyricToRender,
+                                        true,
+                                        theme,
+                                        16,
+                                        0,
+                                        "split"
+                                    )}
+                                </View>
+                                <RadioButton
+                                    value="light"
+                                    color={theme.colors.primary}
+                                    uncheckedColor={theme.colors.grey}
+                                    status={
+                                        chords === "split"
+                                            ? "checked"
+                                            : "unchecked"
+                                    }
+                                    onPress={() => {
+                                        setChords("split");
+                                    }}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    ) : (
+                        <></>
                     )}
                 </View>
             </BottomSheetModal>
@@ -825,6 +959,15 @@ const styles = StyleSheet.create({
     choiceContainer: {
         alignItems: "center",
         marginRight: 15,
+    },
+    choices2: {
+        flexDirection: "column",
+    },
+    choiceContainer2: {
+        alignItems: "center",
+        width: "100%",
+        flexDirection: "row",
+        marginBottom: 30,
     },
     image: {
         width: 60,
