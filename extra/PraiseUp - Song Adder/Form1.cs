@@ -4,16 +4,15 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Dropbox.Api.Files;
-using Dropbox.Api;
 using Newtonsoft.Json;
-using Dropbox.Api;
-using Dropbox.Api.Files;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace PraiseUp {
     public partial class Form1 : Form {
         public Form1() {
             InitializeComponent();
+
 
             textBox1.TabIndex = 0;
             textBox2.TabIndex = 1;
@@ -36,58 +35,131 @@ namespace PraiseUp {
         }
 
         private async void button2_Click(object sender, EventArgs e) {
-            if (textBox1.Text.Length == 0 || textBox2.Text.Length == 0 || textBox7.Text.Length == 0) return;
-            else {
-                Guid id = Guid.NewGuid();
+            try {
 
-                var song = new Song {
-                    id = "S" + id,
-                    type = "song",
-                    title = textBox1.Text.Trim(),
-                    artist = textBox2.Text.Trim(),
-                    cover = null,
-                    initialChord = textBox3.Text.Trim(),
-                    order = textBox4.Text.Length == 0 ? null : textBox4.Text.Trim(),
-                    lyrics = textBox7.Text.Trim()
-                };
+                if (textBox1.Text.Length == 0 || textBox7.Text.Length == 0) return;
+                else {
+                    button2.Enabled = false;
 
-                List<Song> songsList = new List<Song>();
+                    Guid id = Guid.NewGuid();
 
-                string filePath = "songs.json";
+                    var song = new Song {
+                        id = "S" + id,
+                        type = "song",
+                        title = textBox1.Text.Trim(),
+                        artist = textBox2.Text.Length == 0 ? null : textBox2.Text.Trim(),
+                        cover = null,
+                        initialChord = textBox3.Text.Trim(),
+                        order = textBox4.Text.Length == 0 ? null : textBox4.Text.Trim(),
+                        lyrics = textBox7.Text.Trim()
+                    };
 
-                if (File.Exists(filePath)) {
-                    string existingJson = File.ReadAllText(filePath);
-                    songsList = JsonConvert.DeserializeObject<List<Song>>(existingJson) ?? new List<Song>();
+                    string fileName = song.title + ".json";
+
+                    bool gistExists = await CheckIfGistExists(fileName);
+
+                    if (gistExists) {
+                        MessageBox.Show($"Cantecul '{song.title}' exista deja pe GitHub Gist.");
+                    }
+                    else {
+                        string jsonData = JsonConvert.SerializeObject(song, Formatting.Indented);
+                        string gistUrl = await UploadJsonToGist(fileName, jsonData);
+
+                        if (!string.IsNullOrEmpty(gistUrl)) {
+                            MessageBox.Show("Cantec salvat si incarcat pe GitHub Gist!");
+                        }
+                        else {
+                            MessageBox.Show("Cantecul nu a putut fi incarcat pe GitHub Gist.");
+                        }
+                    }
+
+                    UpdateUI(true);
+
+                    button2.Enabled = true;
+
+                    textBox1.Text = "";
+                    textBox2.Text = "";
+                    textBox3.Text = "";
+                    textBox5.Text = "";
+                    textBox6.Text = "";
+                    textBox7.Text = "";
+                    textBox4.Text = "";
                 }
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
-                songsList.Add(song);
+        private async Task<bool> CheckIfGistExists(string fileName) {
+            string githubToken = Environment.GetEnvironmentVariable("GITHUB_OAUTH_TOKEN");
 
-                File.WriteAllText(filePath, JsonConvert.SerializeObject(songsList, Formatting.Indented));
+            if (string.IsNullOrEmpty(githubToken)) {
+                MessageBox.Show("GitHub OAuth token is missing!");
+                return false;
+            }
 
-                string dropboxAccessToken = "sl.B8Wg1M5x2QrIYnZpiw1PndUJ3UFdUe5wxAV40-GbqDYHgEKNFVgloAh47Vl3lZVLq5lG8lcT6PFyq9wMLbcG_migTB-66anYkLCyuDgsgc-ZfGT1EDOFc2z4bPD4JrEqsQd5IGgFs43N";
-                using (var dbx = new DropboxClient(dropboxAccessToken)) {
-                    using (var memStream = new MemoryStream(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(song, Formatting.Indented)))) {
-                        string fileName = song.id + ".json";
-                        string dropboxPath = "/songs/" + fileName;
+            using (var client = new HttpClient()) {
+                client.DefaultRequestHeaders.Add("Authorization", $"token {githubToken}");
+                client.DefaultRequestHeaders.Add("User-Agent", "CSharp-GistUploader");
 
-                        var uploadResult = await dbx.Files.UploadAsync(
-                            dropboxPath,
-                            WriteMode.Overwrite.Instance,
-                            body: memStream);
+                var response = await client.GetAsync("https://api.github.com/gists");
 
-                        MessageBox.Show("Cantec salvat si incarcat pe Dropbox!");
+                if (response.IsSuccessStatusCode) {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    dynamic gists = JsonConvert.DeserializeObject(jsonResponse);
+
+                    foreach (var gist in gists) {
+                        var files = gist.files;
+                        foreach (var file in files) {
+                            string gistFileName = file.Name.ToString();
+                            if (gistFileName.Equals(fileName, StringComparison.OrdinalIgnoreCase)) {
+                                return true;
+                            }
+                        }
                     }
                 }
+                else {
+                    MessageBox.Show("Failed to fetch Gists: " + response.ReasonPhrase);
+                }
+            }
 
-                UpdateUI(true);
+            return false;
+        }
 
-                textBox1.Text = "";
-                textBox2.Text = "";
-                textBox3.Text = "";
-                textBox5.Text = "";
-                textBox6.Text = "";
-                textBox7.Text = "";
-                textBox4.Text = "";
+
+        private async Task<string> UploadJsonToGist(string fileName, string jsonData) {
+            string githubToken = Environment.GetEnvironmentVariable("GITHUB_OAUTH_TOKEN");
+
+            if (string.IsNullOrEmpty(githubToken)) {
+                MessageBox.Show("GitHub OAuth token is missing!");
+                return null;
+            }
+
+            var gistContent = new {
+                description = "Song JSON File Upload",
+                @public = false,
+                files = new Dictionary<string, object> {
+                    { fileName, new { content = jsonData } }
+                }
+            };
+
+            using (var client = new HttpClient()) {
+                client.DefaultRequestHeaders.Add("Authorization", $"token {githubToken}");
+                client.DefaultRequestHeaders.Add("User-Agent", "CSharp-GistUploader");
+
+                var jsonContent = new StringContent(JsonConvert.SerializeObject(gistContent), Encoding.UTF8, "application/json");
+                var response = await client.PostAsync("https://api.github.com/gists", jsonContent);
+
+                if (response.IsSuccessStatusCode) {
+                    var responseJson = await response.Content.ReadAsStringAsync();
+                    dynamic gistResponse = JsonConvert.DeserializeObject(responseJson);
+                    return gistResponse.html_url;
+                }
+                else {
+                    MessageBox.Show("Failed to create Gist: " + response.ReasonPhrase);
+                    return null;
+                }
             }
         }
 
@@ -108,7 +180,7 @@ namespace PraiseUp {
             int j = 0;
             StringBuilder chord = new StringBuilder();
 
-            for (int i = 0; i < withChords.Length; i++) {
+            for (int i = 0; i < withChords.Length && j < withoutChords.Length; i++) {
                 if (withChords[i] == withoutChords[j]) {
                     if (chord.Length != 0) {
                         result.Append("[" + chord + "]");
@@ -118,7 +190,7 @@ namespace PraiseUp {
                     j++;
                 }
                 else {
-                    while (withChords[i] != withoutChords[j] && i < withChords.Length && j < withoutChords.Length) {
+                    while (withChords[i] != withoutChords[j] && i < withChords.Length) {
                         chord.Append(withChords[i]);
                         i++;
                     }
@@ -132,15 +204,20 @@ namespace PraiseUp {
 
 
         private void button3_Click(object sender, EventArgs e) {
-            if (textBox5.Text.Length == 0) return;
+            try {
+                if (textBox5.Text.Length == 0) return;
 
-            UpdateUI(false);
+                UpdateUI(false);
 
-            if (textBox6.Text.Length != 0)
-                textBox7.Text = FormatChords(textBox5.Text, textBox6.Text);
-            else textBox7.Text = textBox5.Text;
+                if (textBox6.Text.Length != 0)
+                    textBox7.Text = FormatChords(textBox5.Text, textBox6.Text);
+                else textBox7.Text = textBox5.Text;
 
-           textBox7.Text = InsertNewLines(textBox7.Text);
+                textBox7.Text = InsertNewLines(textBox7.Text);
+                textBox7.Text = RemoveExtraChords(textBox7.Text);
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private string InsertNewLines(string text) {
@@ -152,24 +229,41 @@ namespace PraiseUp {
                 if (text[i] == '[') {
                     StringBuilder chord = new StringBuilder();
 
-                    while (text[i] != ']') {
+                    while (text[i] != ']' && i < text.Length) {
                         chord.Append(text[i]);
                         i++;
                     }
                     chord.Append(text[i]);
                     i++;
 
-                    if (char.IsLower(lastChar) && char.IsUpper(text[i]) || Regex.IsMatch(lastChar.ToString(), @"[.!?-]") && char.IsUpper(text[i])) {
+                    result.Append(chord);
+
+                    if (char.IsLower(lastChar) && char.IsUpper(text[i]) || Regex.IsMatch(lastChar.ToString(), @"[`”""'.!?]") && char.IsUpper(text[i])) {
                         result.Append("\r\n\r\n");
                     }
-
-                    result.Append(chord);
-                } else if (char.IsLower(lastChar) && char.IsUpper(text[i]) || Regex.IsMatch(lastChar.ToString(), @"[.!?-]") && char.IsUpper(text[i])) {
+                } else if (char.IsLower(lastChar) && char.IsUpper(text[i]) || Regex.IsMatch(lastChar.ToString(), @"[`”""'.!?]") && char.IsUpper(text[i])) {
                     result.Append("\r\n\r\n");
                 }
 
                 result.Append(text[i]);
                 lastChar = text[i];
+            }
+
+            return result.ToString();
+        }
+
+        string RemoveExtraChords(string text) {
+            StringBuilder result = new StringBuilder();
+
+            for (int i = 0; i < text.Length; i++) {
+                if (text[i] == '/')
+                    while (text[i] != ']') 
+                        i++;
+
+                while (text[i] == '—')
+                    i++;
+                    
+                result.Append(text[i]);
             }
 
             return result.ToString();
