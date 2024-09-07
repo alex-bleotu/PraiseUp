@@ -50,9 +50,9 @@
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.textBox11 = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.textBox12 = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
+            this.button5 = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBox1
@@ -106,7 +106,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(21, 368);
+            this.label4.Location = new System.Drawing.Point(21, 378);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(63, 20);
             this.label4.TabIndex = 7;
@@ -114,7 +114,7 @@
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(25, 411);
+            this.textBox5.Location = new System.Drawing.Point(25, 421);
             this.textBox5.Multiline = true;
             this.textBox5.Name = "textBox5";
             this.textBox5.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -123,7 +123,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(25, 795);
+            this.button1.Location = new System.Drawing.Point(25, 805);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(134, 38);
             this.button1.TabIndex = 8;
@@ -133,9 +133,9 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(494, 795);
+            this.button2.Location = new System.Drawing.Point(613, 805);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(268, 38);
+            this.button2.Size = new System.Drawing.Size(149, 38);
             this.button2.TabIndex = 9;
             this.button2.Text = "Salvare";
             this.button2.UseVisualStyleBackColor = true;
@@ -144,7 +144,7 @@
             // 
             // textBox6
             // 
-            this.textBox6.Location = new System.Drawing.Point(396, 411);
+            this.textBox6.Location = new System.Drawing.Point(396, 421);
             this.textBox6.Multiline = true;
             this.textBox6.Name = "textBox6";
             this.textBox6.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -154,7 +154,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(392, 368);
+            this.label5.Location = new System.Drawing.Point(392, 378);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(145, 20);
             this.label5.TabIndex = 11;
@@ -162,7 +162,7 @@
             // 
             // textBox7
             // 
-            this.textBox7.Location = new System.Drawing.Point(25, 411);
+            this.textBox7.Location = new System.Drawing.Point(25, 421);
             this.textBox7.Multiline = true;
             this.textBox7.Name = "textBox7";
             this.textBox7.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -173,19 +173,18 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(21, 368);
+            this.label6.Location = new System.Drawing.Point(21, 378);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(682, 20);
+            this.label6.Size = new System.Drawing.Size(105, 20);
             this.label6.TabIndex = 13;
-            this.label6.Text = "Versuri finale:                                (verifica spatiile intre strofe si" +
-    " acordurile + adauga S1, S2, R etc)";
+            this.label6.Text = "Versuri finale:\r\n";
             this.label6.Visible = false;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(494, 795);
+            this.button3.Location = new System.Drawing.Point(447, 805);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(268, 38);
+            this.button3.Size = new System.Drawing.Size(315, 38);
             this.button3.TabIndex = 14;
             this.button3.Text = "Formatare";
             this.button3.UseVisualStyleBackColor = true;
@@ -212,7 +211,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(180, 795);
+            this.button4.Location = new System.Drawing.Point(180, 805);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(134, 38);
             this.button4.TabIndex = 17;
@@ -234,7 +233,7 @@
             // 
             this.textBox8.Location = new System.Drawing.Point(167, 237);
             this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(184, 26);
+            this.textBox8.Size = new System.Drawing.Size(200, 26);
             this.textBox8.TabIndex = 18;
             // 
             // label9
@@ -250,7 +249,7 @@
             // 
             this.textBox9.Location = new System.Drawing.Point(167, 281);
             this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(184, 26);
+            this.textBox9.Size = new System.Drawing.Size(200, 26);
             this.textBox9.TabIndex = 20;
             // 
             // label10
@@ -258,21 +257,21 @@
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(21, 326);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(140, 20);
+            this.label10.Size = new System.Drawing.Size(179, 20);
             this.label10.TabIndex = 25;
-            this.label10.Text = "Poveste (optional):";
+            this.label10.Text = "Nume original (optional):";
             // 
             // textBox10
             // 
-            this.textBox10.Location = new System.Drawing.Point(167, 323);
+            this.textBox10.Location = new System.Drawing.Point(206, 323);
             this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(595, 26);
+            this.textBox10.Size = new System.Drawing.Size(161, 26);
             this.textBox10.TabIndex = 24;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(392, 243);
+            this.label11.Location = new System.Drawing.Point(392, 240);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(139, 20);
             this.label11.TabIndex = 23;
@@ -280,26 +279,12 @@
             // 
             // textBox11
             // 
-            this.textBox11.Location = new System.Drawing.Point(543, 240);
+            this.textBox11.Location = new System.Drawing.Point(543, 237);
+            this.textBox11.Multiline = true;
             this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(219, 26);
+            this.textBox11.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox11.Size = new System.Drawing.Size(219, 112);
             this.textBox11.TabIndex = 22;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(360, 287);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(177, 20);
-            this.label12.TabIndex = 27;
-            this.label12.Text = "Cuvinte Cheie(optional):";
-            // 
-            // textBox12
-            // 
-            this.textBox12.Location = new System.Drawing.Point(543, 284);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(219, 26);
-            this.textBox12.TabIndex = 26;
             // 
             // label13
             // 
@@ -310,14 +295,35 @@
             this.label13.TabIndex = 28;
             this.label13.Text = "Date extra (toate sunt optionale):";
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(447, 805);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(149, 38);
+            this.button5.TabIndex = 29;
+            this.button5.Text = "Actualizare";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Visible = false;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(259, 369);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(503, 40);
+            this.label12.TabIndex = 30;
+            this.label12.Text = "- verifica spatiile intre strofe, acordurile si acordurile de la final de strofe\r" +
+    "\n- adauga S1, S2, R etc";
+            this.label12.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(795, 849);
-            this.Controls.Add(this.label13);
+            this.ClientSize = new System.Drawing.Size(789, 859);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.textBox12);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.textBox10);
             this.Controls.Add(this.label11);
@@ -344,6 +350,7 @@
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.button5);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -382,9 +389,9 @@
         private System.Windows.Forms.TextBox textBox10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox textBox11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox textBox12;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Label label12;
     }
 }
 

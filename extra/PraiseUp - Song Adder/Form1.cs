@@ -21,11 +21,10 @@ namespace PraiseUp {
             textBox8.TabIndex = 4;
             textBox9.TabIndex = 5;
             textBox11.TabIndex = 6;
-            textBox12.TabIndex = 7;
-            textBox10.TabIndex = 8;
-            textBox5.TabIndex = 9;
-            textBox6.TabIndex = 10;
-            textBox7.TabIndex = 11;
+            textBox10.TabIndex = 7;
+            textBox5.TabIndex = 8;
+            textBox6.TabIndex = 9;
+            textBox7.TabIndex = 10;
         }
 
         public class Song {
@@ -43,9 +42,8 @@ namespace PraiseUp {
         public class ExtraData {
             public string link { get; set; }
             public string year { get; set; }
-            public string story { get; set; }
+            public string originalTitle { get; set; }
             public List<string> verses { get; set; }
-            public List<string> keyWords { get; set; }
         }
 
         private string TranslateVerse(string verse) {
@@ -204,27 +202,6 @@ namespace PraiseUp {
 
                     Guid id = Guid.NewGuid();
 
-                    List<string> keyWords = new List<string>();
-                    HashSet<string> uniqueKeyWords = new HashSet<string>();
-
-                    if (textBox12.Text.Length != 0) {
-                        var result = textBox12.Text.Trim().Split(' ');
-
-                        foreach (var word in result) {
-                            string translatedWord = await TranslateWithMyMemory(word, "ro", "en");
-
-                            translatedWord = Regex.Replace(translatedWord, @"[^\w\s]", "").ToLower();
-
-                            var splits = translatedWord.Split(' ');
-
-                            if (splits.Length == 1 && !uniqueKeyWords.Contains(translatedWord)) {
-                                uniqueKeyWords.Add(translatedWord);
-                            }
-                        }
-
-                        keyWords = new List<string>(uniqueKeyWords);
-                    }
-
                     List<string> verses = new List<string>();
                     if (textBox11.Text.Length != 0) {
                         var words = textBox11.Text.Trim().Split(' ');
@@ -247,8 +224,7 @@ namespace PraiseUp {
                     var extraData = new ExtraData {
                         link = textBox8.Text.Length == 0 ? null : textBox8.Text.Trim(),
                         year = textBox9.Text.Length == 0 ? null : textBox9.Text.Trim(),
-                        story = textBox10.Text.Length == 0 ? null : textBox10.Text.Trim(),
-                        keyWords = keyWords.Count == 0 ? null : keyWords,
+                        originalTitle = textBox10.Text.Length == 0 ? null : textBox10.Text.Trim(),
                         verses = verses.Count == 0 ? null : verses
                     };
 
@@ -264,8 +240,6 @@ namespace PraiseUp {
                         extraData = extraData
                     };
 
-                    MessageBox.Show(JsonConvert.SerializeObject(song, Formatting.Indented));
-
                     string fileName = song.title + ".json";
 
                     bool gistExists = await CheckIfGistExists(fileName);
@@ -279,34 +253,20 @@ namespace PraiseUp {
 
                         if (!string.IsNullOrEmpty(gistUrl)) {
                             MessageBox.Show("Cantec salvat si incarcat pe GitHub Gist!");
+
+                            ResetUI();
                         }
                         else {
                             MessageBox.Show("Cantecul nu a putut fi incarcat pe GitHub Gist.");
                         }
                     }
-
-                    UpdateUI(true);
-
-                    button2.Enabled = true;
-
-                    textBox1.Text = "";
-                    textBox2.Text = "";
-                    textBox3.Text = "";
-                    textBox5.Text = "";
-                    textBox6.Text = "";
-                    textBox7.Text = "";
-                    textBox4.Text = "";
-                    textBox8.Text = "";
-                    textBox9.Text = "";
-                    textBox10.Text = "";
-                    textBox11.Text = "";
-                    textBox12.Text = "";
                 }
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message);
-                button2.Enabled = true;
             }
+
+            button2.Enabled = true;
         }
 
         private async Task<string> TranslateWithMyMemory(string text, string fromLanguage, string toLanguage) {
@@ -397,7 +357,9 @@ namespace PraiseUp {
             }
         }
 
-        private void button1_Click(object sender, EventArgs e) {
+        private void ResetUI() {
+            UpdateUI(true);
+
             textBox1.Text = "";
             textBox2.Text = "";
             textBox3.Text = "";
@@ -409,10 +371,13 @@ namespace PraiseUp {
             textBox9.Text = "";
             textBox10.Text = "";
             textBox11.Text = "";
-            textBox12.Text = "";
 
             button2.Enabled = true;
-            UpdateUI(true);
+            button5.Enabled = true;
+        }
+
+        private void button1_Click(object sender, EventArgs e) {
+            ResetUI();
         }
 
         private string FormatChords(string withoutChords, string withChords) {
@@ -516,9 +481,11 @@ namespace PraiseUp {
             label4.Visible = show;
             label5.Visible = show;
             label6.Visible = !show;
+            label12.Visible = !show;
             textBox7.Visible = !show;
             button2.Visible = !show;
             button4.Visible = !show;
+            button5.Visible = !show;
         }
 
         private void textBox4_TextChanged(object sender, EventArgs e) {
@@ -530,6 +497,165 @@ namespace PraiseUp {
 
         private void button4_Click(object sender, EventArgs e) {
             UpdateUI(true);
+        }
+
+        private async void button5_Click(object sender, EventArgs e) {
+            try {
+                if (textBox1.Text.Length == 0 || textBox7.Text.Length == 0) return;
+
+                button5.Enabled = false;
+
+                Guid id = Guid.NewGuid();
+                List<string> verses = new List<string>();
+
+                // Parsing verses
+                if (textBox11.Text.Length != 0) {
+                    var words = textBox11.Text.Trim().Split(' ');
+                    for (int i = 0; i < words.Length; i++) {
+                        if (i < words.Length - 2 && (words[i] == "1" || words[i] == "2")) {
+                            string combinedBookName = words[i] + " " + words[i + 1];
+                            if (words[i + 2].Contains(":")) {
+                                verses.Add(TranslateVerse(combinedBookName) + " " + words[i + 2]);
+                                i += 2;
+                            }
+                        }
+                        else if (i < words.Length - 1 && words[i + 1].Contains(":")) {
+                            verses.Add(TranslateVerse(words[i]) + " " + words[i + 1]);
+                            i++;
+                        }
+                    }
+                }
+
+                var extraData = new ExtraData {
+                    link = textBox8.Text.Length == 0 ? null : textBox8.Text.Trim(),
+                    year = textBox9.Text.Length == 0 ? null : textBox9.Text.Trim(),
+                    originalTitle = textBox10.Text.Length == 0 ? null : textBox10.Text.Trim(),
+                    verses = verses.Count == 0 ? null : verses
+                };
+
+                var song = new Song {
+                    id = "S" + id,
+                    type = "song",
+                    title = textBox1.Text.Trim(),
+                    artist = textBox2.Text.Length == 0 ? null : textBox2.Text.Trim(),
+                    cover = null,
+                    initialChord = textBox3.Text.Trim(),
+                    order = textBox4.Text.Length == 0 ? null : textBox4.Text.Trim(),
+                    lyrics = textBox7.Text.Trim(),
+                    extraData = extraData
+                };
+
+                string fileName = song.title + ".json";
+                string jsonData = JsonConvert.SerializeObject(song, Formatting.Indented);
+
+                bool gistExists = await CheckIfGistExists(fileName);
+
+                if (gistExists) {
+                    string gistUrl = await UpdateGist(fileName, jsonData);
+
+                    if (!string.IsNullOrEmpty(gistUrl)) {
+                        MessageBox.Show($"Cantecul '{song.title}' a fost actualizat pe GitHub Gist!");
+
+                        ResetUI();
+                    }
+                    else {
+                        MessageBox.Show("Cantecul nu a putut fi actualizat pe GitHub Gist.");
+                    }
+                }
+                else {
+                    DialogResult dialogResult = MessageBox.Show("Cantecul nu exista. Doresti sa il adaugi?", "Cantecul nu exista", MessageBoxButtons.YesNo);
+
+                    if (dialogResult == DialogResult.Yes) {
+                        string gistUrl = await UploadJsonToGist(fileName, jsonData);
+
+                        if (!string.IsNullOrEmpty(gistUrl)) {
+                            MessageBox.Show("Cantecul a fost salvat si incarcat pe GitHub Gist!");
+
+                            ResetUI();
+                        }
+                        else {
+                            MessageBox.Show("Cantecul nu a putut fi incarcat pe GitHub Gist.");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
+
+            button5.Enabled = true;
+        }
+
+        private async Task<string> UpdateGist(string fileName, string jsonData) {
+            string gistId = await GetGistIdByFileName(fileName);
+
+            if (string.IsNullOrEmpty(gistId)) return null;
+
+            var gistUpdateData = new {
+                files = new Dictionary<string, object> {
+                    [fileName] = new { content = jsonData }
+                }
+            };
+
+            var content = new StringContent(JsonConvert.SerializeObject(gistUpdateData), Encoding.UTF8, "application/json");
+
+            using (HttpClient client = new HttpClient()) {
+                string token = Environment.GetEnvironmentVariable("GITHUB_OAUTH_TOKEN");
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                client.DefaultRequestHeaders.Add("User-Agent", "CSharp-App");
+
+                var request = new HttpRequestMessage(new HttpMethod("PATCH"), $"https://api.github.com/gists/{gistId}") {
+                    Content = content
+                };
+
+                var response = await client.SendAsync(request);
+
+                if (response.IsSuccessStatusCode) {
+                    var responseBody = await response.Content.ReadAsStringAsync();
+                    dynamic responseJson = JsonConvert.DeserializeObject(responseBody);
+                    return responseJson.html_url;
+                }
+                else {
+                    return null;
+                }
+            }
+        }
+
+
+        private async Task<string> GetGistIdByFileName(string fileName) {
+            string githubToken = Environment.GetEnvironmentVariable("GITHUB_OAUTH_TOKEN");
+
+            if (string.IsNullOrEmpty(githubToken)) {
+                MessageBox.Show("GitHub OAuth token is missing!");
+                return null;
+            }
+
+            using (var client = new HttpClient()) {
+                client.DefaultRequestHeaders.Add("Authorization", $"token {githubToken}");
+                client.DefaultRequestHeaders.Add("User-Agent", "CSharp-GistUploader");
+
+                var response = await client.GetAsync("https://api.github.com/gists");
+
+                if (response.IsSuccessStatusCode) {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    dynamic gists = JsonConvert.DeserializeObject(jsonResponse);
+
+                    foreach (var gist in gists) {
+                        var files = gist.files;
+                        foreach (var file in files) {
+                            string gistFileName = file.Name.ToString();
+                            if (gistFileName.Equals(fileName, StringComparison.OrdinalIgnoreCase)) {
+                                return gist.id.ToString();
+                            }
+                        }
+                    }
+                }
+                else {
+                    MessageBox.Show("Failed to fetch Gists: " + response.ReasonPhrase);
+                }
+            }
+
+            return null;
         }
     }
 }
