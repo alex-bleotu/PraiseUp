@@ -18,9 +18,14 @@ namespace PraiseUp {
             textBox2.TabIndex = 1;
             textBox3.TabIndex = 2;
             textBox4.TabIndex = 3;
-            textBox5.TabIndex = 4;
-            textBox6.TabIndex = 5;
-            textBox7.TabIndex = 6;
+            textBox8.TabIndex = 4;
+            textBox9.TabIndex = 5;
+            textBox11.TabIndex = 6;
+            textBox12.TabIndex = 7;
+            textBox10.TabIndex = 8;
+            textBox5.TabIndex = 9;
+            textBox6.TabIndex = 10;
+            textBox7.TabIndex = 11;
         }
 
         public class Song {
@@ -32,6 +37,162 @@ namespace PraiseUp {
             public string initialChord { get; set; }
             public string order { get; set; }
             public string lyrics { get; set; }
+            public ExtraData extraData { get; set; }
+        }
+
+        public class ExtraData {
+            public string link { get; set; }
+            public string year { get; set; }
+            public string story { get; set; }
+            public List<string> verses { get; set; }
+            public List<string> keyWords { get; set; }
+        }
+
+        private string TranslateVerse(string verse) {
+            switch (verse) {
+                // Old Testament
+                case "Geneza":
+                    return "Genesis";
+                case "Exodul":
+                    return "Exodus";
+                case "Exod":
+                    return "Exodus";
+                case "Leviticul":
+                    return "Leviticus";
+                case "Numeri":
+                    return "Numbers";
+                case "Deuteronomul":
+                    return "Deuteronomy";
+                case "Deuteronom":
+                    return "Deuteronomy";
+                case "Iosua":
+                    return "Joshua";
+                case "Judecători":
+                    return "Judges";
+                case "Rut":
+                    return "Ruth";
+                case "1 Samuel":
+                    return "1 Samuel";
+                case "2 Samuel":
+                    return "2 Samuel";
+                case "1 Împărați":
+                    return "1 Kings";
+                case "2 Împărați":
+                    return "2 Kings";
+                case "1 Cronici":
+                    return "1 Chronicles";
+                case "2 Cronici":
+                    return "2 Chronicles";
+                case "Ezra":
+                    return "Ezra";
+                case "Neemia":
+                    return "Nehemiah";
+                case "Estera":
+                    return "Esther";
+                case "Iov":
+                    return "Job";
+                case "Psalmi":
+                    return "Psalms";
+                case "Proverbe":
+                    return "Proverbs";
+                case "Eclesiastul":
+                    return "Ecclesiastes";
+                case "Cântarea Cântărilor":
+                    return "Song of Solomon";
+                case "Isaia":
+                    return "Isaiah";
+                case "Ieremia":
+                    return "Jeremiah";
+                case "Plângerile lui Ieremia":
+                    return "Lamentations";
+                case "Ezechiel":
+                    return "Ezekiel";
+                case "Daniel":
+                    return "Daniel";
+                case "Osea":
+                    return "Hosea";
+                case "Ioel":
+                    return "Joel";
+                case "Amos":
+                    return "Amos";
+                case "Obadia":
+                    return "Obadiah";
+                case "Iona":
+                    return "Jonah";
+                case "Mica":
+                    return "Micah";
+                case "Naum":
+                    return "Nahum";
+                case "Habacuc":
+                    return "Habakkuk";
+                case "Țefania":
+                    return "Zephaniah";
+                case "Hagai":
+                    return "Haggai";
+                case "Zaharia":
+                    return "Zechariah";
+                case "Maleahi":
+                    return "Malachi";
+
+                // New Testament
+                case "Matei":
+                    return "Matthew";
+                case "Marcu":
+                    return "Mark";
+                case "Luca":
+                    return "Luke";
+                case "Ioan":
+                    return "John";
+                case "Faptele Apostolilor":
+                    return "Acts";
+                case "Romani":
+                    return "Romans";
+                case "1 Corinteni":
+                    return "1 Corinthians";
+                case "2 Corinteni":
+                    return "2 Corinthians";
+                case "Galateni":
+                    return "Galatians";
+                case "Efeseni":
+                    return "Ephesians";
+                case "Filipeni":
+                    return "Philippians";
+                case "Coloseni":
+                    return "Colossians";
+                case "1 Tesaloniceni":
+                    return "1 Thessalonians";
+                case "2 Tesaloniceni":
+                    return "2 Thessalonians";
+                case "1 Timotei":
+                    return "1 Timothy";
+                case "2 Timotei":
+                    return "2 Timothy";
+                case "Tit":
+                    return "Titus";
+                case "Filimon":
+                    return "Philemon";
+                case "Evrei":
+                    return "Hebrews";
+                case "Iacov":
+                    return "James";
+                case "1 Petru":
+                    return "1 Peter";
+                case "2 Petru":
+                    return "2 Peter";
+                case "1 Ioan":
+                    return "1 John";
+                case "2 Ioan":
+                    return "2 John";
+                case "3 Ioan":
+                    return "3 John";
+                case "Iuda":
+                    return "Jude";
+                case "Apocalipsa":
+                    return "Revelation";
+
+                default:
+                    return "Unknown Book";
+            }
         }
 
         private async void button2_Click(object sender, EventArgs e) {
@@ -43,6 +204,54 @@ namespace PraiseUp {
 
                     Guid id = Guid.NewGuid();
 
+                    List<string> keyWords = new List<string>();
+                    HashSet<string> uniqueKeyWords = new HashSet<string>();
+
+                    if (textBox12.Text.Length != 0) {
+                        var result = textBox12.Text.Trim().Split(' ');
+
+                        foreach (var word in result) {
+                            string translatedWord = await TranslateWithMyMemory(word, "ro", "en");
+
+                            translatedWord = Regex.Replace(translatedWord, @"[^\w\s]", "").ToLower();
+
+                            var splits = translatedWord.Split(' ');
+
+                            if (splits.Length == 1 && !uniqueKeyWords.Contains(translatedWord)) {
+                                uniqueKeyWords.Add(translatedWord);
+                            }
+                        }
+
+                        keyWords = new List<string>(uniqueKeyWords);
+                    }
+
+                    List<string> verses = new List<string>();
+                    if (textBox11.Text.Length != 0) {
+                        var words = textBox11.Text.Trim().Split(' ');
+                        for (int i = 0; i < words.Length; i++) {
+                            if (i < words.Length - 2 && (words[i] == "1" || words[i] == "2")) {
+                                string combinedBookName = words[i] + " " + words[i + 1];
+                                if (words[i + 2].Contains(":")) {
+                                    verses.Add(TranslateVerse(combinedBookName) + " " + words[i + 2]);
+                                    i += 2;
+                                }
+                            }
+                            else if (i < words.Length - 1 && words[i + 1].Contains(":")) {
+                                verses.Add(TranslateVerse(words[i]) + " " + words[i + 1]);
+                                i++;
+                            }
+                        }
+                    }
+
+
+                    var extraData = new ExtraData {
+                        link = textBox8.Text.Length == 0 ? null : textBox8.Text.Trim(),
+                        year = textBox9.Text.Length == 0 ? null : textBox9.Text.Trim(),
+                        story = textBox10.Text.Length == 0 ? null : textBox10.Text.Trim(),
+                        keyWords = keyWords.Count == 0 ? null : keyWords,
+                        verses = verses.Count == 0 ? null : verses
+                    };
+
                     var song = new Song {
                         id = "S" + id,
                         type = "song",
@@ -51,8 +260,11 @@ namespace PraiseUp {
                         cover = null,
                         initialChord = textBox3.Text.Trim(),
                         order = textBox4.Text.Length == 0 ? null : textBox4.Text.Trim(),
-                        lyrics = textBox7.Text.Trim()
+                        lyrics = textBox7.Text.Trim(),
+                        extraData = extraData
                     };
+
+                    MessageBox.Show(JsonConvert.SerializeObject(song, Formatting.Indented));
 
                     string fileName = song.title + ".json";
 
@@ -84,10 +296,32 @@ namespace PraiseUp {
                     textBox6.Text = "";
                     textBox7.Text = "";
                     textBox4.Text = "";
+                    textBox8.Text = "";
+                    textBox9.Text = "";
+                    textBox10.Text = "";
+                    textBox11.Text = "";
+                    textBox12.Text = "";
                 }
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message);
+                button2.Enabled = true;
+            }
+        }
+
+        private async Task<string> TranslateWithMyMemory(string text, string fromLanguage, string toLanguage) {
+            using (HttpClient client = new HttpClient()) {
+                string url = $"https://api.mymemory.translated.net/get?q={Uri.EscapeDataString(text)}&langpair={fromLanguage}|{toLanguage}";
+
+                HttpResponseMessage response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode) {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    dynamic json = JsonConvert.DeserializeObject(jsonResponse);
+                    return json.responseData.translatedText;
+                }
+                else {
+                    return text;
+                }
             }
         }
 
@@ -171,7 +405,13 @@ namespace PraiseUp {
             textBox6.Text = "";
             textBox7.Text = "";
             textBox4.Text = "";
+            textBox8.Text = "";
+            textBox9.Text = "";
+            textBox10.Text = "";
+            textBox11.Text = "";
+            textBox12.Text = "";
 
+            button2.Enabled = true;
             UpdateUI(true);
         }
 
