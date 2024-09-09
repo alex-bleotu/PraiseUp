@@ -3,7 +3,7 @@ import {
     MaterialIcons as MIcon,
 } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
-import React, { useContext, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
 import AnimatedTouchable from "../components/wrapers/animatedTouchable";
 import BottomSheetModal from "../components/wrapers/bottomSheetModal";
@@ -36,16 +36,22 @@ const chords = [
     "B",
 ];
 
+const chordCache: Record<string, string> = {};
+
 const chordChanger = (
     text: string,
     steps: number,
     useBrackets: boolean = true
 ): string => {
+    if (chordCache[text + steps]) {
+        return chordCache[text + steps];
+    }
     if (text === null) return "C";
 
     const regex = useBrackets
         ? /^\[([A-G]#?[a-zA-Z0-9]*)\]$/
         : /^([A-G]#?[a-zA-Z0-9]*)$/;
+
     const match = text.match(regex);
     if (!match) return text;
 
@@ -63,11 +69,14 @@ const chordChanger = (
     const newIndex = (rootIndex + steps + chords.length) % chords.length;
     const newChord = chords[newIndex] + suffix;
 
+    chordCache[text + steps] = newChord;
     return newChord;
 };
 
 const getStepsFromC = (chord: string) => {
-    const steps = chords.indexOf(chord);
+    const match = chord.match(/^([A-G]#?)(.*)$/);
+    if (!match) return null;
+    const steps = chords.indexOf(match[1]);
     return steps !== -1 ? steps : null;
 };
 
@@ -181,6 +190,7 @@ export const renderLyrics = (
                                                             : {
                                                                   alignSelf:
                                                                       "flex-start",
+                                                                  paddingVertical: 2,
                                                               }
                                                     }>
                                                     <Text
@@ -240,14 +250,29 @@ const Song = ({ route, navigation }: SongProps) => {
     const [isChordBottomSheetOpen, setChordBottomSheetOpen] = useState(false);
     const [steps, setSteps] = useState(0);
 
-    const buttonWidth = Dimensions.get("screen").width / 2 - 40;
-    const buttonsContainerWidth = buttonWidth * 2 + 65;
+    const buttonWidth = Dimensions.get("screen").width / 2 - 45;
+    const buttonsContainerWidth = buttonWidth * 2 + 75;
 
     const initialSteps = getStepsFromC(song.initialChord) || 0;
 
     if (song === null || song === undefined) return <Loading />;
 
     const hasChords = song.lyrics && song.lyrics.match(/\[.*?\]/);
+
+    const renderedLyrics = useMemo(() => {
+        return renderLyrics(song.lyrics, false, theme, lyricsSize, steps);
+    }, [song.lyrics, lyricsSize, steps, theme]);
+
+    const renderedChords = useMemo(() => {
+        return renderLyrics(
+            song.lyrics,
+            true,
+            theme,
+            lyricsSize,
+            steps,
+            chords
+        );
+    }, [song.lyrics, lyricsSize, steps, theme, chords]);
 
     return (
         <StackPage
@@ -322,6 +347,7 @@ const Song = ({ route, navigation }: SongProps) => {
                                 styles.chordButton,
                                 {
                                     width: 40,
+                                    marginLeft: 5,
                                 },
                             ]}
                             onPress={() => {
@@ -329,7 +355,7 @@ const Song = ({ route, navigation }: SongProps) => {
                             }}>
                             <Text
                                 bold
-                                fontSize={20}
+                                fontSize={18}
                                 style={{
                                     marginTop: -1,
                                 }}>
@@ -355,13 +381,7 @@ const Song = ({ route, navigation }: SongProps) => {
                         ]}
                         bottom={hasChords ? 40 : 5}
                         top={7}>
-                        {renderLyrics(
-                            song.lyrics,
-                            false,
-                            theme,
-                            lyricsSize,
-                            steps
-                        )}
+                        {renderedLyrics}
                     </ScrollView>
                     <ScrollView
                         style={[
@@ -375,14 +395,7 @@ const Song = ({ route, navigation }: SongProps) => {
                         ]}
                         bottom={37}
                         top={10}>
-                        {renderLyrics(
-                            song.lyrics,
-                            true,
-                            theme,
-                            lyricsSize,
-                            steps,
-                            chords
-                        )}
+                        {renderedChords}
                     </ScrollView>
                 </View>
             </View>
@@ -709,6 +722,9 @@ const Song = ({ route, navigation }: SongProps) => {
                 onClose={() => {
                     setBottomSheetOpen(false);
                 }}
+                extraActions2={() => {
+                    navigation.navigate("AddToAlbum", { currentData: song });
+                }}
             />
         </StackPage>
     );
@@ -775,6 +791,7 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 6,
         borderTopLeftRadius: 6,
         paddingHorizontal: 6,
+        paddingVertical: 2,
         alignSelf: "flex-start",
     },
     emptyLine: {

@@ -29,10 +29,7 @@
             [
                 "expo-font",
                 {
-                    "fonts": [
-                        "./assets/fonts/patrickHand.ttf",
-                        "./assets/fonts/robotoMono.ttf"
-                    ]
+                    "fonts": ["./assets/fonts/patrickHand.ttf"]
                 }
             ]
         ],

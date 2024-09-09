@@ -35,6 +35,7 @@ export const AuthProvider = ({
         syncFavorites,
         syncPersonalAlbumsIds,
         syncPersonalAlbums,
+        updatePersonalAlbums,
     } = useContext(DataContext);
     const { getPersonalAlbumsList } = useContext(ServerContext);
     const { user, setUser } = useContext(UserContext);
@@ -45,8 +46,11 @@ export const AuthProvider = ({
         const load = async () => {
             const user = await AsyncStorage.getItem("user");
 
-            if (user) setUser(JSON.parse(user));
-            else setUser(null);
+            if (user) {
+                const userParsed = JSON.parse(user);
+                setUser(userParsed);
+                await updatePersonalAlbums(userParsed);
+            } else setUser(null);
 
             setLoading(false);
         };
@@ -327,7 +331,6 @@ export const AuthProvider = ({
     return (
         <AuthContext.Provider
             value={{
-                user,
                 loading,
                 setUser,
                 login,

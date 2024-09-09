@@ -14,6 +14,7 @@ import { coversList } from "../utils/covers";
 import { LoadingContext } from "./loading";
 import { RefreshContext } from "./refresh";
 import { ServerContext } from "./server";
+import { UserContext } from "./user";
 
 export const DataContext = createContext<any>(null);
 
@@ -45,8 +46,10 @@ export const DataProvider = ({
 }: {
     children: ReactNode | ReactNode[];
 }) => {
+    const { setUser } = useContext(UserContext);
     const { updateRefresh } = useContext(RefreshContext);
     const {
+        getUserData,
         addFavorite,
         removeFavorite,
         createPersonalAlbum: createPersonalAlbumServer,
@@ -82,6 +85,9 @@ export const DataProvider = ({
                 "language",
                 "personalAlbumsIds",
             ]);
+            console.log("Keys: " + (await AsyncStorage.getAllKeys()));
+
+            setUser(null);
 
             updateRefresh();
         };
@@ -147,7 +153,7 @@ export const DataProvider = ({
                 );
             }
 
-            return { sortedSongs, sortedAlbums };
+            return { sortedSongs, sortedAlbums, storedPersonalAlbums };
         };
 
         const checkForUpdates = async (
@@ -302,8 +308,6 @@ export const DataProvider = ({
         songs: string[] = songIds,
         albums: string[] = albumIds
     ) => {
-        console.log("Checking for updates...");
-
         const data = await checkUpdates();
 
         if (data) {
@@ -521,17 +525,17 @@ export const DataProvider = ({
     };
 
     const updateDate = async (id: string) => {
-        if (id.includes("S")) {
+        if (id.startsWith("S")) {
             const song = await readSong(id);
             song.date = new Date().toISOString();
 
             await writeSong(song);
-        } else if (id.includes("A")) {
+        } else if (id.startsWith("A")) {
             const album = await readAlbum(id);
             album.date = new Date().toISOString();
 
             await writeAlbum(album);
-        } else if (id.includes("P")) {
+        } else if (id.startsWith("P")) {
             const album = await readAlbum(id);
             album.date = new Date().toISOString();
 
@@ -557,9 +561,9 @@ export const DataProvider = ({
     };
 
     const getById = async (id: string) => {
-        if (id.includes("S")) return getSongById(id);
-        if (id.includes("A")) return getAlbumById(id);
-        if (id.includes("P")) return getPersonalAlbumsById(id);
+        if (id.startsWith("S")) return getSongById(id);
+        if (id.startsWith("A")) return getAlbumById(id);
+        if (id.startsWith("P")) return getPersonalAlbumsById(id);
 
         return null;
     };
@@ -590,12 +594,18 @@ export const DataProvider = ({
                 console.error("Error deleting song file:", error);
             }
 
-            if (id.includes("S")) {
+            console.log("Deleted file:", id);
+
+            if (id.startsWith("S")) {
                 setSongIds((prevArray) =>
                     prevArray.filter((songId) => songId !== id)
                 );
-            } else if (id.includes("A")) {
+            } else if (id.startsWith("A")) {
                 setAlbumIds((prevArray) =>
+                    prevArray.filter((albumId) => albumId !== id)
+                );
+            } else if (id.startsWith("P")) {
+                setPersonalAlbumsIds((prevArray) =>
                     prevArray.filter((albumId) => albumId !== id)
                 );
             }
@@ -768,13 +778,13 @@ export const DataProvider = ({
         isFavorite: boolean,
         update: boolean = true
     ) => {
-        if (id.includes("S")) {
+        if (id.startsWith("S")) {
             const song = await getSongById(id);
             song.favorite = isFavorite;
             song.date = new Date().toISOString();
 
             await writeSong(song);
-        } else if (id.includes("A")) {
+        } else if (id.startsWith("A")) {
             const album = await getAlbumById(id);
             album.favorite = isFavorite;
             album.date = new Date().toISOString();
@@ -1045,7 +1055,20 @@ export const DataProvider = ({
         updateRefresh();
     };
 
+    const updatePersonalAlbums = async (user: User) => {
+        const userData = await getUserData(user);
+
+        if (userData.personalAlbumsIds) {
+            await syncPersonalAlbumsIds(userData.personalAlbumsIds);
+            await syncPersonalAlbums(userData.personalAlbumsIds, user);
+        }
+    };
+
     const syncPersonalAlbumsIds = async (personalAlbumsList: string[]) => {
+        for (let i = 0; i < personalAlbumsList.length; i++)
+            if (!personalAlbumsIds.find((id) => id === personalAlbumsList[i]))
+                removeId(personalAlbumsList[i]);
+
         setPersonalAlbumsIds(personalAlbumsList);
     };
 
@@ -1054,6 +1077,7 @@ export const DataProvider = ({
             value={{
                 songIds,
                 albumIds,
+                personalAlbumsIds,
                 updateDate,
                 readSong,
                 readAlbum,
@@ -1087,6 +1111,7 @@ export const DataProvider = ({
                 syncPersonalAlbums,
                 syncPersonalAlbumsIds,
                 updateData,
+                updatePersonalAlbums,
             }}>
             {children}
         </DataContext.Provider>

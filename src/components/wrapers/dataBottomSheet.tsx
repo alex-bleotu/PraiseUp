@@ -1,6 +1,5 @@
 import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
-import * as Linking from "expo-linking";
 import React, { useContext, useEffect, useState } from "react";
 import { Image, Share, StyleSheet, TouchableOpacity, View } from "react-native";
 import { AlbumType, DataContext, SongType } from "../../context/data";
@@ -159,10 +158,12 @@ const DataBottomSheet = ({
 
                                         updateRefresh();
 
-                                        const fav =
-                                            await getFavoriteSongsAlbum();
+                                        if (extraData.type === "favorite") {
+                                            const fav =
+                                                await getFavoriteSongsAlbum();
 
-                                        updateData && updateData(fav);
+                                            updateData && updateData(fav);
+                                        }
                                     }
                                 }}>
                                 <View style={styles.button}>
@@ -272,16 +273,16 @@ const DataBottomSheet = ({
                         <TouchableOpacity
                             activeOpacity={theme.activeOpacity}
                             onPress={async () => {
-                                let url;
+                                let url = "test";
 
-                                if (data.type === "song")
-                                    url = Linking.createURL(`song/${data.id}`);
-                                else if (data.type === "album")
-                                    url = Linking.createURL(`album/${data.id}`);
-                                else if (data.type === "personal")
-                                    url = Linking.createURL(
-                                        `personal/${data.id}`
-                                    );
+                                // if (data.type === "song")
+                                //     url = Linking.createURL(`song/${data.id}`);
+                                // else if (data.type === "album")
+                                //     url = Linking.createURL(`album/${data.id}`);
+                                // else if (data.type === "personal")
+                                //     url = Linking.createURL(
+                                //         `personal/${data.id}`
+                                //     );
 
                                 try {
                                     await Share.share({

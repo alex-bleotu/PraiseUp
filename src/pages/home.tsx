@@ -61,9 +61,7 @@ const Home = ({ navigation }: { navigation: any }) => {
             <ScrollView bottom={15} showScroll={false}>
                 <View style={styles.recent}>
                     {recent.map((data: SongType | AlbumType, index: number) => {
-                        if (index % 2 !== 0) return null;
-
-                        const data2 = recent[index + 1];
+                        if (index > 2) return null;
 
                         return (
                             <View key={index} style={styles.row}>
@@ -71,6 +69,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                                     {data.type === "song" ? (
                                         <SongCover
                                             song={data}
+                                            fullWidth
                                             navigation={navigation}
                                             onLongPress={() => {
                                                 setCurrentData(data);
@@ -80,6 +79,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                                     ) : (
                                         <AlbumCover
                                             album={data}
+                                            fullWidth
                                             navigation={navigation}
                                             onLongPress={() => {
                                                 setCurrentData(data);
@@ -88,7 +88,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                                         />
                                     )}
                                 </View>
-                                <View style={{ width: 10 }} />
+                                {/* <View style={{ width: 10 }} />
                                 {data2 && (
                                     <View key={index + 1}>
                                         {data2.type === "song" ? (
@@ -111,7 +111,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                                             />
                                         )}
                                     </View>
-                                )}
+                                )} */}
                             </View>
                         );
                     })}
@@ -198,10 +198,7 @@ export default Home;
 const styles = StyleSheet.create({
     row: {
         display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginTop: 5,
-        marginBottom: 5,
+        marginVertical: 5,
         width: "100%",
     },
     songsContainer: {

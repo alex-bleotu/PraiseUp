@@ -14,8 +14,13 @@ export const RecentProvider = ({
         null
     );
 
-    const { getRandom, getPersonalAlbumsById, getSongById, getAlbumById } =
-        useContext(DataContext);
+    const {
+        getRandom,
+        getPersonalAlbumsById,
+        getSongById,
+        personalAlbumsIds,
+        getAlbumById,
+    } = useContext(DataContext);
     const { loading } = useContext(LoadingContext);
 
     useEffect(() => {
@@ -47,6 +52,39 @@ export const RecentProvider = ({
 
         saveRecent();
     }, [recent]);
+
+    useEffect(() => {
+        const update = async () => {
+            if (recent === null) return;
+
+            const newRecent = await Promise.all(
+                recent.map(async (item) => {
+                    if (item.id.startsWith("P")) {
+                        if (
+                            personalAlbumsIds.find(
+                                (id: string) => id === item.id
+                            ) === undefined
+                        )
+                            return null;
+
+                        return item;
+                    }
+
+                    return item;
+                })
+            ).then((items) => items.filter((item) => item !== null));
+
+            while (newRecent.length < 6) {
+                const newSong = (await getRandom(1))[0];
+                if (newRecent.find((item) => item.id === newSong.id)) continue;
+                newRecent.push(newSong);
+            }
+
+            setRecent(newRecent);
+        };
+
+        update();
+    }, [personalAlbumsIds]);
 
     const addToRecent = (data: SongType | AlbumType) => {
         if (recent === null) return;

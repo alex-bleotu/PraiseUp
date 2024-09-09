@@ -1,197 +1,235 @@
 {
     "songs": [
         {
-            "id": "S1",
+            "id": "S8384698f-7c39-4339-8d3e-5621e6aa0ed6",
             "type": "song",
-            "title": "Song 1",
-            "artist": "Artist Name",
-            "cover": "default1",
-            "order": null,
+            "title": "Dumnezeu Suveran",
+            "artist": "Autentic Worship",
+            "cover": null,
             "initialChord": "C",
-            "lyrics": "[Am]I took a step into the [G]night,\nWith [C]dreams that glimmered in the [F]light,\nA [Am]path unknown, a heart so [G]bold,\nSeeking [C]stories yet un[F]told.\n\nOh, my [C]journey, my [G]tale to [Am]weave,\nThrough the [F]darkness, I be[C]lieve,\nWith every [G]step, a new [Am]sunrise,\nIn this [F]world of endless [C]skies.\n\n[Am]Mountains high and [G]valleys low,\nIn the [C]rain and in the [F]snow,\nEvery [Am]challenge, every [G]fear,\nMakes the [C]purpose crystal [F]clear.\n\nOh, my [C]journey, my [G]tale to [Am]weave,\nThrough the [F]darkness, I be[C]lieve,\nWith every [G]step, a new [Am]sunrise,\nIn this [F]world of endless [C]skies.\n\nAnd if I [Am]fall, I'll rise a[G]gain,\nFor every [C]loss, a chance to [F]gain,\nWith [Am]courage as my [G]guiding star,\nI'll [C]travel near, I'll travel [F]far.\n\nOh, my [C]journey, my [G]tale to [Am]weave,\nThrough the [F]darkness, I be[C]lieve,\nWith every [G]step, a new [Am]sunrise,\nIn this [F]world of endless [C]skies.\nSo here's to [Am]paths that lie a[G]head,\nTo every [C]word we've yet to [F]be said,\nWith [Am]hope and love, and [G]dreams so wide,\nWe'll [C]find our place, and there a[F]bide."
+            "order": "S1 R1 S2 R2x4 R3",
+            "lyrics": "S1\r\nC[C]ine e puternic Domn biruitor?\r\nC[F]ine e al lumii vrednic, Salvator?\r\nN[Am]umai Tu dai viață p[F]rin al Tău Cuv[C]ânt!\r\nN[F]imeni n-a iubit ca Tine, Rege S[G]fânt!\r\n\r\nR1\r\nÎn veci îți v[F]om cânta,\r\nT[C]e lăudăm al nostru Î[G]mpărat,\r\nA[Am]totputernic, veșnic, n[F]eschimbat,\r\nE[C]ști Dumnezeul Suver[Am]an, Minun[G]at!\r\nEști Înălț[C]at!\r\n\r\nS2\r\nD[C]oar prin jertfa Ta iertare ne-ai adus,\r\nH[F]arul Tău etern ne-a transformat Isus\r\nD[Am]ragostea și mila T[F]a ne-au copleș[C]it\r\nL[F]iberi proclamăm: Cristos a birui[G]t!\r\n\r\nR2\r\nÎn veci îți v[F]om cânta,\r\nT[C]e lăudăm al nostru Î[G]mpărat,\r\nA[Am]totputernic, veșnic, n[F]eschimbat,\r\nE[C]ști Dumnezeul Suver[Am]an, Înălț[G]at!\r\n\r\nR3\r\nÎn veci îți v[F]om cânta,\r\nT[C]e lăudăm al nostru Î[G]mpărat,\r\nA[Am]totputernic, veșnic, n[F]eschimbat,\r\nE[C]ști Dumnezeul Suver[Am]an, Minun[G]at!\r\nEști Înălț[F]at!",
+            "extraData": {
+                "link": "https://youtu.be/fZVF4oHLAoc",
+                "year": null,
+                "originalTitle": null,
+                "verses": null
+            }
         },
         {
-            "id": "S2",
+            "id": "S18e2f8af-9fd8-4395-ae78-473b43520df2",
             "type": "song",
-            "title": "Song 2",
-            "artist": "Artist Name",
-            "cover": "default2",
-            "order": null,
+            "title": "Tu ești scutul și tăria mea",
+            "artist": "Sunny Tranca",
+            "cover": null,
+            "initialChord": "D",
+            "order": "S1 S2 Rx2 S2 Rx2 B Rx2",
+            "lyrics": "S1\r\nTu ești sc[Bm]utul și tăr[F#m]ia mea,\r\nÎn [G]Tine mă încr[D]ed[A].\r\nÎn Tine [B]m[m]i se-ncrede [F#m]inima,\r\nDe-ac[G]eea nu mă t[F#]em!\r\n\r\nS2\r\nTu ești sc[Bm]utul și tăr[F#m]ia mea,\r\nÎn [G]Tine mă încr[D]ed[A].\r\nÎn Tine [B]m[m]i se-ncrede [F#m]inima,\r\nDe-ac[G]eea nu mă t[F#]em!\r\n\r\nR\r\nD[D]oamne, Tu ești b[A]un\r\nCăci în v[G]eac ține îndur[A]area\r\nȘi cre[Bm]dinciosia T[G]a\r\nNu [A]mă va părăs[D]i!\r\n\r\nB\r\nAle[G]luia, Dumne[D]zeu e dragost[A]e!\r\nAle[G]luia, în mine f[D]rică nu mai e[A]!\r\nAle[G]luia, Dumne[D]zeu e dragost[A]e!\r\nAle[G]luia, în mine f[D]rică nu mai e[F#]!",
+            "extraData": {
+                "link": "https://youtu.be/YZ3yqs7S9DM",
+                "year": null,
+                "originalTitle": null,
+                "verses": [
+                    "Psalms 28:7",
+                    "Psalms 18:2",
+                    "Psalms 3:3",
+                    "Psalms 84:9",
+                    "Psalms 119:114"
+                ]
+            }
+        },
+        {
+            "id": "Sb62b0a72-6b67-44ff-8cf8-841d92466472",
+            "type": "song",
+            "title": "Biruitor",
+            "artist": "Studenți Poarta Cerului",
+            "cover": null,
+            "initialChord": "D",
+            "order": "S1 S2 R S3 R Bx2 Rx2",
+            "lyrics": "S1\r\n[D]Pe câmpul de război Tu ești cu mine,\r\n[Bm]Mă-mbărbătezi să lupt ca un viteaz.\r\n[G]Îmi pui în mână sabia și scutul\r\n[A]Și îmi promiți că singur nu mă lași!\r\n\r\nS2\r\n[D]Mă ține tare-a Ta făgăduință,\r\n[Bm]Că lupta după ce-o voi termina,\r\n[G]Îmi voi primi din mâna Ta cununa\r\n[A]Și-n carul biruinței voi umbla!\r\n\r\nR\r\n[G]Biruitor eu voi umbl[D]a,\r\nNu e dușm[Bm]an împotrivă să-mi ste[A]a!\r\nTu mă cond[G]uci cu dreapta T[D]a,\r\nIsuse, a [Bm]Ta e victori[A]a!\r\n\r\nS3\r\nPe marea-nvolburată ești cu mine,\r\nCuvântul Tău mi-e ancoră și far.\r\nMă ține tare-a Ta promisiune:\r\nCă-n zori de zi ajunge-vom la mal!\r\n\r\nB\r\n[Em]De-i lupta-ncrâncenată\r\n[Bm]Și vin săgeți arzând,\r\n[D]Nu tremur, nu mi-e teamă,\r\n[A]Știu lângă Cine lupt!",
+            "extraData": {
+                "link": "https://youtu.be/rgo4q4ac03Y",
+                "year": null,
+                "originalTitle": null,
+                "verses": ["1 John 5:5", "1 Corinthians 15:57"]
+            }
+        },
+        {
+            "id": "Sc5f71251-5573-4e91-a7d7-aa424dec4fcf",
+            "type": "song",
+            "title": "Un cântec de laudă",
+            "artist": "Darlene Zschech",
+            "cover": null,
             "initialChord": "E",
-            "lyrics": "[Am]I took a step into the [G]night,\nWith [C]dreams that glimmered in the [F]light,\nA [Am]path unknown, a heart so [G]bold,\nSeeking [C]stories yet un[F]told.\n\nOh, my [C]journey, my [G]tale to [Am]weave,\nThrough the [F]darkness, I be[C]lieve,\nWith every [G]step, a new [Am]sunrise,\nIn this [F]world of endless [C]skies.\n\n[Am]Mountains high and [G]valleys low,\nIn the [C]rain and in the [F]snow,\nEvery [Am]challenge, every [G]fear,\nMakes the [C]purpose crystal [F]clear.\n\nOh, my [C]journey, my [G]tale to [Am]weave,\nThrough the [F]darkness, I be[C]lieve,\nWith every [G]step, a new [Am]sunrise,\nIn this [F]world of endless [C]skies.\n\nAnd if I [Am]fall, I'll rise a[G]gain,\nFor every [C]loss, a chance to [F]gain,\nWith [Am]courage as my [G]guiding star,\nI'll [C]travel near, I'll travel [F]far.\n\nOh, my [C]journey, my [G]tale to [Am]weave,\nThrough the [F]darkness, I be[C]lieve,\nWith every [G]step, a new [Am]sunrise,\nIn this [F]world of endless [C]skies.\nSo here's to [Am]paths that lie a[G]head,\nTo every [C]word we've yet to [F]be said,\nWith [Am]hope and love, and [G]dreams so wide,\nWe'll [C]find our place, and there a[F]bide."
+            "order": "Sx2 Pc R S Pc R O",
+            "lyrics": "S\r\nUn [E]cântec de laudă în inima mea,\r\nUn [A]cântec ce Tu l-ai [E]pus.\r\nMi-ai dat liber[B]tate\r\nCa să pot cânta din [A]nou.\r\nAi [E]rupt întunericul din viața mea,\r\nMi-ai [A]dat bucuria [E]Ta.\r\nAcum eu sunt [B]liber\r\nCa să pot cânta din [A]nou.[B]\r\n\r\nPc\r\nIsus, Tu [A]m-ai răscumpă[B]rat,\r\nDuhul Tău Sfânt [A]m-a e[B]libe[E]rat.[E]\r\n\r\nR\r\nDragostea [B]Ta îmi dă cu[C#m7]raj\r\nSă alerg către [A]țintă ne-nce[E]tat.\r\nDoar Tu ești [B]Domnul meu,\r\nTe voi [A]binecuvân[B]ta.\r\n[E]Isus, ești [B]fericirea [C#]m[7m]ea.\r\nEu cânt de bucu[A]rie-n fața [E]Ta.\r\nDoar Tu ești [B]Domnul meu,\r\nTe voi [C#m7]bine[A]cuvân[B]ta.\r\n\r\nO\r\nUn [E]cântec de laudă în inima mea,\r\nUn [A]cântec ce Tu l-ai [E]pus.\r\nMi-ai dat liber[B]tate\r\nCa să pot cânta din [A]nou.",
+            "extraData": {
+                "link": "https://youtu.be/YY-TILjZ-wA",
+                "year": "1999",
+                "originalTitle": "Free to dance",
+                "verses": [
+                    "Psalms 147:1",
+                    "Psalms 150:1-6",
+                    "Psalms 104:33",
+                    "Psalms 71:8",
+                    "Romans 15:9",
+                    "Isaiah 12:5",
+                    "Psalms 100:1-5",
+                    "Hebrews 2:10-12",
+                    "Galatians 5:1",
+                    "Galatians 5:13",
+                    "John 8:32",
+                    "2 Corinthians 3:17",
+                    "John 1:5",
+                    "1 John 1:5-7",
+                    "Colossians 1:13",
+                    "Luke 1:68",
+                    "Unknown Book 37:4",
+                    "Philippians 4:4",
+                    "Psalms 84:2"
+                ]
+            }
         },
         {
-            "id": "S3",
+            "id": "Sbdcd6c28-e624-4973-9512-df19b6931e68",
             "type": "song",
-            "title": "Song 3",
-            "artist": "Artist Name",
-            "cover": "default3",
-            "order": null,
-            "initialChord": null,
-            "lyrics": "I took a step into the night,\nWith dreams that glimmered in the light,\nA path unknown, a heart so bold,\nSeeking stories yet untold.\n\nOh, my journey, my tale to weave,\nThrough the darkness, I believe,\nWith every step, a new sunrise,\nIn this world of endless skies.\n\nMountains high and valleys low,\nIn the rain and in the snow,\nEvery challenge, every fear,\nMakes the purpose crystal clear.\n\nOh, my journey, my tale to weave,\nThrough the darkness, I believe,\nWith every step, a new sunrise,\nIn this world of endless skies.\n\nAnd if I fall, I'll rise again,\nFor every loss, a chance to gain,\nWith courage as my guiding star,\nI'll travel near, I'll travel far.\n\nOh, my journey, my tale to weave,\nThrough the darkness, I believe,\nWith every step, a new sunrise,\nIn this world of endless skies.\nSo here's to paths that lie ahead,\nTo every word we've yet to be said,\nWith hope and love, and dreams so wide,\nWe'll find our place, and there abide."
-        },
-        {
-            "id": "S4",
-            "type": "song",
-            "title": "Song 4",
-            "artist": "Artist Name",
-            "cover": "default4",
-            "order": null,
-            "initialChord": null,
-            "lyrics": "[D]Nu m-ai jude[E]cat după drep[F#m][E]ta[D]te"
-        },
-        {
-            "id": "S5",
-            "type": "song",
-            "title": "Song 5",
-            "artist": "Artist Name",
+            "title": "Iubirea Ta",
+            "artist": "Tabăra 477",
             "cover": null,
-            "order": null,
-            "initialChord": null,
-            "lyrics": ""
+            "initialChord": "C",
+            "order": "Sx2 Pc R1x2 Pc R1x2 R2x2 R1x2 R2x2",
+            "lyrics": "S\r\nIubirea [C]Ta este-a[F]tât de [C]mare\r\n[F]Plină e [C]inima [G]mea\r\nSă te cu[C]nosc, în a [F]Ta splen[C]doare\r\n[F]Este do[C]rința [G]mea\r\n\r\nPc\r\nRoua [F]zorilor, bezna [C]nopților,\r\nÎnăl[Am]țimi de munți, și-n [G]adânc de mări,\r\nPână la [F]marginile pă[C]mântului\r\nSe[Am] vede bunatatea [G]Lui\r\n\r\nR1\r\nDomn al mi[F]nunilor,\r\nPuternic C[C]reator\r\nTu spui doar [Am]un cuvânt\r\nȘi [G]totul e nou!\r\n\r\nR2\r\nIstoria [F]ai schimbat\r\nCând ne-ai răs[C]cumpărat\r\nTrecutul [Am]e-ngropat\r\nȘi [G]toate sunt noi.",
+            "extraData": {
+                "link": "https://youtu.be/x0AwI5pzD8o",
+                "year": "2018",
+                "originalTitle": null,
+                "verses": null
+            }
         },
         {
-            "id": "S6",
+            "id": "S7a43979a-d7bc-4bef-8f56-1d5c41fa5c5b",
             "type": "song",
-            "title": "Song 6",
-            "artist": "Artist Name",
+            "title": "Nu e munte prea mare",
+            "artist": "Tabăra 477",
             "cover": null,
-            "initialChord": null,
-            "order": null,
-            "lyrics": ""
+            "initialChord": "G",
+            "order": "S1 R1x2 S2 R1 R2 B1 B2 R1x6",
+            "lyrics": "S1\r\nEști M[G]arel[Am7]e „Eu s[Em7]unt”\r\nÎn lum[G]ina umbrei T[Am7]ale mă asc[Em7]und\r\nAc[G]oper[Am7]it de h[Em7]ar\r\nMă o[G]dihnesc at[Am7]unci când Tu a[Em7]pari\r\n\r\nR1\r\nNu e m[G]unte prea mare\r\nNu-i p[D]ustiu prea uscat\r\nNu e v[Am7]ale prea adâncă\r\nNu-i ni[C]mic mult prea greu\r\nN[D]imic mult prea greu\r\n\r\nS2\r\nEste p[G]ace î[Am]n furt[Em]uni\r\nLa Cuv[G]ântul Tău și s[Am]tele se sup[Em]un\r\nMi-ai d[G]at put[Am]erea T[Em]a\r\nSă fiu mai mult dec[D]ât eu pot vis[C]a\r\n\r\nR2\r\nNu e m[G]unte prea mare\r\nNu-i p[D]ustiu prea uscat\r\nNu e v[Am7]ale prea adâncă\r\nNu-i ni[C]mic mult prea greu\r\nN[D]imic mult prea gre[G]u\r\n\r\nB1\r\nȘi oric[C]e s-ar întâmpla\r\nTu răm[G]âi de partea mea\r\nNu-i nim[Am7]ic prea greu\r\nPentru D[G]omnul meu\r\nUniv[C]ersul de-ar cădea\r\nTu res[G]crii istoria\r\nNu-i nim[Am7]ic prea greu\r\nPentru D[G]omnul meu\r\n\r\nB2\r\nȘi oric[C]e s-ar întâmpla\r\nTu răm[G]âi de partea mea\r\nNu-i nim[Am7]ic prea greu\r\nPentru D[G]omnul meu\r\nUniv[C]ersul de-ar cădea\r\nTu res[G]crii istoria\r\nNu-i nim[Am7]ic prea greu\r\nPentru D[D]omnul meu",
+            "extraData": {
+                "link": "https://youtu.be/ojdbc-ge8qs",
+                "year": "2019",
+                "originalTitle": null,
+                "verses": null
+            }
         },
         {
-            "id": "S7",
+            "id": "Sef30baa4-0bf6-4fa3-9819-5249889a30a4",
             "type": "song",
-            "title": "Song 7",
-            "artist": "Artist Name",
+            "title": "Fii binecuvântat",
+            "artist": "Matt & Beth Redman",
             "cover": null,
-            "initialChord": null,
-            "order": null,
-            "lyrics": ""
+            "initialChord": "A",
+            "order": "S1 Pc R S2 Pc R B R",
+            "lyrics": "S1\r\n[A]Fii binecu[E]vântat când pă[F#]m[7m]ântul e [D]săturat,\r\nCând [A]ploaia dă pe[E]ste el, fii [D]binecuvântat!\r\n[A]Fii binecu[E]vântat când mă [F#m7]aflu pe păm[D]ânt uscat\r\nȘi pă[A]șesc singur [E]prin pustiu, fii [D]binecuvântat!\r\n\r\nPc\r\n[A]Fiecare [E]laudă [F#m7]Ție ți-o [D]dau,\r\n[A]Când noaptea [E]se apropie [F#m7]Te voi lău[D]da!\r\n\r\nR\r\nBinecuvân[A]tat fie E[E]l, binecuvân[F#m7]ta[D]t!\r\nBinecuvân[A]tat fie E[E]l, binecuvân[F#m7]tăm Numele [D]Său!\r\n\r\nS2\r\nFii binecuvântat când Soarele-i din nou pe cer,\r\nCând toate sunt cum le-ai creat, fii binecuvântat!\r\nFii binecuvântat când drumu-i plin de suferinți,\r\nChiar dacă plâng și-mi este greu, fii binecuvântat!\r\n\r\nB\r\nPri[A]mește lau[E]da,\r\nEști [F#m7]vrednic Dumne[D]zeu!\r\nÎmi [A]cântă ini[E]ma,\r\nFii [F#m7]binecuvân[D]tat!",
+            "extraData": {
+                "link": "https://youtu.be/98oRfvtdiBo",
+                "year": "2002",
+                "originalTitle": "Blessed Be Your Name",
+                "verses": [
+                    "Ephesians 1:3",
+                    "Psalms 34:1",
+                    "Psalms 63:3-4",
+                    "Job 1:12",
+                    "Habakkuk 3:17-18",
+                    "Luke 17:11-19"
+                ]
+            }
         },
         {
-            "id": "S8",
+            "id": "Sd76ad79a-2dd2-40cd-9fbf-c9b0747184e5",
             "type": "song",
-            "title": "Song 8",
-            "artist": "Artist Name",
+            "title": "Dumnezeu e tăria mea",
+            "artist": "Rich Mullins",
             "cover": null,
-            "initialChord": null,
-            "order": null,
-            "lyrics": ""
+            "initialChord": "Em",
+            "order": "S1 R S2 Rx2",
+            "lyrics": "S1\r\nCând [Em]în zare se ivește solul celui necurat,\r\nDum[C]nezeu e [D]tăria me[Em]a!\r\n[Em]Când armatele de duhuri cerul au întunecat,\r\n[C]Dumnezeu e [D]tăria[Em] mea!\r\n[Am]Când tot iadul stă-n picioare pregătit pentru război,\r\nCând[C] simt că sufletu-mi se zbate prins[D] în cursa[Em] grea;\r\n[Am]Mă aplec în rugăciune și-aștept ajutorul slavei,\r\n[C]Dumnezeu e [D]tăria[Em] mea!\r\n\r\nR\r\nDum[C]nezeu e tăria[G] mea,\r\nAdă[D]post, pentru sufletul[Em] meu;\r\nAjutor, [C]când povara e[G] grea,\r\nDum[C]nezeu e [D]tăria[Em] mea!\r\n\r\nS2\r\nDumnezeu are putere ca în cer și pe pământ,\r\nDumnezeu e tăria mea!\r\nTot ce-n lume se întâmplă este scris și în Cuvânt,\r\nDumnezeu e tăria mea!\r\nÎncercarea când e mare și se pare că mă-ngroapă,\r\nÎntunericul e gros și nu mai pot vedea.\r\nPlec și fruntea și genunchii,\r\nDar înalț spre ceruri duhul\r\nDumnezeu e scăparea mea!",
+            "extraData": {
+                "link": "https://youtu.be/nBnzAepXOE8",
+                "year": "1988",
+                "originalTitle": "Awesome God",
+                "verses": [
+                    "Exodus 15:2",
+                    "Psalms 22:19",
+                    "Psalms 28:7",
+                    "Psalms 18:1-2",
+                    "Psalms 17:7",
+                    "Psalms 36:7",
+                    "Psalms 59:16-17",
+                    "Joshua 1:9",
+                    "Deuteronomy 33:27",
+                    "2 Samuel 22:3",
+                    "Psalms 61:3",
+                    "Psalms 62:7",
+                    "Psalms 71:3",
+                    "Psalms 91:9",
+                    "Psalms 94:22",
+                    "Psalms 118:8-9",
+                    "Proverbs 18:10",
+                    "Psalms 46:1",
+                    "Psalms 62:8"
+                ]
+            }
         },
         {
-            "id": "S9",
+            "id": "S237e50bb-c1f1-4dfe-aa75-43efd6297db0",
             "type": "song",
-            "title": "Song 9",
-            "artist": "Artist Name",
+            "title": "A fost Isus",
+            "artist": "Emma Repede, Adi Kovaci",
             "cover": null,
-            "initialChord": null,
-            "order": null,
-            "lyrics": ""
+            "initialChord": "E",
+            "order": "S1 S2 R1 S3 R2 B R1",
+            "lyrics": "S1\r\n[C]ând am [E]încercat singur să m-ajut\r\nCând am [G#m]încercat să lupt, eu am căzut\r\nPe toate că[A]ile pe care eu um[F#m]blam\r\nA fost I[E]sus.\r\n\r\nS2\r\nCând tot [E]ce-am clădit în viață s-a sfărmat\r\nIar pri[G#m]etenii pe rând s-au depărtat\r\nEu nu ve[A]deam atunci dar pot să văd a[F#m]cum\r\nA fost I[E]sus.[B]\r\n\r\nR1\r\nÎn tă[C#m]cere, în durere\r\nÎn aștep[A]tare-n clipe grele\r\nO co[E]moară ascuns-a fost în întu[B]neric\r\nZi de [C#m]zi, în orice vreme\r\nPe unde-am [A]fost, pe-unde voi merge\r\nChiar și [E]când eu nu știam ce e `nain[B]te\r\nA fost I[E]sus\r\n\r\nS3\r\nAm ne[E]voie de-acel har nemărginit\r\nCa să [G#m]fiu iertat de prețul neplătit\r\nȘtiu că nu [A]sunt perfect de-aceea-i mulțu[F#]m[m]esc\r\nDoar lui I[E]sus.[B]\r\n\r\nR2\r\nÎn tă[C#m]cere, în durere\r\nÎn aștep[A]tare-n clipe grele\r\nO co[E]moară ascuns-a fost în întu[B]neric\r\nZi de [C#m]zi, în orice vreme\r\nPe unde-am [A]fost, pe-unde voi merge\r\nChiar și [E]când eu nu știam ce e `nain[B]te\r\nA fost I[C#m]sus\r\n\r\nB\r\nSus pe munte, jos în va[A]le\r\nA fost I[E]sus\r\nChiar și-n valea umbrei [G#]m[7m]orții\r\nA fost I[C#m]sus\r\nȘi prin focul încer[A]cării\r\nA fost I[E]sus\r\nEl a fost și-n veci va [G#m7]fi ---[C#m] ---- [A]--- [E]---",
+            "extraData": {
+                "link": "https://youtu.be/J5jFyqrHHIo",
+                "year": "2019",
+                "originalTitle": "There was Jesus",
+                "verses": ["Isaiah 46:4"]
+            }
         },
         {
-            "id": "S10",
+            "id": "S6955614b-e408-44a8-8313-5f7824f46183",
             "type": "song",
-            "title": "Song 10",
-            "artist": "Artist Name",
+            "title": "Mărețul Har",
+            "artist": "BBSO",
             "cover": null,
-            "initialChord": null,
-            "order": null,
-            "lyrics": ""
+            "initialChord": "D",
+            "order": "S1 S2 R1 S3 R1 R2 Bx2 O",
+            "lyrics": "S1\r\nMă[D]rețul har m-a m[G]ântui[D]t\r\nPe mine din păc[A]at.\r\nPierd[D]ut eram, dar m[G]-a găs[D]it,\r\nDe moarte m[A]-a scăp[D]at.\r\n\r\nS2\r\nMă[D]rețul har m-a î[G]nvăț[D]at\r\nS-o rup cu orice r[A]ău.\r\nCe s[D]cump mi-e azi tot h[G]arul d[D]at;\r\nTrăiesc prin e[A]l mer[D]eu.\r\n\r\nR1\r\nLan[D]țul s-a f[G]rânt, eu liber s[D]unt,\r\nRăscumpăr[G]at prin sânge s[A]fânt\r\nȘi-n m[D]ila S[G]a, mi-a dat în d[Bm]ar,\r\nIubirea [Em]Sa, M[A]ărețul H[D]ar.\r\n\r\nS3\r\nPrin H[D]ar ajunge-v[G]oi în cer\r\nCu s[D]lavă îmbrăc[A]at\r\nȘi-L v[D]oi slăvi î[G]n veșnic[D]ii\r\nPe Cel ce H[A]ar mi-a d[D]at.\r\n\r\nR2\r\nLan[D]țul s-a f[G]rânt, eu liber s[D]unt,\r\nRăscumpăr[G]at prin sânge s[A]fânt\r\nȘi-n m[D]ila S[G]a, mi-a dat în d[Bm]ar,\r\nIubirea [Em]Sa, M[A]ărețul H[Bb]ar.\r\n\r\nB\r\nLanțul s-a f[Bb]rânt, eu liber s[F]unt,\r\nRăscumpăr[Bb]at prin sânge s[C]fânt\r\nȘi-n mila S[Bb]a, mi-a dat în d[Dm]ar,\r\nIubirea [Gm]Sa, M[C]ărețul H[F]ar.\r\n\r\nO\r\nIubirea [Gm]Sa, M[C]ărețul H[D]ar\r\nIubirea [Gm]Sa, M[F]ăre[C]țul H[F]ar.",
+            "extraData": {
+                "link": "https://youtu.be/fgF4msV8PFY",
+                "year": null,
+                "originalTitle": null,
+                "verses": null
+            }
         }
     ],
     "albums": [
         {
-            "id": "A1",
+            "id": "A6d43abad-ae19-466a-aa76-003a77e92590",
             "type": "album",
-            "title": "Album 1",
+            "title": "Tabăra 477",
             "songs": [
-                "S1",
-                "S2",
-                "S3",
-                "S4",
-                "S5",
-                "S6",
-                "S7",
-                "S8",
-                "S9",
-                "S10"
+                "Sbdcd6c28-e624-4973-9512-df19b6931e68",
+                "S7a43979a-d7bc-4bef-8f56-1d5c41fa5c5b"
             ],
             "cover": null
         },
         {
-            "id": "A2",
+            "id": "A5e7720ae-ccfe-4188-9820-e3290075bd2b",
             "type": "album",
-            "title": "Album 2",
-            "songs": [
-                "S1",
-                "S2",
-                "S3",
-                "S4",
-                "S5",
-                "S6",
-                "S7",
-                "S8",
-                "S9",
-                "S10"
-            ],
-            "cover": null
-        },
-        {
-            "id": "A3",
-            "type": "album",
-            "title": "Album 3",
-            "songs": ["S1"],
-            "cover": null
-        },
-        {
-            "id": "A4",
-            "type": "album",
-            "title": "Album 4",
-            "songs": ["S1"],
-            "cover": null
-        },
-        {
-            "id": "A5",
-            "type": "album",
-            "title": "Album 5",
-            "songs": ["S1"],
-            "cover": null
-        },
-        {
-            "id": "A6",
-            "type": "album",
-            "title": "Album 6",
-            "songs": ["S1"],
-            "cover": null
-        },
-        {
-            "id": "A7",
-            "type": "album",
-            "title": "Album 7",
-            "songs": ["S1"],
-            "cover": null
-        },
-        {
-            "id": "A8",
-            "type": "album",
-            "title": "Album 8",
-            "songs": ["S1"],
-            "cover": null
-        },
-        {
-            "id": "A9",
-            "type": "album",
-            "title": "Album 9",
-            "songs": ["S1"],
-            "cover": null
-        },
-        {
-            "id": "A10",
-            "type": "album",
-            "title": "Album 10",
-            "songs": ["S1"],
+            "title": "BBSO",
+            "songs": ["S6955614b-e408-44a8-8313-5f7824f46183"],
             "cover": null
         }
     ]

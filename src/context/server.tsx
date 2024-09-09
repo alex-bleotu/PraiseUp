@@ -267,6 +267,21 @@ export const ServerProvider = ({
         }
     };
 
+    const getUserData = async (user: User) => {
+        console.log(user?.uid);
+
+        const userDocRef = doc(db, "users", user?.uid);
+        const userDoc = await getDoc(userDocRef);
+
+        if (userDoc.exists()) {
+            const userData = userDoc.data();
+            return userData;
+        } else {
+            console.error("User document does not exist.");
+            return null;
+        }
+    };
+
     return (
         <ServerContext.Provider
             value={{
@@ -282,6 +297,7 @@ export const ServerProvider = ({
                 getPersonalAlbum,
                 checkUpdates,
                 saveCover,
+                getUserData,
             }}>
             {children}
         </ServerContext.Provider>

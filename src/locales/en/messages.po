@@ -13,24 +13,61 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/pages/settings.tsx:135
+#: src/pages/settings.tsx:514
+msgid "(normal)"
+msgstr "(normal)"
+
+#: src/pages/settings.tsx:214
 msgid "About Us"
 msgstr "About Us"
 
 #: src/pages/settings.tsx:726
-msgid "Access to this account has been temporarily disabled"
-msgstr "Access to this account has been temporarily disabled"
+#~ msgid "Access to this account has been temporarily disabled"
+#~ msgstr "Access to this account has been temporarily disabled"
+
+#: src/pages/resetPassword.tsx:189
+#: src/pages/settings.tsx:903
+msgid "Access to this account has been temporarily disabled due to many failed attempts. Please try again later."
+msgstr "Access to this account has been temporarily disabled due to many failed attempts. Please try again later."
+
+#: src/pages/settings.tsx:162
+msgid "Account"
+msgstr "Account"
+
+#: src/pages/addSong.tsx:64
+#: src/pages/album.tsx:280
+#: src/pages/album.tsx:331
+msgid "Add songs"
+msgstr "Add songs"
+
+#: src/pages/addToAlbum.tsx:136
+msgid "Add to"
+msgstr "Add to"
+
+#: src/components/wrapers/dataBottomSheet.tsx:238
+#: src/pages/addToAlbum.tsx:76
+msgid "Add to album"
+msgstr "Add to album"
+
+#: src/components/wrapers/dataBottomSheet.tsx:237
+msgid "Add to other playlist"
+msgstr "Add to other playlist"
 
 #: src/components/wrapers/dataBottomSheet.tsx:145
-msgid "Add to playlist"
-msgstr "Add to playlist"
+#~ msgid "Add to playlist"
+#~ msgstr "Add to playlist"
 
-#: src/pages/settings.tsx:574
+#: src/components/wrapers/dataBottomSheet.tsx:403
+#: src/pages/library.tsx:331
+msgid "Album Name"
+msgstr "Album Name"
+
+#: src/pages/settings.tsx:746
 msgid "All your data will be lost."
 msgstr "All your data will be lost."
 
-#: src/pages/album.tsx:112
-#: src/pages/library.tsx:108
+#: src/pages/album.tsx:134
+#: src/pages/library.tsx:129
 msgid "Alphabetical"
 msgstr "Alphabetical"
 
@@ -39,32 +76,40 @@ msgid "Already have an account?"
 msgstr "Already have an account?"
 
 #: src/pages/settings.tsx:128
-msgid "App"
-msgstr "App"
+#~ msgid "App"
+#~ msgstr "App"
 
-#: src/pages/settings.tsx:566
+#: src/components/wrapers/dataBottomSheet.tsx:326
+msgid "Are you sure you want to delete this album?"
+msgstr "Are you sure you want to delete this album?"
+
+#: src/pages/settings.tsx:738
 msgid "Are you sure you want to exit guest mode?"
 msgstr "Are you sure you want to exit guest mode?"
 
-#: src/pages/settings.tsx:498
+#: src/pages/settings.tsx:670
 msgid "Are you sure you want to leave?"
 msgstr "Are you sure you want to leave?"
 
-#: src/pages/settings.tsx:522
-#: src/pages/settings.tsx:598
-#: src/pages/settings.tsx:699
+#: src/components/wrapers/dataBottomSheet.tsx:350
+#: src/components/wrapers/dataBottomSheet.tsx:425
+#: src/pages/library.tsx:353
+#: src/pages/settings.tsx:694
+#: src/pages/settings.tsx:770
+#: src/pages/settings.tsx:877
 msgid "Cancel"
 msgstr "Cancel"
 
-#: src/components/wrapers/dataBottomSheet.tsx:161
+#: src/components/wrapers/dataBottomSheet.tsx:289
 msgid "Check out this"
 msgstr "Check out this"
 
-#: src/pages/song.tsx:204
+#: src/pages/settings.tsx:142
+#: src/pages/song.tsx:327
 msgid "Chords"
 msgstr "Chords"
 
-#: src/pages/discover.tsx:137
+#: src/pages/discover.tsx:140
 msgid "Clear recent searches"
 msgstr "Clear recent searches"
 
@@ -72,11 +117,11 @@ msgstr "Clear recent searches"
 #~ msgid "Confirm Password"
 #~ msgstr "Confirm Password"
 
-#: src/pages/settings.tsx:198
+#: src/pages/settings.tsx:252
 msgid "Contact Us"
 msgstr "Contact Us"
 
-#: src/pages/login.tsx:194
+#: src/pages/login.tsx:192
 #: src/pages/register.tsx:184
 msgid "Continue as Guest"
 msgstr "Continue as Guest"
@@ -87,12 +132,16 @@ msgstr "Continue as Guest"
 #~ msgstr "Continue with Facebook"
 
 #: src/pages/link.tsx:174
-#: src/pages/login.tsx:183
+#: src/pages/login.tsx:181
 #: src/pages/register.tsx:173
 msgid "Continue with Google"
 msgstr "Continue with Google"
 
-#: src/pages/library.tsx:236
+#: src/pages/library.tsx:387
+msgid "Create"
+msgstr "Create"
+
+#: src/pages/library.tsx:261
 msgid "Create album"
 msgstr "Create album"
 
@@ -104,15 +153,20 @@ msgstr "Create an account to save your progress and access your data on multiple
 #~ msgid "Creator"
 #~ msgstr "Creator"
 
-#: src/pages/settings.tsx:745
+#: src/components/wrapers/dataBottomSheet.tsx:382
+#: src/pages/settings.tsx:922
 msgid "Delete"
 msgstr "Delete"
 
-#: src/pages/settings.tsx:266
+#: src/pages/settings.tsx:320
 msgid "Delete Account"
 msgstr "Delete Account"
 
-#: src/pages/settings.tsx:644
+#: src/components/wrapers/dataBottomSheet.tsx:216
+msgid "Delete album"
+msgstr "Delete album"
+
+#: src/pages/settings.tsx:820
 msgid "Deleting your account will lose all your data."
 msgstr "Deleting your account will lose all your data."
 
@@ -136,33 +190,46 @@ msgstr "Deleting your account will lose all your data."
 #~ msgid "Drive"
 #~ msgstr "Drive"
 
-#: src/pages/login.tsx:71
-#: src/pages/password.tsx:62
+#: src/components/wrapers/dataBottomSheet.tsx:200
+msgid "Edit album"
+msgstr "Edit album"
+
+#: src/components/wrapers/dataBottomSheet.tsx:400
+msgid "Edit your album"
+msgstr "Edit your album"
+
+#: src/pages/forgotPassword.tsx:62
+#: src/pages/login.tsx:69
 msgid "Email"
 msgstr "Email"
 
 #: src/pages/link.tsx:147
 #: src/pages/register.tsx:146
-msgid "Email is already in use"
-msgstr "Email is already in use"
+#~ msgid "Email is already in use"
+#~ msgstr "Email is already in use"
+
+#: src/pages/link.tsx:147
+#: src/pages/register.tsx:146
+msgid "Email is already in use."
+msgstr "Email is already in use."
 
 #: src/pages/register.tsx:51
 #~ msgid "Email is not valid."
 #~ msgstr "Email is not valid."
 
-#: src/pages/settings.tsx:620
+#: src/pages/settings.tsx:792
 msgid "Exit"
 msgstr "Exit"
 
-#: src/pages/settings.tsx:235
+#: src/pages/settings.tsx:289
 msgid "Exit Guest Mode"
 msgstr "Exit Guest Mode"
 
-#: src/components/wrapers/dataBottomSheet.tsx:130
+#: src/components/wrapers/dataBottomSheet.tsx:180
 msgid "Favorite"
 msgstr "Favorite"
 
-#: src/pages/home.tsx:156
+#: src/pages/home.tsx:154
 msgid "Favorite albums"
 msgstr "Favorite albums"
 
@@ -170,27 +237,36 @@ msgstr "Favorite albums"
 #~ msgid "First name"
 #~ msgstr "First name"
 
-#: src/pages/login.tsx:115
+#: src/pages/login.tsx:113
+#: src/pages/resetPassword.tsx:127
 msgid "Forgot your password?"
 msgstr "Forgot your password?"
 
-#: src/pages/settings.tsx:59
+#: src/pages/settings.tsx:72
 msgid "General Settings"
 msgstr "General Settings"
 
-#: src/pages/settings.tsx:172
+#: src/pages/settings.tsx:208
 msgid "Get in Touch"
 msgstr "Get in Touch"
 
-#: src/pages/settings.tsx:179
+#: src/pages/settings.tsx:233
 msgid "Give us Feedback"
 msgstr "Give us Feedback"
+
+#: src/pages/library.tsx:328
+msgid "Give your album a name"
+msgstr "Give your album a name"
+
+#: src/pages/settings.tsx:45
+msgid "glo[F#m][E]ri[D]fy"
+msgstr "glo[F#m][E]ri[D]fy"
 
 #: src/pages/settings.tsx:210
 #~ msgid "Help"
 #~ msgstr "Help"
 
-#: src/pages/settings.tsx:470
+#: src/pages/settings.tsx:538
 msgid ""
 "I took a step into the night,  \n"
 "With dreams that glimmered in the light,  \n"
@@ -202,24 +278,32 @@ msgstr ""
 "A path unknown, a heart so bold,  \n"
 "Seeking stories yet untold."
 
-#: src/pages/login.tsx:160
+#: src/pages/login.tsx:158
 msgid "Invalid email or password."
 msgstr "Invalid email or password."
 
-#: src/pages/settings.tsx:154
+#: src/pages/settings.tsx:190
 msgid "Invite Friends"
 msgstr "Invite Friends"
 
+#: src/pages/register.tsx:106
+msgid "Join"
+msgstr "Join"
+
 #: src/pages/onboard.tsx:51
 #: src/pages/register.tsx:106
-msgid "Join App"
-msgstr "Join App"
+#~ msgid "Join App"
+#~ msgstr "Join App"
+
+#: src/pages/onboard.tsx:51
+msgid "Join PraiseUp"
+msgstr "Join PraiseUp"
 
 #: src/pages/register.tsx:47
 msgid "Join Us"
 msgstr "Join Us"
 
-#: src/pages/settings.tsx:87
+#: src/pages/settings.tsx:100
 msgid "Language"
 msgstr "Language"
 
@@ -227,9 +311,13 @@ msgstr "Language"
 #~ msgid "Last name"
 #~ msgstr "Last name"
 
+#: src/pages/album.tsx:324
+msgid "Let's start building this ablum"
+msgstr "Let's start building this ablum"
+
 #: src/pages/link.tsx:46
 #: src/pages/link.tsx:105
-#: src/pages/settings.tsx:221
+#: src/pages/settings.tsx:275
 msgid "Link Account"
 msgstr "Link Account"
 
@@ -237,12 +325,12 @@ msgstr "Link Account"
 msgid "Link your account to save your data and access it from any device."
 msgstr "Link your account to save your data and access it from any device."
 
-#: src/pages/login.tsx:128
+#: src/pages/login.tsx:126
 msgid "Log in"
 msgstr "Log in"
 
-#: src/pages/settings.tsx:252
-#: src/pages/settings.tsx:544
+#: src/pages/settings.tsx:306
+#: src/pages/settings.tsx:716
 msgid "Log Out"
 msgstr "Log Out"
 
@@ -262,7 +350,7 @@ msgstr "Lorem Ipsum"
 msgid "Lorem Ipsum is simply dummy text of the printing and typesetting"
 msgstr "Lorem Ipsum is simply dummy text of the printing and typesetting"
 
-#: src/pages/song.tsx:174
+#: src/pages/song.tsx:297
 msgid "Lyrics"
 msgstr "Lyrics"
 
@@ -270,20 +358,32 @@ msgstr "Lyrics"
 #~ msgid "Navigate to your destination hassle-free. Our app ensures you reach your spot quickly and efficiently."
 #~ msgstr "Navigate to your destination hassle-free. Our app ensures you reach your spot quickly and efficiently."
 
-#: src/pages/discover.tsx:152
+#: src/pages/resetPassword.tsx:85
+msgid "New Password"
+msgstr "New Password"
+
+#: src/pages/discover.tsx:155
 msgid "No recent searches"
 msgstr "No recent searches"
 
-#: src/pages/discover.tsx:244
+#: src/pages/discover.tsx:262
 msgid "No search result"
 msgstr "No search result"
 
 #: src/pages/discover.tsx:250
-msgid "No song or album matches your search"
-msgstr "No song or album matches your search"
+#~ msgid "No song or album matches your search"
+#~ msgstr "No song or album matches your search"
+
+#: src/pages/discover.tsx:268
+msgid "No song or album matches your search."
+msgstr "No song or album matches your search."
+
+#: src/pages/resetPassword.tsx:72
+msgid "Old Password"
+msgstr "Old Password"
 
 #: src/pages/link.tsx:166
-#: src/pages/login.tsx:175
+#: src/pages/login.tsx:173
 #: src/pages/register.tsx:165
 msgid "or"
 msgstr "or"
@@ -296,20 +396,26 @@ msgstr "or"
 #~ msgid "Park"
 #~ msgstr "Park"
 
-#: src/pages/settings.tsx:656
+#: src/pages/settings.tsx:832
 msgid "password"
 msgstr "password"
 
 #: src/pages/link.tsx:80
-#: src/pages/login.tsx:81
+#: src/pages/login.tsx:79
 #: src/pages/register.tsx:81
 msgid "Password"
 msgstr "Password"
 
 #: src/pages/link.tsx:86
 #: src/pages/register.tsx:87
-msgid "Password is too short"
-msgstr "Password is too short"
+#~ msgid "Password is too short"
+#~ msgstr "Password is too short"
+
+#: src/pages/link.tsx:86
+#: src/pages/register.tsx:87
+#: src/pages/resetPassword.tsx:90
+msgid "Password is too short."
+msgstr "Password is too short."
 
 #: src/pages/register.tsx:57
 #~ msgid "Password too short"
@@ -324,12 +430,12 @@ msgstr "Password is too short"
 msgid "Personal Email"
 msgstr "Personal Email"
 
-#: src/pages/album.tsx:111
-#: src/pages/library.tsx:107
+#: src/pages/album.tsx:133
+#: src/pages/library.tsx:128
 msgid "Recent"
 msgstr "Recent"
 
-#: src/pages/discover.tsx:85
+#: src/pages/discover.tsx:84
 msgid "Recent Searches"
 msgstr "Recent Searches"
 
@@ -343,6 +449,10 @@ msgstr "Recent Searches"
 #~ msgid "Registered successfully!"
 #~ msgstr "Registered successfully!"
 
+#: src/components/wrapers/dataBottomSheet.tsx:266
+msgid "Remove from this album"
+msgstr "Remove from this album"
+
 #: src/pages/settings.tsx:196
 #~ msgid "Report"
 #~ msgstr "Report"
@@ -351,27 +461,39 @@ msgstr "Recent Searches"
 #~ msgid "Reserve your parking spot in advance for a worry-free experience. No more last-minute hunting for a space."
 #~ msgstr "Reserve your parking spot in advance for a worry-free experience. No more last-minute hunting for a space."
 
-#: src/pages/password.tsx:46
+#: src/pages/forgotPassword.tsx:46
+#: src/pages/resetPassword.tsx:56
+#: src/pages/resetPassword.tsx:140
+#: src/pages/settings.tsx:169
 msgid "Reset your password"
 msgstr "Reset your password"
 
-#: src/pages/discover.tsx:73
+#: src/components/wrapers/dataBottomSheet.tsx:457
+msgid "Save"
+msgstr "Save"
+
+#: src/pages/addToAlbum.tsx:89
+msgid "Saved in"
+msgstr "Saved in"
+
+#: src/pages/addSong.tsx:76
+#: src/pages/discover.tsx:71
 msgid "Search"
 msgstr "Search"
 
-#: src/pages/password.tsx:95
+#: src/pages/forgotPassword.tsx:95
 msgid "Send reset email"
 msgstr "Send reset email"
 
-#: src/pages/settings.tsx:48
+#: src/pages/settings.tsx:61
 msgid "Settings"
 msgstr "Settings"
 
-#: src/components/wrapers/dataBottomSheet.tsx:174
+#: src/components/wrapers/dataBottomSheet.tsx:302
 msgid "Share"
 msgstr "Share"
 
-#: src/pages/login.tsx:55
+#: src/pages/login.tsx:53
 msgid "Sign In"
 msgstr "Sign In"
 
@@ -379,42 +501,67 @@ msgstr "Sign In"
 #: src/pages/login.tsx:214
 #: src/pages/register.tsx:150
 #: src/pages/register.tsx:204
-msgid "Something went wrong"
-msgstr "Something went wrong"
+#~ msgid "Something went wrong"
+#~ msgstr "Something went wrong"
 
-#: src/pages/register.tsx:159
-#~ msgid "Something went wrong."
-#~ msgstr "Something went wrong."
+#: src/pages/forgotPassword.tsx:123
+#: src/pages/link.tsx:151
+#: src/pages/login.tsx:212
+#: src/pages/register.tsx:150
+#: src/pages/register.tsx:204
+#: src/pages/resetPassword.tsx:193
+msgid "Something went wrong."
+msgstr "Something went wrong."
 
 #: src/pages/discover.tsx:155
-msgid "Start searching for your favorite songs"
-msgstr "Start searching for your favorite songs"
+#~ msgid "Start searching for your favorite songs"
+#~ msgstr "Start searching for your favorite songs"
 
-#: src/pages/home.tsx:125
+#: src/pages/discover.tsx:158
+msgid "Start searching for your favorite songs."
+msgstr "Start searching for your favorite songs."
+
+#: src/pages/home.tsx:123
 msgid "Suggested for you"
 msgstr "Suggested for you"
 
-#: src/pages/settings.tsx:668
+#: src/pages/resetPassword.tsx:171
+msgid "The password has been changed successfully."
+msgstr "The password has been changed successfully."
+
+#: src/pages/settings.tsx:844
 msgid "The password is incorrect."
 msgstr "The password is incorrect."
 
-#: src/pages/settings.tsx:66
+#: src/pages/resetPassword.tsx:181
+msgid "The password you entered is incorrect."
+msgstr "The password you entered is incorrect."
+
+#: src/pages/settings.tsx:79
 msgid "Theme"
 msgstr "Theme"
 
-#: src/pages/settings.tsx:658
+#: src/pages/album.tsx:348
+msgid "There are no songs in this album."
+msgstr "There are no songs in this album."
+
+#: src/pages/settings.tsx:834
 msgid "to proceed."
 msgstr "to proceed."
 
-#: src/pages/login.tsx:66
+#: src/pages/login.tsx:64
 msgid "Type in the email and password you used to create your account."
 msgstr "Type in the email and password you used to create your account."
 
-#: src/pages/password.tsx:57
+#: src/pages/forgotPassword.tsx:57
 msgid "Type in the email you used to create your account."
 msgstr "Type in the email you used to create your account."
 
-#: src/pages/settings.tsx:653
+#: src/pages/resetPassword.tsx:67
+msgid "Type in the old password and the new password you want to use."
+msgstr "Type in the old password and the new password you want to use."
+
+#: src/pages/settings.tsx:829
 msgid "Type your"
 msgstr "Type your"
 
@@ -422,7 +569,7 @@ msgstr "Type your"
 #~ msgid "Version"
 #~ msgstr "Version"
 
-#: src/pages/settings.tsx:278
+#: src/pages/settings.tsx:332
 msgid "Version:"
 msgstr "Version:"
 
@@ -430,7 +577,7 @@ msgstr "Version:"
 #~ msgid "Your data will be lost."
 #~ msgstr "Your data will be lost."
 
-#: src/pages/library.tsx:85
+#: src/pages/library.tsx:106
 msgid "Your library"
 msgstr "Your library"
 
@@ -439,14 +586,18 @@ msgstr "Your library"
 msgid "Your Name"
 msgstr "Your Name"
 
-#: src/components/wrapers/dataBottomSheet.tsx:83
+#: src/components/wrapers/dataBottomSheet.tsx:116
 msgid "Zoom"
 msgstr "Zoom"
 
-#: src/pages/settings.tsx:108
+#: src/pages/settings.tsx:121
 msgid "Zoom level"
 msgstr "Zoom level"
 
 #: src/pages/settings.tsx:444
-msgid "Zoom level:"
-msgstr "Zoom level:"
+#~ msgid "Zoom level:"
+#~ msgstr "Zoom level:"
+
+#: src/pages/settings.tsx:502
+msgid "Zoom Level:"
+msgstr "Zoom Level:"

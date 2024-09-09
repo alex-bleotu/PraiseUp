@@ -3,11 +3,11 @@
   "WorkspaceRootPath": "D:\\Projects\\GitHub\\PraiseUp\\extra\\PraiseUp - Song Adder\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0ED1675A-8D23-4BFC-8D34-06D439333BD4}|PraiseUp.csproj|d:\\projects\\github\\praiseup\\extra\\praiseup - song adder\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0ED1675A-8D23-4BFC-8D34-06D439333BD4}|PraiseUp.csproj|D:\\Projects\\GitHub\\PraiseUp\\extra\\PraiseUp - Song Adder\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0ED1675A-8D23-4BFC-8D34-06D439333BD4}|PraiseUp.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0ED1675A-8D23-4BFC-8D34-06D439333BD4}|PraiseUp.csproj|D:\\Projects\\GitHub\\PraiseUp\\extra\\PraiseUp - Song Adder\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{0ED1675A-8D23-4BFC-8D34-06D439333BD4}|PraiseUp.csproj|d:\\projects\\github\\praiseup\\extra\\praiseup - song adder\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{0ED1675A-8D23-4BFC-8D34-06D439333BD4}|PraiseUp.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
@@ -28,7 +28,7 @@
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "D:\\Projects\\GitHub\\PraiseUp\\extra\\PraiseUp - Song Adder\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAABAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-05T11:08:33.209Z",
               "EditorCaption": ""
