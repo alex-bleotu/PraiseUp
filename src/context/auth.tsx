@@ -11,15 +11,10 @@ import {
     updateProfile,
 } from "firebase/auth";
 import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
-import React, {
-    createContext,
-    ReactNode,
-    useContext,
-    useEffect,
-    useState,
-} from "react";
+import React, { createContext, ReactNode, useContext, useEffect } from "react";
 import { auth, db } from "../../firebaseConfig";
 import { DataContext } from "./data";
+import { LoadingContext } from "./loading";
 import { ServerContext } from "./server";
 import { UserContext } from "./user";
 
@@ -33,14 +28,12 @@ export const AuthProvider = ({
     const {
         clearData,
         syncFavorites,
-        syncPersonalAlbumsIds,
         syncPersonalAlbums,
         updatePersonalAlbums,
     } = useContext(DataContext);
     const { getPersonalAlbumsList } = useContext(ServerContext);
     const { user, setUser } = useContext(UserContext);
-
-    const [loading, setLoading] = useState(true);
+    const { loading, setLoading } = useContext(LoadingContext);
 
     useEffect(() => {
         const load = async () => {
@@ -331,7 +324,6 @@ export const AuthProvider = ({
     return (
         <AuthContext.Provider
             value={{
-                loading,
                 setUser,
                 login,
                 register,

@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { createContext, ReactNode, useContext, useEffect } from "react";
-import { AlbumType, DataContext, SongType } from "./data";
+import React, { createContext, ReactNode, useEffect } from "react";
+import { AlbumType, SongType } from "./data";
 
 export const HistoryContext = createContext<any>(null);
 
@@ -13,11 +13,7 @@ export const HistoryProvider = ({
         (SongType | AlbumType)[] | null
     >(null);
 
-    const { loading } = useContext(DataContext);
-
     useEffect(() => {
-        if (loading) return;
-
         const loadHistory = async () => {
             try {
                 const storedHistory = await AsyncStorage.getItem("history");
@@ -34,7 +30,7 @@ export const HistoryProvider = ({
         };
 
         loadHistory();
-    }, [loading]);
+    }, []);
 
     useEffect(() => {
         const saveHistory = async () => {

@@ -11,6 +11,7 @@ import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import bundle from "../../assets/bundle.json";
 import { coversList } from "../utils/covers";
+import { HistoryContext } from "./history";
 import { LoadingContext } from "./loading";
 import { RefreshContext } from "./refresh";
 import { ServerContext } from "./server";
@@ -48,6 +49,7 @@ export const DataProvider = ({
 }) => {
     const { setUser } = useContext(UserContext);
     const { updateRefresh } = useContext(RefreshContext);
+    const { removeFromHistory } = useContext(HistoryContext);
     const {
         getUserData,
         addFavorite,
@@ -433,6 +435,8 @@ export const DataProvider = ({
                     await removeId(data.deleted[i]);
                 else if (data.deleted[i].startsWith("A"))
                     await removeId(data.deleted[i]);
+
+                await removeFromHistory(data.deleted[i]);
             }
 
             updateRefresh();

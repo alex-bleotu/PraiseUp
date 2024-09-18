@@ -22,24 +22,24 @@ export default function App() {
                 <LoadingProvider>
                     <LanguageProvider>
                         <PaperProvider theme={darkTheme}>
-                            <UserProvider>
-                                <ConstantsProvider>
-                                    <RefreshProvider>
-                                        <ServerProvider>
-                                            <DataProvider>
-                                                <AuthProvider>
-                                                    <HistoryProvider>
+                            <HistoryProvider>
+                                <UserProvider>
+                                    <ConstantsProvider>
+                                        <RefreshProvider>
+                                            <ServerProvider>
+                                                <DataProvider>
+                                                    <AuthProvider>
                                                         <RecentProvider>
                                                             <AppNavigation />
                                                             <StatusBar style="auto" />
                                                         </RecentProvider>
-                                                    </HistoryProvider>
-                                                </AuthProvider>
-                                            </DataProvider>
-                                        </ServerProvider>
-                                    </RefreshProvider>
-                                </ConstantsProvider>
-                            </UserProvider>
+                                                    </AuthProvider>
+                                                </DataProvider>
+                                            </ServerProvider>
+                                        </RefreshProvider>
+                                    </ConstantsProvider>
+                                </UserProvider>
+                            </HistoryProvider>
                         </PaperProvider>
                     </LanguageProvider>
                 </LoadingProvider>
