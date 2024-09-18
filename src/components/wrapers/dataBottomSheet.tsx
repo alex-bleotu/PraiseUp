@@ -234,7 +234,7 @@ const DataBottomSheet = ({
                                         />
                                         <Text fontSize={17} style={styles.text}>
                                             {removeSong
-                                                ? t`Add to other playlist`
+                                                ? t`Add to other album`
                                                 : t`Add to album`}
                                         </Text>
                                     </View>

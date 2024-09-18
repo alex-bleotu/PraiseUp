@@ -15,52 +15,44 @@ msgstr ""
 
 #: src/pages/settings.tsx:514
 msgid "(normal)"
-msgstr ""
+msgstr "(normal)"
 
 #: src/pages/settings.tsx:214
 msgid "About Us"
 msgstr "Despre noi"
 
-#: src/pages/settings.tsx:726
-#~ msgid "Access to this account has been temporarily disabled"
-#~ msgstr "Accesul la acest cont a fost dezactivat temporar"
-
 #: src/pages/resetPassword.tsx:189
 #: src/pages/settings.tsx:903
 msgid "Access to this account has been temporarily disabled due to many failed attempts. Please try again later."
-msgstr ""
+msgstr "Accesul la acest cont a fost dezactivat temporar din cauza a multor încercări eșuate. Încearcă din nou mai târziu."
 
 #: src/pages/settings.tsx:162
 msgid "Account"
-msgstr ""
+msgstr "Cont"
 
 #: src/pages/addSong.tsx:64
 #: src/pages/album.tsx:280
 #: src/pages/album.tsx:331
 msgid "Add songs"
-msgstr ""
+msgstr "Adaugă melodii"
 
 #: src/pages/addToAlbum.tsx:136
 msgid "Add to"
-msgstr ""
+msgstr "Adaugă"
 
 #: src/components/wrapers/dataBottomSheet.tsx:238
 #: src/pages/addToAlbum.tsx:76
 msgid "Add to album"
-msgstr ""
+msgstr "Adaugă la album"
 
 #: src/components/wrapers/dataBottomSheet.tsx:237
-msgid "Add to other playlist"
-msgstr ""
-
-#: src/components/wrapers/dataBottomSheet.tsx:145
-#~ msgid "Add to playlist"
-#~ msgstr "Adaugă in playlist"
+msgid "Add to other album"
+msgstr "Adaugă la alt album"
 
 #: src/components/wrapers/dataBottomSheet.tsx:403
 #: src/pages/library.tsx:331
 msgid "Album Name"
-msgstr ""
+msgstr "Numele albumului"
 
 #: src/pages/settings.tsx:746
 msgid "All your data will be lost."
@@ -75,13 +67,9 @@ msgstr "Alfabetic"
 msgid "Already have an account?"
 msgstr "Ai deja un cont?"
 
-#: src/pages/settings.tsx:128
-#~ msgid "App"
-#~ msgstr "App"
-
 #: src/components/wrapers/dataBottomSheet.tsx:326
 msgid "Are you sure you want to delete this album?"
-msgstr ""
+msgstr "Ești sigur că vrei să ștergi acest album?"
 
 #: src/pages/settings.tsx:738
 msgid "Are you sure you want to exit guest mode?"
@@ -113,10 +101,6 @@ msgstr "Acorduri"
 msgid "Clear recent searches"
 msgstr "Șterge căutările recente"
 
-#: src/pages/register.tsx:112
-#~ msgid "Confirm Password"
-#~ msgstr "Confirmă parola"
-
 #: src/pages/settings.tsx:252
 msgid "Contact Us"
 msgstr "Contactează-ne"
@@ -126,11 +110,6 @@ msgstr "Contactează-ne"
 msgid "Continue as Guest"
 msgstr "Continuă ca oaspete"
 
-#: src/pages/login.tsx:143
-#: src/pages/register.tsx:182
-#~ msgid "Continue with Facebook"
-#~ msgstr "Continuă cu Facebook"
-
 #: src/pages/link.tsx:174
 #: src/pages/login.tsx:181
 #: src/pages/register.tsx:173
@@ -139,7 +118,7 @@ msgstr "Continuă cu Google"
 
 #: src/pages/library.tsx:387
 msgid "Create"
-msgstr ""
+msgstr "Creează"
 
 #: src/pages/library.tsx:261
 msgid "Create album"
@@ -149,46 +128,30 @@ msgstr "Creează album"
 msgid "Create an account to save your progress and access your data on multiple devices."
 msgstr "Crează un cont pentru a-ți salva progresul și a accesa datele tale de pe mai multe dispozitive."
 
-#: src/pages/settings.tsx:182
-#~ msgid "Creator"
-#~ msgstr "Creator"
-
 #: src/components/wrapers/dataBottomSheet.tsx:382
 #: src/pages/settings.tsx:922
 msgid "Delete"
-msgstr ""
+msgstr "Șterge"
 
 #: src/pages/settings.tsx:320
 msgid "Delete Account"
-msgstr ""
+msgstr "Șterge contul"
 
 #: src/components/wrapers/dataBottomSheet.tsx:216
 msgid "Delete album"
-msgstr ""
+msgstr "Șterge albumul"
 
 #: src/pages/settings.tsx:820
 msgid "Deleting your account will lose all your data."
-msgstr ""
-
-#: src/pages/settings.tsx:38
-#~ msgid "Display settings"
-#~ msgstr "Setări de afișare"
-
-#: src/pages/login.tsx:149
-#~ msgid "Don't have an account?"
-#~ msgstr "Nu ai un cont?"
-
-#: src/pages/login.tsx:90
-#~ msgid "Don't remember your password?"
-#~ msgstr "Nu îți amintești parola?"
+msgstr "Ștergerea contului tău va duce la pierderea tuturor datelor tale."
 
 #: src/components/wrapers/dataBottomSheet.tsx:200
 msgid "Edit album"
-msgstr ""
+msgstr "Editează albumul"
 
 #: src/components/wrapers/dataBottomSheet.tsx:400
 msgid "Edit your album"
-msgstr ""
+msgstr "Editează-ți albumul"
 
 #: src/pages/forgotPassword.tsx:62
 #: src/pages/login.tsx:69
@@ -197,17 +160,8 @@ msgstr "Email"
 
 #: src/pages/link.tsx:147
 #: src/pages/register.tsx:146
-#~ msgid "Email is already in use"
-#~ msgstr "Emailul este deja folosit"
-
-#: src/pages/link.tsx:147
-#: src/pages/register.tsx:146
 msgid "Email is already in use."
-msgstr ""
-
-#: src/pages/register.tsx:51
-#~ msgid "Email is not valid."
-#~ msgstr "Emailul nu este valid."
+msgstr "Emailul este deja folosit."
 
 #: src/pages/settings.tsx:792
 msgid "Exit"
@@ -224,10 +178,6 @@ msgstr "Favorite"
 #: src/pages/home.tsx:154
 msgid "Favorite albums"
 msgstr "Albume favorite"
-
-#: src/pages/register.tsx:70
-#~ msgid "First name"
-#~ msgstr "Prenume"
 
 #: src/pages/login.tsx:113
 #: src/pages/resetPassword.tsx:127
@@ -248,15 +198,11 @@ msgstr "Oferă-ne feedback"
 
 #: src/pages/library.tsx:328
 msgid "Give your album a name"
-msgstr ""
+msgstr "Dă un nume albumului tău"
 
 #: src/pages/settings.tsx:45
 msgid "glo[F#m][E]ri[D]fy"
-msgstr ""
-
-#: src/pages/settings.tsx:210
-#~ msgid "Help"
-#~ msgstr "Ajutor"
+msgstr "drep[F#m][E]ta[D]te"
 
 #: src/pages/settings.tsx:538
 msgid ""
@@ -276,16 +222,11 @@ msgstr "Invită prietenii"
 
 #: src/pages/register.tsx:106
 msgid "Join"
-msgstr ""
-
-#: src/pages/onboard.tsx:51
-#: src/pages/register.tsx:106
-#~ msgid "Join App"
-#~ msgstr "Alătură-te aplicației"
+msgstr "Alătură-te"
 
 #: src/pages/onboard.tsx:51
 msgid "Join PraiseUp"
-msgstr ""
+msgstr "Alătură-te PraiseUp"
 
 #: src/pages/register.tsx:47
 msgid "Join Us"
@@ -295,13 +236,9 @@ msgstr "Alătură-te nouă"
 msgid "Language"
 msgstr "Limbă"
 
-#: src/pages/register.tsx:79
-#~ msgid "Last name"
-#~ msgstr "Nume"
-
 #: src/pages/album.tsx:324
 msgid "Let's start building this ablum"
-msgstr ""
+msgstr "Hai să începem să construim acest album"
 
 #: src/pages/link.tsx:46
 #: src/pages/link.tsx:105
@@ -340,7 +277,7 @@ msgstr "Versuri"
 
 #: src/pages/resetPassword.tsx:85
 msgid "New Password"
-msgstr ""
+msgstr "Parolă nouă"
 
 #: src/pages/discover.tsx:155
 msgid "No recent searches"
@@ -350,17 +287,13 @@ msgstr "Nicio căutare recentă"
 msgid "No search result"
 msgstr "Niciun rezultat de căutare"
 
-#: src/pages/discover.tsx:250
-#~ msgid "No song or album matches your search"
-#~ msgstr "Nicio melodie sau album nu se potrivește căutării dvs"
-
 #: src/pages/discover.tsx:268
 msgid "No song or album matches your search."
-msgstr ""
+msgstr "Nicio melodie sau album nu se potrivește căutării tale."
 
 #: src/pages/resetPassword.tsx:72
 msgid "Old Password"
-msgstr ""
+msgstr "Parolă veche"
 
 #: src/pages/link.tsx:166
 #: src/pages/login.tsx:173
@@ -368,13 +301,9 @@ msgstr ""
 msgid "or"
 msgstr "sau"
 
-#: src/pages/settings.tsx:164
-#~ msgid "Other info"
-#~ msgstr "Alte informații"
-
 #: src/pages/settings.tsx:832
 msgid "password"
-msgstr ""
+msgstr "parolă"
 
 #: src/pages/link.tsx:80
 #: src/pages/login.tsx:79
@@ -384,18 +313,9 @@ msgstr "Parolă"
 
 #: src/pages/link.tsx:86
 #: src/pages/register.tsx:87
-#~ msgid "Password is too short"
-#~ msgstr "Parola este prea scurtă"
-
-#: src/pages/link.tsx:86
-#: src/pages/register.tsx:87
 #: src/pages/resetPassword.tsx:90
 msgid "Password is too short."
-msgstr ""
-
-#: src/pages/register.tsx:54
-#~ msgid "Passwords don't match"
-#~ msgstr "Parolele nu se potrivesc"
+msgstr "Parola este prea scurtă."
 
 #: src/pages/link.tsx:69
 #: src/pages/register.tsx:70
@@ -411,38 +331,24 @@ msgstr "Recent"
 msgid "Recent Searches"
 msgstr "Căutări recente"
 
-#: src/pages/login.tsx:163
-#: src/pages/register.tsx:44
-#: src/pages/register.tsx:126
-#~ msgid "Register"
-#~ msgstr "Înregistrare"
-
-#: src/pages/login.tsx:56
-#~ msgid "Registered successfully!"
-#~ msgstr "Înregistrare cu succes!"
-
 #: src/components/wrapers/dataBottomSheet.tsx:266
 msgid "Remove from this album"
-msgstr ""
-
-#: src/pages/settings.tsx:196
-#~ msgid "Report"
-#~ msgstr "Raportează"
+msgstr "Elimină din acest album"
 
 #: src/pages/forgotPassword.tsx:46
 #: src/pages/resetPassword.tsx:56
 #: src/pages/resetPassword.tsx:140
 #: src/pages/settings.tsx:169
 msgid "Reset your password"
-msgstr ""
+msgstr "Resetează-ți parola"
 
 #: src/components/wrapers/dataBottomSheet.tsx:457
 msgid "Save"
-msgstr ""
+msgstr "Salvează"
 
 #: src/pages/addToAlbum.tsx:89
 msgid "Saved in"
-msgstr ""
+msgstr "Salvat în"
 
 #: src/pages/addSong.tsx:76
 #: src/pages/discover.tsx:71
@@ -451,7 +357,7 @@ msgstr "Caută"
 
 #: src/pages/forgotPassword.tsx:95
 msgid "Send reset email"
-msgstr ""
+msgstr "Trimite email de resetare"
 
 #: src/pages/settings.tsx:61
 msgid "Settings"
@@ -465,13 +371,6 @@ msgstr "Distribuie"
 msgid "Sign In"
 msgstr "Conectare"
 
-#: src/pages/link.tsx:151
-#: src/pages/login.tsx:214
-#: src/pages/register.tsx:150
-#: src/pages/register.tsx:204
-#~ msgid "Something went wrong"
-#~ msgstr "Ceva nu a mers bine"
-
 #: src/pages/forgotPassword.tsx:123
 #: src/pages/link.tsx:151
 #: src/pages/login.tsx:212
@@ -481,13 +380,9 @@ msgstr "Conectare"
 msgid "Something went wrong."
 msgstr "Ceva nu a mers bine."
 
-#: src/pages/discover.tsx:155
-#~ msgid "Start searching for your favorite songs"
-#~ msgstr "Începeți să căutați melodiile preferate"
-
 #: src/pages/discover.tsx:158
 msgid "Start searching for your favorite songs."
-msgstr ""
+msgstr "Începe să cauți melodiile tale preferate."
 
 #: src/pages/home.tsx:123
 msgid "Suggested for you"
@@ -495,15 +390,15 @@ msgstr "Recomandat pentru tine"
 
 #: src/pages/resetPassword.tsx:171
 msgid "The password has been changed successfully."
-msgstr ""
+msgstr "Parola a fost schimbată cu succes."
 
 #: src/pages/settings.tsx:844
 msgid "The password is incorrect."
-msgstr ""
+msgstr "Parola este incorectă."
 
 #: src/pages/resetPassword.tsx:181
 msgid "The password you entered is incorrect."
-msgstr ""
+msgstr "Parola pe care ai introdus-o este incorectă."
 
 #: src/pages/settings.tsx:79
 msgid "Theme"
@@ -511,11 +406,11 @@ msgstr "Temă"
 
 #: src/pages/album.tsx:348
 msgid "There are no songs in this album."
-msgstr ""
+msgstr "Nu există melodii în acest album."
 
 #: src/pages/settings.tsx:834
 msgid "to proceed."
-msgstr ""
+msgstr "pentru a continua."
 
 #: src/pages/login.tsx:64
 msgid "Type in the email and password you used to create your account."
@@ -523,27 +418,19 @@ msgstr "Introduceți emailul și parola pe care le-ați folosit pentru a vă cre
 
 #: src/pages/forgotPassword.tsx:57
 msgid "Type in the email you used to create your account."
-msgstr ""
+msgstr "Introduceți emailul pe care l-ați folosit pentru a vă crea contul."
 
 #: src/pages/resetPassword.tsx:67
 msgid "Type in the old password and the new password you want to use."
-msgstr ""
+msgstr "Introduceți parola veche și noua parolă pe care doriți să o folosiți."
 
 #: src/pages/settings.tsx:829
 msgid "Type your"
-msgstr ""
-
-#: src/pages/settings.tsx:168
-#~ msgid "Version"
-#~ msgstr "Versiune"
+msgstr "Introduceți"
 
 #: src/pages/settings.tsx:332
 msgid "Version:"
 msgstr "Versiune:"
-
-#: src/pages/settings.tsx:548
-#~ msgid "Your data will be lost."
-#~ msgstr "Datele tale vor fi pierdute."
 
 #: src/pages/library.tsx:106
 msgid "Your library"
@@ -562,10 +449,6 @@ msgstr "Zoom"
 msgid "Zoom level"
 msgstr "Nivel de zoom"
 
-#: src/pages/settings.tsx:444
-#~ msgid "Zoom level:"
-#~ msgstr "Nivel de zoom:"
-
 #: src/pages/settings.tsx:502
 msgid "Zoom Level:"
-msgstr ""
+msgstr "Nivel de zoom:"

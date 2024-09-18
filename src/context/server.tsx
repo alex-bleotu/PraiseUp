@@ -77,6 +77,32 @@ export const ServerProvider = ({
         }
     };
 
+    const getFavorites = async (user: User) => {
+        if (!user) return [];
+
+        setLoading(true);
+        setError(null);
+
+        try {
+            const userDocRef = doc(db, "users", user.uid);
+            const userDoc = await getDoc(userDocRef);
+
+            if (userDoc.exists()) {
+                const userData = userDoc.data();
+                return userData.favorites || [];
+            } else {
+                console.error("User document does not exist.");
+                return [];
+            }
+        } catch (err: any) {
+            console.error("Error fetching favorites: ", err);
+            setError(err.message);
+            return [];
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const createPersonalAlbum = async (
         albumId: string,
         title: string
@@ -268,8 +294,6 @@ export const ServerProvider = ({
     };
 
     const getUserData = async (user: User) => {
-        console.log(user?.uid);
-
         const userDocRef = doc(db, "users", user?.uid);
         const userDoc = await getDoc(userDocRef);
 
@@ -298,6 +322,7 @@ export const ServerProvider = ({
                 checkUpdates,
                 saveCover,
                 getUserData,
+                getFavorites,
             }}>
             {children}
         </ServerContext.Provider>

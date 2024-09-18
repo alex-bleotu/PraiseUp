@@ -17,10 +17,10 @@ import Modal from "../components/wrapers/modal";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
-import { AuthContext } from "../context/auth";
 import { ConstantsContext } from "../context/constants";
 import { LanguageContext } from "../context/language";
 import { ThemeContext } from "../context/theme";
+import { UserContext } from "../context/user";
 import { darkTheme, lightTheme } from "../utils/theme";
 import { renderLyrics } from "./song";
 
@@ -29,7 +29,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
     const { language, setLanguage } = useContext(LanguageContext);
     const { lyricsSize, setLyricsSize, chords, setChords } =
         useContext(ConstantsContext);
-    const { user, logout, exitGuest, deleteAccount } = useContext(AuthContext);
+    const { user, logout, exitGuest, deleteAccount } = useContext(UserContext);
 
     const [settings, setSettings] = useState<
         "theme" | "language" | "zoom" | "chords" | null
