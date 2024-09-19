@@ -117,7 +117,7 @@ const BottomSheetModal = ({
                             backgroundColor: theme.colors.paper,
                             height: height
                                 ? height
-                                : 125 + 50 * numberOfButtons + 5,
+                                : 125 + 50 * numberOfButtons,
                         },
                     ]}
                     {...panResponder.panHandlers}>

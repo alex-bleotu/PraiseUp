@@ -17,6 +17,7 @@ import Modal from "../components/wrapers/modal";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
+import { AuthContext } from "../context/auth";
 import { ConstantsContext } from "../context/constants";
 import { LanguageContext } from "../context/language";
 import { ThemeContext } from "../context/theme";
@@ -29,7 +30,8 @@ const Settings = ({ navigation }: { navigation: any }) => {
     const { language, setLanguage } = useContext(LanguageContext);
     const { lyricsSize, setLyricsSize, chords, setChords } =
         useContext(ConstantsContext);
-    const { user, logout, exitGuest, deleteAccount } = useContext(UserContext);
+    const { user } = useContext(UserContext);
+    const { logout, exitGuest, deleteAccount } = useContext(AuthContext);
 
     const [settings, setSettings] = useState<
         "theme" | "language" | "zoom" | "chords" | null
@@ -839,6 +841,7 @@ Seeking stories yet untold.`}
                     <Input
                         placeholder={""}
                         value={password}
+                        hidden
                         onChange={setPassword}
                         error={passwordError}
                         errorText={t`The password is incorrect.`}

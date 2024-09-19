@@ -57,6 +57,7 @@ const DataBottomSheet = ({
         const load = async () => {
             if (d !== null) {
                 setData(await getById(d.id));
+
                 setName(d.title);
             }
         };
@@ -64,7 +65,7 @@ const DataBottomSheet = ({
         load();
     }, [d, refresh]);
 
-    if (data === null) return <></>;
+    if (data === null || data === undefined) return <></>;
 
     return (
         <>
@@ -72,15 +73,15 @@ const DataBottomSheet = ({
                 isOpen={isOpen && !editAlbum}
                 onClose={onClose}
                 numberOfButtons={
-                    data.type === "personal" || data.type === "song"
-                        ? (zoom || removeSong) && data.type === "song"
+                    data?.type === "personal" || data?.type === "song"
+                        ? (zoom || removeSong) && data?.type === "song"
                             ? 4
                             : 3
                         : 2
                 }>
                 <View>
                     <View style={styles.top}>
-                        {data.type === "song" ? (
+                        {data?.type === "song" ? (
                             <Image
                                 source={getImage(data.cover)}
                                 style={styles.image}
@@ -92,7 +93,7 @@ const DataBottomSheet = ({
                             <Text bold fontSize={18}>
                                 {data.title}
                             </Text>
-                            {data.type === "song" && (
+                            {data?.type === "song" && (
                                 <Text fontSize={15}>{data.artist}</Text>
                             )}
                         </View>
@@ -144,7 +145,7 @@ const DataBottomSheet = ({
                             </View>
                         )}
 
-                        {data.type !== "personal" ? (
+                        {data?.type !== "personal" ? (
                             <TouchableOpacity
                                 activeOpacity={theme.activeOpacity}
                                 onPress={async () => {
@@ -158,7 +159,7 @@ const DataBottomSheet = ({
 
                                         updateRefresh();
 
-                                        if (extraData.type === "favorite") {
+                                        if (extraData?.type === "favorite") {
                                             const fav =
                                                 await getFavoriteSongsAlbum();
 
@@ -219,7 +220,7 @@ const DataBottomSheet = ({
                                 </TouchableOpacity>
                             </>
                         )}
-                        {data.type === "song" && (
+                        {data?.type === "song" && (
                             <>
                                 <TouchableOpacity
                                     activeOpacity={theme.activeOpacity}
@@ -275,11 +276,11 @@ const DataBottomSheet = ({
                             onPress={async () => {
                                 let url = "test";
 
-                                // if (data.type === "song")
+                                // if (data?.type === "song")
                                 //     url = Linking.createURL(`song/${data.id}`);
-                                // else if (data.type === "album")
+                                // else if (data?.type === "album")
                                 //     url = Linking.createURL(`album/${data.id}`);
-                                // else if (data.type === "personal")
+                                // else if (data?.type === "personal")
                                 //     url = Linking.createURL(
                                 //         `personal/${data.id}`
                                 //     );

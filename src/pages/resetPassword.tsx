@@ -11,10 +11,12 @@ import IconInput from "../components/wrapers/iconInput";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
 import { AuthContext } from "../context/auth";
+import { LoadingContext } from "../context/loading";
 import { ThemeContext } from "../context/theme";
 
 const ResetPassword = ({ navigation }: { navigation: any }) => {
-    const { loading, updatePassword } = useContext(AuthContext);
+    const { loading } = useContext(LoadingContext);
+    const { updatePassword } = useContext(AuthContext);
     const { theme } = useContext(ThemeContext);
 
     const [oldPassword, setOldPassword] = useState("");

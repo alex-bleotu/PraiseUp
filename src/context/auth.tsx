@@ -71,22 +71,14 @@ export const AuthProvider = ({
                 const userDoc = await getDoc(userDocRef);
 
                 let favorites: string[] = [];
+
                 if (userDoc.exists()) {
                     const userData = userDoc.data();
                     favorites = userData.favorites || [];
                 }
 
-                const userWithFavorites = {
-                    ...response.user,
-                    favorites: favorites,
-                };
-
-                await AsyncStorage.setItem(
-                    "user",
-                    JSON.stringify(userWithFavorites)
-                );
-
-                setUser(userWithFavorites);
+                setUser(response.user);
+                AsyncStorage.setItem("user", JSON.stringify(user));
 
                 await syncFavorites(favorites);
                 await syncPersonalAlbums();
@@ -121,18 +113,6 @@ export const AuthProvider = ({
                     });
 
                     await initializeUserDocument(response.user.uid);
-
-                    const userWithFavorites = {
-                        ...response.user,
-                        favorites: [],
-                    };
-
-                    await AsyncStorage.setItem(
-                        "user",
-                        JSON.stringify(userWithFavorites)
-                    );
-
-                    setUser(userWithFavorites);
 
                     await login(email, password).catch((error) => {
                         reject(error);

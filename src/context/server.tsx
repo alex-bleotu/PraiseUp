@@ -36,12 +36,6 @@ export const ServerProvider = ({
             await updateDoc(userDocRef, {
                 favorites: arrayUnion(id),
             });
-
-            const updatedUser = {
-                ...user,
-                favorites: [...user.favorites, id],
-            };
-            setUser(updatedUser);
         } catch (err: any) {
             console.error("Error adding favorite: ", err);
             setError(err.message);
@@ -61,14 +55,6 @@ export const ServerProvider = ({
             await updateDoc(userDocRef, {
                 favorites: arrayRemove(id),
             });
-
-            const updatedUser = {
-                ...user,
-                favorites: user.favorites.filter(
-                    (favoriteId: string) => favoriteId !== id
-                ),
-            };
-            setUser(updatedUser);
         } catch (err: any) {
             console.error("Error removing favorite: ", err);
             setError(err.message);
@@ -89,7 +75,7 @@ export const ServerProvider = ({
 
             if (userDoc.exists()) {
                 const userData = userDoc.data();
-                return userData.favorites || [];
+                return userData?.favorites || [];
             } else {
                 console.error("User document does not exist.");
                 return [];
@@ -188,7 +174,7 @@ export const ServerProvider = ({
 
             if (userDoc.exists()) {
                 const userData = userDoc.data();
-                return userData.personalAlbumsIds || [];
+                return userData?.personalAlbumsIds || [];
             } else {
                 console.error("User document does not exist.");
                 return [];

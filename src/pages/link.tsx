@@ -7,11 +7,13 @@ import ImageButton from "../components/wrapers/imageButton";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
 import { AuthContext } from "../context/auth";
+import { LoadingContext } from "../context/loading";
 import { ThemeContext } from "../context/theme";
 import { validateEmail } from "../utils/util";
 
 const Link = ({ navigation }: { navigation: any }) => {
-    const { linkGuest, loading }: any = useContext(AuthContext);
+    const { loading } = useContext(LoadingContext);
+    const { linkGuest }: any = useContext(AuthContext);
     const { theme } = useContext(ThemeContext);
 
     const [username, setUsername] = useState("");

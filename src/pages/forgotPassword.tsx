@@ -6,11 +6,13 @@ import IconInput from "../components/wrapers/iconInput";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
 import { AuthContext } from "../context/auth";
+import { LoadingContext } from "../context/loading";
 import { ThemeContext } from "../context/theme";
 import { validateEmail } from "../utils/util";
 
 const ForgotPassword = ({ navigation }: { navigation: any }) => {
-    const { loading, sendPasswordResetEmail } = useContext(AuthContext);
+    const { loading } = useContext(LoadingContext);
+    const { sendPasswordResetEmail } = useContext(AuthContext);
     const { theme } = useContext(ThemeContext);
 
     const [email, setEmail] = useState("");
