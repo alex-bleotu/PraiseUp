@@ -17,35 +17,31 @@ export const ConstantsProvider = ({
     >(null);
     const [appHeight, setAppHeight] = useState(0);
 
-    useEffect(() => {
-        const load = async () => {
-            const sortBy = await AsyncStorage.getItem("sortBy");
-            const display = await AsyncStorage.getItem("display");
-            const lyricsSize = await AsyncStorage.getItem("lyricsSize");
-            const chords = await AsyncStorage.getItem("chords");
+    const loadConstants = async () => {
+        const sortBy = await AsyncStorage.getItem("sortBy");
+        const display = await AsyncStorage.getItem("display");
+        const lyricsSize = await AsyncStorage.getItem("lyricsSize");
+        const chords = await AsyncStorage.getItem("chords");
 
-            if (sortBy) setSortBy(sortBy as "date" | "name");
-            else setSortBy("date");
-            if (display) setDisplay(display as "grid" | "list");
-            else setDisplay("grid");
-            if (lyricsSize) setLyricsSize(parseInt(lyricsSize));
-            else setLyricsSize(16);
-            if (chords) setChords(chords as "split" | "combined" | "separated");
-            else setChords("combined");
+        if (sortBy) setSortBy(sortBy as "date" | "name");
+        else setSortBy("date");
+        if (display) setDisplay(display as "grid" | "list");
+        else setDisplay("grid");
+        if (lyricsSize) setLyricsSize(parseInt(lyricsSize));
+        else setLyricsSize(16);
+        if (chords) setChords(chords as "split" | "combined" | "separated");
+        else setChords("combined");
 
-            const { height: windowHeight } = Dimensions.get("window");
-            const { height: screenHeight } = Dimensions.get("screen");
+        const { height: windowHeight } = Dimensions.get("window");
+        const { height: screenHeight } = Dimensions.get("screen");
 
-            // TODO: Fix tabs height
-            let appHeight;
-            if (screenHeight - windowHeight < 70) appHeight = screenHeight - 15;
-            else appHeight = screenHeight - 48;
+        // TODO: Fix tabs height
+        let appHeight;
+        if (screenHeight - windowHeight < 70) appHeight = screenHeight - 15;
+        else appHeight = screenHeight - 48;
 
-            setAppHeight(appHeight);
-        };
-
-        load();
-    }, []);
+        setAppHeight(appHeight);
+    };
 
     useEffect(() => {
         if (sortBy !== null) AsyncStorage.setItem("sortBy", sortBy);
@@ -76,6 +72,7 @@ export const ConstantsProvider = ({
                 appHeight,
                 chords,
                 setChords,
+                loadConstants,
             }}>
             {children}
         </ConstantsContext.Provider>

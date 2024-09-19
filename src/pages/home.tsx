@@ -8,19 +8,16 @@ import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
 import Text from "../components/wrapers/text";
 import { AlbumType, DataContext, SongType } from "../context/data";
-import { LoadingContext } from "../context/loading";
 import { RecentContext } from "../context/recent";
 import { RefreshContext } from "../context/refresh";
-import Loading from "./loading";
 
 const Home = ({ navigation }: { navigation: any }) => {
     const { recent } = useContext(RecentContext);
     const { getRandomSongs, getFavoriteSongsAlbum, getFavoriteAlbums } =
         useContext(DataContext);
     const { refresh } = useContext(RefreshContext);
-    const { loading } = useContext(LoadingContext);
 
-    const [randomSongs, setRandomSongs] = useState<SongType[] | null>(null);
+    const [randomSongs, setRandomSongs] = useState<SongType[]>([]);
     const [favoriteAlbums, setFavoriteAlbums] = useState<AlbumType[]>([]);
 
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
@@ -29,32 +26,33 @@ const Home = ({ navigation }: { navigation: any }) => {
     );
 
     useEffect(() => {
-        if (loading) return;
-
         const load = async () => {
+            const favoriteAlbum = await getFavoriteSongsAlbum();
+            const albums = await getFavoriteAlbums();
+
+            if (favoriteAlbum.songs.length > 0)
+                setFavoriteAlbums([favoriteAlbum, ...albums]);
+            else setFavoriteAlbums(albums);
+
             const songs = await getRandomSongs(10);
             setRandomSongs(songs);
         };
 
         load();
-    }, [loading]);
+    }, []);
 
     useEffect(() => {
-        if (!loading) {
-            const load = async () => {
-                const favoriteAlbum = await getFavoriteSongsAlbum();
-                const albums = await getFavoriteAlbums();
+        const load = async () => {
+            const favoriteAlbum = await getFavoriteSongsAlbum();
+            const albums = await getFavoriteAlbums();
 
-                if (favoriteAlbum.songs.length > 0)
-                    setFavoriteAlbums([favoriteAlbum, ...albums]);
-                else setFavoriteAlbums(albums);
-            };
+            if (favoriteAlbum.songs.length > 0)
+                setFavoriteAlbums([favoriteAlbum, ...albums]);
+            else setFavoriteAlbums(albums);
+        };
 
-            load();
-        }
-    }, [loading, refresh]);
-
-    if (loading || randomSongs === null || recent === null) return <Loading />;
+        load();
+    }, [refresh]);
 
     return (
         <Background noPadding>

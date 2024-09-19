@@ -14,33 +14,26 @@ export const HistoryProvider = ({
     >(null);
 
     useEffect(() => {
-        const loadHistory = async () => {
-            try {
-                const storedHistory = await AsyncStorage.getItem("history");
-
-                if (storedHistory !== null)
-                    setHistory(JSON.parse(storedHistory));
-                else {
-                    await AsyncStorage.setItem("history", JSON.stringify([]));
-                    setHistory([]);
-                }
-            } catch (error) {
-                console.error("Failed to load history from storage", error);
-            }
-        };
-
-        loadHistory();
-    }, []);
-
-    useEffect(() => {
-        const saveHistory = async () => {
-            if (history === null) return;
-
-            await AsyncStorage.setItem("history", JSON.stringify(history));
-        };
-
-        saveHistory();
+        if (history === null) return;
+        AsyncStorage.setItem("history", JSON.stringify(history));
     }, [history]);
+
+    const loadHistory = async () => {
+        try {
+            const storedHistory = await AsyncStorage.getItem("history");
+
+            if (storedHistory !== null) {
+                const parsedHistory = JSON.parse(storedHistory);
+
+                setHistory(parsedHistory);
+            } else {
+                await AsyncStorage.setItem("history", JSON.stringify([]));
+                setHistory([]);
+            }
+        } catch (error) {
+            console.error("Failed to load history from storage", error);
+        }
+    };
 
     const addToHistory = (data: SongType | AlbumType) => {
         if (history === null) return;
@@ -54,10 +47,10 @@ export const HistoryProvider = ({
         setHistory(newHistory);
     };
 
-    const removeFromHistory = (song: SongType | AlbumType) => {
+    const removeFromHistory = (id: string) => {
         if (history === null) return;
 
-        setHistory(history.filter((item) => item !== song));
+        setHistory(history.filter((value) => value.id !== id));
     };
 
     const deleteHistory = () => {
@@ -68,9 +61,11 @@ export const HistoryProvider = ({
         <HistoryContext.Provider
             value={{
                 history,
+                setHistory,
                 addToHistory,
                 removeFromHistory,
                 deleteHistory,
+                loadHistory,
             }}>
             {children}
         </HistoryContext.Provider>

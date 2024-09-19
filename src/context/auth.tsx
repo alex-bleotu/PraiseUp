@@ -15,7 +15,6 @@ import React, { createContext, ReactNode, useContext, useEffect } from "react";
 import { auth, db } from "../../firebaseConfig";
 import { DataContext } from "./data";
 import { LoadingContext } from "./loading";
-import { ServerContext } from "./server";
 import { UserContext } from "./user";
 
 export const AuthContext = createContext<any>(null);
@@ -25,30 +24,19 @@ export const AuthProvider = ({
 }: {
     children: ReactNode | ReactNode[];
 }) => {
-    const {
-        clearData,
-        syncFavorites,
-        syncPersonalAlbums,
-        updatePersonalAlbums,
-    } = useContext(DataContext);
-    const { getPersonalAlbumsList } = useContext(ServerContext);
+    const { clearData, syncFavorites, syncPersonalAlbums } =
+        useContext(DataContext);
     const { user, setUser } = useContext(UserContext);
-    const { loading, setLoading } = useContext(LoadingContext);
+    const { setLoading } = useContext(LoadingContext);
 
-    useEffect(() => {
-        const load = async () => {
-            const user = await AsyncStorage.getItem("user");
+    const loadAuth = async () => {
+        const user = await AsyncStorage.getItem("user");
 
-            if (user) {
-                const userParsed = JSON.parse(user);
-                setUser(userParsed);
-                await updatePersonalAlbums(userParsed);
-            } else setUser(null);
-
-            setLoading(false);
-        };
-        load();
-    }, []);
+        if (user) {
+            const userParsed = JSON.parse(user);
+            setUser(userParsed);
+        } else setUser(null);
+    };
 
     useEffect(() => {
         if (user) AsyncStorage.setItem("user", JSON.stringify(user));
@@ -101,9 +89,7 @@ export const AuthProvider = ({
                 setUser(userWithFavorites);
 
                 await syncFavorites(favorites);
-
-                const list = await getPersonalAlbumsList(userWithFavorites);
-                syncPersonalAlbums(list, userWithFavorites);
+                await syncPersonalAlbums();
 
                 resolve(response);
             } catch (error) {
@@ -334,6 +320,7 @@ export const AuthProvider = ({
                 sendPasswordResetEmail,
                 deleteAccount,
                 updatePassword,
+                loadAuth,
             }}>
             {children}
         </AuthContext.Provider>

@@ -1,5 +1,4 @@
 import * as FileSystem from "expo-file-system";
-import { User } from "firebase/auth";
 import {
     arrayRemove,
     arrayUnion,
@@ -78,7 +77,7 @@ export const ServerProvider = ({
         }
     };
 
-    const getFavorites = async (user: User) => {
+    const getFavorites = async () => {
         if (!user) return [];
 
         setLoading(true);
@@ -177,7 +176,7 @@ export const ServerProvider = ({
         }
     };
 
-    const getPersonalAlbumsList = async (user: User) => {
+    const getPersonalAlbumsList = async () => {
         if (!user) return [];
 
         setLoading(true);
@@ -224,10 +223,7 @@ export const ServerProvider = ({
         }
     };
 
-    const getPersonalAlbum = async (
-        albumId: string,
-        user: User
-    ): Promise<any | null> => {
+    const getPersonalAlbum = async (albumId: string): Promise<any | null> => {
         if (!user) return null;
 
         setLoading(true);
@@ -255,8 +251,6 @@ export const ServerProvider = ({
     };
 
     const checkUpdates = async () => {
-        console.log("Checking for updates...");
-
         try {
             const storage = getStorage(app, "gs://praiseup-37c47.appspot.com");
 
@@ -294,8 +288,10 @@ export const ServerProvider = ({
         }
     };
 
-    const getUserData = async (user: User) => {
-        const userDocRef = doc(db, "users", user?.uid);
+    const getUserData = async () => {
+        if (!user) return null;
+
+        const userDocRef = doc(db, "users", user.uid);
         const userDoc = await getDoc(userDocRef);
 
         if (userDoc.exists()) {

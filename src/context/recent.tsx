@@ -1,7 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, ReactNode, useContext, useEffect } from "react";
 import { AlbumType, DataContext, SongType } from "./data";
-import { LoadingContext } from "./loading";
 
 export const RecentContext = createContext<any>(null);
 
@@ -21,36 +20,24 @@ export const RecentProvider = ({
         personalAlbumsIds,
         getAlbumById,
     } = useContext(DataContext);
-    const { loading } = useContext(LoadingContext);
+
+    const loadRecent = async () => {
+        try {
+            const storedRecent = await AsyncStorage.getItem("recent");
+            let recent;
+
+            if (storedRecent !== null) {
+                recent = JSON.parse(storedRecent);
+                await fullyUpdateRecent(recent);
+            } else setRecent(await getRandom(6));
+        } catch (error) {
+            console.error("Failed to load recent from storage", error);
+        }
+    };
 
     useEffect(() => {
-        if (loading) return;
-
-        const loadRecent = async () => {
-            try {
-                const storedRecent = await AsyncStorage.getItem("recent");
-                let recent;
-
-                if (storedRecent !== null) {
-                    recent = JSON.parse(storedRecent);
-                    await fullyUpdateRecent(recent);
-                } else setRecent(await getRandom(6));
-            } catch (error) {
-                console.error("Failed to load recent from storage", error);
-            }
-        };
-
-        loadRecent();
-    }, [loading]);
-
-    useEffect(() => {
-        const saveRecent = async () => {
-            if (recent === null || recent.length === 0) return;
-
-            await AsyncStorage.setItem("recent", JSON.stringify(recent));
-        };
-
-        saveRecent();
+        if (recent === null || recent.length === 0) return;
+        AsyncStorage.setItem("recent", JSON.stringify(recent));
     }, [recent]);
 
     useEffect(() => {
@@ -181,6 +168,7 @@ export const RecentProvider = ({
                 deleteRecent,
                 updateRecent,
                 fullyUpdateRecent,
+                loadRecent,
             }}>
             {children}
         </RecentContext.Provider>

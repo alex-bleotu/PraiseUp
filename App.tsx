@@ -12,7 +12,7 @@ import { RefreshProvider } from "./src/context/refresh";
 import { ServerProvider } from "./src/context/server";
 import { ThemeProvider } from "./src/context/theme";
 import { UserProvider } from "./src/context/user";
-import AppNavigation from "./src/navigation/appNavigation";
+import AppContainer from "./src/navigation/appContainer";
 import { darkTheme } from "./src/utils/theme";
 
 export default function App() {
@@ -30,7 +30,7 @@ export default function App() {
                                                 <DataProvider>
                                                     <AuthProvider>
                                                         <RecentProvider>
-                                                            <AppNavigation />
+                                                            <AppContainer />
                                                             <StatusBar style="auto" />
                                                         </RecentProvider>
                                                     </AuthProvider>

@@ -1,6 +1,5 @@
 import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import { useContext } from "react";
-import Background from "../components/wrapers/background";
 import { UserContext } from "../context/user";
 import AppStack from "./appStack";
 import AuthStack from "./authStack";
@@ -24,8 +23,6 @@ const linking: LinkingOptions<any> = {
 
 const AppNavigation = () => {
     const { user } = useContext(UserContext);
-
-    if (user === undefined) return <Background />;
 
     return (
         <NavigationContainer linking={linking}>

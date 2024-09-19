@@ -10,30 +10,21 @@ export const ThemeProvider = ({
 }: {
     children: ReactNode | ReactNode[];
 }) => {
-    const [loading, setLoading] = useState(true);
-    const [theme, setTheme] = useState<any>(lightTheme);
+    const [loading] = useState(true);
+    const [theme, setTheme] = useState<any>(null);
+
+    const loadTheme = async () => {
+        const themeLoaded = await AsyncStorage.getItem("theme");
+
+        if (themeLoaded === "dark") setTheme(darkTheme);
+        else if (themeLoaded === "light") setTheme(lightTheme);
+        else if (Appearance.getColorScheme() === "dark") setTheme(darkTheme);
+        else setTheme(lightTheme);
+    };
 
     useEffect(() => {
-        const load = async () => {
-            const themeLoaded = await AsyncStorage.getItem("theme");
-
-            if (themeLoaded === "dark") setTheme(darkTheme);
-            else if (themeLoaded === "light") setTheme(lightTheme);
-            else if (Appearance.getColorScheme() === "dark")
-                setTheme(darkTheme);
-            else setTheme(lightTheme);
-
-            setLoading(false);
-        };
-
-        load();
-    }, []);
-
-    useEffect(() => {
-        if (loading) return;
-
         if (theme === lightTheme) AsyncStorage.setItem("theme", "light");
-        else AsyncStorage.setItem("theme", "dark");
+        else if (theme === darkTheme) AsyncStorage.setItem("theme", "dark");
     }, [theme]);
 
     return (
@@ -41,6 +32,7 @@ export const ThemeProvider = ({
             value={{
                 theme,
                 setTheme,
+                loadTheme,
             }}>
             {children}
         </ThemeContext.Provider>

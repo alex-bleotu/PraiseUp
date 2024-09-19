@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { User } from "firebase/auth";
 import React, {
     createContext,
     ReactNode,
@@ -12,7 +11,6 @@ import { v4 as uuidv4 } from "uuid";
 import bundle from "../../assets/bundle.json";
 import { coversList } from "../utils/covers";
 import { HistoryContext } from "./history";
-import { LoadingContext } from "./loading";
 import { RefreshContext } from "./refresh";
 import { ServerContext } from "./server";
 import { UserContext } from "./user";
@@ -47,9 +45,9 @@ export const DataProvider = ({
 }: {
     children: ReactNode | ReactNode[];
 }) => {
-    const { setUser } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const { updateRefresh } = useContext(RefreshContext);
-    const { removeFromHistory } = useContext(HistoryContext);
+    const { history, removeFromHistory } = useContext(HistoryContext);
     const {
         getUserData,
         addFavorite,
@@ -62,15 +60,13 @@ export const DataProvider = ({
         checkUpdates,
         saveCover,
     } = useContext(ServerContext);
-    const { setLoading } = useContext(LoadingContext);
 
     const [songIds, setSongIds] = useState<string[]>([]);
     const [albumIds, setAlbumIds] = useState<string[]>([]);
     const [personalAlbumsIds, setPersonalAlbumsIds] = useState<string[]>([]);
+    const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
 
-    useEffect(() => {
-        setLoading(true);
-
+    const loadData = async () => {
         const clear = async () => {
             setSongIds([]);
             setAlbumIds([]);
@@ -112,6 +108,7 @@ export const DataProvider = ({
             const storedPersonalAlbums = await AsyncStorage.getItem(
                 "personalAlbumsIds"
             );
+            const storedFavorites = await AsyncStorage.getItem("favoriteIds");
 
             let sortedSongs: string[] = [];
             let sortedAlbums: string[] = [];
@@ -139,6 +136,8 @@ export const DataProvider = ({
                     }
                 );
 
+                console.log("Sorted albums:", sortedAlbums);
+
                 setAlbumIds(sortedAlbums);
             }
 
@@ -155,7 +154,25 @@ export const DataProvider = ({
                 );
             }
 
-            return { sortedSongs, sortedAlbums, storedPersonalAlbums };
+            if (storedFavorites !== null) {
+                setFavoriteIds(JSON.parse(storedFavorites));
+            }
+
+            return { sortedSongs, sortedAlbums, storedFavorites };
+        };
+
+        const filterHistory = async () => {
+            if (history !== null) {
+                for (const item of history) {
+                    if (item.type === "song") {
+                        if (!songIds.includes(item.id))
+                            removeFromHistory(item.id);
+                    } else if (item.type === "album") {
+                        if (!albumIds.includes(item.id))
+                            removeFromHistory(item.id);
+                    }
+                }
+            }
         };
 
         const checkForUpdates = async (
@@ -173,53 +190,38 @@ export const DataProvider = ({
 
             await checkForUpdates(lists.sortedSongs, lists.sortedAlbums);
 
-            setLoading(false);
+            filterHistory();
+
+            await syncPersonalAlbums();
+            await syncFavorites(user.favorites, lists.storedFavorites);
         };
 
         initialize();
-    }, []);
+    };
 
     useEffect(() => {
-        if (songIds === null) return;
-
-        const writeSongIds = async () => {
-            if (songIds.length !== 0) {
-                await AsyncStorage.setItem("songIds", JSON.stringify(songIds));
-            }
-        };
-
-        writeSongIds();
+        if (songIds === null || songIds.length === 0) return;
+        AsyncStorage.setItem("songIds", JSON.stringify(songIds));
     }, [songIds]);
 
     useEffect(() => {
-        if (albumIds === null) return;
-
-        const writeAlbumIds = async () => {
-            if (albumIds.length !== 0) {
-                await AsyncStorage.setItem(
-                    "albumIds",
-                    JSON.stringify(albumIds)
-                );
-            }
-        };
-
-        writeAlbumIds();
+        if (albumIds === null || albumIds.length === 0) return;
+        AsyncStorage.setItem("albumIds", JSON.stringify(albumIds));
     }, [albumIds]);
 
     useEffect(() => {
-        if (personalAlbumsIds === null) return;
-
-        const writePersonalAlbumsIds = async () => {
-            if (personalAlbumsIds.length !== 0) {
-                await AsyncStorage.setItem(
-                    "personalAlbumsIds",
-                    JSON.stringify(personalAlbumsIds)
-                );
-            }
-        };
-
-        writePersonalAlbumsIds();
+        if (personalAlbumsIds === null || personalAlbumsIds.length === 0)
+            return;
+        AsyncStorage.setItem(
+            "personalAlbumsIds",
+            JSON.stringify(personalAlbumsIds)
+        );
     }, [personalAlbumsIds]);
+
+    useEffect(() => {
+        if (favoriteIds === null || favoriteIds.length === 0) return;
+        AsyncStorage.setItem("favoriteIds", JSON.stringify(favoriteIds));
+    }, [favoriteIds]);
 
     const addData = async () => {
         const data = await checkUpdates();
@@ -436,7 +438,7 @@ export const DataProvider = ({
                 else if (data.deleted[i].startsWith("A"))
                     await removeId(data.deleted[i]);
 
-                await removeFromHistory(data.deleted[i]);
+                await removeFromHistory(data.deleted[i].id);
             }
 
             updateRefresh();
@@ -798,8 +800,12 @@ export const DataProvider = ({
 
         if (isFavorite && update) {
             addFavorite(id);
+            setFavoriteIds((prevArray) => [...prevArray, id]);
         } else if (update) {
             removeFavorite(id);
+            setFavoriteIds((prevArray) =>
+                prevArray.filter((favoriteId) => favoriteId !== id)
+            );
         }
     };
 
@@ -1013,38 +1019,46 @@ export const DataProvider = ({
         return { albumsThatContainSong, albumsThatDontContainSong };
     };
 
-    const syncFavorites = async (favoriteList: string[]) => {
-        for (let i = 0; i < favoriteList.length; i++) {
-            if (favoriteList[i].startsWith("S")) {
-                const song = await getSongById(favoriteList[i]);
-                song.favorite = true;
-
-                await writeSong(song);
-            } else if (favoriteList[i].startsWith("A")) {
-                const album = await getAlbumById(favoriteList[i]);
-                album.favorite = true;
-
-                await writeAlbum(album);
+    const syncFavorites = async (
+        favoriteList: string[],
+        oldFavoriteList: any = null
+    ) => {
+        if (oldFavoriteList) {
+            for (const item of oldFavoriteList) {
+                if (!favoriteList.find((id) => id === item)) {
+                    setFavorite(item, false, false);
+                }
             }
         }
+
+        for (let i = 0; i < favoriteList.length; i++)
+            setFavorite(favoriteList[i], true, false);
 
         updateRefresh();
     };
 
-    const syncPersonalAlbums = async (
-        personalAlbumsList: string[],
-        user: User
-    ) => {
-        for (let i = 0; i < personalAlbumsList.length; i++) {
+    const syncPersonalAlbums = async () => {
+        const userData = await getUserData();
+
+        for (let i = 0; i < userData.personalAlbumsIds.length; i++)
+            if (
+                !personalAlbumsIds.find(
+                    (id) => id === userData.personalAlbumsIds[i]
+                )
+            )
+                removeId(userData.personalAlbumsIds[i]);
+
+        setPersonalAlbumsIds(userData.personalAlbumsIds);
+
+        for (let i = 0; i < userData.personalAlbumsIds.length; i++) {
             const data = await getPersonalAlbumServer(
-                personalAlbumsList[i],
-                user
+                userData.personalAlbumsIds[i]
             );
 
             if (!data) continue;
 
             const album: AlbumType = {
-                id: personalAlbumsList[i],
+                id: userData.personalAlbumsIds[i],
                 type: "personal",
                 title: data.title,
                 songs: data.songs,
@@ -1057,23 +1071,6 @@ export const DataProvider = ({
         }
 
         updateRefresh();
-    };
-
-    const updatePersonalAlbums = async (user: User) => {
-        const userData = await getUserData(user);
-
-        if (userData.personalAlbumsIds) {
-            await syncPersonalAlbumsIds(userData.personalAlbumsIds);
-            await syncPersonalAlbums(userData.personalAlbumsIds, user);
-        }
-    };
-
-    const syncPersonalAlbumsIds = async (personalAlbumsList: string[]) => {
-        for (let i = 0; i < personalAlbumsList.length; i++)
-            if (!personalAlbumsIds.find((id) => id === personalAlbumsList[i]))
-                removeId(personalAlbumsList[i]);
-
-        setPersonalAlbumsIds(personalAlbumsList);
     };
 
     return (
@@ -1113,9 +1110,8 @@ export const DataProvider = ({
                 syncFavorites,
                 setPersonalAlbumsIds,
                 syncPersonalAlbums,
-                syncPersonalAlbumsIds,
                 updateData,
-                updatePersonalAlbums,
+                loadData,
             }}>
             {children}
         </DataContext.Provider>

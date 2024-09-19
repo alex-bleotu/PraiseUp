@@ -104,7 +104,7 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                                             icon="close"
                                                             action={() =>
                                                                 removeFromHistory(
-                                                                    data
+                                                                    data.id
                                                                 )
                                                             }
                                                         />
@@ -119,7 +119,7 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                                             icon="close"
                                                             action={() =>
                                                                 removeFromHistory(
-                                                                    data
+                                                                    data.id
                                                                 )
                                                             }
                                                         />
