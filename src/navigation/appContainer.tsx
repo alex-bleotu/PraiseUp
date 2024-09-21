@@ -12,8 +12,8 @@ import AppNavigation from "./appNavigation";
 const AppContainer = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const { user } = useContext(UserContext);
-    const { songIds, albumIds, loadData } = useContext(DataContext);
-    const { theme, loadTheme } = useContext(ThemeContext);
+    const { loadingData, loadData } = useContext(DataContext);
+    const { theme } = useContext(ThemeContext);
     const { recent, loadRecent } = useContext(RecentContext);
     const { history, loadHistory } = useContext(HistoryContext);
     const { loadAuth } = useContext(AuthContext);
@@ -22,9 +22,6 @@ const AppContainer = () => {
     useEffect(() => {
         const load = async () => {
             setLoading(true);
-
-            console.log("Loading theme");
-            await loadTheme();
             console.log("Loading auth");
             await loadAuth();
             console.log("Loading constants");
@@ -35,7 +32,7 @@ const AppContainer = () => {
     }, []);
 
     useEffect(() => {
-        if (user === undefined && !loading) return;
+        if ((user === undefined || user === null) && !loading) return;
 
         const load = async () => {
             console.log("Loading data");
@@ -46,7 +43,7 @@ const AppContainer = () => {
     }, [user]);
 
     useEffect(() => {
-        if ((!songIds || !albumIds) && !loading) return;
+        if (loadingData && !loading) return;
 
         const load = async () => {
             console.log("Loading history");
@@ -58,7 +55,7 @@ const AppContainer = () => {
         };
 
         load();
-    }, [songIds, albumIds]);
+    }, [loadingData]);
 
     if (theme === null) return <></>;
     else if (loading === null || history === null || recent === null)

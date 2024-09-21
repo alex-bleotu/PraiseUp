@@ -26,7 +26,7 @@ import { darkTheme, lightTheme } from "../utils/theme";
 import { renderLyrics } from "./song";
 
 const Settings = ({ navigation }: { navigation: any }) => {
-    const { theme, setTheme } = useContext(ThemeContext);
+    const { theme, setThemeType, themeType } = useContext(ThemeContext);
     const { language, setLanguage } = useContext(LanguageContext);
     const { lyricsSize, setLyricsSize, chords, setChords } =
         useContext(ConstantsContext);
@@ -360,7 +360,39 @@ const Settings = ({ navigation }: { navigation: any }) => {
                             <TouchableOpacity
                                 style={styles.choiceContainer}
                                 activeOpacity={1}
-                                onPress={() => setTheme(lightTheme)}>
+                                onPress={() => setThemeType("system")}>
+                                <View
+                                    style={[
+                                        styles.theme,
+                                        {
+                                            backgroundColor:
+                                                theme.colors.background,
+                                        },
+                                    ]}>
+                                    <Text
+                                        fontSize={30}
+                                        bold
+                                        color={theme.colors.primary}
+                                        style={{ marginTop: -5 }}>
+                                        S
+                                    </Text>
+                                </View>
+                                <RadioButton
+                                    value="system"
+                                    color={theme.colors.primary}
+                                    uncheckedColor={theme.colors.grey}
+                                    status={
+                                        themeType === "system"
+                                            ? "checked"
+                                            : "unchecked"
+                                    }
+                                    onPress={() => setThemeType("system")}
+                                />
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.choiceContainer}
+                                activeOpacity={1}
+                                onPress={() => setThemeType("light")}>
                                 <View
                                     style={[
                                         styles.theme,
@@ -382,17 +414,17 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                     color={theme.colors.primary}
                                     uncheckedColor={theme.colors.grey}
                                     status={
-                                        theme === lightTheme
+                                        themeType === "light"
                                             ? "checked"
                                             : "unchecked"
                                     }
-                                    onPress={() => setTheme(lightTheme)}
+                                    onPress={() => setThemeType("light")}
                                 />
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={styles.choiceContainer}
                                 activeOpacity={1}
-                                onPress={() => setTheme(darkTheme)}>
+                                onPress={() => setThemeType("dark")}>
                                 <View
                                     style={[
                                         styles.theme,
@@ -414,11 +446,11 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                     color={theme.colors.primary}
                                     uncheckedColor={theme.colors.grey}
                                     status={
-                                        theme === darkTheme
+                                        themeType === "dark"
                                             ? "checked"
                                             : "unchecked"
                                     }
-                                    onPress={() => setTheme(darkTheme)}
+                                    onPress={() => setThemeType("dark")}
                                 />
                             </TouchableOpacity>
                         </View>

@@ -20,7 +20,7 @@ export const ServerProvider = ({
 }: {
     children: ReactNode | ReactNode[];
 }) => {
-    const { user, setUser } = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const { loading, setLoading } = useContext(LoadingContext);
 
     const [error, setError] = useState<string | null>(null);

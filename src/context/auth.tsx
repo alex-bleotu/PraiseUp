@@ -11,7 +11,7 @@ import {
     updateProfile,
 } from "firebase/auth";
 import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
-import React, { createContext, ReactNode, useContext, useEffect } from "react";
+import React, { createContext, ReactNode, useContext } from "react";
 import { auth, db } from "../../firebaseConfig";
 import { DataContext } from "./data";
 import { LoadingContext } from "./loading";
@@ -26,7 +26,7 @@ export const AuthProvider = ({
 }) => {
     const { clearData, syncFavorites, syncPersonalAlbums } =
         useContext(DataContext);
-    const { user, setUser } = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
     const { setLoading } = useContext(LoadingContext);
 
     const loadAuth = async () => {
@@ -37,10 +37,6 @@ export const AuthProvider = ({
             setUser(userParsed);
         } else setUser(null);
     };
-
-    useEffect(() => {
-        if (user) AsyncStorage.setItem("user", JSON.stringify(user));
-    }, [user]);
 
     const initializeUserDocument = async (uid: string) => {
         const userDocRef = doc(db, "users", uid);
@@ -78,12 +74,11 @@ export const AuthProvider = ({
                 }
 
                 setUser(response.user);
-                AsyncStorage.setItem("user", JSON.stringify(user));
 
-                await syncFavorites(favorites);
+                await syncFavorites();
                 await syncPersonalAlbums();
 
-                resolve(response);
+                resolve(response.user);
             } catch (error) {
                 reject(error);
             } finally {
@@ -135,18 +130,9 @@ export const AuthProvider = ({
 
                 await initializeUserDocument(userCredential.user.uid);
 
-                const guestUserWithFavorites = {
-                    ...userCredential.user,
-                    favorites: [],
-                };
+                setUser(userCredential.user);
 
-                await AsyncStorage.setItem(
-                    "user",
-                    JSON.stringify(guestUserWithFavorites)
-                );
-
-                setUser(guestUserWithFavorites);
-                resolve(guestUserWithFavorites);
+                resolve(userCredential.user);
             } catch (error) {
                 reject(error);
             }
@@ -276,6 +262,7 @@ export const AuthProvider = ({
                 await deleteUserDocument(user.uid);
                 await user.delete();
                 await AsyncStorage.removeItem("user");
+
                 setUser(null);
 
                 resolve("Account deleted successfully");
@@ -290,7 +277,6 @@ export const AuthProvider = ({
     return (
         <AuthContext.Provider
             value={{
-                setUser,
                 login,
                 register,
                 logout,

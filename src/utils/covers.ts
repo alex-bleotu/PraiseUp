@@ -9,7 +9,8 @@ const covers = {
 export const coversList = Object.keys(covers);
 
 export const getImage = (cover: string | null) => {
-    if (cover === null || cover === "none") return covers.default;
+    if (cover === null || cover === "none" || cover === undefined)
+        return covers.default;
 
     if (cover.includes("file://")) return { uri: cover };
 

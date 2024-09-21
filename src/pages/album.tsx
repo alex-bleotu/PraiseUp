@@ -25,7 +25,8 @@ const Album = ({ route, navigation }: AlbumProps) => {
     const { album: a } = route.params;
 
     const { refresh } = useContext(RefreshContext);
-    const { getSongById, getPersonalAlbumsById } = useContext(DataContext);
+    const { getSongById, getPersonalAlbumsById, getFavoriteSongsAlbum } =
+        useContext(DataContext);
     const { language } = useContext(LanguageContext);
     const { theme } = useContext(ThemeContext);
     const { sortBy, setSortBy, display, setDisplay } =
@@ -51,11 +52,21 @@ const Album = ({ route, navigation }: AlbumProps) => {
                         const song = await getSongById(personalAlbum.songs[i]);
                         if (song) loaded.push(song);
                     }
-            } else if (album !== null)
-                for (let i = 0; i < album.songs.length; i++) {
-                    const song = await getSongById(album.songs[i]);
-                    if (song) loaded.push(song);
+            } else if (album !== null) {
+                if (album.type === "favorite") {
+                    const favorite = await getFavoriteSongsAlbum();
+                    if (favorite !== null)
+                        for (let i = 0; i < favorite.songs.length; i++) {
+                            const song = await getSongById(favorite.songs[i]);
+                            if (song) loaded.push(song);
+                        }
+                } else {
+                    for (let i = 0; i < album.songs.length; i++) {
+                        const song = await getSongById(album.songs[i]);
+                        if (song) loaded.push(song);
+                    }
                 }
+            }
 
             const buttonSong: SongType = {
                 id: "B",
