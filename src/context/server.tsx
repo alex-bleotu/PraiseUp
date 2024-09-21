@@ -274,6 +274,14 @@ export const ServerProvider = ({
         }
     };
 
+    const deleteCover = async (uri: string) => {
+        try {
+            await FileSystem.deleteAsync(uri);
+        } catch (err: any) {
+            console.error("Error deleting cover: ", err);
+        }
+    };
+
     const getUserData = async () => {
         if (!user) return null;
 
@@ -306,6 +314,7 @@ export const ServerProvider = ({
                 saveCover,
                 getUserData,
                 getFavorites,
+                deleteCover,
             }}>
             {children}
         </ServerContext.Provider>

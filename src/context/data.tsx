@@ -59,6 +59,7 @@ export const DataProvider = ({
         getPersonalAlbum: getPersonalAlbumServer,
         checkUpdates,
         saveCover,
+        deleteCover,
     } = useContext(ServerContext);
 
     const [songIds, setSongIds] = useState<string[] | null>(null);
@@ -635,6 +636,11 @@ export const DataProvider = ({
     const removeId = async (id: string) => {
         try {
             try {
+                if (id.startsWith("S")) {
+                    const song = await readSong(id);
+                    if (song?.cover) deleteCover(song.cover);
+                }
+
                 await AsyncStorage.removeItem(id);
             } catch (error) {
                 console.error("Error deleting song file:", error);
@@ -663,8 +669,6 @@ export const DataProvider = ({
     const filter = async (searchQuery: string) => {
         if (!songIds || !albumIds || !personalAlbumsIds) return [];
 
-        let filtered: any[] = [];
-
         const normalizeString = (str: string) => {
             return str
                 .toLowerCase()
@@ -672,31 +676,42 @@ export const DataProvider = ({
                 .replace(/î/g, "i")
                 .replace(/â/g, "a")
                 .replace(/ș/g, "s")
-                .replace(/ț/g, "t");
+                .replace(/ț/g, "t")
+                .replace(/\s+/g, " ");
         };
 
         const query = normalizeString(searchQuery);
 
         const stripChords = (lyrics: string) => {
-            return normalizeString(lyrics.replace(/\[[^\]]+\]/g, ""));
+            return normalizeString(lyrics.replace(/\[[^\]]+\]/g, "")).replace(
+                /[^\w\s]|_/g,
+                ""
+            );
         };
+
+        const titleMatches: any[] = [];
+        const artistMatches: any[] = [];
+        const lyricsMatches: any[] = [];
 
         const songPromises = songIds.map(async (id) => {
             const song = await readSong(id);
             if (!song) return null;
 
             const songNameMatches = normalizeString(song.title).includes(query);
-            const artistMatches = song.artist
+            const artistMatchesQuery = song.artist
                 ? normalizeString(song.artist).includes(query)
                 : false;
-            const lyricsMatches = song.lyrics
+            const lyricsMatchesQuery = song.lyrics
                 ? stripChords(song.lyrics).includes(query)
                 : false;
 
-            if (songNameMatches || artistMatches || lyricsMatches) {
-                return song;
+            if (songNameMatches) {
+                titleMatches.push(song);
+            } else if (artistMatchesQuery) {
+                artistMatches.push(song);
+            } else if (lyricsMatchesQuery) {
+                lyricsMatches.push(song);
             }
-            return null;
         });
 
         const albumPromises = albumIds.map(async (id) => {
@@ -707,9 +722,8 @@ export const DataProvider = ({
                 query
             );
             if (albumNameMatches) {
-                return album;
+                titleMatches.push(album);
             }
-            return null;
         });
 
         const personalAlbumPromises = personalAlbumsIds.map(async (id) => {
@@ -720,18 +734,17 @@ export const DataProvider = ({
                 query
             );
             if (albumNameMatches) {
-                return album;
+                titleMatches.push(album);
             }
-            return null;
         });
 
-        const results = await Promise.all([
+        await Promise.all([
             ...songPromises,
             ...albumPromises,
             ...personalAlbumPromises,
         ]);
 
-        filtered = results.filter((result) => result !== null);
+        const filtered = [...titleMatches, ...artistMatches, ...lyricsMatches];
 
         return filtered;
     };

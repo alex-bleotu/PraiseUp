@@ -345,9 +345,9 @@ const Settings = ({ navigation }: { navigation: any }) => {
                 }}
                 height={
                     settings === "theme"
-                        ? 170
+                        ? 180
                         : settings === "language"
-                        ? 150
+                        ? 190
                         : settings === "zoom"
                         ? 290
                         : settings === "chords"
@@ -377,6 +377,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                         S
                                     </Text>
                                 </View>
+                                <Text>{t`System`}</Text>
                                 <RadioButton
                                     value="system"
                                     color={theme.colors.primary}
@@ -409,6 +410,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                         A
                                     </Text>
                                 </View>
+                                <Text>{t`Light`}</Text>
                                 <RadioButton
                                     value="light"
                                     color={theme.colors.primary}
@@ -441,6 +443,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                         A
                                     </Text>
                                 </View>
+                                <Text>{t`Dark`}</Text>
                                 <RadioButton
                                     value="dark"
                                     color={theme.colors.primary}
@@ -472,6 +475,8 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                         style={styles.image}
                                     />
                                 </View>
+                                <Text>{"English"}</Text>
+                                <Text>{t`(English)`}</Text>
                                 <RadioButton
                                     value="english"
                                     color={theme.colors.primary}
@@ -494,6 +499,8 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                         style={styles.image}
                                     />
                                 </View>
+                                <Text>{"Română"}</Text>
+                                <Text>{t`(Romanian)`}</Text>
                                 <RadioButton
                                     value="romanian"
                                     color={theme.colors.primary}
@@ -993,7 +1000,7 @@ const styles = StyleSheet.create({
     },
     choiceContainer: {
         alignItems: "center",
-        marginRight: 15,
+        marginRight: 20,
     },
     choices2: {
         flexDirection: "column",

@@ -32,7 +32,7 @@ const AppContainer = () => {
     }, []);
 
     useEffect(() => {
-        if ((user === undefined || user === null) && !loading) return;
+        if (user === undefined && !loading) return;
 
         const load = async () => {
             console.log("Loading data");
@@ -58,7 +58,10 @@ const AppContainer = () => {
     }, [loadingData]);
 
     if (theme === null) return <></>;
-    else if (loading === null || history === null || recent === null)
+    else if (
+        user !== null &&
+        (loading === null || history === null || recent === null)
+    )
         return <Loading />;
 
     return <AppNavigation />;

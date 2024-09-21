@@ -274,6 +274,8 @@ const Song = ({ route, navigation }: SongProps) => {
         );
     }, [song.lyrics, lyricsSize, steps, theme, chords]);
 
+    console.log(song.cover);
+
     return (
         <StackPage
             navigation={navigation}
@@ -772,8 +774,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         width: 45,
-        marginLeft: 3,
-        marginRight: 3,
+        marginLeft: 5,
+        marginRight: 5,
         height: 40,
     },
     chordButtonsLine: {

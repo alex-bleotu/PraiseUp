@@ -32,6 +32,7 @@ const Discover = ({ navigation }: { navigation: any }) => {
 
     useEffect(() => {
         const currentSearch = ++searchRef.current;
+        let loadingTimeout: NodeJS.Timeout | null = null;
 
         const loadSongs = async () => {
             if (searchQuery.length === 0) {
@@ -40,20 +41,32 @@ const Discover = ({ navigation }: { navigation: any }) => {
                 return;
             }
 
-            setLoading(true);
-
-            if (currentSearch !== searchRef.current) return;
+            loadingTimeout = setTimeout(() => {
+                if (currentSearch === searchRef.current) {
+                    setLoading(true);
+                }
+            }, 100);
 
             const filtered = await filter(searchQuery);
-            setFilteredData(filtered);
 
-            setLoading(false);
+            if (loadingTimeout) {
+                clearTimeout(loadingTimeout);
+                loadingTimeout = null;
+            }
+
+            if (currentSearch === searchRef.current) {
+                setFilteredData(filtered);
+                setLoading(false);
+            }
         };
 
         loadSongs();
 
         return () => {
             searchRef.current++;
+            if (loadingTimeout) {
+                clearTimeout(loadingTimeout);
+            }
         };
     }, [searchQuery]);
 
