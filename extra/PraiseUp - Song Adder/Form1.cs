@@ -13,8 +13,6 @@ namespace PraiseUp {
         public Form1() {
             InitializeComponent();
 
-            Environment.SetEnvironmentVariable("GITHUB_OAUTH_TOKEN", "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");
-
             textBox1.TabIndex = 0;
             textBox2.TabIndex = 1;
             textBox3.TabIndex = 2;
