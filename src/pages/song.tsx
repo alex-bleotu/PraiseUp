@@ -723,7 +723,12 @@ const Song = ({ route, navigation }: SongProps) => {
                     setBottomSheetOpen(false);
                 }}
                 extraActions2={() => {
+                    setBottomSheetOpen(false);
                     navigation.navigate("AddToAlbum", { currentData: song });
+                }}
+                slideshow={() => {
+                    setBottomSheetOpen(false);
+                    navigation.navigate("Slideshow", { song });
                 }}
             />
         </StackPage>

@@ -23,6 +23,7 @@ interface DataBottomSheetProps {
     extraActions2?: () => void;
     removeSong?: boolean;
     updateData?: any;
+    slideshow?: () => void;
 }
 
 const DataBottomSheet = ({
@@ -35,6 +36,7 @@ const DataBottomSheet = ({
     removeSong,
     extraData,
     updateData,
+    slideshow,
 }: DataBottomSheetProps) => {
     const { theme } = useContext(ThemeContext);
     const {
@@ -75,7 +77,7 @@ const DataBottomSheet = ({
                 numberOfButtons={
                     data?.type === "personal" || data?.type === "song"
                         ? (zoom || removeSong) && data?.type === "song"
-                            ? 4
+                            ? 5
                             : 3
                         : 2
                 }>
@@ -157,7 +159,26 @@ const DataBottomSheet = ({
                                 </View>
                             </View>
                         )}
-
+                        {slideshow && (
+                            <TouchableOpacity
+                                activeOpacity={theme.activeOpacity}
+                                onPress={async () => {
+                                    if (data !== null) {
+                                        slideshow();
+                                    }
+                                }}>
+                                <View style={styles.button}>
+                                    <MCIcons
+                                        name={"presentation"}
+                                        size={30}
+                                        color={theme.colors.text}
+                                    />
+                                    <Text fontSize={17} style={styles.text}>
+                                        {t`Slideshow`}
+                                    </Text>
+                                </View>
+                            </TouchableOpacity>
+                        )}
                         {data?.type !== "personal" ? (
                             <TouchableOpacity
                                 activeOpacity={theme.activeOpacity}

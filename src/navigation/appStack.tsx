@@ -9,6 +9,7 @@ import ForgotPassword from "../pages/forgotPassword";
 import Link from "../pages/link";
 import ResetPassword from "../pages/resetPassword";
 import Settings from "../pages/settings";
+import Slideshow from "../pages/slideshow";
 import Tabs from "./tabs";
 
 const S = createStackNavigator();
@@ -28,6 +29,14 @@ const AppStack = () => {
             <S.Screen name="ForgotPassword" component={ForgotPassword} />
             <S.Screen name="AddSong" component={AddSong} />
             <S.Screen name="AddToAlbum" component={AddToAlbum} />
+            <S.Screen
+                name="Slideshow"
+                component={Slideshow}
+                options={{
+                    cardStyleInterpolator:
+                        CardStyleInterpolators.forFadeFromCenter, // Change to fade animation
+                }}
+            />
         </S.Navigator>
     );
 };

@@ -32,7 +32,8 @@
     "react-native-screens": "3.31.1",
     "uuid": "^10.0.0",
     "expo-file-system": "~17.0.1",
-    "expo-font": "~12.0.10"
+    "expo-font": "~12.0.10",
+    "expo-screen-orientation": "~7.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

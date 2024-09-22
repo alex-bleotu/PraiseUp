@@ -293,6 +293,7 @@ const Discover = ({ navigation }: { navigation: any }) => {
                     setBottomSheetOpen(false);
                 }}
                 extraActions2={() => {
+                    setBottomSheetOpen(false);
                     navigation.navigate("AddToAlbum", { currentData });
                 }}
             />

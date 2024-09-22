@@ -431,6 +431,7 @@ const Album = ({ route, navigation }: AlbumProps) => {
                 }}
                 extraData={album}
                 extraActions2={() => {
+                    setBottomSheetOpen(false);
                     navigation.navigate("AddToAlbum", {
                         currentData,
                     });
