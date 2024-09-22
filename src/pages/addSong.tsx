@@ -5,6 +5,7 @@ import { ActivityIndicator, Searchbar as SearchBar } from "react-native-paper";
 import SongCover from "../components/items/songCover";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
+import Text from "../components/wrapers/text";
 import { AlbumType, DataContext, SongType } from "../context/data";
 import { RecentContext } from "../context/recent";
 import { RefreshContext } from "../context/refresh";
@@ -81,36 +82,49 @@ const AddSong = ({ navigation, route }: { navigation: any; route: any }) => {
 
                 <View style={styles.scrollContainer}>
                     {!loading && songs ? (
-                        <ScrollView bottom={10}>
-                            {songs.map((data: SongType, index: any) => {
-                                return (
-                                    <View key={index} style={styles.songs}>
-                                        <SongCover
-                                            key={index}
-                                            song={data}
-                                            disabled
-                                            navigation={navigation}
-                                            fullWidth
-                                            icon="plus-circle-outline"
-                                            action={() => {
-                                                addSongToPersonalAlbum(
-                                                    album,
-                                                    data
-                                                ).then(
-                                                    (newAlbum: AlbumType) => {
-                                                        updateDate(data.id);
-                                                        setAlbum(newAlbum);
-                                                        updateRefresh();
-                                                        updateRecent();
-                                                    }
-                                                );
-                                                removeSongFromList(data);
-                                            }}
-                                        />
-                                    </View>
-                                );
-                            })}
-                        </ScrollView>
+                        songs.length > 0 ? (
+                            <ScrollView bottom={10}>
+                                {songs.map((data: SongType, index: any) => {
+                                    return (
+                                        <View key={index} style={styles.songs}>
+                                            <SongCover
+                                                key={index}
+                                                song={data}
+                                                disabled
+                                                navigation={navigation}
+                                                fullWidth
+                                                icon="plus-circle-outline"
+                                                action={() => {
+                                                    addSongToPersonalAlbum(
+                                                        album,
+                                                        data
+                                                    ).then(
+                                                        (
+                                                            newAlbum: AlbumType
+                                                        ) => {
+                                                            updateDate(data.id);
+                                                            setAlbum(newAlbum);
+                                                            updateRefresh();
+                                                            updateRecent();
+                                                        }
+                                                    );
+                                                    removeSongFromList(data);
+                                                }}
+                                            />
+                                        </View>
+                                    );
+                                })}
+                            </ScrollView>
+                        ) : (
+                            <View style={styles.placeholder}>
+                                <Text fontSize={20} bold center>
+                                    {t`No more songs`}
+                                </Text>
+                                <Text center fontSize={16}>
+                                    {t`You've added all the available songs`}
+                                </Text>
+                            </View>
+                        )
                     ) : (
                         <View
                             style={{
@@ -145,6 +159,14 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     songs: { marginTop: 15, paddingHorizontal: 20 },
+    placeholder: {
+        display: "flex",
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: -100,
+        marginHorizontal: 25,
+    },
 });
 
 export default AddSong;

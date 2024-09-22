@@ -157,67 +157,77 @@ const Library = ({ navigation }: { navigation: any }) => {
                             <SV
                                 contentContainerStyle={styles.grid}
                                 showsVerticalScrollIndicator={false}>
-                                {albums.map(
-                                    (data: AlbumType, index: number) => {
-                                        return (
-                                            <View
-                                                key={data.id}
-                                                style={[
-                                                    styles.item,
-                                                    {
-                                                        marginHorizontal:
-                                                            (index - 1) % 3 == 0
-                                                                ? 15
-                                                                : 0,
-                                                    },
-                                                ]}>
-                                                {data.type === "extra" ? (
-                                                    <AnimatedTouchable
-                                                        onPress={() => {
-                                                            setIsCreateBottomSheetOpen(
-                                                                true
-                                                            );
-                                                        }}
-                                                        style={[
-                                                            styles.addGrid,
-                                                            {
-                                                                backgroundColor:
+                                <View style={styles.gridContent}>
+                                    {albums.map(
+                                        (data: AlbumType, index: number) => {
+                                            return (
+                                                <View
+                                                    key={data.id}
+                                                    style={[
+                                                        styles.item,
+                                                        {
+                                                            marginHorizontal:
+                                                                (index - 1) %
+                                                                    3 ==
+                                                                0
+                                                                    ? 12
+                                                                    : 0,
+                                                        },
+                                                    ]}>
+                                                    {data.type === "extra" ? (
+                                                        <AnimatedTouchable
+                                                            onPress={() => {
+                                                                setIsCreateBottomSheetOpen(
+                                                                    true
+                                                                );
+                                                            }}
+                                                            style={[
+                                                                styles.addGrid,
+                                                                {
+                                                                    backgroundColor:
+                                                                        theme
+                                                                            .colors
+                                                                            .paper,
+                                                                },
+                                                            ]}>
+                                                            <FAIcons
+                                                                name="plus"
+                                                                size={30}
+                                                                color={
                                                                     theme.colors
-                                                                        .paper,
-                                                            },
-                                                        ]}>
-                                                        <FAIcons
-                                                            name="plus"
-                                                            size={30}
-                                                            color={
-                                                                theme.colors
-                                                                    .text
+                                                                        .text
+                                                                }
+                                                            />
+                                                        </AnimatedTouchable>
+                                                    ) : (
+                                                        <AlbumCover
+                                                            key={data.id}
+                                                            album={data}
+                                                            navigation={
+                                                                navigation
                                                             }
-                                                        />
-                                                    </AnimatedTouchable>
-                                                ) : (
-                                                    <AlbumCover
-                                                        key={data.id}
-                                                        album={data}
-                                                        navigation={navigation}
-                                                        vertical
-                                                        onLongPress={() => {
-                                                            if (data.id === "F")
-                                                                return;
+                                                            vertical
+                                                            onLongPress={() => {
+                                                                if (
+                                                                    data.id ===
+                                                                    "F"
+                                                                )
+                                                                    return;
 
-                                                            setCurrentData(
-                                                                data
-                                                            );
-                                                            setBottomSheetOpen(
-                                                                true
-                                                            );
-                                                        }}
-                                                    />
-                                                )}
-                                            </View>
-                                        );
-                                    }
-                                )}
+                                                                setCurrentData(
+                                                                    data
+                                                                );
+                                                                setBottomSheetOpen(
+                                                                    true
+                                                                );
+                                                            }}
+                                                        />
+                                                    )}
+                                                </View>
+                                            );
+                                        }
+                                    )}
+                                </View>
                             </SV>
                         </View>
                     ) : (
@@ -227,7 +237,7 @@ const Library = ({ navigation }: { navigation: any }) => {
                                     return (
                                         <View
                                             key={data.id}
-                                            style={{ marginBottom: 15 }}>
+                                            style={{ marginBottom: 10 }}>
                                             {data.type === "extra" ? (
                                                 <AnimatedTouchable
                                                     onPress={() => {}}>
@@ -420,18 +430,27 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        marginHorizontal: 10,
+        paddingHorizontal: 10,
     },
     scrollContainer: {
         flex: 1,
         width: "100%",
+        paddingHorizontal: 5,
     },
     grid: {
+        width: "100%",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        paddingBottom: 10,
+        alignSelf: "center",
+    },
+    gridContent: {
+        width: "100%",
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: "flex-start",
-        marginHorizontal: 10,
-        paddingBottom: 10,
+        marginLeft: 10,
     },
     item: {
         marginBottom: 15,
@@ -439,7 +458,6 @@ const styles = StyleSheet.create({
     },
     addGrid: {
         borderRadius: 15,
-        width: 94,
         height: 125,
         display: "flex",
         alignItems: "center",

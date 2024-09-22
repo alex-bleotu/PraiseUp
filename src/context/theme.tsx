@@ -10,7 +10,6 @@ export const ThemeProvider = ({
 }: {
     children: ReactNode | ReactNode[];
 }) => {
-    const [loading] = useState(true);
     const [theme, setTheme] = useState<any>(null);
     const [themeType, setThemeType] = useState<"light" | "dark" | "system">(
         "system"
@@ -67,12 +66,22 @@ export const ThemeProvider = ({
         }
     }, [themeType]);
 
+    const getSystemTheme = () => {
+        const systemTheme = Appearance.getColorScheme();
+        if (systemTheme === "dark") {
+            return darkTheme;
+        } else {
+            return lightTheme;
+        }
+    };
+
     return (
         <ThemeContext.Provider
             value={{
                 theme,
                 setThemeType,
                 themeType,
+                getSystemTheme,
             }}>
             {children}
         </ThemeContext.Provider>

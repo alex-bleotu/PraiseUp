@@ -1,7 +1,13 @@
 import { FontAwesome6 as FAIcons } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { StyleSheet, ScrollView as SV, View } from "react-native";
+import {
+    ActivityIndicator,
+    Dimensions,
+    StyleSheet,
+    ScrollView as SV,
+    View,
+} from "react-native";
 import SongCover from "../components/items/songCover";
 import AnimatedTouchable from "../components/wrapers/animatedTouchable";
 import Button from "../components/wrapers/button";
@@ -38,6 +44,8 @@ const Album = ({ route, navigation }: AlbumProps) => {
         null
     );
     const [album, setAlbum] = useState<AlbumType | null>(a);
+
+    const buttonWidth = (Dimensions.get("screen").width - 55) / 3;
 
     useEffect(() => {
         const load = async () => {
@@ -166,198 +174,238 @@ const Album = ({ route, navigation }: AlbumProps) => {
                         )}
                     </AnimatedTouchable>
                 </View>
-                {sortedSongs.length > 1 ? (
-                    display === "grid" ? (
-                        <View style={styles.scrollContainer}>
-                            <SV
-                                contentContainerStyle={styles.grid}
-                                showsVerticalScrollIndicator={false}>
-                                {sortedSongs.map((data: any, index: number) => {
-                                    if (
-                                        data.type === "extra" &&
-                                        album.type === "favorite"
-                                    )
-                                        return null;
+                {songs ? (
+                    sortedSongs.length > 1 ? (
+                        display === "grid" ? (
+                            <View style={styles.scrollContainer}>
+                                <SV
+                                    contentContainerStyle={styles.grid}
+                                    showsVerticalScrollIndicator={false}>
+                                    <View style={styles.gridContent}>
+                                        {sortedSongs.map(
+                                            (data: any, index: number) => {
+                                                if (
+                                                    data.type === "extra" &&
+                                                    album.type === "favorite"
+                                                )
+                                                    return null;
 
-                                    return (
-                                        <View
-                                            key={data.id}
-                                            style={[
-                                                styles.item,
-                                                {
-                                                    marginHorizontal:
-                                                        (index - 1) % 3 == 0
-                                                            ? 15
-                                                            : 0,
-                                                },
-                                            ]}>
-                                            {data.type === "extra" ? (
-                                                <AnimatedTouchable
-                                                    onPress={() => {
-                                                        navigation.navigate(
-                                                            "AddSong",
-                                                            {
-                                                                album,
-                                                            }
-                                                        );
-                                                    }}
-                                                    style={[
-                                                        styles.addGrid,
-                                                        {
-                                                            backgroundColor:
-                                                                theme.colors
-                                                                    .paper,
-                                                        },
-                                                    ]}>
-                                                    <FAIcons
-                                                        name="plus"
-                                                        size={30}
-                                                        color={
-                                                            theme.colors.text
-                                                        }
-                                                    />
-                                                </AnimatedTouchable>
-                                            ) : (
-                                                <SongCover
-                                                    key={data.id}
-                                                    song={data}
-                                                    navigation={navigation}
-                                                    vertical
-                                                    artist={false}
-                                                    onLongPress={() => {
-                                                        setCurrentData(data);
-                                                        setBottomSheetOpen(
-                                                            true
-                                                        );
-                                                    }}
-                                                />
-                                            )}
-                                        </View>
-                                    );
-                                })}
-                            </SV>
-                        </View>
-                    ) : (
-                        <View style={styles.container}>
-                            <ScrollView bottom={5} showScroll={false}>
-                                {sortedSongs.map((data: any) => {
-                                    if (
-                                        data.type === "extra" &&
-                                        album.type === "favorite"
-                                    )
-                                        return null;
-
-                                    return (
-                                        <View
-                                            key={data.id}
-                                            style={{ marginBottom: 15 }}>
-                                            {data.type === "extra" ? (
-                                                <AnimatedTouchable
-                                                    onPress={() => {
-                                                        navigation.navigate(
-                                                            "AddSong",
-                                                            {
-                                                                album,
-                                                            }
-                                                        );
-                                                    }}>
+                                                return (
                                                     <View
+                                                        key={data.id}
                                                         style={[
-                                                            styles.addList,
+                                                            styles.item,
                                                             {
-                                                                backgroundColor:
-                                                                    theme.colors
-                                                                        .paper,
+                                                                marginHorizontal:
+                                                                    (index -
+                                                                        1) %
+                                                                        3 ==
+                                                                    0
+                                                                        ? 12
+                                                                        : 0,
                                                             },
                                                         ]}>
-                                                        <View
-                                                            style={
-                                                                styles.textContainer
-                                                            }>
-                                                            <FAIcons
-                                                                name="plus"
-                                                                size={30}
-                                                                color={
-                                                                    theme.colors
-                                                                        .text
+                                                        {data.type ===
+                                                        "extra" ? (
+                                                            <AnimatedTouchable
+                                                                onPress={() => {
+                                                                    navigation.navigate(
+                                                                        "AddSong",
+                                                                        {
+                                                                            album,
+                                                                        }
+                                                                    );
+                                                                }}
+                                                                style={[
+                                                                    styles.addGrid,
+                                                                    {
+                                                                        width: buttonWidth,
+                                                                        backgroundColor:
+                                                                            theme
+                                                                                .colors
+                                                                                .paper,
+                                                                    },
+                                                                ]}>
+                                                                <FAIcons
+                                                                    name="plus"
+                                                                    size={30}
+                                                                    color={
+                                                                        theme
+                                                                            .colors
+                                                                            .text
+                                                                    }
+                                                                />
+                                                            </AnimatedTouchable>
+                                                        ) : (
+                                                            <SongCover
+                                                                key={data.id}
+                                                                song={data}
+                                                                navigation={
+                                                                    navigation
                                                                 }
+                                                                vertical
+                                                                artist={false}
+                                                                onLongPress={() => {
+                                                                    setCurrentData(
+                                                                        data
+                                                                    );
+                                                                    setBottomSheetOpen(
+                                                                        true
+                                                                    );
+                                                                }}
                                                             />
-                                                            <Text
-                                                                fontSize={14}
-                                                                bold
-                                                                style={{
-                                                                    marginLeft: 28,
-                                                                }}>
-                                                                {t`Add songs`}
-                                                            </Text>
-                                                        </View>
+                                                        )}
                                                     </View>
-                                                </AnimatedTouchable>
-                                            ) : (
-                                                <View key={data.id}>
-                                                    <SongCover
-                                                        key={data.id}
-                                                        song={data}
-                                                        navigation={navigation}
-                                                        fullWidth
-                                                        icon={"dots-vertical"}
-                                                        onLongPress={() => {
-                                                            setCurrentData(
-                                                                data
+                                                );
+                                            }
+                                        )}
+                                    </View>
+                                </SV>
+                            </View>
+                        ) : (
+                            <View style={styles.container}>
+                                <ScrollView bottom={5} showScroll={false}>
+                                    {sortedSongs.map((data: any) => {
+                                        if (
+                                            data.type === "extra" &&
+                                            album.type === "favorite"
+                                        )
+                                            return null;
+
+                                        return (
+                                            <View
+                                                key={data.id}
+                                                style={{ marginBottom: 10 }}>
+                                                {data.type === "extra" ? (
+                                                    <AnimatedTouchable
+                                                        onPress={() => {
+                                                            navigation.navigate(
+                                                                "AddSong",
+                                                                {
+                                                                    album,
+                                                                }
                                                             );
-                                                            setBottomSheetOpen(
-                                                                true
-                                                            );
-                                                        }}
-                                                        action={() => {
-                                                            setCurrentData(
-                                                                data
-                                                            );
-                                                            setBottomSheetOpen(
-                                                                true
-                                                            );
-                                                        }}
-                                                    />
-                                                </View>
-                                            )}
-                                        </View>
-                                    );
-                                })}
-                            </ScrollView>
+                                                        }}>
+                                                        <View
+                                                            style={[
+                                                                styles.addList,
+                                                                {
+                                                                    backgroundColor:
+                                                                        theme
+                                                                            .colors
+                                                                            .paper,
+                                                                },
+                                                            ]}>
+                                                            <View
+                                                                style={
+                                                                    styles.textContainer
+                                                                }>
+                                                                <FAIcons
+                                                                    name="plus"
+                                                                    size={30}
+                                                                    color={
+                                                                        theme
+                                                                            .colors
+                                                                            .text
+                                                                    }
+                                                                />
+                                                                <Text
+                                                                    fontSize={
+                                                                        15
+                                                                    }
+                                                                    bold
+                                                                    style={{
+                                                                        marginLeft: 28,
+                                                                    }}>
+                                                                    {t`Add songs`}
+                                                                </Text>
+                                                            </View>
+                                                        </View>
+                                                    </AnimatedTouchable>
+                                                ) : (
+                                                    <View key={data.id}>
+                                                        <SongCover
+                                                            key={data.id}
+                                                            song={data}
+                                                            navigation={
+                                                                navigation
+                                                            }
+                                                            fullWidth
+                                                            icon={
+                                                                "dots-vertical"
+                                                            }
+                                                            onLongPress={() => {
+                                                                setCurrentData(
+                                                                    data
+                                                                );
+                                                                setBottomSheetOpen(
+                                                                    true
+                                                                );
+                                                            }}
+                                                            action={() => {
+                                                                setCurrentData(
+                                                                    data
+                                                                );
+                                                                setBottomSheetOpen(
+                                                                    true
+                                                                );
+                                                            }}
+                                                        />
+                                                    </View>
+                                                )}
+                                            </View>
+                                        );
+                                    })}
+                                </ScrollView>
+                            </View>
+                        )
+                    ) : (
+                        <View style={styles.noSongs}>
+                            {album.type === "personal" ? (
+                                <>
+                                    <Text
+                                        bold
+                                        center>{t`Let's start building this ablum`}</Text>
+                                    <Button
+                                        mode="contained"
+                                        fullWidth
+                                        bold
+                                        backgroundColor={theme.colors.primary}
+                                        upper
+                                        text={t`Add songs`}
+                                        onPress={() => {
+                                            navigation.navigate("AddSong", {
+                                                album,
+                                            });
+                                        }}
+                                        color={theme.colors.textInverted}
+                                        fontSize={14}
+                                        style={{
+                                            marginBottom: 10,
+                                            marginTop: 20,
+                                        }}
+                                    />
+                                </>
+                            ) : (
+                                <Text
+                                    bold
+                                    center>{t`There are no songs in this album.`}</Text>
+                            )}
                         </View>
                     )
                 ) : (
-                    <View style={styles.noSongs}>
-                        {album.type === "personal" ? (
-                            <>
-                                <Text
-                                    bold
-                                    center>{t`Let's start building this ablum`}</Text>
-                                <Button
-                                    mode="contained"
-                                    fullWidth
-                                    bold
-                                    backgroundColor={theme.colors.primary}
-                                    upper
-                                    text={t`Add songs`}
-                                    onPress={() => {
-                                        navigation.navigate("AddSong", {
-                                            album,
-                                        });
-                                    }}
-                                    color={theme.colors.textInverted}
-                                    fontSize={14}
-                                    style={{
-                                        marginBottom: 10,
-                                        marginTop: 20,
-                                    }}
-                                />
-                            </>
-                        ) : (
-                            <Text
-                                bold
-                                center>{t`There are no songs in this album.`}</Text>
-                        )}
+                    <View
+                        style={{
+                            marginTop: -50,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            flex: 1,
+                        }}>
+                        <ActivityIndicator
+                            size="large"
+                            color={theme.colors.primary}
+                        />
                     </View>
                 )}
             </View>
@@ -401,14 +449,14 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 10,
     },
-    songs: { marginTop: 15, paddingRight: 25 },
     sortButton: {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
         padding: 10,
-        margin: 10,
+        marginVertical: 10,
+        marginHorizontal: 5,
         borderRadius: 10,
     },
     row: {
@@ -425,13 +473,22 @@ const styles = StyleSheet.create({
     scrollContainer: {
         flex: 1,
         width: "100%",
+        paddingHorizontal: 5,
     },
     grid: {
+        width: "100%",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        paddingBottom: 10,
+        alignSelf: "center",
+    },
+    gridContent: {
+        width: "100%",
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: "flex-start",
-        marginHorizontal: 10,
-        paddingBottom: 10,
+        marginLeft: 10,
     },
     item: {
         marginBottom: 15,
@@ -460,7 +517,6 @@ const styles = StyleSheet.create({
     },
     addGrid: {
         borderRadius: 15,
-        width: 94,
         height: 125,
         display: "flex",
         alignItems: "center",

@@ -87,14 +87,27 @@ const DataBottomSheet = ({
                                 style={styles.image}
                             />
                         ) : (
-                            <AlbumImage cover={data.cover} />
+                            <AlbumImage cover={data.cover} width={60} />
                         )}
-                        <View>
-                            <Text bold fontSize={18}>
+                        <View
+                            style={{
+                                marginLeft: 10,
+                                flexShrink: 1,
+                            }}>
+                            <Text
+                                bold
+                                fontSize={18}
+                                numberOfLines={1}
+                                ellipsizeMode="tail">
                                 {data.title}
                             </Text>
                             {data?.type === "song" && (
-                                <Text fontSize={15}>{data.artist}</Text>
+                                <Text
+                                    fontSize={15}
+                                    numberOfLines={1}
+                                    ellipsizeMode="tail">
+                                    {data.artist}
+                                </Text>
                             )}
                         </View>
                     </View>
@@ -473,7 +486,6 @@ const styles = StyleSheet.create({
         width: 60,
         height: 60,
         borderRadius: 15,
-        marginRight: 15,
     },
     top: {
         display: "flex",

@@ -5,24 +5,47 @@ import { getImage } from "../../utils/covers";
 interface AlbumImageProps {
     cover: string | null | string[];
     vertical?: boolean;
+    width?: number;
 }
 
-const AlbumImage = ({ vertical = false, cover }: AlbumImageProps) => {
+const AlbumImage = ({ vertical = false, cover, width }: AlbumImageProps) => {
     if (!Array.isArray(cover) || cover.length < 3)
         return (
             <Image
                 source={
                     !Array.isArray(cover) ? getImage(cover) : getImage(null)
                 }
-                style={vertical ? styles.imageVertical : styles.image}
+                style={[
+                    vertical ? styles.imageVertical : styles.image,
+                    {
+                        width: width || 70,
+                        height: width || 70,
+                    },
+                ]}
             />
         );
 
+    width = Math.floor(width || 70);
+
+    let leftWidth = 35;
+    let rightWidth = 35;
+    let leftHeight = 35;
+    let rightHeight = 35;
+
+    if (width && width % 2 == 1) {
+        leftWidth = width / 2;
+        rightWidth = leftWidth + 1;
+        leftHeight = leftWidth + 1;
+        rightHeight = rightWidth;
+    } else if (width) {
+        leftWidth = width / 2;
+        rightWidth = leftWidth;
+        leftHeight = leftWidth;
+        rightHeight = rightWidth;
+    }
+
     return (
-        <View
-            style={{
-                marginRight: vertical ? 0 : 8,
-            }}>
+        <View>
             <View style={styles.row}>
                 <Image
                     source={getImage(cover[0])}
@@ -31,6 +54,8 @@ const AlbumImage = ({ vertical = false, cover }: AlbumImageProps) => {
                             ? styles.smallImageVertical
                             : styles.smallImage,
                         {
+                            width: leftWidth,
+                            height: leftHeight,
                             borderTopLeftRadius: 12,
                         },
                     ]}
@@ -43,6 +68,8 @@ const AlbumImage = ({ vertical = false, cover }: AlbumImageProps) => {
                             : styles.smallImage,
                         {
                             borderTopRightRadius: 12,
+                            width: rightWidth,
+                            height: rightHeight,
                         },
                     ]}
                 />
@@ -56,6 +83,8 @@ const AlbumImage = ({ vertical = false, cover }: AlbumImageProps) => {
                             : styles.smallImage,
                         {
                             borderBottomLeftRadius: 12,
+                            width: leftWidth,
+                            height: leftHeight,
                         },
                     ]}
                 />
@@ -67,6 +96,8 @@ const AlbumImage = ({ vertical = false, cover }: AlbumImageProps) => {
                             : styles.smallImage,
                         {
                             borderBottomRightRadius: 12,
+                            width: rightWidth,
+                            height: rightHeight,
                         },
                     ]}
                 />
@@ -83,7 +114,7 @@ const styles = StyleSheet.create({
         height: 95,
         borderRadius: 12,
     },
-    image: { width: 70, height: 70, borderRadius: 12, marginRight: 8 },
+    image: { width: 70, height: 70, borderRadius: 12 },
 
     smallImageVertical: {
         width: 48,

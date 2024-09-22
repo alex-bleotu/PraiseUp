@@ -279,13 +279,13 @@ msgstr "Deconectare"
 #: src/utils/slides.ts:12
 #: src/utils/slides.ts:18
 msgid "Lorem Ipsum"
-msgstr ""
+msgstr "Lorem Ipsum"
 
 #: src/utils/slides.ts:7
 #: src/utils/slides.ts:13
 #: src/utils/slides.ts:19
 msgid "Lorem Ipsum is simply dummy text of the printing and typesetting"
-msgstr ""
+msgstr "Lorem Ipsum is simply dummy text of the printing and typesetting"
 
 #: src/pages/song.tsx:299
 msgid "Lyrics"

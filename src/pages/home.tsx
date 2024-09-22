@@ -86,30 +86,6 @@ const Home = ({ navigation }: { navigation: any }) => {
                                         />
                                     )}
                                 </View>
-                                {/* <View style={{ width: 10 }} />
-                                {data2 && (
-                                    <View key={index + 1}>
-                                        {data2.type === "song" ? (
-                                            <SongCover
-                                                song={data2}
-                                                navigation={navigation}
-                                                onLongPress={() => {
-                                                    setCurrentData(data2);
-                                                    setBottomSheetOpen(true);
-                                                }}
-                                            />
-                                        ) : (
-                                            <AlbumCover
-                                                album={data2}
-                                                navigation={navigation}
-                                                onLongPress={() => {
-                                                    setCurrentData(data2);
-                                                    setBottomSheetOpen(true);
-                                                }}
-                                            />
-                                        )}
-                                    </View>
-                                )} */}
                             </View>
                         );
                     })}

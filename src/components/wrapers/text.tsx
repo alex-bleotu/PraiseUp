@@ -12,6 +12,8 @@ interface TextProps {
     center?: boolean;
     upper?: boolean;
     fontFamily?: "PatrickHand" | "monospace" | "Roboto";
+    numberOfLines?: number;
+    ellipsizeMode?: "head" | "middle" | "tail" | "clip";
 }
 
 const Text = ({
@@ -23,6 +25,8 @@ const Text = ({
     center,
     upper = false,
     fontFamily,
+    numberOfLines,
+    ellipsizeMode,
 }: TextProps) => {
     const { theme } = useContext(ThemeContext);
 
@@ -32,6 +36,8 @@ const Text = ({
 
     return (
         <Ts
+            numberOfLines={numberOfLines}
+            ellipsizeMode={ellipsizeMode}
             style={{
                 ...style,
                 fontSize,

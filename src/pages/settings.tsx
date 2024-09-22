@@ -26,7 +26,8 @@ import { darkTheme, lightTheme } from "../utils/theme";
 import { renderLyrics } from "./song";
 
 const Settings = ({ navigation }: { navigation: any }) => {
-    const { theme, setThemeType, themeType } = useContext(ThemeContext);
+    const { theme, setThemeType, themeType, getSystemTheme } =
+        useContext(ThemeContext);
     const { language, setLanguage } = useContext(LanguageContext);
     const { lyricsSize, setLyricsSize, chords, setChords } =
         useContext(ConstantsContext);
@@ -351,7 +352,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                         : settings === "zoom"
                         ? 290
                         : settings === "chords"
-                        ? 275
+                        ? 280
                         : 0
                 }>
                 <View style={styles.bottomSheetContainer}>
@@ -366,13 +367,14 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                         styles.theme,
                                         {
                                             backgroundColor:
-                                                theme.colors.background,
+                                                getSystemTheme().colors
+                                                    .background,
                                         },
                                     ]}>
                                     <Text
                                         fontSize={30}
                                         bold
-                                        color={theme.colors.primary}
+                                        color={getSystemTheme().colors.primary}
                                         style={{ marginTop: -5 }}>
                                         S
                                     </Text>

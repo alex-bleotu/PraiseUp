@@ -40,6 +40,7 @@ const SongCover = ({
     const { theme } = useContext(ThemeContext);
 
     const width = fullWidth ? "100%" : Dimensions.get("screen").width / 2 - 25;
+    const verticalWidth = (Dimensions.get("screen").width - 55) / 3;
 
     if (song === null) return null;
 
@@ -63,29 +64,73 @@ const SongCover = ({
                     vertical ? styles.containerVertical : styles.container,
                     {
                         width: vertical ? "100%" : width,
-                        backgroundColor: theme.colors.paper,
+                        backgroundColor: vertical
+                            ? "transparent"
+                            : theme.colors.paper,
                     },
                 ]}>
                 <Image
                     source={getImage(song.cover)}
-                    style={vertical ? styles.imageVertical : styles.image}
+                    style={
+                        vertical
+                            ? [
+                                  styles.imageVertical,
+                                  {
+                                      width: verticalWidth,
+                                      height: verticalWidth,
+                                  },
+                              ]
+                            : styles.image
+                    }
                 />
-                {
+                {vertical ? (
                     <View
                         style={[
                             styles.textContainer,
-                            { marginTop: vertical ? 5 : 0 },
+                            {
+                                marginTop: 5,
+                                width: verticalWidth,
+                            },
                         ]}>
-                        <Text bold fontSize={14} center={vertical}>
+                        <Text
+                            bold
+                            fontSize={13}
+                            center={vertical}
+                            numberOfLines={1}
+                            ellipsizeMode="tail">
                             {song.title}
                         </Text>
                         {artist && (
-                            <Text fontSize={12} center={vertical}>
+                            <Text
+                                fontSize={12}
+                                center={vertical}
+                                numberOfLines={1}
+                                ellipsizeMode="tail">
                                 {song.artist}
                             </Text>
                         )}
                     </View>
-                }
+                ) : (
+                    <View style={styles.textContainer}>
+                        <Text
+                            bold
+                            fontSize={16}
+                            center={vertical}
+                            numberOfLines={1}
+                            ellipsizeMode="tail">
+                            {song.title}
+                        </Text>
+                        {artist && (
+                            <Text
+                                fontSize={14}
+                                center={vertical}
+                                numberOfLines={1}
+                                ellipsizeMode="tail">
+                                {song.artist}
+                            </Text>
+                        )}
+                    </View>
+                )}
             </View>
             {action && (
                 <AnimatedTouchable
@@ -105,6 +150,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         display: "flex",
         flexDirection: "row",
+        paddingRight: 8,
     },
     containerVertical: {
         borderRadius: 12,
@@ -114,14 +160,12 @@ const styles = StyleSheet.create({
         paddingBottom: 8,
     },
     textContainer: {
-        display: "flex",
         flexDirection: "column",
         justifyContent: "center",
+        flexShrink: 1,
     },
     imageVertical: {
-        width: 95,
-        height: 95,
-        borderRadius: 12,
+        borderRadius: 10,
     },
-    image: { width: 70, height: 70, borderRadius: 12, marginRight: 8 },
+    image: { width: 70, height: 70, borderRadius: 12, marginRight: 10 },
 });

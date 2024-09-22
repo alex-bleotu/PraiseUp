@@ -1,9 +1,9 @@
 import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
+import { t } from "@lingui/macro";
 import React, { useContext } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import { DataContext } from "../../context/data";
 import { HistoryContext } from "../../context/history";
-import { LanguageContext } from "../../context/language";
 import { RecentContext } from "../../context/recent";
 import { ThemeContext } from "../../context/theme";
 import AnimatedTouchable from "../wrapers/animatedTouchable";
@@ -36,12 +36,12 @@ const AlbumCover = ({
     const { addToHistory } = useContext(HistoryContext);
     const { addToRecent } = useContext(RecentContext);
     const { theme } = useContext(ThemeContext);
-    const { language } = useContext(LanguageContext);
     const { updateDate } = useContext(DataContext);
 
     const width: any = fullWidth
         ? "100%"
         : Dimensions.get("screen").width / 2 - 25;
+    const verticalWidth = (Dimensions.get("screen").width - 55) / 3;
 
     if (album === null) return null;
 
@@ -64,25 +64,32 @@ const AlbumCover = ({
                 style={[
                     vertical ? styles.containerVertical : styles.container,
                     {
-                        width: vertical ? "100%" : width,
-                        backgroundColor: theme.colors.paper,
+                        width: vertical ? verticalWidth : width,
+                        backgroundColor: vertical
+                            ? "transparent"
+                            : theme.colors.paper,
                     },
                 ]}>
-                <AlbumImage vertical={vertical} cover={album.cover} />
+                <AlbumImage
+                    vertical={vertical}
+                    cover={album.cover}
+                    width={vertical ? verticalWidth : undefined}
+                />
                 <View
                     style={[
                         styles.textContainer,
                         {
-                            width: !fullWidth ? width - 80 : "auto",
+                            width: !fullWidth ? width : "auto",
                             marginTop: vertical ? 5 : 0,
                         },
                     ]}>
-                    <Text bold fontSize={14} center={vertical}>
-                        {album.id !== "F"
-                            ? album.title
-                            : language === "en"
-                            ? album.title
-                            : "Cântece favorite"}
+                    <Text
+                        bold
+                        fontSize={14}
+                        center={vertical}
+                        numberOfLines={1}
+                        ellipsizeMode="tail">
+                        {album.id !== "F" ? album.title : t`Favorite songs`}
                     </Text>
                 </View>
             </View>
@@ -113,6 +120,7 @@ const styles = StyleSheet.create({
         paddingBottom: 8,
     },
     textContainer: {
+        marginLeft: 8,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
