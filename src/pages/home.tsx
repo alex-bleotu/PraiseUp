@@ -30,7 +30,9 @@ const Home = ({ navigation }: { navigation: any }) => {
             const favoriteAlbum = await getFavoriteSongsAlbum();
             const albums = await getFavoriteAlbums();
 
-            if (favoriteAlbum.songs.length > 0)
+            console.log(favoriteAlbum, albums);
+
+            if (favoriteAlbum && favoriteAlbum.songs.length > 0)
                 setFavoriteAlbums([favoriteAlbum, ...albums]);
             else setFavoriteAlbums(albums);
 
@@ -46,7 +48,7 @@ const Home = ({ navigation }: { navigation: any }) => {
             const favoriteAlbum = await getFavoriteSongsAlbum();
             const albums = await getFavoriteAlbums();
 
-            if (favoriteAlbum.songs.length > 0)
+            if (favoriteAlbum && favoriteAlbum.songs.length > 0)
                 setFavoriteAlbums([favoriteAlbum, ...albums]);
             else setFavoriteAlbums(albums);
         };

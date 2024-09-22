@@ -5,7 +5,7 @@
             "type": "song",
             "title": "Dumnezeu Suveran",
             "artist": "Autentic Worship",
-            "cover": null,
+            "cover": "1",
             "initialChord": "C",
             "order": "S1 R1 S2 R2x4 R3",
             "lyrics": "S1\r\nC[C]ine e puternic Domn biruitor?\r\nC[F]ine e al lumii vrednic, Salvator?\r\nN[Am]umai Tu dai viață p[F]rin al Tău Cuv[C]ânt!\r\nN[F]imeni n-a iubit ca Tine, Rege S[G]fânt!\r\n\r\nR1\r\nÎn veci îți v[F]om cânta,\r\nT[C]e lăudăm al nostru Î[G]mpărat,\r\nA[Am]totputernic, veșnic, n[F]eschimbat,\r\nE[C]ști Dumnezeul Suver[Am]an, Minun[G]at!\r\nEști Înălț[C]at!\r\n\r\nS2\r\nD[C]oar prin jertfa Ta iertare ne-ai adus,\r\nH[F]arul Tău etern ne-a transformat Isus\r\nD[Am]ragostea și mila T[F]a ne-au copleș[C]it\r\nL[F]iberi proclamăm: Cristos a birui[G]t!\r\n\r\nR2\r\nÎn veci îți v[F]om cânta,\r\nT[C]e lăudăm al nostru Î[G]mpărat,\r\nA[Am]totputernic, veșnic, n[F]eschimbat,\r\nE[C]ști Dumnezeul Suver[Am]an, Înălț[G]at!\r\n\r\nR3\r\nÎn veci îți v[F]om cânta,\r\nT[C]e lăudăm al nostru Î[G]mpărat,\r\nA[Am]totputernic, veșnic, n[F]eschimbat,\r\nE[C]ști Dumnezeul Suver[Am]an, Minun[G]at!\r\nEști Înălț[F]at!",
@@ -21,7 +21,7 @@
             "type": "song",
             "title": "Tu ești scutul și tăria mea",
             "artist": "Sunny Tranca",
-            "cover": null,
+            "cover": "2",
             "initialChord": "D",
             "order": "S1 S2 Rx2 S2 Rx2 B Rx2",
             "lyrics": "S1\r\nTu ești sc[Bm]utul și tăr[F#m]ia mea,\r\nÎn [G]Tine mă încr[D]ed[A].\r\nÎn Tine [B]m[m]i se-ncrede [F#m]inima,\r\nDe-ac[G]eea nu mă t[F#]em!\r\n\r\nS2\r\nTu ești sc[Bm]utul și tăr[F#m]ia mea,\r\nÎn [G]Tine mă încr[D]ed[A].\r\nÎn Tine [B]m[m]i se-ncrede [F#m]inima,\r\nDe-ac[G]eea nu mă t[F#]em!\r\n\r\nR\r\nD[D]oamne, Tu ești b[A]un\r\nCăci în v[G]eac ține îndur[A]area\r\nȘi cre[Bm]dinciosia T[G]a\r\nNu [A]mă va părăs[D]i!\r\n\r\nB\r\nAle[G]luia, Dumne[D]zeu e dragost[A]e!\r\nAle[G]luia, în mine f[D]rică nu mai e[A]!\r\nAle[G]luia, Dumne[D]zeu e dragost[A]e!\r\nAle[G]luia, în mine f[D]rică nu mai e[F#]!",
@@ -43,7 +43,7 @@
             "type": "song",
             "title": "Biruitor",
             "artist": "Studenți Poarta Cerului",
-            "cover": null,
+            "cover": "3",
             "initialChord": "D",
             "order": "S1 S2 R S3 R Bx2 Rx2",
             "lyrics": "S1\r\n[D]Pe câmpul de război Tu ești cu mine,\r\n[Bm]Mă-mbărbătezi să lupt ca un viteaz.\r\n[G]Îmi pui în mână sabia și scutul\r\n[A]Și îmi promiți că singur nu mă lași!\r\n\r\nS2\r\n[D]Mă ține tare-a Ta făgăduință,\r\n[Bm]Că lupta după ce-o voi termina,\r\n[G]Îmi voi primi din mâna Ta cununa\r\n[A]Și-n carul biruinței voi umbla!\r\n\r\nR\r\n[G]Biruitor eu voi umbl[D]a,\r\nNu e dușm[Bm]an împotrivă să-mi ste[A]a!\r\nTu mă cond[G]uci cu dreapta T[D]a,\r\nIsuse, a [Bm]Ta e victori[A]a!\r\n\r\nS3\r\nPe marea-nvolburată ești cu mine,\r\nCuvântul Tău mi-e ancoră și far.\r\nMă ține tare-a Ta promisiune:\r\nCă-n zori de zi ajunge-vom la mal!\r\n\r\nB\r\n[Em]De-i lupta-ncrâncenată\r\n[Bm]Și vin săgeți arzând,\r\n[D]Nu tremur, nu mi-e teamă,\r\n[A]Știu lângă Cine lupt!",
@@ -59,7 +59,7 @@
             "type": "song",
             "title": "Un cântec de laudă",
             "artist": "Darlene Zschech",
-            "cover": null,
+            "cover": "4",
             "initialChord": "E",
             "order": "Sx2 Pc R S Pc R O",
             "lyrics": "S\r\nUn [E]cântec de laudă în inima mea,\r\nUn [A]cântec ce Tu l-ai [E]pus.\r\nMi-ai dat liber[B]tate\r\nCa să pot cânta din [A]nou.\r\nAi [E]rupt întunericul din viața mea,\r\nMi-ai [A]dat bucuria [E]Ta.\r\nAcum eu sunt [B]liber\r\nCa să pot cânta din [A]nou.[B]\r\n\r\nPc\r\nIsus, Tu [A]m-ai răscumpă[B]rat,\r\nDuhul Tău Sfânt [A]m-a e[B]libe[E]rat.[E]\r\n\r\nR\r\nDragostea [B]Ta îmi dă cu[C#m7]raj\r\nSă alerg către [A]țintă ne-nce[E]tat.\r\nDoar Tu ești [B]Domnul meu,\r\nTe voi [A]binecuvân[B]ta.\r\n[E]Isus, ești [B]fericirea [C#]m[7m]ea.\r\nEu cânt de bucu[A]rie-n fața [E]Ta.\r\nDoar Tu ești [B]Domnul meu,\r\nTe voi [C#m7]bine[A]cuvân[B]ta.\r\n\r\nO\r\nUn [E]cântec de laudă în inima mea,\r\nUn [A]cântec ce Tu l-ai [E]pus.\r\nMi-ai dat liber[B]tate\r\nCa să pot cânta din [A]nou.",
@@ -95,7 +95,7 @@
             "type": "song",
             "title": "Iubirea Ta",
             "artist": "Tabăra 477",
-            "cover": null,
+            "cover": "5",
             "initialChord": "C",
             "order": "Sx2 Pc R1x2 Pc R1x2 R2x2 R1x2 R2x2",
             "lyrics": "S\r\nIubirea [C]Ta este-a[F]tât de [C]mare\r\n[F]Plină e [C]inima [G]mea\r\nSă te cu[C]nosc, în a [F]Ta splen[C]doare\r\n[F]Este do[C]rința [G]mea\r\n\r\nPc\r\nRoua [F]zorilor, bezna [C]nopților,\r\nÎnăl[Am]țimi de munți, și-n [G]adânc de mări,\r\nPână la [F]marginile pă[C]mântului\r\nSe[Am] vede bunatatea [G]Lui\r\n\r\nR1\r\nDomn al mi[F]nunilor,\r\nPuternic C[C]reator\r\nTu spui doar [Am]un cuvânt\r\nȘi [G]totul e nou!\r\n\r\nR2\r\nIstoria [F]ai schimbat\r\nCând ne-ai răs[C]cumpărat\r\nTrecutul [Am]e-ngropat\r\nȘi [G]toate sunt noi.",
@@ -111,7 +111,7 @@
             "type": "song",
             "title": "Nu e munte prea mare",
             "artist": "Tabăra 477",
-            "cover": null,
+            "cover": "6",
             "initialChord": "G",
             "order": "S1 R1x2 S2 R1 R2 B1 B2 R1x6",
             "lyrics": "S1\r\nEști M[G]arel[Am7]e „Eu s[Em7]unt”\r\nÎn lum[G]ina umbrei T[Am7]ale mă asc[Em7]und\r\nAc[G]oper[Am7]it de h[Em7]ar\r\nMă o[G]dihnesc at[Am7]unci când Tu a[Em7]pari\r\n\r\nR1\r\nNu e m[G]unte prea mare\r\nNu-i p[D]ustiu prea uscat\r\nNu e v[Am7]ale prea adâncă\r\nNu-i ni[C]mic mult prea greu\r\nN[D]imic mult prea greu\r\n\r\nS2\r\nEste p[G]ace î[Am]n furt[Em]uni\r\nLa Cuv[G]ântul Tău și s[Am]tele se sup[Em]un\r\nMi-ai d[G]at put[Am]erea T[Em]a\r\nSă fiu mai mult dec[D]ât eu pot vis[C]a\r\n\r\nR2\r\nNu e m[G]unte prea mare\r\nNu-i p[D]ustiu prea uscat\r\nNu e v[Am7]ale prea adâncă\r\nNu-i ni[C]mic mult prea greu\r\nN[D]imic mult prea gre[G]u\r\n\r\nB1\r\nȘi oric[C]e s-ar întâmpla\r\nTu răm[G]âi de partea mea\r\nNu-i nim[Am7]ic prea greu\r\nPentru D[G]omnul meu\r\nUniv[C]ersul de-ar cădea\r\nTu res[G]crii istoria\r\nNu-i nim[Am7]ic prea greu\r\nPentru D[G]omnul meu\r\n\r\nB2\r\nȘi oric[C]e s-ar întâmpla\r\nTu răm[G]âi de partea mea\r\nNu-i nim[Am7]ic prea greu\r\nPentru D[G]omnul meu\r\nUniv[C]ersul de-ar cădea\r\nTu res[G]crii istoria\r\nNu-i nim[Am7]ic prea greu\r\nPentru D[D]omnul meu",
@@ -189,7 +189,7 @@
             "cover": null,
             "initialChord": "E",
             "order": "S1 S2 R1 S3 R2 B R1",
-            "lyrics": "S1\r\n[C]ând am [E]încercat singur să m-ajut\r\nCând am [G#m]încercat să lupt, eu am căzut\r\nPe toate că[A]ile pe care eu um[F#m]blam\r\nA fost I[E]sus.\r\n\r\nS2\r\nCând tot [E]ce-am clădit în viață s-a sfărmat\r\nIar pri[G#m]etenii pe rând s-au depărtat\r\nEu nu ve[A]deam atunci dar pot să văd a[F#m]cum\r\nA fost I[E]sus.[B]\r\n\r\nR1\r\nÎn tă[C#m]cere, în durere\r\nÎn aștep[A]tare-n clipe grele\r\nO co[E]moară ascuns-a fost în întu[B]neric\r\nZi de [C#m]zi, în orice vreme\r\nPe unde-am [A]fost, pe-unde voi merge\r\nChiar și [E]când eu nu știam ce e `nain[B]te\r\nA fost I[E]sus\r\n\r\nS3\r\nAm ne[E]voie de-acel har nemărginit\r\nCa să [G#m]fiu iertat de prețul neplătit\r\nȘtiu că nu [A]sunt perfect de-aceea-i mulțu[F#]m[m]esc\r\nDoar lui I[E]sus.[B]\r\n\r\nR2\r\nÎn tă[C#m]cere, în durere\r\nÎn aștep[A]tare-n clipe grele\r\nO co[E]moară ascuns-a fost în întu[B]neric\r\nZi de [C#m]zi, în orice vreme\r\nPe unde-am [A]fost, pe-unde voi merge\r\nChiar și [E]când eu nu știam ce e `nain[B]te\r\nA fost I[C#m]sus\r\n\r\nB\r\nSus pe munte, jos în va[A]le\r\nA fost I[E]sus\r\nChiar și-n valea umbrei [G#]m[7m]orții\r\nA fost I[C#m]sus\r\nȘi prin focul încer[A]cării\r\nA fost I[E]sus\r\nEl a fost și-n veci va [G#m7]fi ---[C#m] ---- [A]--- [E]---",
+            "lyrics": "S1\r\nCând am [E]încercat singur să m-ajut\r\nCând am [G#m]încercat să lupt, eu am căzut\r\nPe toate că[A]ile pe care eu um[F#m]blam\r\nA fost I[E]sus.\r\n\r\nS2\r\nCând tot [E]ce-am clădit în viață s-a sfărmat\r\nIar pri[G#m]etenii pe rând s-au depărtat\r\nEu nu ve[A]deam atunci dar pot să văd a[F#m]cum\r\nA fost I[E]sus.[B]\r\n\r\nR1\r\nÎn tă[C#m]cere, în durere\r\nÎn aștep[A]tare-n clipe grele\r\nO co[E]moară ascuns-a fost în întu[B]neric\r\nZi de [C#m]zi, în orice vreme\r\nPe unde-am [A]fost, pe-unde voi merge\r\nChiar și [E]când eu nu știam ce e `nain[B]te\r\nA fost I[E]sus\r\n\r\nS3\r\nAm ne[E]voie de-acel har nemărginit\r\nCa să [G#m]fiu iertat de prețul neplătit\r\nȘtiu că nu [A]sunt perfect de-aceea-i mulțu[F#]m[m]esc\r\nDoar lui I[E]sus.[B]\r\n\r\nR2\r\nÎn tă[C#m]cere, în durere\r\nÎn aștep[A]tare-n clipe grele\r\nO co[E]moară ascuns-a fost în întu[B]neric\r\nZi de [C#m]zi, în orice vreme\r\nPe unde-am [A]fost, pe-unde voi merge\r\nChiar și [E]când eu nu știam ce e `nain[B]te\r\nA fost I[C#m]sus\r\n\r\nB\r\nSus pe munte, jos în va[A]le\r\nA fost I[E]sus\r\nChiar și-n valea umbrei [G#]m[7m]orții\r\nA fost I[C#m]sus\r\nȘi prin focul încer[A]cării\r\nA fost I[E]sus\r\nEl a fost și-n veci va [G#m7]fi ---[C#m] ---- [A]--- [E]---",
             "extraData": {
                 "link": "https://youtu.be/J5jFyqrHHIo",
                 "year": "2019",
@@ -212,6 +212,70 @@
                 "originalTitle": null,
                 "verses": null
             }
+        },
+        {
+            "id": "Sd4a9f0fc-0385-4841-975e-9c6d48b9c206",
+            "type": "song",
+            "title": "Rămâi Isus",
+            "artist": "BBSO",
+            "cover": null,
+            "initialChord": "G",
+            "order": "S1 R S2 R B O",
+            "lyrics": "S1\r\nAc[G]um, când nu mai știu încot[C]ro să o apuc,\r\nAc[Em7]um, când nu m[G]ai cred că mai p[C]ot să lupt,\r\nAc[Am7]um, când cred[G]ința mi-e-ncercată,\r\nAc[C]um, când totul e pierd[D]ut.\r\n\r\nR\r\nTu rămâi si[G]gur, rămâi un adăpost.\r\nTu rămâi mar[Em]e când viața-i fără rost,\r\nTu răm[C]âi Stăpân când s[D]imt că nu mai pot,\r\nRămâi com[Am7]oara mea, rămâi al v[C]ieții tot.\r\n\r\nS2\r\nAc[G]um nu mai pășesc pe al l[C]umii drum\r\nȘi v[Em]reau doar v[G]oia Ta s-o-mplin[C]esc de acum.\r\nDoar [Am7]Tu ai plăt[G]it întreaga-mi vină\r\nMuri[C]nd ca Miel neprihăn[D]it.\r\n\r\nB\r\nRămâi, I[Em]sus Hrist[C]os, Stăp[G]ânul n[D]ostru.\r\nRăm[C]ân în br[Em]ațul T[D]ău.\r\nRămâi, I[Em]sus Hrist[C]os, Stăp[G]ânul n[D]ostru.\r\nRăm[C]ân în br[Em]ațul T[D]ău.\r\nRămâi, I[Em]sus Hrist[C]os, Stăp[G]ânul n[D]ostru.\r\nRăm[Am7]ân în br[C]ațul T[D]ău.\r\nRăm[Am7]ân în br[C]ațul T[D]ău.\r\n\r\nO\r\nTu rămâi s[G]igur, rămâi un adăpost.\r\nTu rămâi m[Em]are când viața-i fără rost,\r\nTu răm[C]âi Stăpân când s[D]imt că nu mai pot,\r\nTu rămâi s[G]igur, rămâi un adăpost.\r\nTu rămâi m[Em]are când viața-i fără rost,\r\nTu răm[C]âi Stăpân când s[D]imt că nu mai pot,\r\n/: Rămâi com[Am7]oara mea, rămâi al v[C]ieții tot. :/ x3",
+            "extraData": {
+                "link": "https://youtu.be/K9c2MstQ2dQ",
+                "year": null,
+                "originalTitle": null,
+                "verses": null
+            }
+        },
+        {
+            "id": "S2fb6c725-33e2-462f-b710-6e0abbebdbf7",
+            "type": "song",
+            "title": "Tu Ai Biruit",
+            "artist": "BBSO",
+            "cover": null,
+            "initialChord": "C",
+            "order": "S1 S2 R S3 R Bx4 S4 R Bx6",
+            "lyrics": "S1\r\nTu ești c[C]el ce-ntodeauna, luptă p[Am]entru-al Său popor\r\nTu ești c[Dm]el ce porți coroana, sfântă d[F]e biruit[G]or\r\nAjut[Am]or îmi ești în toate, Salvat[C]or, tăria mea\r\nEu tră[Dm]iesc doar pentru a mă închi[G]na\r\n\r\nS2\r\nMă aplec în adorare, când văd măreția Ta\r\nOrice frică va dispare, ai purtat victoria\r\nUmple astăzi al Tău templu, lasă din puterea Ta\r\nEu trăiesc doar pentru a mă închina\r\n\r\nR\r\nAle[F]luu[G]ui[C]a, Tu ai b[F]irui[C]t, Tu ai b[G]irui[Dm]t\r\nAle[F]luu[G]ui[Am]a, Isus, lumea [Dm]Tu ai b[G]irui[F]t\r\n\r\nS3\r\nPentru oameni ești la Tatăl, singurul mijlocitor\r\nCei pierduți găsesc salvare, doar Tu ești Mântuitor\r\nEști Isus Cristos Mesia, ești speranță-ntregii lumi\r\nTu ești cel ce porți pe cap multe cununi\r\n\r\nB\r\nT[F]u răstorni orice înălț[C]imi\r\nT[G]u dărâmi orice-ntărit[Dm]ură\r\nT[F]u ești cel care porți cun[C]uni\r\nD[G]e-nvingător, biruito[F]r\r\n\r\nS4\r\nCrucea [Am]a sfârșit lucrarea\r\nȘi ai f[C]ost înmormântat\r\nÎn[Dm]să vine învierea\r\nCăci vic[F]tori-a[G]i purt[C]at",
+            "extraData": {
+                "link": "https://youtu.be/A-Q030xhXzk",
+                "year": null,
+                "originalTitle": null,
+                "verses": null
+            }
+        },
+        {
+            "id": "S8258423d-a58d-490d-8cf3-d895df91c9f7",
+            "type": "song",
+            "title": "Doar Isus (Only Jesus)",
+            "artist": "BBSO",
+            "cover": null,
+            "initialChord": "D",
+            "order": "S1 R S2 R Pc Rx2 O",
+            "lyrics": "S1\r\n[D]Împlinesc, alergând, al visărilor pas\r\nȘi trud[A]esc încercând un semn s[D]ă l[G]as\r\nPentru-a lumii ne[D]uitare\r\nDar lumea-i un pustiu și tot ce-mi poate da\r\nS[A]unt amăgiri ce spun că stă-n puterea m[D]ea[G]\r\nSă-mi făuresc un nume m[D]are\r\nI[Bm]sus este singur[G]ul ce rămâne[D]\r\n\r\nR\r\nȘ[D]i vreau tot ce voi lăsa în u[A]rma mea\r\nS-amintească lumii-n[G]tregi cândva\r\nDoar de I[D]sus\r\nȘi stiu, am doar o viață d[A]e trăit\r\nDar voi spune până l[G]a sfârșit\r\nDespre I[D]sus\r\n\r\nS2\r\nG[D]lorii pământești, vaste-mpărății\r\nC[A]a trupul meu de lut se vor risip[G]i\r\nCăci tot ce este veș[D]nic\r\nE trăirea mea care-a oglindit[A]\r\nAdevărul viu și nemaiîntâlni[G]t\r\nEtern, deplin, putern[D]ic\r\n\r\nPc\r\nO[Bm]oooo[G]oooo[D]oooo[F#m]oooo\r\nO[Bm]oooo[G]oooo[D]oooo[F#m]oooo\r\nI[Bm]sus este singur[G]ul\r\nI[D]sus este singur[F#m]ul\r\nI[Bm]sus este singur[G]ul ce rămâne[D] oooo [F#m]oooo\r\nI[Bm]sus este singur[G]ul\r\nI[D]sus este singur[F#m]ul\r\nIsus este singurul ce rămâne\r\n\r\nO\r\nȘ[D]i vreau tot ce voi lăsa în u[A]rma mea\r\nS-amintească lumii-n[G]tregi cândva\r\nDoar de I[D]sus",
+            "extraData": {
+                "link": "https://youtu.be/4ZDthue6C0E",
+                "year": null,
+                "originalTitle": null,
+                "verses": null
+            }
+        },
+        {
+            "id": "S12296302-1766-4bde-98f0-8e67798a4025",
+            "type": "song",
+            "title": "Sfânt din veșnicie",
+            "artist": "Impact Worship",
+            "cover": null,
+            "initialChord": "C",
+            "order": "S1 Pc R1 S2 R1 R2 Pcx2 R1 R2 O",
+            "lyrics": "S1\r\n[C]Mii de generații se [F]pleacă-n ado[C]rare\r\nȘi [Am]cântă toți Cân[G4]tarea Mielu[F]lui\r\nA[C]cei ce-au fost 'nainte și [F]cei ce vor ve[C]ni\r\nToți [Am]vor cânta Cân[G4]tarea Mielu[F]lui\r\n\r\nPc\r\nTu [F]ești Cel mai mare[Am]\r\nDom[G]nești în splendoare\r\nTu [Am]ești mai presus de [G]orice [F]tron\r\nDe-ori[F]ce împărăție[Am]\r\nDe-ori[G]ce stăpânire\r\nTu [Am]ești mai pre[G]sus de [Dm7]toți\r\n\r\nR1\r\nCântă înge[F]rii: „Sf[Am]ânt [G]ești!”\r\nUniversu-n[C]treg: „Sfânt [Am]ești!”\r\nTu ești înăl[Dm]țat, sfânt [G]ești\r\nDin veșni[C]cie![C]\r\n\r\nS2\r\nDacă ai primit iertarea și ai [F]fost răscumpă[C]rat\r\n[Am]Cântă azi Cân[G]tarea Mielu[F]lui\r\n[C]Dacă umbli-n libertate și [F]porți Numele [C]Său\r\n[Am]Cântă azi Cân[G]tarea [F]Mielului\r\nVom cân[Am]ta pe veci Cân[G]tarea Mielu[F]lui\r\n\r\nR2\r\nNoi cântăm a[F]cum: „Sf[Am]ânt [G]ești!”\r\nRege-al regi[C]lor: „Sfânt [Am]ești!”\r\nTu ești înăl[F]țat, sfânt [G]ești\r\nDin veșni[C]cie!\r\n\r\nO\r\nTu ești înăl[Dm]țat, sfânt [G]ești\r\nDin veșni[C]cie!",
+            "extraData": {
+                "link": "https://youtu.be/VejKY0oRPIs",
+                "year": "2022",
+                "originalTitle": "Holy forever",
+                "verses": ["Colossians 1:16", "Isaiah 6:3"]
+            }
         }
     ],
     "albums": [
@@ -219,6 +283,7 @@
             "id": "A6d43abad-ae19-466a-aa76-003a77e92590",
             "type": "album",
             "title": "Tabăra 477",
+            "creator": null,
             "songs": [
                 "Sbdcd6c28-e624-4973-9512-df19b6931e68",
                 "S7a43979a-d7bc-4bef-8f56-1d5c41fa5c5b"
@@ -229,8 +294,16 @@
             "id": "A5e7720ae-ccfe-4188-9820-e3290075bd2b",
             "type": "album",
             "title": "BBSO",
-            "songs": ["S6955614b-e408-44a8-8313-5f7824f46183"],
+            "creator": null,
+            "songs": [
+                "S6955614b-e408-44a8-8313-5f7824f46183",
+                "Sd4a9f0fc-0385-4841-975e-9c6d48b9c206",
+                "S2fb6c725-33e2-462f-b710-6e0abbebdbf7",
+                "S8258423d-a58d-490d-8cf3-d895df91c9f7"
+            ],
             "cover": null
         }
-    ]
+    ],
+    "updated": [],
+    "deleted": []
 }

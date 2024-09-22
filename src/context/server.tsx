@@ -91,7 +91,8 @@ export const ServerProvider = ({
 
     const createPersonalAlbum = async (
         albumId: string,
-        title: string
+        title: string,
+        uid: string
     ): Promise<void> => {
         if (!user) return;
 
@@ -104,6 +105,7 @@ export const ServerProvider = ({
                 [`personalAlbums.${albumId}`]: {
                     title: title,
                     songs: [],
+                    creator: uid,
                 },
                 personalAlbumsIds: arrayUnion(albumId),
             });
@@ -297,6 +299,35 @@ export const ServerProvider = ({
         }
     };
 
+    const getUserDisplayName = async (uid: string) => {
+        try {
+            // from document
+            const userDocRef = doc(db, "users", uid);
+            const userDoc = await getDoc(userDocRef);
+
+            if (userDoc.exists()) {
+                const userData = userDoc.data();
+                return userData?.displayName || null;
+            } else {
+                console.error("User document does not exist.");
+                return null;
+            }
+        } catch (error) {
+            console.error("Error fetching user:", error);
+        }
+    };
+
+    const setUserDisplayName = async (uid: string, displayName: string) => {
+        try {
+            const userDocRef = doc(db, "users", uid);
+            await updateDoc(userDocRef, {
+                displayName: displayName,
+            });
+        } catch (error) {
+            console.error("Error fetching user:", error);
+        }
+    };
+
     return (
         <ServerContext.Provider
             value={{
@@ -315,6 +346,8 @@ export const ServerProvider = ({
                 getUserData,
                 getFavorites,
                 deleteCover,
+                getUserDisplayName,
+                setUserDisplayName,
             }}>
             {children}
         </ServerContext.Provider>

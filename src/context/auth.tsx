@@ -15,6 +15,7 @@ import React, { createContext, ReactNode, useContext } from "react";
 import { auth, db } from "../../firebaseConfig";
 import { DataContext } from "./data";
 import { LoadingContext } from "./loading";
+import { ServerContext } from "./server";
 import { UserContext } from "./user";
 
 export const AuthContext = createContext<any>(null);
@@ -26,6 +27,7 @@ export const AuthProvider = ({
 }) => {
     const { clearData, syncFavorites, syncPersonalAlbums } =
         useContext(DataContext);
+    const { setUserDisplayName } = useContext(ServerContext);
     const { setUser } = useContext(UserContext);
     const { setLoading } = useContext(LoadingContext);
 
@@ -112,6 +114,8 @@ export const AuthProvider = ({
                     await login(email, password).catch((error) => {
                         reject(error);
                     });
+
+                    await setUserDisplayName(response.user.uid, username);
                 }
 
                 resolve(response);
@@ -187,6 +191,8 @@ export const AuthProvider = ({
                     await updateProfile(response.user, {
                         displayName: username,
                     });
+
+                    await setUserDisplayName(response.user.uid, username);
 
                     setUser(response.user);
 

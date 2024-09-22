@@ -22,6 +22,7 @@ export interface AlbumType {
     type: "album" | "personal" | "favorite" | "extra";
     title: string;
     songs: string[];
+    creator: string | null;
     favorite: boolean;
     date: string;
     cover: string | null | string[];
@@ -60,6 +61,7 @@ export const DataProvider = ({
         checkUpdates,
         saveCover,
         deleteCover,
+        getUserDisplayName,
     } = useContext(ServerContext);
 
     const [songIds, setSongIds] = useState<string[] | null>(null);
@@ -884,7 +886,8 @@ export const DataProvider = ({
     };
 
     const getFavoriteSongsAlbum = async () => {
-        if (!favoriteIds) return null;
+        if (!favoriteIds || !favoriteIds.length || !songIds || !songIds.length)
+            return null;
 
         let favoriteSongs = [];
 
@@ -897,6 +900,7 @@ export const DataProvider = ({
             id: "F",
             type: "favorite",
             title: "Favorite Songs",
+            creator: null,
             songs: favoriteSongs.map((song) => song.id),
             favorite: true,
             date: new Date().toISOString(),
@@ -915,6 +919,7 @@ export const DataProvider = ({
                     id: `P${uniqueId}`,
                     type: "personal",
                     title: title,
+                    creator: user.displayName,
                     songs: [],
                     favorite: false,
                     date: new Date().toISOString(),
@@ -923,7 +928,7 @@ export const DataProvider = ({
 
                 await writePersonalAlbum(playlist);
 
-                createPersonalAlbumServer(playlist.id, title);
+                createPersonalAlbumServer(playlist.id, title, user.uid);
 
                 resolve(playlist);
             } catch (error) {
@@ -1157,11 +1162,14 @@ export const DataProvider = ({
 
             if (!data) continue;
 
+            const displayName = await getUserDisplayName(data.creator);
+
             const album: AlbumType = {
                 id: userData.personalAlbumsIds[i],
                 type: "personal",
                 title: data.title,
                 songs: data.songs,
+                creator: displayName,
                 favorite: false,
                 date: new Date().toISOString(),
                 cover: null,

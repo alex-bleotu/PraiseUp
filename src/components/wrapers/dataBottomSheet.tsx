@@ -111,6 +111,16 @@ const DataBottomSheet = ({
                                     {data.artist}
                                 </Text>
                             )}
+                            {(data?.type === "album" ||
+                                data?.type === "personal") &&
+                                data?.creator && (
+                                    <Text
+                                        fontSize={15}
+                                        numberOfLines={1}
+                                        ellipsizeMode="tail">
+                                        {data.creator}
+                                    </Text>
+                                )}
                         </View>
                     </View>
                     <View

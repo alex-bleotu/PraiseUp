@@ -57,6 +57,7 @@ const Library = ({ navigation }: { navigation: any }) => {
                     id: "B",
                     type: "extra",
                     title: "",
+                    creator: "",
                     songs: [],
                     favorite: false,
                     date: "",
@@ -64,7 +65,7 @@ const Library = ({ navigation }: { navigation: any }) => {
                 };
 
                 let combinedAlbums =
-                    favoriteAlbum.songs.length > 0
+                    favoriteAlbum && favoriteAlbum.songs.length > 0
                         ? [favoriteAlbum, ...personal, ...albums, buttonAlbum]
                         : [...personal, ...albums, buttonAlbum];
 
