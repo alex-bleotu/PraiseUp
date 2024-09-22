@@ -14,6 +14,9 @@ export const ThemeProvider = ({
     const [themeType, setThemeType] = useState<"light" | "dark" | "system">(
         "system"
     );
+    const [systemTheme, setSystemTheme] = useState<"light" | "dark">(
+        Appearance.getColorScheme() || "light"
+    );
 
     const loadTheme = async () => {
         const themeLoaded = await AsyncStorage.getItem("themeType");
@@ -31,11 +34,10 @@ export const ThemeProvider = ({
     };
 
     const updateSystemTheme = () => {
-        const systemTheme = Appearance.getColorScheme();
-        if (systemTheme === "dark") {
-            setTheme(darkTheme);
-        } else {
-            setTheme(lightTheme);
+        const systemColorScheme = Appearance.getColorScheme();
+        setSystemTheme(systemColorScheme === "dark" ? "dark" : "light");
+        if (themeType === "system") {
+            setTheme(systemColorScheme === "dark" ? darkTheme : lightTheme);
         }
     };
 
@@ -43,9 +45,7 @@ export const ThemeProvider = ({
         loadTheme();
 
         const appearanceListener = Appearance.addChangeListener(() => {
-            if (themeType === "system") {
-                updateSystemTheme();
-            }
+            updateSystemTheme();
         });
 
         return () => {
@@ -67,12 +67,7 @@ export const ThemeProvider = ({
     }, [themeType]);
 
     const getSystemTheme = () => {
-        const systemTheme = Appearance.getColorScheme();
-        if (systemTheme === "dark") {
-            return darkTheme;
-        } else {
-            return lightTheme;
-        }
+        return systemTheme === "dark" ? darkTheme : lightTheme;
     };
 
     return (
@@ -81,6 +76,7 @@ export const ThemeProvider = ({
                 theme,
                 setThemeType,
                 themeType,
+                systemTheme,
                 getSystemTheme,
             }}>
             {children}

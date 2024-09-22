@@ -33,9 +33,9 @@ const AlbumImage = ({ vertical = false, cover, width }: AlbumImageProps) => {
     let rightHeight = 35;
 
     if (width && width % 2 == 1) {
-        leftWidth = width / 2;
-        rightWidth = leftWidth + 1;
-        leftHeight = leftWidth + 1;
+        leftWidth = width / 2 + 1;
+        rightWidth = leftWidth;
+        leftHeight = leftWidth;
         rightHeight = rightWidth;
     } else if (width) {
         leftWidth = width / 2;

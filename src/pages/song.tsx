@@ -274,8 +274,6 @@ const Song = ({ route, navigation }: SongProps) => {
         );
     }, [song.lyrics, lyricsSize, steps, theme, chords]);
 
-    console.log(song.cover);
-
     return (
         <StackPage
             navigation={navigation}
