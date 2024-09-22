@@ -6,20 +6,39 @@
         "orientation": "portrait",
         "icon": "./assets/icon.png",
         "userInterfaceStyle": "light",
+        "scheme": "praiseup",
         "splash": {
             "image": "./assets/splash.png",
             "resizeMode": "contain",
             "backgroundColor": "#ffffff"
         },
         "ios": {
-            "supportsTablet": true
+            "supportsTablet": true,
+            "bundleIdentifier": "com.praiseup.app",
+            "associatedDomains": ["applinks:praiseup.alexbleotu.com"]
         },
         "android": {
+            "package": "com.praiseup.app",
             "adaptiveIcon": {
                 "foregroundImage": "./assets/adaptive-icon.png",
                 "backgroundColor": "#ffffff"
             },
-            "package": "com.praiseup.app"
+            "intentFilters": [
+                {
+                    "action": "VIEW",
+                    "data": [
+                        {
+                            "scheme": "https",
+                            "host": "praiseup.alexbleotu.com",
+                            "pathPrefix": "/"
+                        },
+                        {
+                            "scheme": "praiseup"
+                        }
+                    ],
+                    "category": ["BROWSABLE", "DEFAULT"]
+                }
+            ]
         },
         "web": {
             "favicon": "./assets/favicon.png"

@@ -301,7 +301,7 @@ msgstr "Parolă nouă"
 
 #: src/pages/addSong.tsx:121
 msgid "No more songs"
-msgstr "
+msgstr "Nu mai sunt melodii"
 
 #: src/pages/discover.tsx:168
 msgid "No recent searches"

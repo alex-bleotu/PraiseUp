@@ -5,18 +5,21 @@ import AppStack from "./appStack";
 import AuthStack from "./authStack";
 
 const linking: LinkingOptions<any> = {
-    prefixes: ["app://"],
+    prefixes: ["praiseup://", "https://praiseup.alexbleotu.com"],
     config: {
         screens: {
-            Home: {
+            Tabs: {
                 screens: {
-                    HomePage: "home",
-                    SongPage: "song/:id",
-                    AlbumPage: "album/:id",
+                    HomeStack: {
+                        path: "",
+                        screens: {
+                            Home: "home",
+                            Song: "song/:id",
+                            Album: "album/:id",
+                        },
+                    },
                 },
             },
-            Discover: "discover",
-            User: "user",
         },
     },
 };

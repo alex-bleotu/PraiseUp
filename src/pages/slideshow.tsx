@@ -4,21 +4,37 @@ import {
     MaterialIcons as MIcons,
 } from "@expo/vector-icons";
 import * as ScreenOrientation from "expo-screen-orientation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import AnimatedTouchable from "../components/wrapers/animatedTouchable";
 import Text from "../components/wrapers/text";
+import { DataContext } from "../context/data";
 
 const Slideshow = ({ route, navigation }: { route: any; navigation: any }) => {
-    const { song } = route.params;
+    const { song: s, id } = route.params;
+
+    const { getSongById } = useContext(DataContext);
 
     const [rotation, setRotation] = useState<0 | 180>(0);
     const [lyricsArray, setLyricsArray] = useState<string[]>([]);
     const [currentVerse, setCurrentVerse] = useState(0);
+    const [song, setSong] = useState<any>(s);
 
     const screenWidth = Dimensions.get("window").width;
     const screenHeight = Dimensions.get("window").height;
+
+    useEffect(() => {
+        if (song) return;
+
+        const load = async () => {
+            if (id) {
+                setSong(await getSongById(id));
+            }
+        };
+
+        load();
+    }, []);
 
     const getTop = () => {
         switch (rotation) {
@@ -131,8 +147,8 @@ const Slideshow = ({ route, navigation }: { route: any; navigation: any }) => {
                     <View
                         style={{
                             height: "100%",
-                            marginRight: 20,
-                            marginTop: 20,
+                            marginRight: 10,
+                            marginTop: 23,
                         }}>
                         <Text color="grey" bold fontSize={18}>
                             {lyricsArray[currentVerse].split("\r")[0]}:
@@ -262,7 +278,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         alignItems: "center",
         justifyContent: "center",
-        width: 1000,
+        width: 650,
         flexDirection: "row",
     },
     buttonContainer: {

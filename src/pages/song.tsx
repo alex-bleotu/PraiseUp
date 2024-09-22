@@ -3,7 +3,7 @@ import {
     MaterialIcons as MIcon,
 } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
 import AnimatedTouchable from "../components/wrapers/animatedTouchable";
 import BottomSheetModal from "../components/wrapers/bottomSheetModal";
@@ -13,6 +13,7 @@ import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
 import { ConstantsContext } from "../context/constants";
+import { DataContext } from "../context/data";
 import { ThemeContext } from "../context/theme";
 import Loading from "./loading";
 
@@ -46,7 +47,7 @@ const chordChanger = (
     if (chordCache[text + steps]) {
         return chordCache[text + steps];
     }
-    if (text === null) return "C";
+    if (text === null || text === undefined) return "C";
 
     const regex = useBrackets
         ? /^\[([A-G]#?[a-zA-Z0-9]*)\]$/
@@ -74,6 +75,8 @@ const chordChanger = (
 };
 
 const getStepsFromC = (chord: string) => {
+    if (chord === null || chord === undefined) return null;
+
     const match = chord.match(/^([A-G]#?)(.*)$/);
     if (!match) return null;
     const steps = chords.indexOf(match[1]);
@@ -88,6 +91,8 @@ export const renderLyrics = (
     steps: number = 0,
     chords: "split" | "combined" | "separated" = "combined"
 ) => {
+    if (!lyrics) return null;
+
     const lines = lyrics.split("\n");
 
     const isSmallLyric = (lyric: string) => lyric.trim().length <= 3;
@@ -240,11 +245,13 @@ export const renderLyrics = (
 };
 
 const Song = ({ route, navigation }: SongProps) => {
-    const { song } = route.params;
+    const { song: s, id } = route.params;
 
     const { theme } = useContext(ThemeContext);
     const { lyricsSize, setLyricsSize, chords } = useContext(ConstantsContext);
+    const { getSongById } = useContext(DataContext);
 
+    const [song, setSong] = useState(s);
     const [value, setValue] = useState("lyrics");
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
     const [isChordBottomSheetOpen, setChordBottomSheetOpen] = useState(false);
@@ -253,26 +260,38 @@ const Song = ({ route, navigation }: SongProps) => {
     const buttonWidth = Dimensions.get("screen").width / 2 - 45;
     const buttonsContainerWidth = buttonWidth * 2 + 75;
 
-    const initialSteps = getStepsFromC(song.initialChord) || 0;
+    useEffect(() => {
+        if (song) return;
 
-    if (song === null || song === undefined) return <Loading />;
+        const load = async () => {
+            if (id) {
+                setSong(await getSongById(id));
+            }
+        };
 
-    const hasChords = song.lyrics && song.lyrics.match(/\[.*?\]/);
+        load();
+    }, []);
+
+    const initialSteps = getStepsFromC(song?.initialChord) || 0;
+
+    const hasChords = song?.lyrics && song?.lyrics.match(/\[.*?\]/);
 
     const renderedLyrics = useMemo(() => {
-        return renderLyrics(song.lyrics, false, theme, lyricsSize, steps);
-    }, [song.lyrics, lyricsSize, steps, theme]);
+        return renderLyrics(song?.lyrics, false, theme, lyricsSize, steps);
+    }, [song?.lyrics, lyricsSize, steps, theme]);
 
     const renderedChords = useMemo(() => {
         return renderLyrics(
-            song.lyrics,
+            song?.lyrics,
             true,
             theme,
             lyricsSize,
             steps,
             chords
         );
-    }, [song.lyrics, lyricsSize, steps, theme, chords]);
+    }, [song?.lyrics, lyricsSize, steps, theme, chords]);
+
+    if (song === null || song === undefined) return <Loading />;
 
     return (
         <StackPage

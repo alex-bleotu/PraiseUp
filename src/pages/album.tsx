@@ -28,11 +28,15 @@ interface AlbumProps {
 }
 
 const Album = ({ route, navigation }: AlbumProps) => {
-    const { album: a } = route.params;
+    const { album: a, id } = route.params;
 
-    const { refresh } = useContext(RefreshContext);
-    const { getSongById, getPersonalAlbumsById, getFavoriteSongsAlbum } =
-        useContext(DataContext);
+    const { refresh, updateRefresh } = useContext(RefreshContext);
+    const {
+        getSongById,
+        getPersonalAlbumsById,
+        getFavoriteSongsAlbum,
+        getAlbumById,
+    } = useContext(DataContext);
     const { language } = useContext(LanguageContext);
     const { theme } = useContext(ThemeContext);
     const { sortBy, setSortBy, display, setDisplay } =
@@ -48,6 +52,27 @@ const Album = ({ route, navigation }: AlbumProps) => {
     const buttonWidth = (Dimensions.get("screen").width - 55) / 3;
 
     useEffect(() => {
+        if (album) return;
+
+        if (id) {
+            const load = async () => {
+                let album;
+
+                if (id.startsWith("P")) album = await getPersonalAlbumsById(id);
+                else if (id.startsWith("A")) album = await getAlbumById(id);
+
+                if (album) {
+                    setAlbum(album);
+                    updateRefresh();
+                    // setSongs(album?.songs);
+                }
+            };
+
+            load();
+        }
+    }, []);
+
+    useEffect(() => {
         const load = async () => {
             let loaded: SongType[] = [];
 
@@ -60,8 +85,8 @@ const Album = ({ route, navigation }: AlbumProps) => {
                         const song = await getSongById(personalAlbum.songs[i]);
                         if (song) loaded.push(song);
                     }
-            } else if (album !== null) {
-                if (album.type === "favorite") {
+            } else if (album) {
+                if (album?.type === "favorite") {
                     const favorite = await getFavoriteSongsAlbum();
                     if (favorite !== null)
                         for (let i = 0; i < favorite.songs.length; i++) {
@@ -96,8 +121,8 @@ const Album = ({ route, navigation }: AlbumProps) => {
     }, [refresh]);
 
     const sortSongs = (songsList: SongType[]) => {
-        const button = songsList.find((song) => song.type === "extra");
-        const rest = songsList.filter((song) => song.type !== "extra");
+        const button = songsList.find((song) => song?.type === "extra");
+        const rest = songsList.filter((song) => song?.type !== "extra");
 
         if (sortBy === "date") {
             rest.sort(
@@ -418,7 +443,11 @@ const Album = ({ route, navigation }: AlbumProps) => {
                     setCurrentData(null);
                 }}
                 extraActions={() => {
-                    navigation.goBack();
+                    try {
+                        navigation.goBack();
+                    } catch {
+                        navigation.navigate("Home");
+                    }
                 }}
                 updateData={(newAlbum: AlbumType) => {
                     setAlbum(newAlbum);
@@ -427,7 +456,11 @@ const Album = ({ route, navigation }: AlbumProps) => {
                         newAlbum.songs.length === 0 &&
                         newAlbum.type === "favorite"
                     )
-                        navigation.goBack();
+                        try {
+                            navigation.goBack();
+                        } catch {
+                            navigation.navigate("Home");
+                        }
                 }}
                 extraData={album}
                 extraActions2={() => {

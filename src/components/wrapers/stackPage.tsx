@@ -39,7 +39,11 @@ const StackPage = ({
                     <AnimatedTouchable
                         style={{ marginLeft: 10 }}
                         onPress={() => {
-                            navigation.goBack();
+                            try {
+                                navigation.goBack();
+                            } catch {
+                                navigation.navigate("Home");
+                            }
                         }}>
                         <EIcons
                             name="chevron-left"

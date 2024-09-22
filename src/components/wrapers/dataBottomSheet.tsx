@@ -1,6 +1,7 @@
 import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useState } from "react";
+
 import { Image, Share, StyleSheet, TouchableOpacity, View } from "react-native";
 import { AlbumType, DataContext, SongType } from "../../context/data";
 import { RecentContext } from "../../context/recent";
@@ -318,20 +319,21 @@ const DataBottomSheet = ({
                         <TouchableOpacity
                             activeOpacity={theme.activeOpacity}
                             onPress={async () => {
-                                let url = "test";
+                                let url = "https://praiseup.alexbleotu.com/";
 
-                                // if (data?.type === "song")
-                                //     url = Linking.createURL(`song/${data.id}`);
-                                // else if (data?.type === "album")
-                                //     url = Linking.createURL(`album/${data.id}`);
-                                // else if (data?.type === "personal")
-                                //     url = Linking.createURL(
-                                //         `personal/${data.id}`
-                                //     );
+                                if (data?.type === "song")
+                                    url = url + `song/${data.id}`;
+                                else if (data?.type === "album")
+                                    url = url + `album/${data.id}`;
+                                else if (data?.type === "personal")
+                                    url = url + `personal/${data.id}`;
 
                                 try {
                                     await Share.share({
-                                        message: `${t`Check out this`} ${url}`,
+                                        message: `${
+                                            t`Check this out on PraiseUp!` +
+                                            "\n"
+                                        } ${url}`,
                                     });
                                 } catch (error) {
                                     console.log(error);
