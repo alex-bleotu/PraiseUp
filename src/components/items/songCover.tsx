@@ -1,13 +1,13 @@
 import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
 import React, { useContext } from "react";
-import { Dimensions, Image, StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import { DataContext, SongType } from "../../context/data";
 import { HistoryContext } from "../../context/history";
 import { RecentContext } from "../../context/recent";
 import { ThemeContext } from "../../context/theme";
-import { getImage } from "../../utils/covers";
 import AnimatedTouchable from "../wrapers/animatedTouchable";
 import Text from "../wrapers/text";
+import SongImage from "./songImage";
 
 interface SongCoverProps {
     song: SongType;
@@ -69,19 +69,12 @@ const SongCover = ({
                             : theme.colors.paper,
                     },
                 ]}>
-                <Image
-                    source={getImage(song.cover)}
-                    style={
-                        vertical
-                            ? [
-                                  styles.imageVertical,
-                                  {
-                                      width: verticalWidth,
-                                      height: verticalWidth,
-                                  },
-                              ]
-                            : styles.image
-                    }
+                <SongImage
+                    vertical={vertical}
+                    cover={song.cover}
+                    title={song.title}
+                    id={song.id}
+                    width={vertical ? verticalWidth : 70}
                 />
                 {vertical ? (
                     <View
@@ -111,7 +104,13 @@ const SongCover = ({
                         )}
                     </View>
                 ) : (
-                    <View style={styles.textContainer}>
+                    <View
+                        style={[
+                            styles.textContainer,
+                            {
+                                marginLeft: 10,
+                            },
+                        ]}>
                         <Text
                             bold
                             fontSize={16}
@@ -164,8 +163,4 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         flexShrink: 1,
     },
-    imageVertical: {
-        borderRadius: 10,
-    },
-    image: { width: 70, height: 70, borderRadius: 12, marginRight: 10 },
 });

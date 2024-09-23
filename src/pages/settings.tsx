@@ -1031,7 +1031,7 @@ const styles = StyleSheet.create({
     },
     version: {
         marginTop: 20,
-        marginBottom: 20,
+        marginBottom: 10,
         display: "flex",
         flexDirection: "row",
         alignItems: "center",

@@ -74,6 +74,8 @@ const AlbumCover = ({
                     vertical={vertical}
                     cover={album.cover}
                     width={vertical ? verticalWidth : undefined}
+                    title={album.title}
+                    id={album.id}
                 />
                 <View
                     style={[

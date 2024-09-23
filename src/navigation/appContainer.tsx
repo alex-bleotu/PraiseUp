@@ -1,3 +1,4 @@
+import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/auth";
 import { ConstantsContext } from "../context/constants";
@@ -61,12 +62,11 @@ const AppContainer = () => {
         load();
     }, [loadingData]);
 
-    if (theme === null) return <></>;
-    else if (
+    if (
         user !== null &&
         (loading === null || history === null || recent === null)
     )
-        return <Loading />;
+        return <Loading text={t`Updating the content`} />;
 
     return <AppNavigation />;
 };

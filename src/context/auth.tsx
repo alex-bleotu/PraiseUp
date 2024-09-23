@@ -75,14 +75,14 @@ export const AuthProvider = ({
                     favorites = userData.favorites || [];
                 }
 
-                setUser(response.user);
-
                 try {
-                    await syncFavorites();
-                    await syncPersonalAlbums();
+                    await syncFavorites(response.user);
+                    await syncPersonalAlbums(response.user);
                 } catch (error) {
                     console.error("Error syncing data:", error);
                 }
+
+                setUser(response.user);
 
                 resolve(response.user);
             } catch (error) {

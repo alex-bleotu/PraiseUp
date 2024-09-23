@@ -2,13 +2,13 @@ import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useState } from "react";
 
-import { Image, Share, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Share, StyleSheet, TouchableOpacity, View } from "react-native";
 import { AlbumType, DataContext, SongType } from "../../context/data";
 import { RecentContext } from "../../context/recent";
 import { RefreshContext } from "../../context/refresh";
 import { ThemeContext } from "../../context/theme";
-import { getImage } from "../../utils/covers";
 import AlbumImage from "../items/albumImage";
+import SongImage from "../items/songImage";
 import BottomSheetModal from "./bottomSheetModal";
 import Input from "./input";
 import Modal from "./modal";
@@ -85,12 +85,19 @@ const DataBottomSheet = ({
                 <View>
                     <View style={styles.top}>
                         {data?.type === "song" ? (
-                            <Image
-                                source={getImage(data.cover)}
-                                style={styles.image}
+                            <SongImage
+                                cover={data.cover}
+                                title={data.title}
+                                id={data.id}
+                                width={60}
                             />
                         ) : (
-                            <AlbumImage cover={data.cover} width={60} />
+                            <AlbumImage
+                                cover={data.cover}
+                                width={60}
+                                id={data.id}
+                                title={data.title}
+                            />
                         )}
                         <View
                             style={{
@@ -515,11 +522,6 @@ const DataBottomSheet = ({
 export default DataBottomSheet;
 
 const styles = StyleSheet.create({
-    image: {
-        width: 60,
-        height: 60,
-        borderRadius: 15,
-    },
     top: {
         display: "flex",
         alignItems: "center",

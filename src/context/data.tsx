@@ -213,6 +213,8 @@ export const DataProvider = ({
                     try {
                         await syncFavorites(lists.favorites);
                         await syncPersonalAlbums(lists.personalAlbums);
+
+                        updateRefresh();
                     } catch (error) {
                         console.error("Error syncing data:", error);
                     } finally {
@@ -555,7 +557,11 @@ export const DataProvider = ({
                     })
                 );
 
-                const covers = songPromises.map((song) => song?.cover);
+                const covers = songPromises.map((song) => {
+                    if (song?.cover === null)
+                        return song.title[0] + song.id.slice(1, 7);
+                    else return song?.cover;
+                });
 
                 album.cover = covers;
             }
@@ -960,7 +966,7 @@ export const DataProvider = ({
             songs: favoriteSongs.map((song) => song.id),
             favorite: true,
             date: new Date().toISOString(),
-            cover: null,
+            cover: "favorites",
         };
 
         return album;
@@ -1172,18 +1178,19 @@ export const DataProvider = ({
     };
 
     const syncFavorites = async (
-        oldFavoriteList: string[] | null = favoriteIds
+        oldFavoriteList: string[] | null = favoriteIds,
+        passedUser: any = user
     ): Promise<void> => {
         return new Promise(async (resolve, reject) => {
             try {
-                const userData = await getUserData();
+                const userData = await getUserData(passedUser);
 
                 if (
                     userData === null ||
                     !userData.favorites ||
                     !oldFavoriteList
                 )
-                    return resolve(); // Resolve if no data to process
+                    return resolve();
 
                 for (let i = 0; i < oldFavoriteList.length; i++) {
                     if (
@@ -1200,8 +1207,6 @@ export const DataProvider = ({
 
                 setFavoriteIds(userData.favorites);
 
-                console.log(setFavoriteIds);
-
                 resolve();
             } catch (error) {
                 reject(error);
@@ -1210,11 +1215,12 @@ export const DataProvider = ({
     };
 
     const syncPersonalAlbums = async (
-        personalAlbumsIds: string[] | null
+        personalAlbumsIds: string[] | null,
+        passedUser: any = user
     ): Promise<void> => {
         return new Promise(async (resolve, reject) => {
             try {
-                const userData = await getUserData();
+                const userData = await getUserData(passedUser);
 
                 if (
                     userData === null ||

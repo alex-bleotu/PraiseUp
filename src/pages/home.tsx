@@ -10,6 +10,7 @@ import Text from "../components/wrapers/text";
 import { AlbumType, DataContext, SongType } from "../context/data";
 import { RecentContext } from "../context/recent";
 import { RefreshContext } from "../context/refresh";
+import Loading from "./loading";
 
 const Home = ({ navigation }: { navigation: any }) => {
     const { recent } = useContext(RecentContext);
@@ -34,7 +35,8 @@ const Home = ({ navigation }: { navigation: any }) => {
 
             if (favoriteAlbum && favoriteAlbum.songs.length > 0)
                 setFavoriteAlbums([favoriteAlbum, ...albums]);
-            else setFavoriteAlbums(albums);
+            else if (albums.length > 0) setFavoriteAlbums(albums);
+            else setFavoriteAlbums([]);
 
             const songs = await getRandomSongs(10);
 
@@ -59,12 +61,8 @@ const Home = ({ navigation }: { navigation: any }) => {
         load();
     }, [refresh]);
 
-    // useEffect(() => {
-    //     if (favoriteAlbums && randomSongs && recent)
-    //         setLoading(false);
-    // }, [favoriteAlbums, randomSongs, recent]);
-
-    if (!favoriteAlbums || !randomSongs || !recent) return null;
+    if (!favoriteAlbums || !randomSongs || !recent)
+        return <Loading text={t`Finishing things`} />;
 
     return (
         <Background noPadding>

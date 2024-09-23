@@ -283,10 +283,10 @@ export const ServerProvider = ({
         }
     };
 
-    const getUserData = async () => {
-        if (!user) return null;
+    const getUserData = async (passedUser: any = user) => {
+        if (!passedUser) return null;
 
-        const userDocRef = doc(db, "users", user.uid);
+        const userDocRef = doc(db, "users", passedUser.uid);
         const userDoc = await getDoc(userDocRef);
 
         if (userDoc.exists()) {

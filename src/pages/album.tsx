@@ -64,7 +64,6 @@ const Album = ({ route, navigation }: AlbumProps) => {
                 if (album) {
                     setAlbum(album);
                     updateRefresh();
-                    // setSongs(album?.songs);
                 }
             };
 
