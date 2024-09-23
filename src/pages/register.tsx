@@ -147,7 +147,15 @@ const Register = ({ navigation }: { navigation: any }) => {
                                                 setError(
                                                     t`Email is already in use.`
                                                 );
-                                            } else
+                                            } else if (
+                                                error.message.includes(
+                                                    "auth/network-request-failed"
+                                                )
+                                            )
+                                                setError(
+                                                    t`Network error. Please try again later.`
+                                                );
+                                            else
                                                 setError(
                                                     t`Something went wrong.`
                                                 );

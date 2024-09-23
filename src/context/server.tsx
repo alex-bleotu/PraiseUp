@@ -10,7 +10,6 @@ import {
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import { app, db } from "../../firebaseConfig";
-import { LoadingContext } from "./loading";
 import { UserContext } from "./user";
 
 export const ServerContext = createContext<any>(null);
@@ -21,7 +20,7 @@ export const ServerProvider = ({
     children: ReactNode | ReactNode[];
 }) => {
     const { user } = useContext(UserContext);
-    const { loading, setLoading } = useContext(LoadingContext);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const [error, setError] = useState<string | null>(null);
 

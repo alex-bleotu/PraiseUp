@@ -4,6 +4,7 @@ import { ConstantsContext } from "../context/constants";
 import { DataContext } from "../context/data";
 import { HistoryContext } from "../context/history";
 import { RecentContext } from "../context/recent";
+import { RefreshContext } from "../context/refresh";
 import { ThemeContext } from "../context/theme";
 import { UserContext } from "../context/user";
 import Loading from "../pages/loading";
@@ -11,6 +12,7 @@ import AppNavigation from "./appNavigation";
 
 const AppContainer = () => {
     const [loading, setLoading] = useState<boolean>(false);
+    const { updateRefresh } = useContext(RefreshContext);
     const { user } = useContext(UserContext);
     const { loadingData, loadData } = useContext(DataContext);
     const { theme } = useContext(ThemeContext);
@@ -50,6 +52,8 @@ const AppContainer = () => {
             await loadHistory();
             console.log("Loading recent");
             await loadRecent();
+
+            updateRefresh();
 
             setLoading(false);
         };

@@ -17,8 +17,10 @@ const Home = ({ navigation }: { navigation: any }) => {
         useContext(DataContext);
     const { refresh } = useContext(RefreshContext);
 
-    const [randomSongs, setRandomSongs] = useState<SongType[]>([]);
-    const [favoriteAlbums, setFavoriteAlbums] = useState<AlbumType[]>([]);
+    const [randomSongs, setRandomSongs] = useState<SongType[] | null>(null);
+    const [favoriteAlbums, setFavoriteAlbums] = useState<AlbumType[] | null>(
+        null
+    );
 
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
     const [currentData, setCurrentData] = useState<SongType | AlbumType | null>(
@@ -30,14 +32,14 @@ const Home = ({ navigation }: { navigation: any }) => {
             const favoriteAlbum = await getFavoriteSongsAlbum();
             const albums = await getFavoriteAlbums();
 
-            console.log(favoriteAlbum, albums);
-
             if (favoriteAlbum && favoriteAlbum.songs.length > 0)
                 setFavoriteAlbums([favoriteAlbum, ...albums]);
             else setFavoriteAlbums(albums);
 
             const songs = await getRandomSongs(10);
-            setRandomSongs(songs);
+
+            if (songs) setRandomSongs(songs);
+            else setRandomSongs([]);
         };
 
         load();
@@ -50,11 +52,19 @@ const Home = ({ navigation }: { navigation: any }) => {
 
             if (favoriteAlbum && favoriteAlbum.songs.length > 0)
                 setFavoriteAlbums([favoriteAlbum, ...albums]);
-            else setFavoriteAlbums(albums);
+            else if (albums.length > 0) setFavoriteAlbums(albums);
+            else setFavoriteAlbums([]);
         };
 
         load();
     }, [refresh]);
+
+    // useEffect(() => {
+    //     if (favoriteAlbums && randomSongs && recent)
+    //         setLoading(false);
+    // }, [favoriteAlbums, randomSongs, recent]);
+
+    if (!favoriteAlbums || !randomSongs || !recent) return null;
 
     return (
         <Background noPadding>

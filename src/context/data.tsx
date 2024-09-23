@@ -100,15 +100,11 @@ export const DataProvider = ({
         };
 
         const firstLoad = async () => {
-            const loaded = await AsyncStorage.getItem("loaded");
+            await AsyncStorage.clear();
 
-            if (loaded === null) {
-                await AsyncStorage.clear();
+            await addData();
 
-                await addData();
-
-                await AsyncStorage.setItem("loaded", "true");
-            }
+            await AsyncStorage.setItem("loaded", "true");
         };
 
         const readLists = async () => {
@@ -203,19 +199,29 @@ export const DataProvider = ({
         const initialize = async () => {
             // await clear();
 
-            await firstLoad();
             const lists = await readLists();
 
-            await checkForUpdates(lists.songs, lists.albums);
+            const loaded = await AsyncStorage.getItem("loaded");
 
-            filterHistory();
+            if (loaded === null) await firstLoad();
+            else await checkForUpdates(lists.songs, lists.albums);
 
             if (user) {
-                await syncFavorites(lists.favorites);
-                await syncPersonalAlbums(lists.personalAlbums);
-            }
+                filterHistory();
 
-            setLoadingData(false);
+                (async () => {
+                    try {
+                        await syncFavorites(lists.favorites);
+                        await syncPersonalAlbums(lists.personalAlbums);
+                    } catch (error) {
+                        console.error("Error syncing data:", error);
+                    } finally {
+                        setLoadingData(false);
+                    }
+                })();
+            } else {
+                setLoadingData(false);
+            }
         };
 
         initialize();
@@ -248,27 +254,42 @@ export const DataProvider = ({
         const data = await checkUpdates();
 
         if (data) {
+            let songIds = [];
+
             for (let i = 0; i < data.songs.length; i++) {
                 const cover = data.songs[i].cover;
 
                 if (cover && !coversList.includes(cover)) {
                     const uri = await saveCover(cover);
 
-                    await writeSong({
+                    const song = {
                         ...data.songs[i],
                         cover: uri,
                         favorite: false,
                         date: new Date().toISOString(),
                         type: data.songs[i].type as "song" | "extra",
-                    });
-                } else
-                    await writeSong({
+                    };
+
+                    writeSong(song, false);
+
+                    songIds.push(song.id);
+                } else {
+                    const song = {
                         ...data.songs[i],
                         favorite: false,
                         date: new Date().toISOString(),
                         type: data.songs[i].type as "song" | "extra",
-                    });
+                    };
+
+                    writeSong(song, false);
+
+                    songIds.push(song.id);
+                }
             }
+
+            setSongIds(songIds);
+
+            let albumIds = [];
 
             for (let i = 0; i < data.albums.length; i++) {
                 const cover = data.albums[i].cover;
@@ -276,7 +297,7 @@ export const DataProvider = ({
                 if (cover && !coversList.includes(cover)) {
                     const uri = await saveCover(cover);
 
-                    await writeAlbum({
+                    const album = {
                         ...data.albums[i],
                         cover: uri,
                         favorite: false,
@@ -286,9 +307,13 @@ export const DataProvider = ({
                             | "extra"
                             | "favorite"
                             | "personal",
-                    });
-                } else
-                    await writeAlbum({
+                    };
+
+                    writeAlbum(album, false);
+
+                    albumIds.push(album.id);
+                } else {
+                    const album = {
                         ...data.albums[i],
                         favorite: false,
                         date: new Date().toISOString(),
@@ -297,19 +322,37 @@ export const DataProvider = ({
                             | "extra"
                             | "favorite"
                             | "personal",
-                    });
+                    };
+
+                    writeAlbum(album, false);
+
+                    albumIds.push(album.id);
+                }
             }
+
+            setAlbumIds(albumIds);
         } else {
-            for (let i = 0; i < bundle.songs.length; i++)
-                await writeSong({
+            let songIds = [];
+
+            for (let i = 0; i < bundle.songs.length; i++) {
+                const song = {
                     ...bundle.songs[i],
                     favorite: false,
                     date: new Date().toISOString(),
                     type: bundle.songs[i].type as "song" | "extra",
-                });
+                };
 
-            for (let i = 0; i < bundle.albums.length; i++)
-                await writeAlbum({
+                writeSong(song, false);
+
+                songIds.push(song.id);
+            }
+
+            setSongIds(songIds);
+
+            let albumIds = [];
+
+            for (let i = 0; i < bundle.albums.length; i++) {
+                const album = {
                     ...bundle.albums[i],
                     favorite: false,
                     date: new Date().toISOString(),
@@ -318,7 +361,14 @@ export const DataProvider = ({
                         | "extra"
                         | "favorite"
                         | "personal",
-                });
+                };
+
+                writeAlbum(album);
+
+                albumIds.push(album.id);
+            }
+
+            setAlbumIds(albumIds);
         }
     };
 
@@ -471,7 +521,7 @@ export const DataProvider = ({
     };
 
     const writeSong = async (song: SongType, update = true) => {
-        if (!songIds) return;
+        if (!songIds && update) return;
 
         try {
             await AsyncStorage.setItem(song.id, JSON.stringify(song));
@@ -492,7 +542,7 @@ export const DataProvider = ({
     };
 
     const writeAlbum = async (album: AlbumType, update = true) => {
-        if (!albumIds) return;
+        if (!albumIds && update) return;
 
         try {
             if (album.songs.length >= 3 && !Array.isArray(album.cover)) {
@@ -853,12 +903,18 @@ export const DataProvider = ({
     ) => {
         if (id.startsWith("S")) {
             const song = await getSongById(id);
+
+            if (!song) return;
+
             song.favorite = isFavorite;
             song.date = new Date().toISOString();
 
             await writeSong(song);
         } else if (id.startsWith("A")) {
             const album = await getAlbumById(id);
+
+            if (!album) return;
+
             album.favorite = isFavorite;
             album.date = new Date().toISOString();
 
@@ -1117,68 +1173,102 @@ export const DataProvider = ({
 
     const syncFavorites = async (
         oldFavoriteList: string[] | null = favoriteIds
-    ) => {
-        const userData = await getUserData();
+    ): Promise<void> => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const userData = await getUserData();
 
-        if (userData === null || !userData.favorites || !oldFavoriteList)
-            return;
+                if (
+                    userData === null ||
+                    !userData.favorites ||
+                    !oldFavoriteList
+                )
+                    return resolve(); // Resolve if no data to process
 
-        for (let i = 0; i < oldFavoriteList.length; i++)
-            if (
-                !userData.favorites.find((id: any) => id === oldFavoriteList[i])
-            )
-                setFavorite(oldFavoriteList[i], false, false);
+                for (let i = 0; i < oldFavoriteList.length; i++) {
+                    if (
+                        !userData.favorites.find(
+                            (id: any) => id === oldFavoriteList[i]
+                        )
+                    )
+                        setFavorite(oldFavoriteList[i], false, false);
+                }
 
-        for (let i = 0; i < userData.favorites.length; i++)
-            setFavorite(userData.favorites[i], true, false);
+                for (let i = 0; i < userData.favorites.length; i++) {
+                    setFavorite(userData.favorites[i], true, false);
+                }
 
-        setFavoriteIds(userData.favorites);
+                setFavoriteIds(userData.favorites);
+
+                console.log(setFavoriteIds);
+
+                resolve();
+            } catch (error) {
+                reject(error);
+            }
+        });
     };
 
-    const syncPersonalAlbums = async (personalAlbumsIds: string[] | null) => {
-        const userData = await getUserData();
+    const syncPersonalAlbums = async (
+        personalAlbumsIds: string[] | null
+    ): Promise<void> => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const userData = await getUserData();
 
-        if (
-            userData === null ||
-            !userData.personalAlbumsIds ||
-            !personalAlbumsIds
-        )
-            return;
-
-        for (let i = 0; i < personalAlbumsIds.length; i++)
-            if (
-                !userData.personalAlbumsIds.find(
-                    (id: any) => id === personalAlbumsIds[i]
+                if (
+                    userData === null ||
+                    !userData.personalAlbumsIds ||
+                    !personalAlbumsIds
                 )
-            )
-                removeId(personalAlbumsIds[i]);
+                    return resolve();
 
-        setPersonalAlbumsIds(userData.personalAlbumsIds);
+                for (let i = 0; i < personalAlbumsIds.length; i++) {
+                    if (
+                        !userData.personalAlbumsIds.find(
+                            (id: any) => id === personalAlbumsIds[i]
+                        )
+                    )
+                        removeId(personalAlbumsIds[i]);
+                }
 
-        for (let i = 0; i < userData.personalAlbumsIds.length; i++) {
-            const data = await getPersonalAlbumServer(
-                userData.personalAlbumsIds[i]
-            );
+                setPersonalAlbumsIds(userData.personalAlbumsIds);
 
-            if (!data) continue;
+                const albumPromises = userData.personalAlbumsIds.map(
+                    async (id: string) => {
+                        const data = await getPersonalAlbumServer(id);
+                        if (!data) return null;
 
-            const displayName = await getUserDisplayName(data.creator);
+                        const displayName = await getUserDisplayName(
+                            data.creator
+                        );
 
-            const album: AlbumType = {
-                id: userData.personalAlbumsIds[i],
-                type: "personal",
-                title: data.title,
-                songs: data.songs,
-                creator: displayName,
-                favorite: false,
-                date: new Date().toISOString(),
-                cover: null,
-            };
+                        const album: AlbumType = {
+                            id,
+                            type: "personal",
+                            title: data.title,
+                            songs: data.songs,
+                            creator: displayName,
+                            favorite: false,
+                            date: new Date().toISOString(),
+                            cover: null,
+                        };
 
-            await writePersonalAlbum(album, userData.personalAlbumsIds);
-        }
+                        await writePersonalAlbum(
+                            album,
+                            userData.personalAlbumsIds
+                        );
+                        return album;
+                    }
+                );
 
-        updateRefresh();
+                await Promise.all(albumPromises);
+
+                resolve();
+            } catch (error) {
+                reject(error);
+            }
+        });
     };
 
     return (
@@ -1187,6 +1277,7 @@ export const DataProvider = ({
                 songIds,
                 albumIds,
                 personalAlbumsIds,
+                favoriteIds,
                 loadingData,
                 updateDate,
                 readSong,

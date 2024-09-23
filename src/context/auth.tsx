@@ -77,8 +77,12 @@ export const AuthProvider = ({
 
                 setUser(response.user);
 
-                await syncFavorites();
-                await syncPersonalAlbums();
+                try {
+                    await syncFavorites();
+                    await syncPersonalAlbums();
+                } catch (error) {
+                    console.error("Error syncing data:", error);
+                }
 
                 resolve(response.user);
             } catch (error) {

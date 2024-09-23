@@ -159,7 +159,15 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                                             setError(
                                                 t`Invalid email or password.`
                                             );
-                                        else setError(error.message);
+                                        else if (
+                                            error.message.includes(
+                                                "auth/network-request-failed"
+                                            )
+                                        )
+                                            setError(
+                                                t`Network error. Please try again later.`
+                                            );
+                                        else setError(t`Something went wrong.`);
                                     });
                             }}
                         />
