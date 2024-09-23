@@ -79,6 +79,7 @@ const getStepsFromC = (chord: string) => {
 
     const match = chord.match(/^([A-G]#?)(.*)$/);
     if (!match) return null;
+
     const steps = chords.indexOf(match[1]);
     return steps !== -1 ? steps : null;
 };

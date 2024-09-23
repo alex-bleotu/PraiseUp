@@ -10,11 +10,11 @@ export const getColorFromId = (id: string): string => {
     const g = parseInt(hash.slice(2, 4), 16);
     const b = parseInt(hash.slice(4, 6), 16);
 
-    const pastelFactor = 0.5;
+    const pastelFactor = 0.7;
 
-    const pastelR = Math.round((255 - r) * pastelFactor + r);
-    const pastelG = Math.round((255 - g) * pastelFactor + g);
-    const pastelB = Math.round((255 - b) * pastelFactor + b);
+    const pastelR = Math.round((220 - r) * pastelFactor + r);
+    const pastelG = Math.round((220 - g) * pastelFactor + g);
+    const pastelB = Math.round((220 - b) * pastelFactor + b);
 
     return `rgb(${pastelR}, ${pastelG}, ${pastelB})`;
 };

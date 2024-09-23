@@ -600,7 +600,11 @@ export const DataProvider = ({
                     })
                 );
 
-                const covers = songPromises.map((song) => song?.cover);
+                const covers = songPromises.map((song) => {
+                    if (song?.cover === null)
+                        return song.title[0] + song.id.slice(1, 7);
+                    else return song?.cover;
+                });
 
                 album.cover = covers;
             } else if (album.songs.length > 0) {
