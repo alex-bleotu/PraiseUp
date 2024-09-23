@@ -4,8 +4,8 @@ export const validateEmail = (email: string) => {
 };
 
 export const getColorFromId = (id: string): string => {
-    const pastelAdjustment = 40;
-    const neonReduction = 0.7;
+    const pastelAdjustment = 80;
+    const neonReduction = 0.6;
 
     let hash = 0;
     for (let i = 0; i < id.length; i++) {
@@ -25,10 +25,9 @@ export const getColorFromId = (id: string): string => {
         ((hash >> 16) & 0xff) * neonReduction + pastelAdjustment
     );
 
-    // Avoid brown-like colors by adjusting similar RGB values
     if (Math.abs(r - g) < 30 && Math.abs(g - b) < 30 && Math.abs(r - b) < 30) {
-        r = Math.min(255, r + 40); // Increase the red to move away from brownish tones
-        b = Math.max(0, b - 40); // Decrease blue slightly for better contrast
+        r = Math.min(255, r + 40);
+        b = Math.max(0, b - 40);
     }
 
     return `rgb(${r}, ${g}, ${b})`;

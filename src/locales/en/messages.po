@@ -29,7 +29,7 @@ msgstr "(Romanian)"
 msgid "About Us"
 msgstr "About Us"
 
-#: src/utils/slides.ts:7
+#: src/pages/onboard.tsx:22
 msgid "Access lyrics and chords with ease, bringing your worship moments to life."
 msgstr "Access lyrics and chords with ease, bringing your worship moments to life."
 
@@ -62,7 +62,7 @@ msgid "Add to other album"
 msgstr "Add to other album"
 
 #: src/components/wrapers/dataBottomSheet.tsx:457
-#: src/pages/library.tsx:343
+#: src/pages/library.tsx:347
 msgid "Album Name"
 msgstr "Album Name"
 
@@ -75,7 +75,7 @@ msgstr "All your data will be lost."
 msgid "Alphabetical"
 msgstr "Alphabetical"
 
-#: src/pages/onboard.tsx:62
+#: src/pages/onboard.tsx:82
 msgid "Already have an account?"
 msgstr "Already have an account?"
 
@@ -93,7 +93,7 @@ msgstr "Are you sure you want to leave?"
 
 #: src/components/wrapers/dataBottomSheet.tsx:404
 #: src/components/wrapers/dataBottomSheet.tsx:479
-#: src/pages/library.tsx:365
+#: src/pages/library.tsx:369
 #: src/pages/settings.tsx:737
 #: src/pages/settings.tsx:813
 #: src/pages/settings.tsx:921
@@ -105,7 +105,7 @@ msgid "Check this out on PraiseUp!"
 msgstr "Check this out on PraiseUp!"
 
 #: src/pages/settings.tsx:145
-#: src/pages/song.tsx:347
+#: src/pages/song.tsx:381
 msgid "Chords"
 msgstr "Chords"
 
@@ -128,11 +128,11 @@ msgstr "Continue as Guest"
 msgid "Continue with Google"
 msgstr "Continue with Google"
 
-#: src/pages/library.tsx:399
+#: src/pages/library.tsx:403
 msgid "Create"
 msgstr "Create"
 
-#: src/pages/library.tsx:272
+#: src/pages/library.tsx:276
 msgid "Create album"
 msgstr "Create album"
 
@@ -220,7 +220,7 @@ msgstr "Get in Touch"
 msgid "Give us Feedback"
 msgstr "Give us Feedback"
 
-#: src/pages/library.tsx:340
+#: src/pages/library.tsx:344
 msgid "Give your album a name"
 msgstr "Give your album a name"
 
@@ -252,7 +252,7 @@ msgstr "Invite Friends"
 msgid "Join"
 msgstr "Join"
 
-#: src/pages/onboard.tsx:51
+#: src/pages/onboard.tsx:71
 msgid "Join PraiseUp"
 msgstr "Join PraiseUp"
 
@@ -291,11 +291,11 @@ msgstr "Log in"
 msgid "Log Out"
 msgstr "Log Out"
 
-#: src/pages/song.tsx:317
+#: src/pages/song.tsx:351
 msgid "Lyrics"
 msgstr "Lyrics"
 
-#: src/utils/slides.ts:19
+#: src/pages/onboard.tsx:34
 msgid "Make your worship sessions with quick access to slideshows and more."
 msgstr "Make your worship sessions with quick access to slideshows and more."
 
@@ -334,7 +334,7 @@ msgstr "Old Password"
 msgid "or"
 msgstr "or"
 
-#: src/utils/slides.ts:13
+#: src/pages/onboard.tsx:28
 msgid "Organize and share your favorite worship songs with your friends."
 msgstr "Organize and share your favorite worship songs with your friends."
 
@@ -359,7 +359,7 @@ msgstr "Password is too short."
 msgid "Personal Email"
 msgstr "Personal Email"
 
-#: src/utils/slides.ts:18
+#: src/pages/onboard.tsx:33
 msgid "Prepare, Play, Praise"
 msgstr "Prepare, Play, Praise"
 
@@ -486,7 +486,7 @@ msgstr "Updating the content"
 msgid "Version:"
 msgstr "Version:"
 
-#: src/utils/slides.ts:6
+#: src/pages/onboard.tsx:21
 msgid "Worship Made Easy"
 msgstr "Worship Made Easy"
 
@@ -498,7 +498,7 @@ msgstr "You've added all the available songs"
 msgid "Your library"
 msgstr "Your library"
 
-#: src/utils/slides.ts:12
+#: src/pages/onboard.tsx:27
 msgid "Your Music, His Glory"
 msgstr "Your Music, His Glory"
 

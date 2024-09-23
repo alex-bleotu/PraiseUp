@@ -547,7 +547,7 @@ export const DataProvider = ({
         if (!albumIds && update) return;
 
         try {
-            if (album.songs.length >= 3 && !Array.isArray(album.cover)) {
+            if (album.songs.length >= 3) {
                 const songs = album.songs.slice(0, 4);
 
                 const songPromises = await Promise.all(
@@ -564,6 +564,17 @@ export const DataProvider = ({
                 });
 
                 album.cover = covers;
+            } else if (album.songs.length > 0) {
+                const song = await readSong(
+                    album.songs[album.songs.length - 1]
+                );
+                if (song) {
+                    if (song.cover === null)
+                        album.cover = song.title[0] + song.id.slice(1);
+                    else album.cover = song?.cover;
+                } else album.cover = null;
+            } else if (album.songs.length === 0) {
+                album.cover = null;
             }
 
             await AsyncStorage.setItem(album.id, JSON.stringify(album));
@@ -590,7 +601,7 @@ export const DataProvider = ({
         if (!personalAlbumIds) return;
 
         try {
-            if (album.songs.length >= 4) {
+            if (album.songs.length >= 3) {
                 const songs = album.songs.slice(-4).reverse();
 
                 const songPromises = await Promise.all(
@@ -611,7 +622,11 @@ export const DataProvider = ({
                 const song = await readSong(
                     album.songs[album.songs.length - 1]
                 );
-                if (song) album.cover = song.cover;
+                if (song) {
+                    if (song?.cover === null)
+                        album.cover = song.title[0] + song.id.slice(1);
+                    else album.cover = song?.cover;
+                } else album.cover = null;
             } else if (album.songs.length === 0) {
                 album.cover = null;
             }

@@ -47,31 +47,65 @@ const chordChanger = (
     if (chordCache[text + steps]) {
         return chordCache[text + steps];
     }
+
     if (text === null || text === undefined) return "C";
 
     const regex = useBrackets
-        ? /^\[([A-G]#?[a-zA-Z0-9]*)\]$/
-        : /^([A-G]#?[a-zA-Z0-9]*)$/;
+        ? /^\[([A-G](?:#|b)?(?:m|maj|min|dim|aug|sus|add|[0-9]*)?\/?[A-G]?(?:#|b)?(?:m|maj|min|dim|aug|sus|add|[0-9]*)?)\]$/
+        : /^([A-G](?:#|b)?(?:m|maj|min|dim|aug|sus|add|[0-9]*)?\/?[A-G]?(?:#|b)?(?:m|maj|min|dim|aug|sus|add|[0-9]*)?)$/;
 
     const match = text.match(regex);
     if (!match) return text;
 
     const chord = match[1];
 
-    const rootMatch = chord.match(/^([A-G]#?)(.*)$/);
-    if (!rootMatch) return text;
+    if (chord.includes("/")) {
+        const [rootPart, bassPart] = chord.split("/");
 
-    const root = rootMatch[1];
-    const suffix = rootMatch[2];
+        const rootMatch = rootPart.match(/^([A-G](?:#|b)?)(.*)$/);
+        if (!rootMatch) return text;
 
-    const rootIndex = chords.indexOf(root);
-    if (rootIndex === -1) return text;
+        const root = rootMatch[1];
+        const suffix = rootMatch[2];
 
-    const newIndex = (rootIndex + steps + chords.length) % chords.length;
-    const newChord = chords[newIndex] + suffix;
+        const rootIndex = chords.indexOf(root);
+        if (rootIndex === -1) return text;
 
-    chordCache[text + steps] = newChord;
-    return newChord;
+        const newRootIndex =
+            (rootIndex + steps + chords.length) % chords.length;
+        const newRoot = chords[newRootIndex] + suffix;
+
+        const bassMatch = bassPart.match(/^([A-G](?:#|b)?)(.*)$/);
+        if (!bassMatch) return text;
+
+        const bassRoot = bassMatch[1];
+        const bassIndex = chords.indexOf(bassRoot);
+        if (bassIndex === -1) return text;
+
+        const newBassIndex =
+            (bassIndex + steps + chords.length) % chords.length;
+        const newBass = chords[newBassIndex];
+
+        const newChord = `${newRoot}/${newBass}`;
+        chordCache[text + steps] = newChord;
+        return newChord;
+    } else {
+        const rootMatch = chord.match(/^([A-G](?:#|b)?)(.*)$/);
+        if (!rootMatch) return text;
+
+        const root = rootMatch[1];
+        const suffix = rootMatch[2];
+
+        const rootIndex = chords.indexOf(root);
+        if (rootIndex === -1) return text;
+
+        const newRootIndex =
+            (rootIndex + steps + chords.length) % chords.length;
+        const newChord = chords[newRootIndex] + suffix;
+
+        chordCache[text + steps] = newChord;
+        return newChord;
+    }
 };
 
 const getStepsFromC = (chord: string) => {
