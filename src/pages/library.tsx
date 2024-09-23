@@ -241,7 +241,11 @@ const Library = ({ navigation }: { navigation: any }) => {
                                             style={{ marginBottom: 10 }}>
                                             {data.type === "extra" ? (
                                                 <AnimatedTouchable
-                                                    onPress={() => {}}>
+                                                    onPress={() => {
+                                                        setIsCreateBottomSheetOpen(
+                                                            true
+                                                        );
+                                                    }}>
                                                     <View
                                                         style={[
                                                             styles.addList,

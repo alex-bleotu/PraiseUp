@@ -6,7 +6,6 @@ import Background from "../components/wrapers/background";
 import Button from "../components/wrapers/button";
 import Paginator from "../components/wrapers/paginator";
 import { ThemeContext } from "../context/theme";
-import slides from "../utils/slides";
 
 function Onboard({ navigation }: { navigation: any }) {
     const { theme } = useContext(ThemeContext);
@@ -15,6 +14,27 @@ function Onboard({ navigation }: { navigation: any }) {
     const slidesRef = useRef(null);
 
     const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
+
+    const slides = [
+        {
+            id: 1,
+            title: t`Worship Made Easy`,
+            description: t`Access lyrics and chords with ease, bringing your worship moments to life.`,
+            image: require("../../assets/images/onboard/image.png"),
+        },
+        {
+            id: 2,
+            title: t`Your Music, His Glory`,
+            description: t`Organize and share your favorite worship songs with your friends.`,
+            image: require("../../assets/images/onboard/image2.png"),
+        },
+        {
+            id: 3,
+            title: t`Prepare, Play, Praise`,
+            description: t`Make your worship sessions with quick access to slideshows and more.`,
+            image: require("../../assets/images/onboard/image3.png"),
+        },
+    ];
 
     return (
         <Background

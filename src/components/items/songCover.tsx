@@ -93,15 +93,6 @@ const SongCover = ({
                             ellipsizeMode="tail">
                             {song.title}
                         </Text>
-                        {artist && (
-                            <Text
-                                fontSize={12}
-                                center={vertical}
-                                numberOfLines={1}
-                                ellipsizeMode="tail">
-                                {song.artist}
-                            </Text>
-                        )}
                     </View>
                 ) : (
                     <View

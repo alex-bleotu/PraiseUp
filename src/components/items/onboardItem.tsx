@@ -13,15 +13,20 @@ const OnboardItem = ({ item }: { item: any }) => {
             <View
                 style={{
                     marginTop: 10,
+                    alignItems: "center",
                 }}>
                 <Text
-                    fontSize={36}
+                    fontSize={26}
                     bold
                     center
                     style={{ marginTop: 40, marginBottom: 20 }}>
                     {item.title}
                 </Text>
-                <Text center color={theme.colors.textVariant} fontSize={17}>
+                <Text
+                    center
+                    color={theme.colors.textVariant}
+                    fontSize={17}
+                    style={{ width: 275 }}>
                     {item.description}
                 </Text>
             </View>

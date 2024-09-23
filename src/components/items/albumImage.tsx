@@ -40,8 +40,8 @@ const AlbumImage = ({
                     {
                         backgroundColor: getColorFromId(
                             !Array.isArray(cover)
-                                ? cover[0].slice(1, 7)
-                                : cover.slice(1, 7).join("")
+                                ? cover[0].slice(1)
+                                : cover.slice(1).join("")
                         ),
                         justifyContent: "center",
                         alignItems: "center",
@@ -61,7 +61,7 @@ const AlbumImage = ({
                 style={[
                     vertical ? styles.imageVertical : styles.image,
                     {
-                        backgroundColor: getColorFromId(id.slice(1, 7)),
+                        backgroundColor: getColorFromId(id.slice(1)),
                         justifyContent: "center",
                         alignItems: "center",
                         width: width || 70,
@@ -116,7 +116,7 @@ const AlbumImage = ({
                                 : styles.smallImage,
                             {
                                 backgroundColor: getColorFromId(
-                                    cover[0].slice(1, 7)
+                                    cover[0].slice(1)
                                 ),
                                 justifyContent: "center",
                                 alignItems: "center",
@@ -152,7 +152,7 @@ const AlbumImage = ({
                                 : styles.smallImage,
                             {
                                 backgroundColor: getColorFromId(
-                                    cover[1].slice(1, 7)
+                                    cover[1].slice(1)
                                 ),
                                 justifyContent: "center",
                                 alignItems: "center",
@@ -190,7 +190,7 @@ const AlbumImage = ({
                                 : styles.smallImage,
                             {
                                 backgroundColor: getColorFromId(
-                                    cover[2].slice(1, 7)
+                                    cover[2].slice(1)
                                 ),
                                 justifyContent: "center",
                                 alignItems: "center",
@@ -226,7 +226,7 @@ const AlbumImage = ({
                                 : styles.smallImage,
                             {
                                 backgroundColor: getColorFromId(
-                                    cover[3].slice(1, 7)
+                                    cover[3].slice(1)
                                 ),
                                 justifyContent: "center",
                                 alignItems: "center",

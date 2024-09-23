@@ -11,118 +11,90 @@ import AnimatedTouchable from "../components/wrapers/animatedTouchable";
 import Text from "../components/wrapers/text";
 import { DataContext } from "../context/data";
 
+const countLines = (str: string) => {
+    const lines = str.split("\n").filter((line) => line.trim() !== "");
+    return lines.length;
+};
+
 const Slideshow = ({ route, navigation }: { route: any; navigation: any }) => {
     const { song: s, id } = route.params;
-
     const { getSongById } = useContext(DataContext);
 
     const [rotation, setRotation] = useState<0 | 180>(0);
     const [lyricsArray, setLyricsArray] = useState<string[]>([]);
     const [currentVerse, setCurrentVerse] = useState(0);
     const [song, setSong] = useState<any>(s);
-
-    const screenWidth = Dimensions.get("window").width;
-    const screenHeight = Dimensions.get("window").height;
+    const [screenSize, setScreenSize] = useState({
+        width: Dimensions.get("screen").width,
+        height: Dimensions.get("screen").height,
+    });
 
     useEffect(() => {
-        if (song) return;
-
-        const load = async () => {
-            if (id) {
-                setSong(await getSongById(id));
-            }
+        const updateScreenSize = () => {
+            setScreenSize({
+                width: Dimensions.get("screen").width,
+                height: Dimensions.get("screen").height,
+            });
         };
 
-        load();
+        const dimensionListener = Dimensions.addEventListener(
+            "change",
+            updateScreenSize
+        );
+        return () => {
+            if (dimensionListener) dimensionListener.remove();
+        };
     }, []);
 
-    const getTop = () => {
-        switch (rotation) {
-            case 0:
-                return screenHeight / 2;
-            case 180:
-                return screenHeight / 2;
+    useEffect(() => {
+        if (!song && id) {
+            (async () => {
+                const loadedSong = await getSongById(id);
+                setSong(loadedSong);
+            })();
         }
-    };
-    const getLeft = () => {
-        switch (rotation) {
-            case 0:
-                return screenWidth / 4 - 20;
-            case 180:
-                return screenWidth / 2 + screenWidth / 4 + 20;
-        }
-    };
+    }, [id, song, getSongById]);
 
-    const getLeft2 = () => {
-        switch (rotation) {
-            case 0:
-                return screenWidth / 2 + screenWidth / 4 + 20;
-            case 180:
-                return screenWidth / 4 - 20;
-        }
-    };
-
-    const removeChords = (lyrics: string) => {
-        return lyrics ? lyrics.replace(/\[.*?\]/g, "").trim() : "";
-    };
+    const removeChords = (lyrics: string) =>
+        lyrics ? lyrics.replace(/\[.*?\]/g, "").trim() : "";
 
     const processLyrics = () => {
         const lyrics = removeChords(song.lyrics).split("\r\n\r\n");
         const order = song.order.split(" ");
-
-        const songVersesArray: string[] = [];
-
-        order.forEach((section: string) => {
-            let index = 0;
-
-            for (let i = 0; i < lyrics.length; i++) {
-                if (lyrics[i].split("\r")[0] === section.split("x")[0]) {
-                    index = i;
-                    break;
-                }
-            }
-
-            songVersesArray.push(lyrics[index]);
+        const songVersesArray = order.map((section: string) => {
+            return (
+                lyrics.find((verse) =>
+                    verse.startsWith(section.split("x")[0])
+                ) || ""
+            );
         });
-
         songVersesArray.push("");
-
         setLyricsArray(songVersesArray);
     };
 
-    const lockToLandscapeLeft = async () => {
-        await ScreenOrientation.lockAsync(
-            ScreenOrientation.OrientationLock.LANDSCAPE_LEFT
-        );
-    };
-
-    const lockToLandscapeRight = async () => {
-        await ScreenOrientation.lockAsync(
-            ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT
-        );
-    };
-    const lockToPortrait = async () => {
-        await ScreenOrientation.lockAsync(
-            ScreenOrientation.OrientationLock.PORTRAIT
-        );
-    };
-
-    const goBackWithPortrait = async () => {
-        setLyricsArray([]);
-
-        await lockToPortrait();
-
-        // delay 50 ms
-        setTimeout(() => {
-            navigation.goBack();
-        }, 100);
+    const lockOrientation = async (
+        orientation: ScreenOrientation.OrientationLock
+    ) => {
+        await ScreenOrientation.lockAsync(orientation);
     };
 
     useEffect(() => {
-        lockToLandscapeRight();
+        const lockOrientationToLandscape = async () => {
+            await ScreenOrientation.lockAsync(
+                ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT
+            );
+        };
+
+        const lockOrientationToPortrait = async () => {
+            await ScreenOrientation.lockAsync(
+                ScreenOrientation.OrientationLock.PORTRAIT
+            );
+        };
+
+        lockOrientationToLandscape();
 
         return () => {
-            lockToPortrait();
+            lockOrientationToPortrait();
         };
     }, []);
 
@@ -132,29 +104,34 @@ const Slideshow = ({ route, navigation }: { route: any; navigation: any }) => {
         }
     }, [song]);
 
-    if (
-        song === undefined ||
-        song === null ||
-        song.lyrics === null ||
-        song.lyrics === ""
-    )
-        navigation.goBack();
+    useEffect(() => {
+        if (!song || !song.lyrics) {
+            navigation.goBack();
+        }
+    }, [song, navigation]);
+
+    const goBackWithPortrait = async () => {
+        await lockOrientation(ScreenOrientation.OrientationLock.PORTRAIT);
+
+        setTimeout(() => {
+            navigation.goBack();
+        }, 150);
+    };
 
     return (
         <View style={styles.container}>
             {lyricsArray.length > 0 && lyricsArray[currentVerse] !== "" && (
                 <View style={styles.textContainer}>
-                    <View
-                        style={{
-                            height: "100%",
-                            marginRight: 10,
-                            marginTop: 23,
-                        }}>
+                    <View style={styles.sectionLabel}>
                         <Text color="grey" bold fontSize={18}>
                             {lyricsArray[currentVerse].split("\r")[0]}:
                         </Text>
                     </View>
-                    <Text color="white" fontSize={34}>
+                    <Text
+                        color="white"
+                        fontSize={
+                            countLines(lyricsArray[currentVerse]) > 6 ? 26 : 34
+                        }>
                         {lyricsArray[currentVerse]
                             .split("\r")
                             .slice(1)
@@ -164,50 +141,43 @@ const Slideshow = ({ route, navigation }: { route: any; navigation: any }) => {
                 </View>
             )}
 
-            <View style={[styles.buttonContainer]}>
+            <View style={styles.buttonContainer}>
                 <AnimatedTouchable
-                    style={{
-                        marginRight: 20,
-                    }}
-                    onPress={() => {
-                        if (currentVerse !== 0) {
-                            setCurrentVerse(currentVerse - 1);
-                        }
-                    }}>
+                    style={styles.button}
+                    onPress={() =>
+                        setCurrentVerse(Math.max(currentVerse - 1, 0))
+                    }>
                     <EIcons name="chevron-left" size={24} color="white" />
                 </AnimatedTouchable>
                 <AnimatedTouchable
-                    style={{
-                        marginRight: 20,
-                    }}
+                    style={styles.button}
                     onPress={() => {
-                        if (currentVerse !== lyricsArray.length - 1) {
+                        if (currentVerse < lyricsArray.length - 1) {
                             setCurrentVerse(currentVerse + 1);
                         } else {
-                            goBackWithPortrait(); // Call goBackWithPortrait to ensure portrait reset
+                            goBackWithPortrait();
                         }
                     }}>
                     <EIcons name="chevron-right" size={24} color="white" />
                 </AnimatedTouchable>
                 <AnimatedTouchable
-                    style={{
-                        marginRight: 20,
-                    }}
+                    style={styles.button}
                     onPress={() => {
-                        setRotation(rotation === 0 ? 180 : 0);
-
-                        if (rotation === 0) {
-                            lockToLandscapeLeft();
-                        } else {
-                            lockToLandscapeRight();
-                        }
+                        const newRotation = rotation === 0 ? 180 : 0;
+                        setRotation(newRotation);
+                        lockOrientation(
+                            newRotation === 0
+                                ? ScreenOrientation.OrientationLock
+                                      .LANDSCAPE_RIGHT
+                                : ScreenOrientation.OrientationLock
+                                      .LANDSCAPE_LEFT
+                        );
                     }}>
                     <MCIcons name="rotate-right" size={24} color="white" />
                 </AnimatedTouchable>
                 <AnimatedTouchable
-                    onPress={() => {
-                        goBackWithPortrait(); // Call goBackWithPortrait when going back
-                    }}>
+                    style={styles.button}
+                    onPress={goBackWithPortrait}>
                     <MIcons
                         name="cancel-presentation"
                         size={24}
@@ -219,44 +189,33 @@ const Slideshow = ({ route, navigation }: { route: any; navigation: any }) => {
             <View
                 style={[
                     styles.touchableAreaContainer,
-                    {
-                        transform: [{ rotate: `${rotation}deg` }],
-                        width: screenWidth,
-                        height: screenHeight,
-                    },
+                    { width: screenSize.width, height: screenSize.height },
                 ]}>
                 <TouchableWithoutFeedback
-                    onPress={() => {
-                        if (currentVerse !== 0) {
-                            setCurrentVerse(currentVerse - 1);
-                        }
-                    }}
+                    onPress={() =>
+                        setCurrentVerse(Math.max(currentVerse - 1, 0))
+                    }
                     style={[
                         styles.touchableLeft,
                         {
-                            width: screenWidth,
-                            height: screenHeight,
-                            top: getTop(),
-                            left: -getLeft(),
+                            width: screenSize.width / 2,
+                            height: screenSize.height,
                         },
                     ]}
                 />
-
                 <TouchableWithoutFeedback
                     onPress={() => {
-                        if (currentVerse !== lyricsArray.length - 1) {
+                        if (currentVerse < lyricsArray.length - 1) {
                             setCurrentVerse(currentVerse + 1);
                         } else {
-                            goBackWithPortrait(); // Call goBackWithPortrait
+                            goBackWithPortrait();
                         }
                     }}
                     style={[
                         styles.touchableRight,
                         {
-                            width: screenWidth,
-                            height: screenHeight,
-                            top: getTop(),
-                            left: getLeft2(),
+                            width: screenSize.width / 2,
+                            height: screenSize.height,
                         },
                     ]}
                 />
@@ -281,6 +240,11 @@ const styles = StyleSheet.create({
         width: 650,
         flexDirection: "row",
     },
+    sectionLabel: {
+        height: "100%",
+        marginRight: 10,
+        marginTop: 23,
+    },
     buttonContainer: {
         position: "absolute",
         flexDirection: "row",
@@ -289,6 +253,9 @@ const styles = StyleSheet.create({
         bottom: 10,
         right: 20,
         zIndex: 100,
+    },
+    button: {
+        marginRight: 20,
     },
     touchableAreaContainer: {
         position: "absolute",
@@ -299,10 +266,9 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     touchableLeft: {
-        position: "absolute",
-        left: 0,
+        // backgroundColor: "rgba(255,0,0,0.2)",
     },
     touchableRight: {
-        position: "absolute",
+        // backgroundColor: "rgba(0,0,255,0.2)",
     },
 });

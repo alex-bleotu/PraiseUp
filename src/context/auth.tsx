@@ -11,7 +11,7 @@ import {
     updateProfile,
 } from "firebase/auth";
 import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
-import React, { createContext, ReactNode, useContext } from "react";
+import React, { createContext, ReactNode, useContext, useEffect } from "react";
 import { auth, db } from "../../firebaseConfig";
 import { DataContext } from "./data";
 import { LoadingContext } from "./loading";
@@ -31,14 +31,18 @@ export const AuthProvider = ({
     const { setUser } = useContext(UserContext);
     const { setLoading } = useContext(LoadingContext);
 
-    const loadAuth = async () => {
-        const user = await AsyncStorage.getItem("user");
+    useEffect(() => {
+        const loadAuth = async () => {
+            const user = await AsyncStorage.getItem("user");
 
-        if (user) {
-            const userParsed = JSON.parse(user);
-            setUser(userParsed);
-        } else setUser(null);
-    };
+            if (user) {
+                const userParsed = JSON.parse(user);
+                setUser(userParsed);
+            } else setUser(null);
+        };
+
+        loadAuth();
+    }, []);
 
     const initializeUserDocument = async (uid: string) => {
         const userDocRef = doc(db, "users", uid);
@@ -296,7 +300,6 @@ export const AuthProvider = ({
                 sendPasswordResetEmail,
                 deleteAccount,
                 updatePassword,
-                loadAuth,
             }}>
             {children}
         </AuthContext.Provider>

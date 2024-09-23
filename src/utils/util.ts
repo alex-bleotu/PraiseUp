@@ -4,17 +4,32 @@ export const validateEmail = (email: string) => {
 };
 
 export const getColorFromId = (id: string): string => {
-    const hash = id.slice(1, 7);
+    const pastelAdjustment = 40;
+    const neonReduction = 0.7;
 
-    const r = parseInt(hash.slice(0, 2), 16);
-    const g = parseInt(hash.slice(2, 4), 16);
-    const b = parseInt(hash.slice(4, 6), 16);
+    let hash = 0;
+    for (let i = 0; i < id.length; i++) {
+        hash = id.charCodeAt(i) + ((hash << 5) - hash);
+    }
 
-    const pastelFactor = 0.7;
+    let r = Math.min(
+        255,
+        ((hash >> 0) & 0xff) * neonReduction + pastelAdjustment
+    );
+    let g = Math.min(
+        255,
+        ((hash >> 8) & 0xff) * neonReduction + pastelAdjustment
+    );
+    let b = Math.min(
+        255,
+        ((hash >> 16) & 0xff) * neonReduction + pastelAdjustment
+    );
 
-    const pastelR = Math.round((220 - r) * pastelFactor + r);
-    const pastelG = Math.round((220 - g) * pastelFactor + g);
-    const pastelB = Math.round((220 - b) * pastelFactor + b);
+    // Avoid brown-like colors by adjusting similar RGB values
+    if (Math.abs(r - g) < 30 && Math.abs(g - b) < 30 && Math.abs(r - b) < 30) {
+        r = Math.min(255, r + 40); // Increase the red to move away from brownish tones
+        b = Math.max(0, b - 40); // Decrease blue slightly for better contrast
+    }
 
-    return `rgb(${pastelR}, ${pastelG}, ${pastelB})`;
+    return `rgb(${r}, ${g}, ${b})`;
 };

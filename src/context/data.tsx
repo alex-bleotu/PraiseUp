@@ -559,7 +559,7 @@ export const DataProvider = ({
 
                 const covers = songPromises.map((song) => {
                     if (song?.cover === null)
-                        return song.title[0] + song.id.slice(1, 7);
+                        return song.title[0] + song.id.slice(1);
                     else return song?.cover;
                 });
 
@@ -602,7 +602,7 @@ export const DataProvider = ({
 
                 const covers = songPromises.map((song) => {
                     if (song?.cover === null)
-                        return song.title[0] + song.id.slice(1, 7);
+                        return song.title[0] + song.id.slice(1);
                     else return song?.cover;
                 });
 
@@ -962,6 +962,8 @@ export const DataProvider = ({
             if (song) favoriteSongs.push(song);
         }
 
+        if (!favoriteSongs.length) return null;
+
         const album: AlbumType = {
             id: "F",
             type: "favorite",
@@ -1154,7 +1156,6 @@ export const DataProvider = ({
             "recent",
             "history",
             "user",
-            "language",
             "personalAlbumsIds",
         ]);
 

@@ -2,9 +2,10 @@ import * as FileSystem from "expo-file-system";
 import {
     arrayRemove,
     arrayUnion,
-    deleteField,
+    deleteDoc,
     doc,
     getDoc,
+    setDoc,
     updateDoc,
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
@@ -99,13 +100,15 @@ export const ServerProvider = ({
         setError(null);
 
         try {
+            const personalAlbumRef = doc(db, "personalAlbums", albumId);
+            await setDoc(personalAlbumRef, {
+                title: title,
+                songs: [],
+                creator: uid,
+            });
+
             const userDocRef = doc(db, "users", user.uid);
             await updateDoc(userDocRef, {
-                [`personalAlbums.${albumId}`]: {
-                    title: title,
-                    songs: [],
-                    creator: uid,
-                },
                 personalAlbumsIds: arrayUnion(albumId),
             });
         } catch (err: any) {
@@ -127,12 +130,10 @@ export const ServerProvider = ({
         setError(null);
 
         try {
-            const userDocRef = doc(db, "users", user.uid);
-            await updateDoc(userDocRef, {
-                [`personalAlbums.${albumId}`]: {
-                    title,
-                    songs,
-                },
+            const personalAlbumRef = doc(db, "personalAlbums", albumId);
+            await updateDoc(personalAlbumRef, {
+                ...(title && { title }),
+                ...(songs && { songs }),
             });
         } catch (err: any) {
             console.error("Error updating personal album: ", err);
@@ -141,7 +142,6 @@ export const ServerProvider = ({
             setLoading(false);
         }
     };
-
     const updatePersonalAlbumsList = async (
         personalAlbumsIds: string[]
     ): Promise<void> => {
@@ -196,10 +196,11 @@ export const ServerProvider = ({
         setError(null);
 
         try {
-            const userDocRef = doc(db, "users", user.uid);
+            const personalAlbumRef = doc(db, "personalAlbums", albumId);
+            await deleteDoc(personalAlbumRef);
 
+            const userDocRef = doc(db, "users", user.uid);
             await updateDoc(userDocRef, {
-                [`personalAlbums.${albumId}`]: deleteField(),
                 personalAlbumsIds: arrayRemove(albumId),
             });
         } catch (err: any) {
@@ -217,15 +218,13 @@ export const ServerProvider = ({
         setError(null);
 
         try {
-            const userDocRef = doc(db, "users", user.uid);
-            const userDoc = await getDoc(userDocRef);
+            const personalAlbumRef = doc(db, "personalAlbums", albumId);
+            const personalAlbumDoc = await getDoc(personalAlbumRef);
 
-            if (userDoc.exists()) {
-                const userData = userDoc.data();
-                const albumData = userData.personalAlbums?.[albumId] || null;
-                return albumData;
+            if (personalAlbumDoc.exists()) {
+                return personalAlbumDoc.data();
             } else {
-                console.error("User document does not exist.");
+                console.error("Personal album document does not exist.");
                 return null;
             }
         } catch (err: any) {
@@ -300,7 +299,8 @@ export const ServerProvider = ({
 
     const getUserDisplayName = async (uid: string) => {
         try {
-            // from document
+            if (!uid) return null;
+
             const userDocRef = doc(db, "users", uid);
             const userDoc = await getDoc(userDocRef);
 

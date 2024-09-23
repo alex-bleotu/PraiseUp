@@ -29,6 +29,10 @@ msgstr "(Română)"
 msgid "About Us"
 msgstr "Despre noi"
 
+#: src/utils/slides.ts:7
+msgid "Access lyrics and chords with ease, bringing your worship moments to life."
+msgstr "Accesează cu ușurință versurile și acordurile, aducând la viață momentele tale de închinare."
+
 #: src/pages/resetPassword.tsx:191
 #: src/pages/settings.tsx:947
 msgid "Access to this account has been temporarily disabled due to many failed attempts. Please try again later."
@@ -39,8 +43,8 @@ msgid "Account"
 msgstr "Cont"
 
 #: src/pages/addSong.tsx:65
-#: src/pages/album.tsx:320
-#: src/pages/album.tsx:375
+#: src/pages/album.tsx:344
+#: src/pages/album.tsx:399
 msgid "Add songs"
 msgstr "Adaugă melodii"
 
@@ -48,16 +52,16 @@ msgstr "Adaugă melodii"
 msgid "Add to"
 msgstr "Adaugă"
 
-#: src/components/wrapers/dataBottomSheet.tsx:283
+#: src/components/wrapers/dataBottomSheet.tsx:291
 #: src/pages/addToAlbum.tsx:76
 msgid "Add to album"
 msgstr "Adaugă la album"
 
-#: src/components/wrapers/dataBottomSheet.tsx:282
+#: src/components/wrapers/dataBottomSheet.tsx:290
 msgid "Add to other album"
 msgstr "Adaugă la alt album"
 
-#: src/components/wrapers/dataBottomSheet.tsx:448
+#: src/components/wrapers/dataBottomSheet.tsx:457
 #: src/pages/library.tsx:343
 msgid "Album Name"
 msgstr "Numele albumului"
@@ -66,7 +70,7 @@ msgstr "Numele albumului"
 msgid "All your data will be lost."
 msgstr "Toate datele tale vor fi pierdute."
 
-#: src/pages/album.tsx:153
+#: src/pages/album.tsx:177
 #: src/pages/library.tsx:130
 msgid "Alphabetical"
 msgstr "Alfabetic"
@@ -75,7 +79,7 @@ msgstr "Alfabetic"
 msgid "Already have an account?"
 msgstr "Ai deja un cont?"
 
-#: src/components/wrapers/dataBottomSheet.tsx:371
+#: src/components/wrapers/dataBottomSheet.tsx:380
 msgid "Are you sure you want to delete this album?"
 msgstr "Ești sigur că vrei să ștergi acest album?"
 
@@ -87,8 +91,8 @@ msgstr "Ești sigur că vrei să ieși din modul oaspete?"
 msgid "Are you sure you want to leave?"
 msgstr "Ești sigur că vrei să pleci?"
 
-#: src/components/wrapers/dataBottomSheet.tsx:395
-#: src/components/wrapers/dataBottomSheet.tsx:470
+#: src/components/wrapers/dataBottomSheet.tsx:404
+#: src/components/wrapers/dataBottomSheet.tsx:479
 #: src/pages/library.tsx:365
 #: src/pages/settings.tsx:737
 #: src/pages/settings.tsx:813
@@ -96,12 +100,12 @@ msgstr "Ești sigur că vrei să pleci?"
 msgid "Cancel"
 msgstr "Anulează"
 
-#: src/components/wrapers/dataBottomSheet.tsx:334
-msgid "Check out this"
-msgstr "Verifică asta"
+#: src/components/wrapers/dataBottomSheet.tsx:341
+msgid "Check this out on PraiseUp!"
+msgstr "Intră aici pe PraiseUp!"
 
 #: src/pages/settings.tsx:145
-#: src/pages/song.tsx:327
+#: src/pages/song.tsx:347
 msgid "Chords"
 msgstr "Acorduri"
 
@@ -113,14 +117,14 @@ msgstr "Șterge căutările recente"
 msgid "Contact Us"
 msgstr "Contactează-ne"
 
-#: src/pages/login.tsx:194
-#: src/pages/register.tsx:186
+#: src/pages/login.tsx:202
+#: src/pages/register.tsx:194
 msgid "Continue as Guest"
 msgstr "Continuă ca oaspete"
 
 #: src/pages/link.tsx:176
-#: src/pages/login.tsx:183
-#: src/pages/register.tsx:175
+#: src/pages/login.tsx:191
+#: src/pages/register.tsx:183
 msgid "Continue with Google"
 msgstr "Continuă cu Google"
 
@@ -140,7 +144,7 @@ msgstr "Crează un cont pentru a-ți salva progresul și a accesa datele tale de
 msgid "Dark"
 msgstr "Întunecat"
 
-#: src/components/wrapers/dataBottomSheet.tsx:427
+#: src/components/wrapers/dataBottomSheet.tsx:436
 #: src/pages/settings.tsx:966
 msgid "Delete"
 msgstr "Șterge"
@@ -149,7 +153,7 @@ msgstr "Șterge"
 msgid "Delete Account"
 msgstr "Șterge contul"
 
-#: src/components/wrapers/dataBottomSheet.tsx:261
+#: src/components/wrapers/dataBottomSheet.tsx:269
 msgid "Delete album"
 msgstr "Șterge albumul"
 
@@ -157,11 +161,11 @@ msgstr "Șterge albumul"
 msgid "Deleting your account will lose all your data."
 msgstr "Ștergerea contului tău va duce la pierderea tuturor datelor tale."
 
-#: src/components/wrapers/dataBottomSheet.tsx:245
+#: src/components/wrapers/dataBottomSheet.tsx:253
 msgid "Edit album"
 msgstr "Editează albumul"
 
-#: src/components/wrapers/dataBottomSheet.tsx:445
+#: src/components/wrapers/dataBottomSheet.tsx:454
 msgid "Edit your album"
 msgstr "Editează-ți albumul"
 
@@ -183,17 +187,21 @@ msgstr "Ieșire"
 msgid "Exit Guest Mode"
 msgstr "Ieșire din modul oaspete"
 
-#: src/components/wrapers/dataBottomSheet.tsx:225
+#: src/components/wrapers/dataBottomSheet.tsx:233
 msgid "Favorite"
 msgstr "Favorite"
 
-#: src/pages/home.tsx:130
+#: src/pages/home.tsx:138
 msgid "Favorite albums"
 msgstr "Albume favorite"
 
-#: src/components/items/albumCover.tsx:92
+#: src/components/items/albumCover.tsx:94
 msgid "Favorite songs"
 msgstr "Melodii favorite"
+
+#: src/pages/home.tsx:65
+msgid "Finishing things"
+msgstr "Lucrurile finalizează"
 
 #: src/pages/login.tsx:115
 #: src/pages/resetPassword.tsx:129
@@ -227,6 +235,10 @@ msgid ""
 "A path unknown, a heart so bold,  \n"
 "Seeking stories yet untold."
 msgstr ""
+Am făcut un pas în noapte,  \n"
+"Cu vise care străluceau în lumină,  \n"
+"Un drum necunoscut, un inimă atât de curajoasă,  \n"
+"Căutând povești încă nespuse."
 
 #: src/pages/login.tsx:160
 msgid "Invalid email or password."
@@ -252,7 +264,7 @@ msgstr "Alătură-te nouă"
 msgid "Language"
 msgstr "Limbă"
 
-#: src/pages/album.tsx:368
+#: src/pages/album.tsx:392
 msgid "Let's start building this ablum"
 msgstr "Hai să începem să construim acest album"
 
@@ -279,21 +291,18 @@ msgstr "Conectare"
 msgid "Log Out"
 msgstr "Deconectare"
 
-#: src/utils/slides.ts:6
-#: src/utils/slides.ts:12
-#: src/utils/slides.ts:18
-msgid "Lorem Ipsum"
-msgstr "Lorem Ipsum"
-
-#: src/utils/slides.ts:7
-#: src/utils/slides.ts:13
-#: src/utils/slides.ts:19
-msgid "Lorem Ipsum is simply dummy text of the printing and typesetting"
-msgstr "Lorem Ipsum is simply dummy text of the printing and typesetting"
-
-#: src/pages/song.tsx:297
+#: src/pages/song.tsx:317
 msgid "Lyrics"
 msgstr "Versuri"
+
+#: src/utils/slides.ts:19
+msgid "Make your worship sessions with quick access to slideshows and more."
+msgstr "Transformă sesiunile de închinare cu acces rapid la prezentări și multe altele."
+
+#: src/pages/login.tsx:168
+#: src/pages/register.tsx:156
+msgid "Network error. Please try again later."
+msgstr "Eroare de internet. Încearcă din nou mai târziu."
 
 #: src/pages/resetPassword.tsx:87
 msgid "New Password"
@@ -320,10 +329,14 @@ msgid "Old Password"
 msgstr "Parolă veche"
 
 #: src/pages/link.tsx:168
-#: src/pages/login.tsx:175
-#: src/pages/register.tsx:167
+#: src/pages/login.tsx:183
+#: src/pages/register.tsx:175
 msgid "or"
 msgstr "sau"
+
+#: src/utils/slides.ts:13
+msgid "Organize and share your favorite worship songs with your friends."
+msgstr "Organizează și distribuie cântecele tale preferate de închinare cu prietenii tăi."
 
 #: src/pages/settings.tsx:875
 msgid "password"
@@ -346,7 +359,11 @@ msgstr "Parola este prea scurtă."
 msgid "Personal Email"
 msgstr "Emailul personal"
 
-#: src/pages/album.tsx:152
+#: src/utils/slides.ts:18
+msgid "Prepare, Play, Praise"
+msgstr "Pregătește, Cântă, Laudă"
+
+#: src/pages/album.tsx:176
 #: src/pages/library.tsx:129
 msgid "Recent"
 msgstr "Recent"
@@ -355,7 +372,7 @@ msgstr "Recent"
 msgid "Recent Searches"
 msgstr "Căutări recente"
 
-#: src/components/wrapers/dataBottomSheet.tsx:311
+#: src/components/wrapers/dataBottomSheet.tsx:319
 msgid "Remove from this album"
 msgstr "Elimină din acest album"
 
@@ -366,7 +383,7 @@ msgstr "Elimină din acest album"
 msgid "Reset your password"
 msgstr "Resetează-ți parola"
 
-#: src/components/wrapers/dataBottomSheet.tsx:502
+#: src/components/wrapers/dataBottomSheet.tsx:511
 msgid "Save"
 msgstr "Salvează"
 
@@ -387,7 +404,7 @@ msgstr "Trimite email de resetare"
 msgid "Settings"
 msgstr "Setări"
 
-#: src/components/wrapers/dataBottomSheet.tsx:347
+#: src/components/wrapers/dataBottomSheet.tsx:356
 msgid "Share"
 msgstr "Distribuie"
 
@@ -395,15 +412,16 @@ msgstr "Distribuie"
 msgid "Sign In"
 msgstr "Conectare"
 
-#: src/components/wrapers/dataBottomSheet.tsx:187
+#: src/components/wrapers/dataBottomSheet.tsx:195
 msgid "Slideshow"
 msgstr "Prezentare"
 
 #: src/pages/forgotPassword.tsx:125
 #: src/pages/link.tsx:153
-#: src/pages/login.tsx:214
-#: src/pages/register.tsx:152
-#: src/pages/register.tsx:206
+#: src/pages/login.tsx:170
+#: src/pages/login.tsx:222
+#: src/pages/register.tsx:160
+#: src/pages/register.tsx:214
 #: src/pages/resetPassword.tsx:195
 msgid "Something went wrong."
 msgstr "Ceva nu a mers bine."
@@ -412,7 +430,11 @@ msgstr "Ceva nu a mers bine."
 msgid "Start searching for your favorite songs."
 msgstr "Începe să cauți melodiile tale preferate."
 
-#: src/pages/home.tsx:99
+#: src/utils/slides.ts:19
+#~ msgid "Streamline your worship sessions with quick access to slideshows and more."
+#~ msgstr "Optimizează sesiunile tale de închinare cu acces rapid la prezentări și multe altele."
+
+#: src/pages/home.tsx:107
 msgid "Suggested for you"
 msgstr "Recomandat pentru tine"
 
@@ -436,7 +458,7 @@ msgstr "Parola pe care ai introdus-o este incorectă."
 msgid "Theme"
 msgstr "Temă"
 
-#: src/pages/album.tsx:392
+#: src/pages/album.tsx:416
 msgid "There are no songs in this album."
 msgstr "Nu există melodii în acest album."
 
@@ -460,9 +482,17 @@ msgstr "Introduceți parola veche și noua parolă pe care doriți să o folosi�
 msgid "Type your"
 msgstr "Introduceți"
 
+#: src/navigation/appContainer.tsx:55
+msgid "Updating the content"
+msgstr "Actualizarea conținutului"
+
 #: src/pages/settings.tsx:335
 msgid "Version:"
 msgstr "Versiune:"
+
+#: src/utils/slides.ts:6
+msgid "Worship Made Easy"
+msgstr "Închinarea Simplificată"
 
 #: src/pages/addSong.tsx:124
 msgid "You've added all the available songs"
@@ -472,12 +502,16 @@ msgstr "Ai adăugat toate melodiile disponibile"
 msgid "Your library"
 msgstr "Biblioteca ta"
 
+#: src/utils/slides.ts:12
+msgid "Your Music, His Glory"
+msgstr "Muzica Ta, Slava Lui"
+
 #: src/pages/link.tsx:63
 #: src/pages/register.tsx:64
 msgid "Your Name"
 msgstr "Numele tău"
 
-#: src/components/wrapers/dataBottomSheet.tsx:142
+#: src/components/wrapers/dataBottomSheet.tsx:150
 msgid "Zoom"
 msgstr "Zoom"
 

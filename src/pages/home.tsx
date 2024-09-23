@@ -61,7 +61,7 @@ const Home = ({ navigation }: { navigation: any }) => {
         load();
     }, [refresh]);
 
-    if (!favoriteAlbums || !randomSongs || !recent)
+    if (!favoriteAlbums || !randomSongs || !recent || recent.length === 0)
         return <Loading text={t`Finishing things`} />;
 
     return (

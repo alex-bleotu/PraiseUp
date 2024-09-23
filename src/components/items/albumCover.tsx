@@ -87,12 +87,21 @@ const AlbumCover = ({
                     ]}>
                     <Text
                         bold
-                        fontSize={14}
+                        fontSize={vertical ? 13 : 16}
                         center={vertical}
                         numberOfLines={1}
                         ellipsizeMode="tail">
                         {album.id !== "F" ? album.title : t`Favorite songs`}
                     </Text>
+                    {album.creator && !vertical && (
+                        <Text
+                            fontSize={14}
+                            center={vertical}
+                            numberOfLines={1}
+                            ellipsizeMode="tail">
+                            {album.creator}
+                        </Text>
+                    )}
                 </View>
             </View>
             {action && (
