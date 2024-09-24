@@ -11,9 +11,15 @@ import AnimatedTouchable from "../components/wrapers/animatedTouchable";
 import Text from "../components/wrapers/text";
 import { DataContext } from "../context/data";
 
-const countLines = (str: string) => {
+const isTooLarge = (str: string) => {
+    const maxLines = 6;
+    const maxCharsPerLine = 80;
+
     const lines = str.split("\n").filter((line) => line.trim() !== "");
-    return lines.length;
+    const hasTooManyLines = lines.length > maxLines;
+    const hasLongLine = lines.some((line) => line.length > maxCharsPerLine);
+
+    return hasTooManyLines || hasLongLine;
 };
 
 const Slideshow = ({ route, navigation }: { route: any; navigation: any }) => {
@@ -122,15 +128,28 @@ const Slideshow = ({ route, navigation }: { route: any; navigation: any }) => {
         <View style={styles.container}>
             {lyricsArray.length > 0 && lyricsArray[currentVerse] !== "" && (
                 <View style={styles.textContainer}>
-                    <View style={styles.sectionLabel}>
-                        <Text color="grey" bold fontSize={18}>
+                    <View
+                        style={[
+                            styles.sectionLabel,
+                            {
+                                marginTop: isTooLarge(lyricsArray[currentVerse])
+                                    ? 17
+                                    : 23,
+                            },
+                        ]}>
+                        <Text
+                            color="grey"
+                            bold
+                            fontSize={
+                                isTooLarge(lyricsArray[currentVerse]) ? 14 : 18
+                            }>
                             {lyricsArray[currentVerse].split("\r")[0]}:
                         </Text>
                     </View>
                     <Text
                         color="white"
                         fontSize={
-                            countLines(lyricsArray[currentVerse]) > 6 ? 26 : 34
+                            isTooLarge(lyricsArray[currentVerse]) ? 26 : 34
                         }>
                         {lyricsArray[currentVerse]
                             .split("\r")
@@ -243,7 +262,6 @@ const styles = StyleSheet.create({
     sectionLabel: {
         height: "100%",
         marginRight: 10,
-        marginTop: 23,
     },
     buttonContainer: {
         position: "absolute",

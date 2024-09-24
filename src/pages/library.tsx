@@ -399,7 +399,7 @@ const Library = ({ navigation }: { navigation: any }) => {
                                     bold
                                     upper
                                     center
-                                    color={theme.colors.textInverted}>
+                                    color={theme.colors.textOnPrimary}>
                                     {t`Create`}
                                 </Text>
                             </TouchableOpacity>

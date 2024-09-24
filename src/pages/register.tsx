@@ -102,12 +102,14 @@ const Register = ({ navigation }: { navigation: any }) => {
                     <View
                         style={{
                             width: "100%",
+                            marginTop: 10,
                         }}>
                         <Button
                             mode="contained"
                             text={t`Join`}
                             upper
                             fullWidth
+                            color={theme.colors.textOnPrimary}
                             fontSize={14}
                             bold
                             disabled={!email || !password || !emailValid}
@@ -119,7 +121,7 @@ const Register = ({ navigation }: { navigation: any }) => {
                                     <ActivityIndicator
                                         animating={true}
                                         size={22}
-                                        color={theme.colors.textInverted}
+                                        color={theme.colors.textOnPrimary}
                                     />
                                 )
                             }
@@ -194,6 +196,7 @@ const Register = ({ navigation }: { navigation: any }) => {
                             text={t`Continue as Guest`}
                             upper
                             fullWidth
+                            color={theme.colors.textOnPrimary}
                             fontSize={14}
                             bold
                             style={{
@@ -220,7 +223,7 @@ const Register = ({ navigation }: { navigation: any }) => {
                                     <ActivityIndicator
                                         animating={true}
                                         size={22}
-                                        color={theme.colors.textInverted}
+                                        color={theme.colors.textOnPrimary}
                                     />
                                 )
                             }

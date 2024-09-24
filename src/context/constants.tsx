@@ -16,6 +16,7 @@ export const ConstantsProvider = ({
         "split" | "combined" | "separated" | null
     >(null);
     const [appHeight, setAppHeight] = useState(0);
+    const [songTab, setSongTab] = useState<"lyrics" | "chords">("lyrics");
 
     useEffect(() => {
         const loadConstants = async () => {
@@ -23,6 +24,7 @@ export const ConstantsProvider = ({
             const display = await AsyncStorage.getItem("display");
             const lyricsSize = await AsyncStorage.getItem("lyricsSize");
             const chords = await AsyncStorage.getItem("chords");
+            const songTab = await AsyncStorage.getItem("sontTab");
 
             if (sortBy) setSortBy(sortBy as "date" | "name");
             else setSortBy("date");
@@ -32,6 +34,8 @@ export const ConstantsProvider = ({
             else setLyricsSize(16);
             if (chords) setChords(chords as "split" | "combined" | "separated");
             else setChords("combined");
+            if (songTab) setSongTab(songTab as "lyrics" | "chords");
+            else setSongTab("lyrics");
 
             const { height: windowHeight } = Dimensions.get("window");
             const { height: screenHeight } = Dimensions.get("screen");
@@ -64,6 +68,10 @@ export const ConstantsProvider = ({
         if (chords !== null) AsyncStorage.setItem("chords", chords);
     }, [chords]);
 
+    useEffect(() => {
+        if (songTab !== null) AsyncStorage.setItem("songTab", songTab);
+    }, [songTab]);
+
     return (
         <ConstantsContext.Provider
             value={{
@@ -76,6 +84,8 @@ export const ConstantsProvider = ({
                 appHeight,
                 chords,
                 setChords,
+                songTab,
+                setSongTab,
             }}>
             {children}
         </ConstantsContext.Provider>

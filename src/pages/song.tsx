@@ -241,9 +241,8 @@ export const renderLyrics = (
                                                         color={
                                                             chord !== "."
                                                                 ? theme.colors
-                                                                      .textInverted
-                                                                : theme.colors
-                                                                      .background
+                                                                      .textOnPrimary
+                                                                : "transparent"
                                                         }
                                                         fontSize={fontSize - 2}>
                                                         {chord}
@@ -283,11 +282,11 @@ const Song = ({ route, navigation }: SongProps) => {
     const { song: s, id } = route.params;
 
     const { theme } = useContext(ThemeContext);
-    const { lyricsSize, setLyricsSize, chords } = useContext(ConstantsContext);
+    const { lyricsSize, setLyricsSize, chords, songTab, setSongTab } =
+        useContext(ConstantsContext);
     const { getSongById } = useContext(DataContext);
 
     const [song, setSong] = useState(s);
-    const [value, setValue] = useState("lyrics");
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
     const [isChordBottomSheetOpen, setChordBottomSheetOpen] = useState(false);
     const [steps, setSteps] = useState(0);
@@ -346,14 +345,14 @@ const Song = ({ route, navigation }: SongProps) => {
                         ]}>
                         <Button
                             bold
-                            mode={value === "lyrics" ? "contained" : "none"}
-                            onPress={() => setValue("lyrics")}
+                            mode={songTab === "lyrics" ? "contained" : "none"}
+                            onPress={() => setSongTab("lyrics")}
                             text={t`Lyrics`}
                             style={{ ...styles.button, width: buttonWidth }}
                             fontSize={15}
                             color={
-                                value === "lyrics"
-                                    ? theme.colors.textInverted
+                                songTab === "lyrics"
+                                    ? theme.colors.textOnPrimary
                                     : theme.colors.text
                             }
                             icon={
@@ -361,8 +360,8 @@ const Song = ({ route, navigation }: SongProps) => {
                                     name="lyrics"
                                     size={18}
                                     color={
-                                        value === "lyrics"
-                                            ? theme.colors.textInverted
+                                        songTab === "lyrics"
+                                            ? theme.colors.textOnPrimary
                                             : theme.colors.text
                                     }
                                 />
@@ -371,8 +370,8 @@ const Song = ({ route, navigation }: SongProps) => {
                         <View style={{ width: 10 }} />
                         <Button
                             bold
-                            mode={value === "chords" ? "contained" : "none"}
-                            onPress={() => setValue("chords")}
+                            mode={songTab === "chords" ? "contained" : "none"}
+                            onPress={() => setSongTab("chords")}
                             style={{
                                 width: buttonWidth,
                                 ...styles.button,
@@ -380,8 +379,8 @@ const Song = ({ route, navigation }: SongProps) => {
                             fontSize={15}
                             text={t`Chords`}
                             color={
-                                value === "chords"
-                                    ? theme.colors.textInverted
+                                songTab === "chords"
+                                    ? theme.colors.textOnPrimary
                                     : theme.colors.text
                             }
                             icon={
@@ -389,8 +388,8 @@ const Song = ({ route, navigation }: SongProps) => {
                                     name="itunes-note"
                                     size={18}
                                     color={
-                                        value === "chords"
-                                            ? theme.colors.textInverted
+                                        songTab === "chords"
+                                            ? theme.colors.textOnPrimary
                                             : theme.colors.text
                                     }
                                 />
@@ -428,7 +427,7 @@ const Song = ({ route, navigation }: SongProps) => {
                             styles.lyrics,
                             {
                                 display:
-                                    value === "lyrics" && song.lyrics
+                                    songTab === "lyrics" && song.lyrics
                                         ? "flex"
                                         : "none",
                             },
@@ -442,7 +441,7 @@ const Song = ({ route, navigation }: SongProps) => {
                             styles.lyrics,
                             {
                                 display:
-                                    value === "chords" && song.lyrics
+                                    songTab === "chords" && song.lyrics
                                         ? "flex"
                                         : "none",
                             },
@@ -479,7 +478,7 @@ const Song = ({ route, navigation }: SongProps) => {
                             fontSize={20}
                             color={
                                 steps + initialSteps === 0
-                                    ? theme.colors.textInverted
+                                    ? theme.colors.textOnPrimary
                                     : theme.colors.text
                             }>
                             C
@@ -504,7 +503,7 @@ const Song = ({ route, navigation }: SongProps) => {
                             fontSize={20}
                             color={
                                 steps + initialSteps === 1
-                                    ? theme.colors.textInverted
+                                    ? theme.colors.textOnPrimary
                                     : theme.colors.text
                             }>
                             C#
@@ -529,7 +528,7 @@ const Song = ({ route, navigation }: SongProps) => {
                             fontSize={20}
                             color={
                                 steps + initialSteps === 2
-                                    ? theme.colors.textInverted
+                                    ? theme.colors.textOnPrimary
                                     : theme.colors.text
                             }>
                             D
@@ -554,7 +553,7 @@ const Song = ({ route, navigation }: SongProps) => {
                             fontSize={20}
                             color={
                                 steps + initialSteps === 3
-                                    ? theme.colors.textInverted
+                                    ? theme.colors.textOnPrimary
                                     : theme.colors.text
                             }>
                             Eb
@@ -579,7 +578,7 @@ const Song = ({ route, navigation }: SongProps) => {
                             fontSize={20}
                             color={
                                 steps + initialSteps === 4
-                                    ? theme.colors.textInverted
+                                    ? theme.colors.textOnPrimary
                                     : theme.colors.text
                             }>
                             E
@@ -604,7 +603,7 @@ const Song = ({ route, navigation }: SongProps) => {
                             fontSize={20}
                             color={
                                 steps + initialSteps === 5
-                                    ? theme.colors.textInverted
+                                    ? theme.colors.textOnPrimary
                                     : theme.colors.text
                             }>
                             F
@@ -631,7 +630,7 @@ const Song = ({ route, navigation }: SongProps) => {
                             fontSize={20}
                             color={
                                 steps + initialSteps === 6
-                                    ? theme.colors.textInverted
+                                    ? theme.colors.textOnPrimary
                                     : theme.colors.text
                             }>
                             F#
@@ -656,7 +655,7 @@ const Song = ({ route, navigation }: SongProps) => {
                             fontSize={20}
                             color={
                                 steps + initialSteps === 7
-                                    ? theme.colors.textInverted
+                                    ? theme.colors.textOnPrimary
                                     : theme.colors.text
                             }>
                             G
@@ -681,7 +680,7 @@ const Song = ({ route, navigation }: SongProps) => {
                             fontSize={20}
                             color={
                                 steps + initialSteps === 8
-                                    ? theme.colors.textInverted
+                                    ? theme.colors.textOnPrimary
                                     : theme.colors.text
                             }>
                             G#
@@ -706,7 +705,7 @@ const Song = ({ route, navigation }: SongProps) => {
                             fontSize={20}
                             color={
                                 steps + initialSteps === 9
-                                    ? theme.colors.textInverted
+                                    ? theme.colors.textOnPrimary
                                     : theme.colors.text
                             }>
                             A
@@ -731,7 +730,7 @@ const Song = ({ route, navigation }: SongProps) => {
                             fontSize={20}
                             color={
                                 steps + initialSteps === 10
-                                    ? theme.colors.textInverted
+                                    ? theme.colors.textOnPrimary
                                     : theme.colors.text
                             }>
                             Bb
@@ -756,7 +755,7 @@ const Song = ({ route, navigation }: SongProps) => {
                             fontSize={20}
                             color={
                                 steps + initialSteps === 11
-                                    ? theme.colors.textInverted
+                                    ? theme.colors.textOnPrimary
                                     : theme.colors.text
                             }>
                             B

@@ -144,6 +144,7 @@ const ResetPassword = ({ navigation }: { navigation: any }) => {
                             fullWidth
                             fontSize={14}
                             bold
+                            color={theme.colors.textOnPrimary}
                             disabled={!oldPassword || !newPassword}
                             style={{
                                 paddingVertical: loading ? 13 : 14.5,
@@ -153,7 +154,7 @@ const ResetPassword = ({ navigation }: { navigation: any }) => {
                                     <ActivityIndicator
                                         animating={true}
                                         size={22}
-                                        color={theme.colors.textInverted}
+                                        color={theme.colors.textOnPrimary}
                                     />
                                 )
                             }

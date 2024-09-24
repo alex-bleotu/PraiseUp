@@ -71,6 +71,7 @@ function Onboard({ navigation }: { navigation: any }) {
                     text={t`Join PraiseUp`}
                     upper
                     fullWidth
+                    color={theme.colors.textOnPrimary}
                     fontSize={14}
                     bold
                     onPress={() => {

@@ -337,6 +337,11 @@ const Album = ({ route, navigation }: AlbumProps) => {
                                                                     fontSize={
                                                                         15
                                                                     }
+                                                                    color={
+                                                                        theme
+                                                                            .colors
+                                                                            .textInverted
+                                                                    }
                                                                     bold
                                                                     style={{
                                                                         marginLeft: 28,
@@ -402,7 +407,7 @@ const Album = ({ route, navigation }: AlbumProps) => {
                                                 album,
                                             });
                                         }}
-                                        color={theme.colors.textInverted}
+                                        color={theme.colors.textOnPrimary}
                                         fontSize={14}
                                         style={{
                                             marginBottom: 10,

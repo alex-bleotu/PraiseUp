@@ -38,6 +38,7 @@ export const lightTheme = {
         text: "#1a1a1a",
         textInverted: "#f2f2f2",
         textVariant: "#9f9f9f",
+        textOnPrimary: "#f2f2f2",
     },
 };
 
@@ -45,13 +46,35 @@ export const darkTheme = {
     ...defaultTheme,
     colors: {
         ...defaultTheme.colors,
-        primary: "#38a3a5",
-        primaryVariant: "#98C1C1",
-        secondary: "#CCE490",
+        primary: "#8a56ac",
+        primaryVariant: "#3a2e48",
+        secondary: "#ffb74d",
 
-        background: "#253334",
-        paper: "#354443",
-        text: "#f2f2f2",
-        textInverted: "#1a1a1a",
+        background: "#1a1a1a",
+        paper: "#262626",
+        darkPaper: "#383838",
+
+        text: "#e6e6e6",
+        textInverted: "#121212",
+        textVariant: "#9f9f9f",
+        textOnPrimary: "#f2f2f2",
+    },
+};
+
+// darkPurple
+export const darkPurpleTheme = {
+    ...defaultTheme,
+    colors: {
+        ...defaultTheme.colors,
+        primary: "#8a56ac",
+        primaryVariant: "#b39ddb",
+        secondary: "#ffb74d",
+
+        background: "#2c2235",
+        paper: "#3a2e4a",
+        darkPaper: "#4a415a",
+
+        text: "#e6e6e6",
+        textInverted: "#121212",
     },
 };

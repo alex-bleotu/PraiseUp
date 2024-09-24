@@ -973,18 +973,22 @@ export const DataProvider = ({
         let favoriteSongs = [];
 
         for (let i = 0; i < favoriteIds.length; i++) {
+            if (!favoriteIds[i].startsWith("S")) continue;
+
             const song = await getSongById(favoriteIds[i]);
-            if (song) favoriteSongs.push(song);
+            if (song) favoriteSongs.push(favoriteIds[i]);
         }
 
         if (!favoriteSongs.length) return null;
+
+        console.log(favoriteSongs);
 
         const album: AlbumType = {
             id: "F",
             type: "favorite",
             title: "Favorite Songs",
             creator: null,
-            songs: favoriteSongs.map((song) => song.id),
+            songs: favoriteSongs,
             favorite: true,
             date: new Date().toISOString(),
             cover: "favorites",

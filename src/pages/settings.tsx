@@ -279,7 +279,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                             onPress={() => {
                                 navigation.navigate("Link");
                             }}
-                            color={theme.colors.textInverted}
+                            color={theme.colors.textOnPrimary}
                             fontSize={14}
                             style={{ marginBottom: 10, marginTop: 30 }}
                         />
@@ -348,7 +348,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     settings === "theme"
                         ? 180
                         : settings === "language"
-                        ? 190
+                        ? 200
                         : settings === "zoom"
                         ? 290
                         : settings === "chords"
@@ -477,8 +477,14 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                         style={styles.image}
                                     />
                                 </View>
-                                <Text>{"English"}</Text>
-                                <Text>{t`(English)`}</Text>
+                                <View
+                                    style={{
+                                        marginVertical: 5,
+                                        alignItems: "center",
+                                    }}>
+                                    <Text>{"English"}</Text>
+                                    <Text>{t`(English)`}</Text>
+                                </View>
                                 <RadioButton
                                     value="english"
                                     color={theme.colors.primary}
@@ -501,8 +507,14 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                         style={styles.image}
                                     />
                                 </View>
-                                <Text>{"Română"}</Text>
-                                <Text>{t`(Romanian)`}</Text>
+                                <View
+                                    style={{
+                                        marginVertical: 5,
+                                        alignItems: "center",
+                                    }}>
+                                    <Text>{"Română"}</Text>
+                                    <Text>{t`(Romanian)`}</Text>
+                                </View>
                                 <RadioButton
                                     value="romanian"
                                     color={theme.colors.primary}

@@ -113,6 +113,7 @@ const Link = ({ navigation }: { navigation: any }) => {
                             style={{
                                 paddingVertical: loading ? 13 : 14.5,
                             }}
+                            color={theme.colors.textOnPrimary}
                             icon={
                                 loading && (
                                     <ActivityIndicator

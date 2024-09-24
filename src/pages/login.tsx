@@ -127,6 +127,7 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                             mode="contained"
                             text={t`Log in`}
                             upper
+                            color={theme.colors.textOnPrimary}
                             fullWidth
                             fontSize={14}
                             bold
@@ -139,7 +140,7 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                                     <ActivityIndicator
                                         animating={true}
                                         size={22}
-                                        color={theme.colors.textInverted}
+                                        color={theme.colors.textOnPrimary}
                                     />
                                 )
                             }
@@ -201,6 +202,7 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                             mode="contained"
                             text={t`Continue as Guest`}
                             upper
+                            color={theme.colors.textOnPrimary}
                             fullWidth
                             fontSize={14}
                             bold
@@ -228,7 +230,7 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                                     <ActivityIndicator
                                         animating={true}
                                         size={22}
-                                        color={theme.colors.textInverted}
+                                        color={theme.colors.textOnPrimary}
                                     />
                                 )
                             }

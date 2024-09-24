@@ -99,6 +99,7 @@ const ForgotPassword = ({ navigation }: { navigation: any }) => {
                             fullWidth
                             fontSize={14}
                             bold
+                            color={theme.colors.textOnPrimary}
                             disabled={!email || !emailValid}
                             style={{
                                 paddingVertical: loading ? 13 : 14.5,
@@ -108,7 +109,7 @@ const ForgotPassword = ({ navigation }: { navigation: any }) => {
                                     <ActivityIndicator
                                         animating={true}
                                         size={22}
-                                        color={theme.colors.textInverted}
+                                        color={theme.colors.textOnPrimary}
                                     />
                                 )
                             }

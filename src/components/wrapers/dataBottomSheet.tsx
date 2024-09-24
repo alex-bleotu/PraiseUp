@@ -507,7 +507,7 @@ const DataBottomSheet = ({
                                     bold
                                     upper
                                     center
-                                    color={theme.colors.textInverted}>
+                                    color={theme.colors.textOnPrimary}>
                                     {t`Save`}
                                 </Text>
                             </TouchableOpacity>
