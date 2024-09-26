@@ -294,7 +294,12 @@ const Song = ({ route, navigation }: SongProps) => {
     const { lyricsSize, setLyricsSize, chords, songTab, setSongTab } =
         useContext(ConstantsContext);
     const { getSongById } = useContext(DataContext);
-    const { chordsTutorial, setChordsTutorial } = useContext(TutorialContext);
+    const {
+        chordsTutorial,
+        setChordsTutorial,
+        chordsChangerTutorial,
+        setChordsChangerTutorial,
+    } = useContext(TutorialContext);
 
     const [song, setSong] = useState(s);
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
@@ -305,6 +310,11 @@ const Song = ({ route, navigation }: SongProps) => {
         top: 0,
         left: 0,
     });
+    const [chordsChangeButtonPosition, setChordsChangeButtonPosition] =
+        useState({
+            top: 0,
+            left: 0,
+        });
 
     const buttonWidth = Dimensions.get("screen").width / 2 - 45;
     const buttonsContainerWidth = buttonWidth * 2 + 75;
@@ -313,6 +323,7 @@ const Song = ({ route, navigation }: SongProps) => {
         if (song) return;
 
         setChordsTutorial(true);
+        setChordsChangerTutorial(false);
 
         const load = async () => {
             if (id) {
@@ -323,7 +334,13 @@ const Song = ({ route, navigation }: SongProps) => {
         load();
     }, []);
 
-    const handleLayout = (event: LayoutChangeEvent) => {
+    const handleLayoutChordsChanger = (event: LayoutChangeEvent) => {
+        const { x, y, width, height } = event.nativeEvent.layout;
+
+        setChordsChangeButtonPosition({ top: y, left: x });
+    };
+
+    const handleLayoutChords = (event: LayoutChangeEvent) => {
         const { x, y, width, height } = event.nativeEvent.layout;
 
         setChordsButtonPosition({ top: y, left: x });
@@ -391,34 +408,38 @@ const Song = ({ route, navigation }: SongProps) => {
                             }
                         />
                         <View style={{ width: 10 }} />
-                        <Button
-                            bold
-                            mode={songTab === "chords" ? "contained" : "none"}
-                            onPress={() => setSongTab("chords")}
-                            style={{
-                                width: buttonWidth,
-                                ...styles.button,
-                            }}
-                            fontSize={15}
-                            text={t`Chords`}
-                            color={
-                                songTab === "chords"
-                                    ? theme.colors.textOnPrimary
-                                    : theme.colors.text
-                            }
-                            icon={
-                                <FIcon
-                                    name="itunes-note"
-                                    size={18}
-                                    color={
-                                        songTab === "chords"
-                                            ? theme.colors.textOnPrimary
-                                            : theme.colors.text
-                                    }
-                                />
-                            }
-                        />
-                        <View onLayout={handleLayout}>
+                        <View onLayout={handleLayoutChords}>
+                            <Button
+                                bold
+                                mode={
+                                    songTab === "chords" ? "contained" : "none"
+                                }
+                                onPress={() => setSongTab("chords")}
+                                style={{
+                                    width: buttonWidth,
+                                    ...styles.button,
+                                }}
+                                fontSize={15}
+                                text={t`Chords`}
+                                color={
+                                    songTab === "chords"
+                                        ? theme.colors.textOnPrimary
+                                        : theme.colors.text
+                                }
+                                icon={
+                                    <FIcon
+                                        name="itunes-note"
+                                        size={18}
+                                        color={
+                                            songTab === "chords"
+                                                ? theme.colors.textOnPrimary
+                                                : theme.colors.text
+                                        }
+                                    />
+                                }
+                            />
+                        </View>
+                        <View onLayout={handleLayoutChordsChanger}>
                             <AnimatedTouchable
                                 style={[
                                     styles.chordButton,
@@ -486,12 +507,86 @@ const Song = ({ route, navigation }: SongProps) => {
                 visible={chordsTutorial}
                 setVisible={() => {
                     setChordsTutorial(false);
+
+                    setTimeout(() => {
+                        setChordsChangerTutorial(true);
+                    }, 1000);
                 }}>
                 <View
                     style={{
                         position: "absolute",
                         top: chordsButtonPosition.top + 75,
                         left: chordsButtonPosition.left + 5,
+                    }}>
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        onPress={() => {
+                            setChordBottomSheetOpen(true);
+
+                            setChordsTutorial(false);
+
+                            setTimeout(() => {
+                                setChordsChangerTutorial(true);
+                            }, 1000);
+                        }}>
+                        <Button
+                            bold
+                            mode={songTab === "chords" ? "contained" : "none"}
+                            onPress={() => setSongTab("chords")}
+                            style={{
+                                width: buttonWidth,
+                                ...styles.button,
+                            }}
+                            fontSize={15}
+                            text={t`Chords`}
+                            color={
+                                songTab === "chords"
+                                    ? theme.colors.textOnPrimary
+                                    : theme.colors.text
+                            }
+                            icon={
+                                <FIcon
+                                    name="itunes-note"
+                                    size={18}
+                                    color={
+                                        songTab === "chords"
+                                            ? theme.colors.textOnPrimary
+                                            : theme.colors.text
+                                    }
+                                />
+                            }
+                        />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            marginLeft: -100,
+                            marginTop: 30,
+                        }}>
+                        <Image
+                            style={{
+                                width: 70,
+                                height: 70,
+                                marginTop: -35,
+                                marginLeft: 40,
+                                marginBottom: -5,
+                            }}
+                            source={require("../../assets/images/arrows/curved.png")}
+                        />
+                        <Text bold color="white">{t`Enable chords`}</Text>
+                    </View>
+                </View>
+            </Overlay>
+
+            <Overlay
+                visible={chordsChangerTutorial}
+                setVisible={() => {
+                    setChordsChangerTutorial(false);
+                }}>
+                <View
+                    style={{
+                        position: "absolute",
+                        top: chordsChangeButtonPosition.top + 75,
+                        left: chordsChangeButtonPosition.left + 5,
                     }}>
                     <TouchableOpacity
                         activeOpacity={1}
@@ -505,7 +600,7 @@ const Song = ({ route, navigation }: SongProps) => {
                         ]}
                         onPress={() => {
                             setChordBottomSheetOpen(true);
-                            setChordsTutorial(false);
+                            setChordsChangerTutorial(false);
                         }}>
                         <Text
                             bold

@@ -9,7 +9,7 @@ export const TutorialProvider = ({
     children: ReactNode | ReactNode[];
 }) => {
     const [chordsTutorial, setChordsTutorial] = useState<boolean>(true);
-    const [chorodsChangerTutorial, setChordsChangerTutorial] =
+    const [chordsChangerTutorial, setChordsChangerTutorial] =
         useState<boolean>(false);
     const [presentationTutorial, setPresentationTutorial] =
         useState<boolean>(false);
@@ -45,12 +45,12 @@ export const TutorialProvider = ({
     }, [chordsTutorial]);
 
     useEffect(() => {
-        if (chorodsChangerTutorial === false) return;
+        if (chordsChangerTutorial === false) return;
         AsyncStorage.setItem(
             "chorodsChangerTutorial",
-            JSON.stringify(chorodsChangerTutorial)
+            JSON.stringify(chordsChangerTutorial)
         );
-    }, [chorodsChangerTutorial]);
+    }, [chordsChangerTutorial]);
 
     useEffect(() => {
         if (presentationTutorial === false) return;
@@ -77,7 +77,7 @@ export const TutorialProvider = ({
             value={{
                 chordsTutorial,
                 setChordsTutorial,
-                chorodsChangerTutorial,
+                chorodsChangerTutorial: chordsChangerTutorial,
                 setChordsChangerTutorial,
                 presentationTutorial,
                 setPresentationTutorial,
