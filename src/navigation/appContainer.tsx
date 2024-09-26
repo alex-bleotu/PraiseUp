@@ -2,6 +2,7 @@ import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../context/data";
 import { HistoryContext } from "../context/history";
+import { LoadingContext } from "../context/loading";
 import { RecentContext } from "../context/recent";
 import { RefreshContext } from "../context/refresh";
 import { UserContext } from "../context/user";
@@ -15,6 +16,7 @@ const AppContainer = () => {
     const { loadingData, loadData } = useContext(DataContext);
     const { recent, loadRecent } = useContext(RecentContext);
     const { history, loadHistory } = useContext(HistoryContext);
+    const { syncLoading } = useContext(LoadingContext);
 
     useEffect(() => {
         setLoading(true);
@@ -49,10 +51,14 @@ const AppContainer = () => {
     }, [loadingData]);
 
     if (
-        user !== null &&
-        (loading === null || history === null || recent === null)
-    )
-        return <Loading text={t`Updating the content`} />;
+        (user !== null &&
+            (loading === null || history === null || recent === null)) ||
+        syncLoading
+    ) {
+        const text = syncLoading ? t`Syncing data` : t`Updating the content`;
+
+        return <Loading text={text} />;
+    }
 
     return <AppNavigation />;
 };
