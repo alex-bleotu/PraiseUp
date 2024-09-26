@@ -59,11 +59,13 @@ export const DataProvider = ({
         deletePersonalAlbum: deletePersonalAlbumServer,
         getPersonalAlbum: getPersonalAlbumServer,
         checkUpdates,
+        getVersion,
         saveCover,
         deleteCover,
         getUserDisplayName,
     } = useContext(ServerContext);
 
+    const [version, setVersion] = useState<string | null>(null);
     const [songIds, setSongIds] = useState<string[] | null>(null);
     const [albumIds, setAlbumIds] = useState<string[] | null>(null);
     const [personalAlbumsIds, setPersonalAlbumsIds] = useState<string[] | null>(
@@ -81,6 +83,7 @@ export const DataProvider = ({
 
             await AsyncStorage.clear();
             await AsyncStorage.multiRemove([
+                "version",
                 "loaded",
                 "songIds",
                 "albumIds",
@@ -92,7 +95,6 @@ export const DataProvider = ({
                 "personalAlbumsIds",
                 "favoriteIds",
             ]);
-            console.log("Keys: " + (await AsyncStorage.getAllKeys()));
 
             setUser(null);
 
@@ -193,7 +195,10 @@ export const DataProvider = ({
             songs: string[] | null = songIds,
             albums: string[] | null = albumIds
         ) => {
-            await updateData(songs, albums);
+            const version = await AsyncStorage.getItem("version");
+
+            if (version === null) await updateData(songs, albums);
+            else await updateData(songs, albums, version);
         };
 
         const initialize = async () => {
@@ -251,6 +256,11 @@ export const DataProvider = ({
         if (favoriteIds === null) return;
         AsyncStorage.setItem("favoriteIds", JSON.stringify(favoriteIds));
     }, [favoriteIds]);
+
+    useEffect(() => {
+        if (version === null) return;
+        AsyncStorage.setItem("version", version);
+    }, [version]);
 
     const addData = async () => {
         const data = await checkUpdates();
@@ -371,6 +381,8 @@ export const DataProvider = ({
             }
 
             setAlbumIds(albumIds);
+
+            setVersion(bundle.version);
         }
     };
 
@@ -385,8 +397,16 @@ export const DataProvider = ({
 
     const updateData = async (
         songs: string[] | null = songIds,
-        albums: string[] | null = albumIds
+        albums: string[] | null = albumIds,
+        vers: string | null = version
     ) => {
+        const newVersion = await getVersion();
+
+        if (newVersion === vers) {
+            console.log("No updates available: " + newVersion);
+            return;
+        } else console.log("Updates available: " + newVersion);
+
         const data = await checkUpdates();
 
         if (!songs || !albums) return;
@@ -520,6 +540,8 @@ export const DataProvider = ({
 
             updateRefresh();
         }
+
+        setVersion(newVersion);
     };
 
     const writeSong = async (song: SongType, update = true) => {
@@ -1172,6 +1194,7 @@ export const DataProvider = ({
         setPersonalAlbumsIds([]);
 
         await AsyncStorage.multiRemove([
+            "version",
             "recent",
             "history",
             "user",

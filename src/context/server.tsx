@@ -8,7 +8,7 @@ import {
     setDoc,
     updateDoc,
 } from "firebase/firestore";
-import { getDownloadURL, getStorage, ref } from "firebase/storage";
+import { getDownloadURL, getMetadata, getStorage, ref } from "firebase/storage";
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import { app, db } from "../../firebaseConfig";
 import { UserContext } from "./user";
@@ -255,6 +255,28 @@ export const ServerProvider = ({
         }
     };
 
+    const getVersion = async () => {
+        try {
+            const storage = getStorage(app, "gs://praiseup-37c47.appspot.com");
+
+            const fileRef = ref(storage, "bundle.json");
+
+            const metadata = await getMetadata(fileRef);
+
+            const version = metadata.customMetadata?.version;
+
+            if (version) {
+                return version;
+            } else {
+                console.log("No version metadata available.");
+                return null;
+            }
+        } catch (err: any) {
+            console.error("Error checking for updates: ", err);
+            return null;
+        }
+    };
+
     const saveCover = async (coverName: string) => {
         try {
             const storage = getStorage(app, "gs://praiseup-37c47.appspot.com");
@@ -347,6 +369,7 @@ export const ServerProvider = ({
                 deleteCover,
                 getUserDisplayName,
                 setUserDisplayName,
+                getVersion,
             }}>
             {children}
         </ServerContext.Provider>
