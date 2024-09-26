@@ -11,6 +11,7 @@ import { RecentProvider } from "./src/context/recent";
 import { RefreshProvider } from "./src/context/refresh";
 import { ServerProvider } from "./src/context/server";
 import { ThemeProvider } from "./src/context/theme";
+import { TutorialProvider } from "./src/context/tutorial";
 import { UserProvider } from "./src/context/user";
 import AppContainer from "./src/navigation/appContainer";
 import { darkTheme } from "./src/utils/theme";
@@ -22,24 +23,26 @@ export default function App() {
                 <LoadingProvider>
                     <LanguageProvider>
                         <PaperProvider theme={darkTheme}>
-                            <HistoryProvider>
-                                <UserProvider>
-                                    <ConstantsProvider>
-                                        <RefreshProvider>
-                                            <ServerProvider>
-                                                <DataProvider>
-                                                    <AuthProvider>
-                                                        <RecentProvider>
-                                                            <AppContainer />
-                                                            <StatusBar style="auto" />
-                                                        </RecentProvider>
-                                                    </AuthProvider>
-                                                </DataProvider>
-                                            </ServerProvider>
-                                        </RefreshProvider>
-                                    </ConstantsProvider>
-                                </UserProvider>
-                            </HistoryProvider>
+                            <TutorialProvider>
+                                <HistoryProvider>
+                                    <UserProvider>
+                                        <ConstantsProvider>
+                                            <RefreshProvider>
+                                                <ServerProvider>
+                                                    <DataProvider>
+                                                        <AuthProvider>
+                                                            <RecentProvider>
+                                                                <AppContainer />
+                                                                <StatusBar style="auto" />
+                                                            </RecentProvider>
+                                                        </AuthProvider>
+                                                    </DataProvider>
+                                                </ServerProvider>
+                                            </RefreshProvider>
+                                        </ConstantsProvider>
+                                    </UserProvider>
+                                </HistoryProvider>
+                            </TutorialProvider>
                         </PaperProvider>
                     </LanguageProvider>
                 </LoadingProvider>

@@ -16,6 +16,7 @@ import { auth, db } from "../../firebaseConfig";
 import { DataContext } from "./data";
 import { LoadingContext } from "./loading";
 import { ServerContext } from "./server";
+import { TutorialContext } from "./tutorial";
 import { UserContext } from "./user";
 
 export const AuthContext = createContext<any>(null);
@@ -30,6 +31,7 @@ export const AuthProvider = ({
     const { setUserDisplayName } = useContext(ServerContext);
     const { setUser } = useContext(UserContext);
     const { setLoading } = useContext(LoadingContext);
+    const { resetTutorial, activateTutorial } = useContext(TutorialContext);
 
     useEffect(() => {
         const loadAuth = async () => {
@@ -119,6 +121,8 @@ export const AuthProvider = ({
 
                     await initializeUserDocument(response.user.uid);
 
+                    activateTutorial();
+
                     await login(email, password).catch((error) => {
                         reject(error);
                     });
@@ -138,6 +142,8 @@ export const AuthProvider = ({
     const loginAsGuest = async (): Promise<any> => {
         return new Promise(async (resolve, reject) => {
             try {
+                activateTutorial();
+
                 const userCredential = await signInAnonymously(auth);
 
                 await initializeUserDocument(userCredential.user.uid);
@@ -158,6 +164,7 @@ export const AuthProvider = ({
             await auth.signOut();
             clearData();
             setUser(null);
+            resetTutorial();
         } finally {
             setLoading(false);
         }

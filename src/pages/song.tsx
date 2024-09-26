@@ -4,17 +4,26 @@ import {
 } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+    Dimensions,
+    Image,
+    LayoutChangeEvent,
+    StyleSheet,
+    TouchableOpacity,
+    View,
+} from "react-native";
 import AnimatedTouchable from "../components/wrapers/animatedTouchable";
 import BottomSheetModal from "../components/wrapers/bottomSheetModal";
 import Button from "../components/wrapers/button";
 import DataBottomSheet from "../components/wrapers/dataBottomSheet";
+import Overlay from "../components/wrapers/overlay";
 import ScrollView from "../components/wrapers/scrollView";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
 import { ConstantsContext } from "../context/constants";
 import { DataContext } from "../context/data";
 import { ThemeContext } from "../context/theme";
+import { TutorialContext } from "../context/tutorial";
 import Loading from "./loading";
 
 interface SongProps {
@@ -285,17 +294,25 @@ const Song = ({ route, navigation }: SongProps) => {
     const { lyricsSize, setLyricsSize, chords, songTab, setSongTab } =
         useContext(ConstantsContext);
     const { getSongById } = useContext(DataContext);
+    const { chordsTutorial, setChordsTutorial } = useContext(TutorialContext);
 
     const [song, setSong] = useState(s);
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
     const [isChordBottomSheetOpen, setChordBottomSheetOpen] = useState(false);
     const [steps, setSteps] = useState(0);
 
+    const [chordsButtonPosition, setChordsButtonPosition] = useState({
+        top: 0,
+        left: 0,
+    });
+
     const buttonWidth = Dimensions.get("screen").width / 2 - 45;
     const buttonsContainerWidth = buttonWidth * 2 + 75;
 
     useEffect(() => {
         if (song) return;
+
+        setChordsTutorial(true);
 
         const load = async () => {
             if (id) {
@@ -305,6 +322,12 @@ const Song = ({ route, navigation }: SongProps) => {
 
         load();
     }, []);
+
+    const handleLayout = (event: LayoutChangeEvent) => {
+        const { x, y, width, height } = event.nativeEvent.layout;
+
+        setChordsButtonPosition({ top: y, left: x });
+    };
 
     const initialSteps = getStepsFromC(song?.initialChord) || 0;
 
@@ -395,26 +418,32 @@ const Song = ({ route, navigation }: SongProps) => {
                                 />
                             }
                         />
-                        <AnimatedTouchable
-                            style={[
-                                styles.chordButton,
-                                {
-                                    width: 40,
-                                    marginLeft: 5,
-                                },
-                            ]}
-                            onPress={() => {
-                                setChordBottomSheetOpen(true);
-                            }}>
-                            <Text
-                                bold
-                                fontSize={18}
-                                style={{
-                                    marginTop: -1,
+                        <View onLayout={handleLayout}>
+                            <AnimatedTouchable
+                                style={[
+                                    styles.chordButton,
+                                    {
+                                        width: 40,
+                                        marginLeft: 5,
+                                    },
+                                ]}
+                                onPress={() => {
+                                    setChordBottomSheetOpen(true);
                                 }}>
-                                {chordChanger(song.initialChord, steps, false)}
-                            </Text>
-                        </AnimatedTouchable>
+                                <Text
+                                    bold
+                                    fontSize={18}
+                                    style={{
+                                        marginTop: -1,
+                                    }}>
+                                    {chordChanger(
+                                        song.initialChord,
+                                        steps,
+                                        false
+                                    )}
+                                </Text>
+                            </AnimatedTouchable>
+                        </View>
                     </View>
                 )}
 
@@ -452,6 +481,61 @@ const Song = ({ route, navigation }: SongProps) => {
                     </ScrollView>
                 </View>
             </View>
+
+            <Overlay
+                visible={chordsTutorial}
+                setVisible={() => {
+                    setChordsTutorial(false);
+                }}>
+                <View
+                    style={{
+                        position: "absolute",
+                        top: chordsButtonPosition.top + 75,
+                        left: chordsButtonPosition.left + 5,
+                    }}>
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        style={[
+                            styles.chordButton,
+                            {
+                                backgroundColor: theme.colors.paper,
+                                width: 40,
+                                marginLeft: 5,
+                            },
+                        ]}
+                        onPress={() => {
+                            setChordBottomSheetOpen(true);
+                            setChordsTutorial(false);
+                        }}>
+                        <Text
+                            bold
+                            fontSize={18}
+                            style={{
+                                marginTop: -1,
+                            }}>
+                            {chordChanger(song.initialChord, steps, false)}
+                        </Text>
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            marginLeft: -100,
+                            marginTop: 30,
+                        }}>
+                        <Image
+                            style={{
+                                width: 70,
+                                height: 70,
+                                marginTop: -35,
+                                marginLeft: 40,
+                                marginBottom: -5,
+                            }}
+                            source={require("../../assets/images/arrows/loop.png")}
+                        />
+                        <Text bold color="white">{t`Change the chords`}</Text>
+                    </View>
+                </View>
+            </Overlay>
+
             <BottomSheetModal
                 isOpen={isChordBottomSheetOpen}
                 onClose={() => {
