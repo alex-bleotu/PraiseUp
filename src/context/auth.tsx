@@ -30,8 +30,8 @@ export const AuthProvider = ({
         useContext(DataContext);
     const { setUserDisplayName } = useContext(ServerContext);
     const { setUser } = useContext(UserContext);
-    const { setLoading } = useContext(LoadingContext);
-    const { resetTutorial, activateTutorial } = useContext(TutorialContext);
+    const { setLoading, setSyncLoading } = useContext(LoadingContext);
+    const { activateTutorial } = useContext(TutorialContext);
 
     useEffect(() => {
         const loadAuth = async () => {
@@ -60,8 +60,12 @@ export const AuthProvider = ({
         await deleteDoc(userDocRef);
     };
 
-    const login = async (email: string, password: string): Promise<any> => {
-        setLoading(true);
+    const login = async (
+        email: string,
+        password: string,
+        loading: boolean = true
+    ): Promise<any> => {
+        if (loading) setLoading(true);
 
         return new Promise(async (resolve, reject) => {
             try {
@@ -81,20 +85,18 @@ export const AuthProvider = ({
                     favorites = userData.favorites || [];
                 }
 
-                try {
-                    await syncFavorites(response.user);
-                    await syncPersonalAlbums(response.user);
-                } catch (error) {
-                    console.error("Error syncing data:", error);
-                }
+                setSyncLoading(true);
 
                 setUser(response.user);
+
+                await syncFavorites(response.user);
+                await syncPersonalAlbums(response.user);
 
                 resolve(response.user);
             } catch (error) {
                 reject(error);
             } finally {
-                setLoading(false);
+                if (loading) setLoading(false);
             }
         });
     };
@@ -123,14 +125,14 @@ export const AuthProvider = ({
 
                     activateTutorial();
 
-                    await login(email, password).catch((error) => {
+                    await login(email, password, false).catch((error) => {
                         reject(error);
                     });
 
                     await setUserDisplayName(response.user.uid, username);
                 }
 
-                resolve(response);
+                resolve(response.user);
             } catch (error) {
                 reject(error);
             } finally {
@@ -162,9 +164,8 @@ export const AuthProvider = ({
 
         try {
             await auth.signOut();
-            clearData();
+            await clearData();
             setUser(null);
-            resetTutorial();
         } finally {
             setLoading(false);
         }
@@ -178,7 +179,7 @@ export const AuthProvider = ({
                 await deleteUserDocument(auth.currentUser.uid);
                 await auth.currentUser.delete();
             }
-            clearData();
+            await clearData();
             setUser(null);
         } finally {
             setLoading(false);
