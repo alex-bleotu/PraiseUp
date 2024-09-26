@@ -24,7 +24,7 @@ export const ConstantsProvider = ({
             const display = await AsyncStorage.getItem("display");
             const lyricsSize = await AsyncStorage.getItem("lyricsSize");
             const chords = await AsyncStorage.getItem("chords");
-            const songTab = await AsyncStorage.getItem("sontTab");
+            const songTab = await AsyncStorage.getItem("songTab");
 
             if (sortBy) setSortBy(sortBy as "date" | "name");
             else setSortBy("date");
@@ -72,6 +72,20 @@ export const ConstantsProvider = ({
         if (songTab !== null) AsyncStorage.setItem("songTab", songTab);
     }, [songTab]);
 
+    const resetConstants = async () => {
+        await AsyncStorage.removeItem("sortBy");
+        await AsyncStorage.removeItem("display");
+        await AsyncStorage.removeItem("lyricsSize");
+        await AsyncStorage.removeItem("chords");
+        await AsyncStorage.removeItem("songTab");
+
+        setSortBy("date");
+        setDisplay("grid");
+        setLyricsSize(16);
+        setChords("combined");
+        setSongTab("lyrics");
+    };
+
     return (
         <ConstantsContext.Provider
             value={{
@@ -86,6 +100,7 @@ export const ConstantsProvider = ({
                 setChords,
                 songTab,
                 setSongTab,
+                resetConstants,
             }}>
             {children}
         </ConstantsContext.Provider>

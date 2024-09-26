@@ -8,68 +8,33 @@ export const TutorialProvider = ({
 }: {
     children: ReactNode | ReactNode[];
 }) => {
-    const [chordsTutorial, setChordsTutorial] = useState<boolean>(true);
+    const [chordsTutorial, setChordsTutorial] = useState<boolean>(false);
     const [chordsChangerTutorial, setChordsChangerTutorial] =
         useState<boolean>(false);
-    const [presentationTutorial, setPresentationTutorial] =
-        useState<boolean>(false);
+    const [menuTutorial, setMenuTutorial] = useState<boolean>(false);
 
     useEffect(() => {
         const load = async () => {
-            const chordsTutorial = await AsyncStorage.getItem("chordsTutorial");
-            if (chordsTutorial) {
-                setChordsTutorial(JSON.parse(chordsTutorial));
-            }
+            const tutorial = await AsyncStorage.getItem("tutorial");
 
-            const chorodsChangerTutorial = await AsyncStorage.getItem(
-                "chorodsChangerTutorial"
-            );
-            if (chorodsChangerTutorial) {
-                setChordsChangerTutorial(JSON.parse(chorodsChangerTutorial));
-            }
-
-            const presentationTutorial = await AsyncStorage.getItem(
-                "presentationTutorial"
-            );
-            if (presentationTutorial) {
-                setPresentationTutorial(JSON.parse(presentationTutorial));
-            }
+            if (tutorial) setChordsTutorial(JSON.parse(tutorial));
         };
 
         load();
     }, []);
 
     useEffect(() => {
-        if (chordsTutorial === false) return;
-        AsyncStorage.setItem("chordsTutorial", JSON.stringify(chordsTutorial));
+        AsyncStorage.setItem("tutorial", JSON.stringify(chordsTutorial));
     }, [chordsTutorial]);
-
-    useEffect(() => {
-        if (chordsChangerTutorial === false) return;
-        AsyncStorage.setItem(
-            "chorodsChangerTutorial",
-            JSON.stringify(chordsChangerTutorial)
-        );
-    }, [chordsChangerTutorial]);
-
-    useEffect(() => {
-        if (presentationTutorial === false) return;
-        AsyncStorage.setItem(
-            "presentationTutorial",
-            JSON.stringify(presentationTutorial)
-        );
-    }, [presentationTutorial]);
 
     const resetTutorial = () => {
         setChordsTutorial(false);
         setChordsChangerTutorial(false);
-        setPresentationTutorial(false);
+        setMenuTutorial(false);
     };
 
     const activateTutorial = () => {
         setChordsTutorial(true);
-        setChordsChangerTutorial(true);
-        setPresentationTutorial(true);
     };
 
     return (
@@ -77,10 +42,10 @@ export const TutorialProvider = ({
             value={{
                 chordsTutorial,
                 setChordsTutorial,
-                chorodsChangerTutorial: chordsChangerTutorial,
+                chordsChangerTutorial,
                 setChordsChangerTutorial,
-                presentationTutorial,
-                setPresentationTutorial,
+                menuTutorial,
+                setMenuTutorial,
                 resetTutorial,
                 activateTutorial,
             }}>

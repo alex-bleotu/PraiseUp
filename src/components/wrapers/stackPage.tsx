@@ -17,6 +17,7 @@ interface StackPageProps {
     back?: boolean;
     noBottom?: boolean;
     action?: () => void;
+    buttonRef?: React.RefObject<any>;
 }
 
 const StackPage = ({
@@ -27,6 +28,7 @@ const StackPage = ({
     action,
     back = true,
     noBottom = false,
+    buttonRef,
 }: StackPageProps) => {
     const { theme } = useContext(ThemeContext);
 
@@ -65,19 +67,21 @@ const StackPage = ({
                     </Text>
                 </View>
                 {icon && (
-                    <AnimatedTouchable
-                        style={{
-                            ...styles.cornerButton,
-                        }}
-                        onPress={() => {
-                            action && action();
-                        }}>
-                        <MCIcons
-                            name={icon}
-                            size={iconSize}
-                            color={theme.colors.text}
-                        />
-                    </AnimatedTouchable>
+                    <View ref={buttonRef} collapsable={false}>
+                        <AnimatedTouchable
+                            style={{
+                                ...styles.cornerButton,
+                            }}
+                            onPress={() => {
+                                action && action();
+                            }}>
+                            <MCIcons
+                                name={icon}
+                                size={iconSize}
+                                color={theme.colors.text}
+                            />
+                        </AnimatedTouchable>
+                    </View>
                 )}
             </View>
             <View

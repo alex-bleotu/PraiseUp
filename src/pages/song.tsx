@@ -1,13 +1,13 @@
 import {
     FontAwesome6 as FIcon,
+    MaterialCommunityIcons as MCIcons,
     MaterialIcons as MIcon,
 } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
     Dimensions,
     Image,
-    LayoutChangeEvent,
     StyleSheet,
     TouchableOpacity,
     View,
@@ -299,12 +299,15 @@ const Song = ({ route, navigation }: SongProps) => {
         setChordsTutorial,
         chordsChangerTutorial,
         setChordsChangerTutorial,
+        menuTutorial,
+        setMenuTutorial,
     } = useContext(TutorialContext);
 
     const [song, setSong] = useState(s);
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
     const [isChordBottomSheetOpen, setChordBottomSheetOpen] = useState(false);
     const [steps, setSteps] = useState(0);
+    const [tutorial, setTutorial] = useState(false);
 
     const [chordsButtonPosition, setChordsButtonPosition] = useState({
         top: 0,
@@ -315,15 +318,24 @@ const Song = ({ route, navigation }: SongProps) => {
             top: 0,
             left: 0,
         });
+    const [menuButtonPosition, setMenuButtonPosition] = useState({
+        top: 0,
+        left: 0,
+    });
 
     const buttonWidth = Dimensions.get("screen").width / 2 - 45;
     const buttonsContainerWidth = buttonWidth * 2 + 75;
 
+    const chordsButtonRef = useRef<View>(null);
+    const chordsChangerButtonRef = useRef<View>(null);
+    const menuButtonRef = useRef<View>(null);
+
+    const chordsTutorialTimeout = useRef<any>(null);
+    const chordsChangerTimeout = useRef<any>(null);
+    const menuTimeout = useRef<any>(null);
+
     useEffect(() => {
         if (song) return;
-
-        setChordsTutorial(true);
-        setChordsChangerTutorial(false);
 
         const load = async () => {
             if (id) {
@@ -334,17 +346,37 @@ const Song = ({ route, navigation }: SongProps) => {
         load();
     }, []);
 
-    const handleLayoutChordsChanger = (event: LayoutChangeEvent) => {
-        const { x, y, width, height } = event.nativeEvent.layout;
+    useEffect(() => {
+        setTimeout(() => {
+            chordsButtonRef.current?.measureInWindow((x, y, width, height) => {
+                setChordsButtonPosition({ top: y, left: x });
+            });
+            chordsChangerButtonRef.current?.measureInWindow(
+                (x, y, width, height) => {
+                    setChordsChangeButtonPosition({ top: y, left: x });
+                }
+            );
+            menuButtonRef.current?.measureInWindow((x, y, width, height) => {
+                setMenuButtonPosition({ top: y, left: x });
+            });
 
-        setChordsChangeButtonPosition({ top: y, left: x });
-    };
+            setTutorial(true);
+        }, 500);
+    }, []);
 
-    const handleLayoutChords = (event: LayoutChangeEvent) => {
-        const { x, y, width, height } = event.nativeEvent.layout;
-
-        setChordsButtonPosition({ top: y, left: x });
-    };
+    useEffect(() => {
+        return () => {
+            if (chordsTutorialTimeout.current) {
+                clearTimeout(chordsTutorialTimeout.current);
+            }
+            if (chordsChangerTimeout.current) {
+                clearTimeout(chordsChangerTimeout.current);
+            }
+            if (menuTimeout.current) {
+                clearTimeout(menuTimeout.current);
+            }
+        };
+    }, [navigation]);
 
     const initialSteps = getStepsFromC(song?.initialChord) || 0;
 
@@ -372,6 +404,7 @@ const Song = ({ route, navigation }: SongProps) => {
             navigation={navigation}
             title={song.title}
             icon={"dots-vertical"}
+            buttonRef={menuButtonRef}
             action={() => setBottomSheetOpen(true)}>
             <View style={styles.container}>
                 {song.lyrics && hasChords && (
@@ -386,7 +419,9 @@ const Song = ({ route, navigation }: SongProps) => {
                         <Button
                             bold
                             mode={songTab === "lyrics" ? "contained" : "none"}
-                            onPress={() => setSongTab("lyrics")}
+                            onPress={() => {
+                                setSongTab("lyrics");
+                            }}
                             text={t`Lyrics`}
                             style={{ ...styles.button, width: buttonWidth }}
                             fontSize={15}
@@ -408,13 +443,15 @@ const Song = ({ route, navigation }: SongProps) => {
                             }
                         />
                         <View style={{ width: 10 }} />
-                        <View onLayout={handleLayoutChords}>
+                        <View ref={chordsButtonRef} collapsable={false}>
                             <Button
                                 bold
                                 mode={
                                     songTab === "chords" ? "contained" : "none"
                                 }
-                                onPress={() => setSongTab("chords")}
+                                onPress={() => {
+                                    setSongTab("chords");
+                                }}
                                 style={{
                                     width: buttonWidth,
                                     ...styles.button,
@@ -439,7 +476,7 @@ const Song = ({ route, navigation }: SongProps) => {
                                 }
                             />
                         </View>
-                        <View onLayout={handleLayoutChordsChanger}>
+                        <View ref={chordsChangerButtonRef} collapsable={false}>
                             <AnimatedTouchable
                                 style={[
                                     styles.chordButton,
@@ -503,133 +540,224 @@ const Song = ({ route, navigation }: SongProps) => {
                 </View>
             </View>
 
-            <Overlay
-                visible={chordsTutorial}
-                setVisible={() => {
-                    setChordsTutorial(false);
-
-                    setTimeout(() => {
-                        setChordsChangerTutorial(true);
-                    }, 1000);
-                }}>
-                <View
-                    style={{
-                        position: "absolute",
-                        top: chordsButtonPosition.top + 75,
-                        left: chordsButtonPosition.left + 5,
-                    }}>
-                    <TouchableOpacity
-                        activeOpacity={1}
-                        onPress={() => {
-                            setChordBottomSheetOpen(true);
-
+            {tutorial && (
+                <>
+                    <Overlay
+                        visible={chordsTutorial}
+                        setVisible={() => {
                             setChordsTutorial(false);
 
-                            setTimeout(() => {
-                                setChordsChangerTutorial(true);
+                            setTutorial(false);
+                            setChordsChangerTutorial(true);
+                            chordsTutorialTimeout.current = setTimeout(() => {
+                                setTutorial(true);
                             }, 1000);
                         }}>
-                        <Button
-                            bold
-                            mode={songTab === "chords" ? "contained" : "none"}
-                            onPress={() => setSongTab("chords")}
+                        <View
                             style={{
-                                width: buttonWidth,
-                                ...styles.button,
-                            }}
-                            fontSize={15}
-                            text={t`Chords`}
-                            color={
-                                songTab === "chords"
-                                    ? theme.colors.textOnPrimary
-                                    : theme.colors.text
-                            }
-                            icon={
-                                <FIcon
-                                    name="itunes-note"
-                                    size={18}
-                                    color={
-                                        songTab === "chords"
-                                            ? theme.colors.textOnPrimary
-                                            : theme.colors.text
+                                position: "absolute",
+                                top: chordsButtonPosition.top,
+                                left: chordsButtonPosition.left,
+                            }}>
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                onPress={() => {
+                                    setChordsTutorial(false);
+                                    setTutorial(false);
+
+                                    setSongTab("chords");
+
+                                    setChordsChangerTutorial(true);
+                                    chordsTutorialTimeout.current = setTimeout(
+                                        () => {
+                                            setTutorial(true);
+                                        },
+                                        1000
+                                    );
+                                }}>
+                                <Button
+                                    bold
+                                    mode={"contained"}
+                                    onPress={() => setSongTab("chords")}
+                                    style={{
+                                        width: buttonWidth,
+                                        ...styles.button,
+                                    }}
+                                    backgroundColor={theme.colors.paper}
+                                    fontSize={15}
+                                    text={t`Chords`}
+                                    color={theme.colors.text}
+                                    icon={
+                                        <FIcon
+                                            name="itunes-note"
+                                            size={18}
+                                            color={theme.colors.text}
+                                        />
                                     }
                                 />
-                            }
-                        />
-                    </TouchableOpacity>
-                    <View
-                        style={{
-                            marginLeft: -100,
-                            marginTop: 30,
-                        }}>
-                        <Image
-                            style={{
-                                width: 70,
-                                height: 70,
-                                marginTop: -35,
-                                marginLeft: 40,
-                                marginBottom: -5,
-                            }}
-                            source={require("../../assets/images/arrows/curved.png")}
-                        />
-                        <Text bold color="white">{t`Enable chords`}</Text>
-                    </View>
-                </View>
-            </Overlay>
+                            </TouchableOpacity>
+                            <View
+                                style={{
+                                    marginLeft: -50,
+                                    marginTop: 35,
+                                }}>
+                                <Image
+                                    style={{
+                                        width: 70,
+                                        height: 70,
+                                        marginTop: -35,
+                                        marginLeft: 40,
+                                        marginBottom: -5,
+                                    }}
+                                    source={require("../../assets/images/arrows/curved.png")}
+                                />
+                                <Text
+                                    bold
+                                    color="white"
+                                    style={{
+                                        marginTop: -30,
+                                        marginLeft: -70,
+                                    }}>{t`Enable chords`}</Text>
+                            </View>
+                        </View>
+                    </Overlay>
 
-            <Overlay
-                visible={chordsChangerTutorial}
-                setVisible={() => {
-                    setChordsChangerTutorial(false);
-                }}>
-                <View
-                    style={{
-                        position: "absolute",
-                        top: chordsChangeButtonPosition.top + 75,
-                        left: chordsChangeButtonPosition.left + 5,
-                    }}>
-                    <TouchableOpacity
-                        activeOpacity={1}
-                        style={[
-                            styles.chordButton,
-                            {
-                                backgroundColor: theme.colors.paper,
-                                width: 40,
-                                marginLeft: 5,
-                            },
-                        ]}
-                        onPress={() => {
-                            setChordBottomSheetOpen(true);
+                    <Overlay
+                        visible={chordsChangerTutorial}
+                        setVisible={() => {
                             setChordsChangerTutorial(false);
+
+                            setTutorial(false);
+                            setMenuTutorial(true);
+                            chordsTutorialTimeout.current = setTimeout(() => {
+                                setTutorial(true);
+                            }, 1000);
                         }}>
-                        <Text
-                            bold
-                            fontSize={18}
+                        <View
                             style={{
-                                marginTop: -1,
+                                position: "absolute",
+                                top: chordsChangeButtonPosition.top,
+                                left: chordsChangeButtonPosition.left,
                             }}>
-                            {chordChanger(song.initialChord, steps, false)}
-                        </Text>
-                    </TouchableOpacity>
-                    <View
-                        style={{
-                            marginLeft: -100,
-                            marginTop: 30,
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                style={[
+                                    styles.chordButton,
+                                    {
+                                        backgroundColor: theme.colors.paper,
+                                        width: 40,
+                                        marginLeft: 5,
+                                    },
+                                ]}
+                                onPress={() => {
+                                    setChordsChangerTutorial(false);
+                                    setTutorial(false);
+
+                                    setChordBottomSheetOpen(true);
+
+                                    setMenuTutorial(true);
+                                    chordsTutorialTimeout.current = setTimeout(
+                                        () => {
+                                            setTutorial(true);
+                                        },
+                                        1000
+                                    );
+                                }}>
+                                <Text
+                                    bold
+                                    fontSize={18}
+                                    style={{
+                                        marginTop: -1,
+                                    }}>
+                                    {chordChanger(
+                                        song.initialChord,
+                                        steps,
+                                        false
+                                    )}
+                                </Text>
+                            </TouchableOpacity>
+                            <View
+                                style={{
+                                    marginLeft: -100,
+                                    marginTop: 30,
+                                }}>
+                                <Image
+                                    style={{
+                                        width: 70,
+                                        height: 70,
+                                        marginTop: -35,
+                                        marginLeft: 40,
+                                        marginBottom: -5,
+                                    }}
+                                    source={require("../../assets/images/arrows/loop.png")}
+                                />
+                                <Text
+                                    bold
+                                    color="white">{t`Change the chords`}</Text>
+                            </View>
+                        </View>
+                    </Overlay>
+
+                    <Overlay
+                        visible={menuTutorial && !isChordBottomSheetOpen}
+                        setVisible={() => {
+                            setMenuTutorial(false);
                         }}>
-                        <Image
+                        <View
                             style={{
-                                width: 70,
-                                height: 70,
-                                marginTop: -35,
-                                marginLeft: 40,
-                                marginBottom: -5,
-                            }}
-                            source={require("../../assets/images/arrows/loop.png")}
-                        />
-                        <Text bold color="white">{t`Change the chords`}</Text>
-                    </View>
-                </View>
-            </Overlay>
+                                position: "absolute",
+                                top: menuButtonPosition.top - 5,
+                                left: menuButtonPosition.left - 5,
+                            }}>
+                            <TouchableOpacity
+                                style={{
+                                    backgroundColor: theme.colors.paper,
+                                    borderRadius: 12,
+                                    height: 40,
+                                    width: 40,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+                                activeOpacity={1}
+                                onPress={() => {
+                                    setMenuTutorial(false);
+
+                                    setBottomSheetOpen(true);
+                                }}>
+                                <MCIcons
+                                    name={"dots-vertical"}
+                                    size={30}
+                                    color={theme.colors.text}
+                                />
+                            </TouchableOpacity>
+                            <View
+                                style={{
+                                    marginLeft: -100,
+                                    marginTop: 30,
+                                }}>
+                                <Image
+                                    style={{
+                                        width: 70,
+                                        height: 70,
+                                        marginTop: -40,
+                                        marginLeft: 30,
+                                        marginBottom: 5,
+                                        transform: [
+                                            { rotate: "90deg" },
+                                            { scaleX: -1 },
+                                        ],
+                                    }}
+                                    source={require("../../assets/images/arrows/curved.png")}
+                                />
+                                <Text
+                                    style={{ marginLeft: -30 }}
+                                    bold
+                                    color="white">{t`See more options here`}</Text>
+                            </View>
+                        </View>
+                    </Overlay>
+                </>
+            )}
 
             <BottomSheetModal
                 isOpen={isChordBottomSheetOpen}

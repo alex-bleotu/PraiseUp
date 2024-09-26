@@ -10,9 +10,11 @@ import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import bundle from "../../assets/bundle.json";
 import { coversList } from "../utils/covers";
+import { ConstantsContext } from "./constants";
 import { HistoryContext } from "./history";
 import { RefreshContext } from "./refresh";
 import { ServerContext } from "./server";
+import { TutorialContext } from "./tutorial";
 import { UserContext } from "./user";
 
 export const DataContext = createContext<any>(null);
@@ -64,6 +66,8 @@ export const DataProvider = ({
         deleteCover,
         getUserDisplayName,
     } = useContext(ServerContext);
+    const { resetConstants } = useContext(ConstantsContext);
+    const { resetTutorial } = useContext(TutorialContext);
 
     const [version, setVersion] = useState<string | null>(null);
     const [songIds, setSongIds] = useState<string[] | null>(null);
@@ -386,13 +390,16 @@ export const DataProvider = ({
         }
     };
 
-    const resetData = async () => {
-        if (!songIds || !albumIds) return;
+    const resetData = () => {
+        if (!songIds || !albumIds) return Promise.resolve();
 
-        for (let i = 0; i < songIds.length; i++)
-            setFavorite(songIds[i], false, false);
-        for (let i = 0; i < albumIds.length; i++)
-            setFavorite(albumIds[i], false, false);
+        const songPromises = songIds.map((id) => setFavorite(id, false, false));
+
+        const albumPromises = albumIds.map((id) =>
+            setFavorite(id, false, false)
+        );
+
+        return Promise.all([...songPromises, ...albumPromises]);
     };
 
     const updateData = async (
@@ -1193,16 +1200,21 @@ export const DataProvider = ({
 
         setPersonalAlbumsIds([]);
 
+        resetTutorial();
+
         await AsyncStorage.multiRemove([
             "version",
             "recent",
             "history",
             "user",
             "personalAlbumsIds",
+            "favoriteIds",
         ]);
 
-        await resetData();
-        await updateData();
+        resetConstants();
+        resetData()
+            .then(() => updateData())
+            .catch(() => updateData());
     };
 
     const getPersonalAlbumsBySong = async (song: SongType) => {
