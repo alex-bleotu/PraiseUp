@@ -14,7 +14,7 @@ import { validateEmail } from "../utils/util";
 const Register = ({ navigation }: { navigation: any }) => {
     const { loading } = useContext(LoadingContext);
     const { register, loginAsGuest }: any = useContext(AuthContext);
-    const { theme } = useContext(ThemeContext);
+    const { theme, themeType } = useContext(ThemeContext);
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -180,17 +180,18 @@ const Register = ({ navigation }: { navigation: any }) => {
                     <View style={{ width: "100%" }}>
                         <ImageButton
                             src={require("../../assets/images/auth/google.png")}
-                            bgcolor={theme.colors.white}
-                            color={"black"}
+                            bgcolor={
+                                themeType === "light"
+                                    ? theme.colors.white
+                                    : theme.colors.darkGrey
+                            }
+                            color={
+                                themeType === "light"
+                                    ? theme.colors.black
+                                    : theme.colors.white
+                            }
                             text={t`Continue with Google`}
                         />
-                        {/* <ImageButton
-                            src={require("../../assets/images/auth/facebook.png")}
-                            bgcolor={theme.colors.blue}
-                            color={"white"}
-                            text={t`Continue with Facebook`}
-                            style={{ marginTop: 15 }}
-                        /> */}
                         <Button
                             mode="contained"
                             text={t`Continue as Guest`}

@@ -15,7 +15,7 @@ const defaultTheme = {
         blue: "#0a58d1",
         lightBlue: "#586eb2",
         lightGrey: "#bababa",
-        darkGrey: "#2d2d2d",
+        darkGrey: "#383838",
         danger: "#f65857",
         tomato: "#f5593d",
         success: "#00b16a",

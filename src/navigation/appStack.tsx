@@ -2,7 +2,8 @@ import {
     CardStyleInterpolators,
     createStackNavigator,
 } from "@react-navigation/stack";
-import React from "react";
+import React, { useContext } from "react";
+import { ThemeContext } from "../context/theme";
 import AddSong from "../pages/addSong";
 import AddToAlbum from "../pages/addToAlbum";
 import ForgotPassword from "../pages/forgotPassword";
@@ -15,12 +16,17 @@ import Tabs from "./tabs";
 const S = createStackNavigator();
 
 const AppStack = () => {
+    const { theme } = useContext(ThemeContext);
+
     return (
         <S.Navigator
             initialRouteName="Tabs"
             screenOptions={{
                 headerShown: false,
                 cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                cardStyle: {
+                    backgroundColor: theme.colors.background,
+                },
             }}>
             <S.Screen name="Tabs" component={Tabs} />
             <S.Screen name="Settings" component={Settings} />
@@ -34,7 +40,7 @@ const AppStack = () => {
                 component={Slideshow}
                 options={{
                     cardStyleInterpolator:
-                        CardStyleInterpolators.forFadeFromCenter, // Change to fade animation
+                        CardStyleInterpolators.forFadeFromCenter,
                 }}
             />
         </S.Navigator>
