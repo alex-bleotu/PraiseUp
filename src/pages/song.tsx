@@ -338,6 +338,7 @@ const Song = ({ route, navigation }: SongProps) => {
         if (song) return;
 
         const load = async () => {
+            console.log("Loading song", id);
             if (id) {
                 setSong(await getSongById(id));
             }
@@ -519,7 +520,7 @@ const Song = ({ route, navigation }: SongProps) => {
                                         : "none",
                             },
                         ]}
-                        bottom={hasChords ? 40 : 5}
+                        bottom={hasChords ? 40 : 15}
                         top={7}>
                         {renderedLyrics}
                     </ScrollView>

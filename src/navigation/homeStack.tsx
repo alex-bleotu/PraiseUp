@@ -15,6 +15,7 @@ const HomeStack = () => {
 
     return (
         <S.Navigator
+            initialRouteName="Home"
             screenOptions={{
                 headerShown: false,
                 cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,

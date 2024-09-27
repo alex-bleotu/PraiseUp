@@ -41,9 +41,9 @@ const StackPage = ({
                     <AnimatedTouchable
                         style={{ marginLeft: 10 }}
                         onPress={() => {
-                            try {
+                            if (navigation.canGoBack()) {
                                 navigation.goBack();
-                            } catch {
+                            } else {
                                 navigation.navigate("Home");
                             }
                         }}>

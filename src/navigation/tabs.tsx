@@ -36,6 +36,7 @@ const Tabs = () => {
     return (
         <View style={{ height: appHeight }}>
             <Tab.Navigator
+                initialRouteName="HomeStack"
                 sceneContainerStyle={{
                     backgroundColor: "transparent",
                 }}
