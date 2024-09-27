@@ -340,7 +340,7 @@ const DataBottomSheet = ({
                                         message: `${
                                             t`Check this out on PraiseUp!` +
                                             "\n"
-                                        } ${url}`,
+                                        }${url}`,
                                     });
                                 } catch (error) {
                                     console.log(error);
