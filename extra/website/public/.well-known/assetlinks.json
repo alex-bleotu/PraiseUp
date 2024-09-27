@@ -1,0 +1,12 @@
+[
+    {
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.praiseup",
+            "sha256_cert_fingerprints": [
+                "10:2c:05:67:29:9a:b3:60:5d:58:e0:71:89:a7:e6:7c:3e:f9:a0:5c"
+            ]
+        }
+    }
+]
