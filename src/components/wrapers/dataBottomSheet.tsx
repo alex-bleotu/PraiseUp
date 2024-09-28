@@ -77,8 +77,10 @@ const DataBottomSheet = ({
                 onClose={onClose}
                 numberOfButtons={
                     data?.type === "personal" || data?.type === "song"
-                        ? (zoom || removeSong) && data?.type === "song"
+                        ? zoom && data?.type === "song"
                             ? 5
+                            : removeSong && data?.type === "song"
+                            ? 4
                             : 3
                         : 2
                 }>

@@ -535,7 +535,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                     activeOpacity={theme.activeOpacity}
                                     style={{ marginRight: 10 }}
                                     onPress={() => {
-                                        if (lyricsSize < 21)
+                                        if (lyricsSize < 22)
                                             setLyricsSize(lyricsSize + 1);
                                     }}>
                                     <MCIcons
@@ -557,9 +557,9 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                         {t`Zoom Level: `}
                                     </Text>
                                     <Text bold fontSize={17}>
-                                        {lyricsSize - 11}
+                                        {lyricsSize - 12}
                                     </Text>
-                                    {lyricsSize - 11 === 5 && (
+                                    {lyricsSize - 12 === 4 && (
                                         <Text
                                             bold
                                             fontSize={17}
@@ -573,7 +573,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                 <TouchableOpacity
                                     activeOpacity={theme.activeOpacity}
                                     onPress={() => {
-                                        if (lyricsSize > 12)
+                                        if (lyricsSize > 13)
                                             setLyricsSize(lyricsSize - 1);
                                     }}>
                                     <MCIcons

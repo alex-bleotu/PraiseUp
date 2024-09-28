@@ -40,7 +40,10 @@ const SongCover = ({
     const { theme } = useContext(ThemeContext);
 
     const width = fullWidth ? "100%" : Dimensions.get("screen").width / 2 - 25;
-    const verticalWidth = (Dimensions.get("screen").width - 55) / 3;
+    const verticalWidth = Math.min(
+        (Dimensions.get("screen").width - 55) / 3,
+        160
+    );
 
     if (song === null) return null;
 
@@ -100,6 +103,7 @@ const SongCover = ({
                             styles.textContainer,
                             {
                                 marginLeft: 10,
+                                marginRight: 40,
                             },
                         ]}>
                         <Text

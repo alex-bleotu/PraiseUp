@@ -1080,9 +1080,9 @@ const Song = ({ route, navigation }: SongProps) => {
                 data={song}
                 isOpen={isBottomSheetOpen}
                 zoom={(zoomIn: boolean) => {
-                    if (zoomIn && lyricsSize < 21)
+                    if (zoomIn && lyricsSize < 22)
                         setLyricsSize(lyricsSize + 1);
-                    else if (!zoomIn && lyricsSize > 12)
+                    else if (!zoomIn && lyricsSize > 13)
                         setLyricsSize(lyricsSize - 1);
                 }}
                 onClose={() => {

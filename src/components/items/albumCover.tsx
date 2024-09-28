@@ -41,7 +41,10 @@ const AlbumCover = ({
     const width: any = fullWidth
         ? "100%"
         : Dimensions.get("screen").width / 2 - 25;
-    const verticalWidth = (Dimensions.get("screen").width - 55) / 3;
+    const verticalWidth = Math.min(
+        (Dimensions.get("screen").width - 55) / 3,
+        160
+    );
 
     if (album === null) return null;
 

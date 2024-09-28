@@ -631,7 +631,7 @@ export const DataProvider = ({
         if (!personalAlbumIds) return;
 
         try {
-            if (album.songs.length >= 3) {
+            if (album.songs.length > 3) {
                 const songs = album.songs.slice(-4).reverse();
 
                 const songPromises = await Promise.all(

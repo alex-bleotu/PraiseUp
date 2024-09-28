@@ -34,6 +34,15 @@ const Slideshow = ({ route, navigation }: { route: any; navigation: any }) => {
         width: Dimensions.get("screen").width,
         height: Dimensions.get("screen").height,
     });
+    const [fontSize, setFontSize] = useState(34);
+
+    useEffect(() => {
+        if (screenSize.height < 800) {
+            setFontSize(34);
+        } else {
+            setFontSize(fontSize * (screenSize.height / 800));
+        }
+    }, []);
 
     useEffect(() => {
         const updateScreenSize = () => {
@@ -127,7 +136,13 @@ const Slideshow = ({ route, navigation }: { route: any; navigation: any }) => {
     return (
         <View style={styles.container}>
             {lyricsArray.length > 0 && lyricsArray[currentVerse] !== "" && (
-                <View style={styles.textContainer}>
+                <View
+                    style={[
+                        styles.textContainer,
+                        {
+                            width: screenSize.width - 150,
+                        },
+                    ]}>
                     <View
                         style={[
                             styles.sectionLabel,
@@ -141,7 +156,9 @@ const Slideshow = ({ route, navigation }: { route: any; navigation: any }) => {
                             color="grey"
                             bold
                             fontSize={
-                                isTooLarge(lyricsArray[currentVerse]) ? 14 : 18
+                                isTooLarge(lyricsArray[currentVerse])
+                                    ? fontSize - 20
+                                    : fontSize - 10
                             }>
                             {lyricsArray[currentVerse].split("\r")[0]}:
                         </Text>
@@ -149,7 +166,9 @@ const Slideshow = ({ route, navigation }: { route: any; navigation: any }) => {
                     <Text
                         color="white"
                         fontSize={
-                            isTooLarge(lyricsArray[currentVerse]) ? 26 : 34
+                            isTooLarge(lyricsArray[currentVerse])
+                                ? fontSize - 8
+                                : fontSize
                         }>
                         {lyricsArray[currentVerse]
                             .split("\r")
@@ -256,7 +275,6 @@ const styles = StyleSheet.create({
         position: "absolute",
         alignItems: "center",
         justifyContent: "center",
-        width: 650,
         flexDirection: "row",
     },
     sectionLabel: {

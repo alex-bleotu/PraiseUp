@@ -38,7 +38,6 @@ const SongImage = ({
             style={[
                 vertical ? [styles.imageVertical] : styles.image,
                 {
-                    // skip the first letter
                     backgroundColor: getColorFromId(id.slice(1)),
                     justifyContent: "center",
                     alignItems: "center",

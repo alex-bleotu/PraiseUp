@@ -49,7 +49,14 @@ const Album = ({ route, navigation }: AlbumProps) => {
     );
     const [album, setAlbum] = useState<AlbumType | null>(a);
 
-    const buttonWidth = (Dimensions.get("screen").width - 55) / 3;
+    const buttonWidth = Math.min(
+        (Dimensions.get("screen").width - 55) / 3,
+        160
+    );
+    const horizontalMargin =
+        Dimensions.get("screen").width > 400
+            ? (Dimensions.get("screen").width - buttonWidth * 3 - 120) / 2
+            : (Dimensions.get("screen").width - buttonWidth * 3 - 32) / 2;
 
     useEffect(() => {
         if (album) return;
@@ -225,7 +232,7 @@ const Album = ({ route, navigation }: AlbumProps) => {
                                                                         1) %
                                                                         3 ==
                                                                     0
-                                                                        ? 12
+                                                                        ? horizontalMargin
                                                                         : 0,
                                                             },
                                                         ]}>
@@ -244,6 +251,7 @@ const Album = ({ route, navigation }: AlbumProps) => {
                                                                     styles.addGrid,
                                                                     {
                                                                         width: buttonWidth,
+                                                                        height: buttonWidth,
                                                                         backgroundColor:
                                                                             theme
                                                                                 .colors
@@ -340,7 +348,7 @@ const Album = ({ route, navigation }: AlbumProps) => {
                                                                     color={
                                                                         theme
                                                                             .colors
-                                                                            .textInverted
+                                                                            .text
                                                                     }
                                                                     bold
                                                                     style={{
@@ -485,8 +493,6 @@ export default Album;
 
 const styles = StyleSheet.create({
     container: {
-        width: "100%",
-        display: "flex",
         flex: 1,
         paddingHorizontal: 10,
     },
@@ -544,11 +550,11 @@ const styles = StyleSheet.create({
     addList: {
         borderRadius: 15,
         width: "100%",
-        height: 70,
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
         paddingLeft: 22,
+        height: 70,
     },
     textContainer: {
         display: "flex",
@@ -558,7 +564,6 @@ const styles = StyleSheet.create({
     },
     addGrid: {
         borderRadius: 15,
-        height: 125,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

@@ -2,6 +2,7 @@ import { FontAwesome6 as FAIcons } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useState } from "react";
 import {
+    Dimensions,
     StyleSheet,
     ScrollView as SV,
     TouchableOpacity,
@@ -45,6 +46,15 @@ const Library = ({ navigation }: { navigation: any }) => {
     const [isCreateBottomSheetOpen, setIsCreateBottomSheetOpen] =
         useState(false);
     const [name, setName] = useState("");
+
+    const buttonWidth = Math.min(
+        (Dimensions.get("screen").width - 55) / 3,
+        160
+    );
+    const horizontalMargin =
+        Dimensions.get("screen").width > 400
+            ? (Dimensions.get("screen").width - buttonWidth * 3 - 120) / 2
+            : (Dimensions.get("screen").width - buttonWidth * 3 - 32) / 2;
 
     useEffect(() => {
         if (!loading) {
@@ -154,7 +164,16 @@ const Library = ({ navigation }: { navigation: any }) => {
                 </View>
                 {albums !== null ? (
                     display === "grid" ? (
-                        <View style={styles.scrollContainer}>
+                        <View
+                            style={[
+                                styles.scrollContainer,
+                                {
+                                    marginLeft:
+                                        Dimensions.get("screen").width > 400
+                                            ? 15
+                                            : 0,
+                                },
+                            ]}>
                             <SV
                                 contentContainerStyle={styles.grid}
                                 showsVerticalScrollIndicator={false}>
@@ -171,7 +190,7 @@ const Library = ({ navigation }: { navigation: any }) => {
                                                                 (index - 1) %
                                                                     3 ==
                                                                 0
-                                                                    ? 12
+                                                                    ? horizontalMargin
                                                                     : 0,
                                                         },
                                                     ]}>
@@ -185,6 +204,8 @@ const Library = ({ navigation }: { navigation: any }) => {
                                                             style={[
                                                                 styles.addGrid,
                                                                 {
+                                                                    width: buttonWidth,
+                                                                    height: buttonWidth,
                                                                     backgroundColor:
                                                                         theme
                                                                             .colors

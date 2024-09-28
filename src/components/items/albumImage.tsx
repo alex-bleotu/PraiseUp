@@ -19,6 +19,26 @@ const AlbumImage = ({
     title,
     id,
 }: AlbumImageProps) => {
+    if (!cover || (typeof cover !== "string" && !Array.isArray(cover)))
+        return (
+            <View
+                style={[
+                    vertical ? styles.imageVertical : styles.image,
+                    {
+                        backgroundColor: getColorFromId(id.slice(1)),
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: width || 70,
+                        height: width || 70,
+                        borderRadius: 12,
+                    },
+                ]}>
+                <Text bold fontSize={vertical ? 50 : 30} color="#FFF">
+                    {title[0].toUpperCase()}
+                </Text>
+            </View>
+        );
+
     if (!Array.isArray(cover) || cover.length < 3)
         return cover?.includes("file") || cover === "favorites" ? (
             <Image
@@ -40,8 +60,8 @@ const AlbumImage = ({
                     {
                         backgroundColor: getColorFromId(
                             !Array.isArray(cover)
-                                ? cover[0].slice(1)
-                                : cover.slice(1).join("")
+                                ? cover.slice(1)
+                                : cover[0].slice(1)
                         ),
                         justifyContent: "center",
                         alignItems: "center",
