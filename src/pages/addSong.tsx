@@ -34,16 +34,8 @@ const AddSong = ({ navigation, route }: { navigation: any; route: any }) => {
 
             if (currentSearch !== searchRef.current) return;
 
-            if (searchQuery.length === 0) {
-                const filtered = await filterSongsNotInAlbum(album, "");
-                setSongs(filtered);
-                setLoading(false);
-                return;
-            }
-
             const filtered = await filterSongsNotInAlbum(album, searchQuery);
             setSongs(filtered);
-
             setLoading(false);
         };
 
@@ -54,11 +46,31 @@ const AddSong = ({ navigation, route }: { navigation: any; route: any }) => {
         };
     }, [searchQuery]);
 
-    const removeSongFromList = async (song: SongType) => {
+    const removeSongFromList = (song: SongType) => {
         if (!songs) return;
 
+        // Immediately remove the song from the list without awaiting the promise
         const newSongs = songs.filter((s) => s.id !== song.id);
         setSongs(newSongs);
+    };
+
+    const handleAddSong = async (song: SongType) => {
+        // Remove song from list immediately
+        removeSongFromList(song);
+
+        try {
+            // Add song to the personal album asynchronously
+            const newAlbum = await addSongToPersonalAlbum(album, song);
+
+            // Update the album and refresh the date
+            updateDate(song.id);
+            setAlbum(newAlbum);
+            updateRefresh();
+            updateRecent();
+        } catch (error) {
+            // Handle error if needed
+            console.error("Error adding song:", error);
+        }
     };
 
     return (
@@ -94,22 +106,9 @@ const AddSong = ({ navigation, route }: { navigation: any; route: any }) => {
                                                 navigation={navigation}
                                                 fullWidth
                                                 icon="plus-circle-outline"
-                                                action={() => {
-                                                    addSongToPersonalAlbum(
-                                                        album,
-                                                        data
-                                                    ).then(
-                                                        (
-                                                            newAlbum: AlbumType
-                                                        ) => {
-                                                            updateDate(data.id);
-                                                            setAlbum(newAlbum);
-                                                            updateRefresh();
-                                                            updateRecent();
-                                                        }
-                                                    );
-                                                    removeSongFromList(data);
-                                                }}
+                                                action={() =>
+                                                    handleAddSong(data)
+                                                } // Optimized function
                                             />
                                         </View>
                                     );
