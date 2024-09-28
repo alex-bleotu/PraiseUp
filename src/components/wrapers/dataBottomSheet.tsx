@@ -339,7 +339,7 @@ const DataBottomSheet = ({
                                     await Share.share({
                                         message: `${
                                             t`Check this out on PraiseUp!` +
-                                            "\n"
+                                            "\n\n"
                                         }${url}`,
                                     });
                                 } catch (error) {
