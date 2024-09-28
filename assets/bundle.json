@@ -1,5 +1,5 @@
 {
-    "version": "1.0.1",
+    "version": "1.0.2",
     "songs": [
         {
             "id": "S8384698f-7c39-4339-8d3e-5621e6aa0ed6",
@@ -249,7 +249,7 @@
         {
             "id": "S8258423d-a58d-490d-8cf3-d895df91c9f7",
             "type": "song",
-            "title": "Doar Isus (Only Jesus)",
+            "title": "Only Jesus",
             "artist": "BBSO",
             "cover": null,
             "initialChord": "D",
@@ -474,6 +474,6 @@
             "cover": null
         }
     ],
-    "updated": ["S18e2f8af-9fd8-4395-ae78-473b43520df2"],
+    "updated": ["S8258423d-a58d-490d-8cf3-d895df91c9f7"],
     "deleted": []
 }

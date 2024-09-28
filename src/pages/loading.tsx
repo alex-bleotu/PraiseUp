@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import {
     ActivityIndicator,
     Appearance,
@@ -19,70 +19,67 @@ const Loading = ({
     text?: string;
 }) => {
     const { theme } = useContext(ThemeContext);
-    const [dots, setDots] = useState("");
+    const [dots, setDots] = useState(0);
 
-    const color = theme
-        ? theme.colors.primary
-        : Appearance.getColorScheme() === "dark"
-        ? darkTheme.colors.primary
-        : lightTheme.colors.primary;
-    const bgColor = theme
-        ? theme.colors.background
-        : Appearance.getColorScheme() === "dark"
-        ? darkTheme.colors.background
-        : lightTheme.colors.background;
-    const textColor = theme
-        ? theme.colors.text
-        : Appearance.getColorScheme() === "dark"
-        ? darkTheme.colors.text
-        : lightTheme.colors.text;
+    const colors = useMemo(() => {
+        const scheme = Appearance.getColorScheme();
+        const selectedTheme =
+            theme || (scheme === "dark" ? darkTheme : lightTheme);
+
+        return {
+            primary: selectedTheme.colors.primary,
+            background: selectedTheme.colors.background,
+            text: selectedTheme.colors.text,
+        };
+    }, [theme]);
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setDots((prevDots) => {
-                if (prevDots === "") return ".";
-                if (prevDots === ".") return "..";
-                if (prevDots === "..") return "...";
-                return "";
-            });
+            setDots((prev) => (prev + 1) % 4);
         }, 500);
 
         return () => clearInterval(interval);
     }, []);
+
+    const dotText = ".".repeat(dots);
 
     if (!background)
         return (
             <ActivityIndicator
                 animating={true}
                 size={50}
-                color={color}
+                color={colors.primary}
                 style={{ height: "100%", marginTop: -70 }}
+                accessibilityLabel="Loading indicator"
             />
         );
 
     return (
-        <RNModal
-            animationType="none"
-            transparent={true}
-            visible={true}
-            style={{ top: 100 }}>
-            <Background center color={bgColor}>
-                <ActivityIndicator animating={true} size={50} color={color} />
-                <View style={styles.textContainer}>
-                    {text && (
-                        <View style={styles.first}>
-                            <Text bold center color={textColor}>
-                                {text}
+        <RNModal animationType="none" transparent={true} visible={true}>
+            <View style={styles.modalWrapper}>
+                <Background center color={colors.background}>
+                    <ActivityIndicator
+                        animating={true}
+                        size={50}
+                        color={colors.primary}
+                        accessibilityLabel="Loading content"
+                    />
+                    <View style={styles.textContainer}>
+                        {text && (
+                            <View style={styles.first}>
+                                <Text bold center color={colors.text}>
+                                    {text}
+                                </Text>
+                            </View>
+                        )}
+                        <View style={styles.second}>
+                            <Text color={colors.text} bold>
+                                {dotText}
                             </Text>
                         </View>
-                    )}
-                    <View style={styles.second}>
-                        <Text color={textColor} bold>
-                            {dots}
-                        </Text>
                     </View>
-                </View>
-            </Background>
+                </Background>
+            </View>
         </RNModal>
     );
 };
@@ -104,5 +101,10 @@ const styles = StyleSheet.create({
     second: {
         width: 30,
         alignItems: "flex-start",
+    },
+    modalWrapper: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
     },
 });

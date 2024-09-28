@@ -1,6 +1,6 @@
 import { FontAwesome6 as FAIcons } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import {
     Dimensions,
     StyleSheet,
@@ -47,14 +47,15 @@ const Library = ({ navigation }: { navigation: any }) => {
         useState(false);
     const [name, setName] = useState("");
 
-    const buttonWidth = Math.min(
-        (Dimensions.get("screen").width - 55) / 3,
-        160
-    );
-    const horizontalMargin =
-        Dimensions.get("screen").width > 400
+    const buttonWidth = useMemo(() => {
+        return Math.min((Dimensions.get("screen").width - 55) / 3, 160);
+    }, []);
+
+    const horizontalMargin = useMemo(() => {
+        return Dimensions.get("screen").width > 400
             ? (Dimensions.get("screen").width - buttonWidth * 3 - 120) / 2
             : (Dimensions.get("screen").width - buttonWidth * 3 - 32) / 2;
+    }, [buttonWidth]);
 
     useEffect(() => {
         if (!loading) {
@@ -105,12 +106,12 @@ const Library = ({ navigation }: { navigation: any }) => {
         return favorite ? [favorite, ...rest, button] : [...rest, button];
     };
 
-    useEffect(() => {
+    const sortedAlbums = useMemo(() => {
         if (albums) {
-            const sortedAlbums = sortAlbums(albums);
-            setAlbums(sortedAlbums);
+            return sortAlbums(albums);
         }
-    }, [sortBy]);
+        return albums;
+    }, [albums, sortBy]);
 
     return (
         <StackPage
@@ -137,8 +138,7 @@ const Library = ({ navigation }: { navigation: any }) => {
                             <Text bold>
                                 {sortBy === "date"
                                     ? t`Recent`
-                                    : t`Alphabetical
-                            `}
+                                    : t`Alphabetical`}
                             </Text>
                         </View>
                     </AnimatedTouchable>
@@ -162,7 +162,7 @@ const Library = ({ navigation }: { navigation: any }) => {
                         )}
                     </AnimatedTouchable>
                 </View>
-                {albums !== null ? (
+                {sortedAlbums !== null ? (
                     display === "grid" ? (
                         <View
                             style={[
@@ -178,7 +178,7 @@ const Library = ({ navigation }: { navigation: any }) => {
                                 contentContainerStyle={styles.grid}
                                 showsVerticalScrollIndicator={false}>
                                 <View style={styles.gridContent}>
-                                    {albums.map(
+                                    {sortedAlbums.map(
                                         (data: AlbumType, index: number) => {
                                             return (
                                                 <View
@@ -255,7 +255,7 @@ const Library = ({ navigation }: { navigation: any }) => {
                     ) : (
                         <View style={styles.container}>
                             <ScrollView bottom={5} showScroll={false}>
-                                {albums.map((data: AlbumType) => {
+                                {sortedAlbums.map((data: AlbumType) => {
                                     return (
                                         <View
                                             key={data.id}

@@ -39,14 +39,12 @@ export const AuthProvider = ({
     const { setUser } = useContext(UserContext);
     const { setLoading, setSyncLoading } = useContext(LoadingContext);
     const { activateTutorial } = useContext(TutorialContext);
-    const { webClientId, iosClientId, androidClientId } =
-        Constants.expoConfig?.extra || {};
+    const { webClientId, iosClientId } = Constants.expoConfig?.extra || {};
 
     const configureGoogleSignIn = async () => {
         GoogleSignin.configure({
             webClientId: webClientId,
             iosClientId: iosClientId,
-            // androidClientId: androidClientId,
         });
     };
 

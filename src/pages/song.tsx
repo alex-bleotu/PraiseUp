@@ -328,8 +328,14 @@ const Song = ({ route, navigation }: SongProps) => {
         left: 0,
     });
 
-    const buttonWidth = Dimensions.get("screen").width / 2 - 45;
-    const buttonsContainerWidth = buttonWidth * 2 + 75;
+    const buttonWidth = useMemo(
+        () => Dimensions.get("screen").width / 2 - 45,
+        []
+    );
+    const buttonsContainerWidth = useMemo(
+        () => buttonWidth * 2 + 75,
+        [buttonWidth]
+    );
 
     const chordsButtonRef = useRef<View>(null);
     const chordsChangerButtonRef = useRef<View>(null);

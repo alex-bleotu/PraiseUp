@@ -1,4 +1,4 @@
-import React, { ReactNode, useContext } from "react";
+import React, { ReactNode, useContext, useMemo } from "react";
 import { Dimensions, View } from "react-native";
 import { ThemeContext } from "../../context/theme";
 
@@ -21,7 +21,7 @@ const Background = ({
 }: BackgroundProps) => {
     const { theme } = useContext(ThemeContext);
 
-    const height = Dimensions.get("screen").height - 15;
+    const height = useMemo(() => Dimensions.get("screen").height - 15, []);
 
     return (
         <View

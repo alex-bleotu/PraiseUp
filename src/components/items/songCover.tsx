@@ -1,5 +1,5 @@
 import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import { DataContext, SongType } from "../../context/data";
 import { HistoryContext } from "../../context/history";
@@ -39,13 +39,75 @@ const SongCover = ({
     const { updateDate } = useContext(DataContext);
     const { theme } = useContext(ThemeContext);
 
-    const width = fullWidth ? "100%" : Dimensions.get("screen").width / 2 - 25;
-    const verticalWidth = Math.min(
-        (Dimensions.get("screen").width - 55) / 3,
-        160
+    const width = useMemo(
+        () => (fullWidth ? "100%" : Dimensions.get("screen").width / 2 - 25),
+        [fullWidth]
+    );
+    const verticalWidth = useMemo(
+        () => Math.min((Dimensions.get("screen").width - 55) / 3, 160),
+        []
     );
 
     if (song === null) return null;
+
+    const songImage = useMemo(
+        () => (
+            <SongImage
+                vertical={vertical}
+                cover={song.cover}
+                title={song.title}
+                id={song.id}
+                width={vertical ? verticalWidth : 70}
+            />
+        ),
+        [song.cover, song.title, song.id, vertical, verticalWidth]
+    );
+
+    const textContent = useMemo(() => {
+        if (vertical) {
+            return (
+                <View
+                    style={[
+                        styles.textContainer,
+                        { marginTop: 5, width: verticalWidth },
+                    ]}>
+                    <Text
+                        bold
+                        fontSize={13}
+                        center={vertical}
+                        numberOfLines={1}
+                        ellipsizeMode="tail">
+                        {song.title}
+                    </Text>
+                </View>
+            );
+        }
+        return (
+            <View
+                style={[
+                    styles.textContainer,
+                    { marginLeft: 10, marginRight: 40 },
+                ]}>
+                <Text
+                    bold
+                    fontSize={16}
+                    center={vertical}
+                    numberOfLines={1}
+                    ellipsizeMode="tail">
+                    {song.title}
+                </Text>
+                {artist && (
+                    <Text
+                        fontSize={14}
+                        center={vertical}
+                        numberOfLines={1}
+                        ellipsizeMode="tail">
+                        {song.artist}
+                    </Text>
+                )}
+            </View>
+        );
+    }, [song.title, song.artist, artist, vertical, verticalWidth]);
 
     return (
         <AnimatedTouchable
@@ -72,59 +134,8 @@ const SongCover = ({
                             : theme.colors.paper,
                     },
                 ]}>
-                <SongImage
-                    vertical={vertical}
-                    cover={song.cover}
-                    title={song.title}
-                    id={song.id}
-                    width={vertical ? verticalWidth : 70}
-                />
-                {vertical ? (
-                    <View
-                        style={[
-                            styles.textContainer,
-                            {
-                                marginTop: 5,
-                                width: verticalWidth,
-                            },
-                        ]}>
-                        <Text
-                            bold
-                            fontSize={13}
-                            center={vertical}
-                            numberOfLines={1}
-                            ellipsizeMode="tail">
-                            {song.title}
-                        </Text>
-                    </View>
-                ) : (
-                    <View
-                        style={[
-                            styles.textContainer,
-                            {
-                                marginLeft: 10,
-                                marginRight: 40,
-                            },
-                        ]}>
-                        <Text
-                            bold
-                            fontSize={16}
-                            center={vertical}
-                            numberOfLines={1}
-                            ellipsizeMode="tail">
-                            {song.title}
-                        </Text>
-                        {artist && (
-                            <Text
-                                fontSize={14}
-                                center={vertical}
-                                numberOfLines={1}
-                                ellipsizeMode="tail">
-                                {song.artist}
-                            </Text>
-                        )}
-                    </View>
-                )}
+                {songImage}
+                {textContent}
             </View>
             {action && (
                 <AnimatedTouchable

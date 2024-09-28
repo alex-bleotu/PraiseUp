@@ -1,6 +1,6 @@
 import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import { DataContext } from "../../context/data";
 import { HistoryContext } from "../../context/history";
@@ -38,15 +38,61 @@ const AlbumCover = ({
     const { theme } = useContext(ThemeContext);
     const { updateDate } = useContext(DataContext);
 
-    const width: any = fullWidth
-        ? "100%"
-        : Dimensions.get("screen").width / 2 - 25;
-    const verticalWidth = Math.min(
-        (Dimensions.get("screen").width - 55) / 3,
-        160
-    );
+    const width = useMemo(() => {
+        return fullWidth ? "100%" : Dimensions.get("screen").width / 2 - 25;
+    }, [fullWidth]);
+
+    const verticalWidth = useMemo(() => {
+        return Math.min((Dimensions.get("screen").width - 55) / 3, 160);
+    }, []);
 
     if (album === null) return null;
+
+    const albumImage = useMemo(
+        () => (
+            <AlbumImage
+                vertical={vertical}
+                cover={album.cover}
+                width={vertical ? verticalWidth : undefined}
+                title={album.title}
+                id={album.id}
+            />
+        ),
+        [album.cover, album.title, album.id, vertical, verticalWidth]
+    );
+
+    const textContainer = useMemo(
+        () => (
+            <View
+                style={[
+                    styles.textContainer,
+                    {
+                        width: !fullWidth ? width : "auto",
+                        marginTop: vertical ? 5 : 0,
+                        marginLeft: vertical ? 0 : 8,
+                    },
+                ]}>
+                <Text
+                    bold
+                    fontSize={vertical ? 13 : 16}
+                    center={vertical}
+                    numberOfLines={1}
+                    ellipsizeMode="tail">
+                    {album.id !== "F" ? album.title : t`Favorite songs`}
+                </Text>
+                {album.creator && !vertical && (
+                    <Text
+                        fontSize={14}
+                        center={vertical}
+                        numberOfLines={1}
+                        ellipsizeMode="tail">
+                        {album.creator}
+                    </Text>
+                )}
+            </View>
+        ),
+        [album.title, album.creator, fullWidth, vertical, width]
+    );
 
     return (
         <AnimatedTouchable
@@ -73,45 +119,14 @@ const AlbumCover = ({
                             : theme.colors.paper,
                     },
                 ]}>
-                <AlbumImage
-                    vertical={vertical}
-                    cover={album.cover}
-                    width={vertical ? verticalWidth : undefined}
-                    title={album.title}
-                    id={album.id}
-                />
-                <View
-                    style={[
-                        styles.textContainer,
-                        {
-                            width: !fullWidth ? width : "auto",
-                            marginTop: vertical ? 5 : 0,
-                            marginLeft: vertical ? 0 : 8,
-                        },
-                    ]}>
-                    <Text
-                        bold
-                        fontSize={vertical ? 13 : 16}
-                        center={vertical}
-                        numberOfLines={1}
-                        ellipsizeMode="tail">
-                        {album.id !== "F" ? album.title : t`Favorite songs`}
-                    </Text>
-                    {album.creator && !vertical && (
-                        <Text
-                            fontSize={14}
-                            center={vertical}
-                            numberOfLines={1}
-                            ellipsizeMode="tail">
-                            {album.creator}
-                        </Text>
-                    )}
-                </View>
+                {albumImage}
+                {textContainer}
             </View>
+
             {action && (
                 <AnimatedTouchable
                     style={{ position: "absolute", right: 15, top: -46 }}
-                    onPress={() => action()}>
+                    onPress={action}>
                     <MCIcons name={icon} size={24} color={theme.colors.text} />
                 </AnimatedTouchable>
             )}

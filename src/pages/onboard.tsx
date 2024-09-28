@@ -1,5 +1,5 @@
 import { t } from "@lingui/macro";
-import { useContext, useRef } from "react";
+import { useContext, useMemo, useRef } from "react";
 import { Animated, FlatList, StyleSheet, View } from "react-native";
 import OnboardItem from "../components/items/onboardItem";
 import Background from "../components/wrapers/background";
@@ -9,32 +9,35 @@ import { ThemeContext } from "../context/theme";
 
 function Onboard({ navigation }: { navigation: any }) {
     const { theme } = useContext(ThemeContext);
-
     const scrollX = useRef(new Animated.Value(0)).current;
     const slidesRef = useRef(null);
 
     const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
 
-    const slides = [
-        {
-            id: 1,
-            title: t`Worship Made Easy`,
-            description: t`Access lyrics and chords with ease, bringing your worship moments to life.`,
-            image: require("../../assets/images/onboard/image.png"),
-        },
-        {
-            id: 2,
-            title: t`Your Music, His Glory`,
-            description: t`Organize and share your favorite worship songs with your friends.`,
-            image: require("../../assets/images/onboard/image2.png"),
-        },
-        {
-            id: 3,
-            title: t`Prepare, Play, Praise`,
-            description: t`Make your worship sessions with quick access to slideshows and more.`,
-            image: require("../../assets/images/onboard/image3.png"),
-        },
-    ];
+    // Memoized slides data
+    const slides = useMemo(
+        () => [
+            {
+                id: 1,
+                title: t`Worship Made Easy`,
+                description: t`Access lyrics and chords with ease, bringing your worship moments to life.`,
+                image: require("../../assets/images/onboard/image.png"),
+            },
+            {
+                id: 2,
+                title: t`Your Music, His Glory`,
+                description: t`Organize and share your favorite worship songs with your friends.`,
+                image: require("../../assets/images/onboard/image2.png"),
+            },
+            {
+                id: 3,
+                title: t`Prepare, Play, Praise`,
+                description: t`Make your worship sessions with quick access to slideshows and more.`,
+                image: require("../../assets/images/onboard/image3.png"),
+            },
+        ],
+        []
+    );
 
     return (
         <Background
@@ -50,7 +53,7 @@ function Onboard({ navigation }: { navigation: any }) {
                 horizontal
                 pagingEnabled
                 bounces={false}
-                keyExtractor={(item: any) => item.id}
+                keyExtractor={(item: any) => String(item.id)}
                 onScroll={Animated.event(
                     [{ nativeEvent: { contentOffset: { x: scrollX } } }],
                     { useNativeDriver: false }
@@ -101,6 +104,7 @@ export default Onboard;
 const styles = StyleSheet.create({
     paginator: {
         position: "absolute",
+        bottom: 100, // Ensuring the paginator does not overlap the buttons
     },
     buttons: {
         marginBottom: 20,

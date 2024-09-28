@@ -4,7 +4,7 @@ import {
     MaterialIcons as MIcons,
 } from "@expo/vector-icons";
 import * as ScreenOrientation from "expo-screen-orientation";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import AnimatedTouchable from "../components/wrapers/animatedTouchable";
@@ -27,7 +27,6 @@ const Slideshow = ({ route, navigation }: { route: any; navigation: any }) => {
     const { getSongById } = useContext(DataContext);
 
     const [rotation, setRotation] = useState<0 | 180>(0);
-    const [lyricsArray, setLyricsArray] = useState<string[]>([]);
     const [currentVerse, setCurrentVerse] = useState(0);
     const [song, setSong] = useState<any>(s);
     const [screenSize, setScreenSize] = useState({
@@ -73,9 +72,12 @@ const Slideshow = ({ route, navigation }: { route: any; navigation: any }) => {
     const removeChords = (lyrics: string) =>
         lyrics ? lyrics.replace(/\[.*?\]/g, "").trim() : "";
 
-    const processLyrics = () => {
+    const lyricsArray = useMemo(() => {
+        if (!song || !song.lyrics || !song.order) return [];
+
         const lyrics = removeChords(song.lyrics).split("\r\n\r\n");
         const order = song.order.split(" ");
+
         const songVersesArray = order.map((section: string) => {
             return (
                 lyrics.find((verse) =>
@@ -84,8 +86,9 @@ const Slideshow = ({ route, navigation }: { route: any; navigation: any }) => {
             );
         });
         songVersesArray.push("");
-        setLyricsArray(songVersesArray);
-    };
+
+        return songVersesArray;
+    }, [song]);
 
     const lockOrientation = async (
         orientation: ScreenOrientation.OrientationLock
@@ -112,12 +115,6 @@ const Slideshow = ({ route, navigation }: { route: any; navigation: any }) => {
             lockOrientationToPortrait();
         };
     }, []);
-
-    useEffect(() => {
-        if (song && song.lyrics && song.order) {
-            processLyrics();
-        }
-    }, [song]);
 
     useEffect(() => {
         if (!song || !song.lyrics) {
@@ -148,8 +145,8 @@ const Slideshow = ({ route, navigation }: { route: any; navigation: any }) => {
                             styles.sectionLabel,
                             {
                                 marginTop: isTooLarge(lyricsArray[currentVerse])
-                                    ? 17
-                                    : 23,
+                                    ? 14
+                                    : 17,
                             },
                         ]}>
                         <Text
@@ -157,8 +154,8 @@ const Slideshow = ({ route, navigation }: { route: any; navigation: any }) => {
                             bold
                             fontSize={
                                 isTooLarge(lyricsArray[currentVerse])
-                                    ? fontSize - 20
-                                    : fontSize - 10
+                                    ? fontSize - 18
+                                    : fontSize - 12
                             }>
                             {lyricsArray[currentVerse].split("\r")[0]}:
                         </Text>
