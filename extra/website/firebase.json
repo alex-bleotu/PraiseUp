@@ -6,6 +6,10 @@
             {
                 "source": "/song/**",
                 "destination": "/index.html"
+            },
+            {
+                "source": "/album/**",
+                "destination": "/index.html"
             }
         ],
         "headers": [
