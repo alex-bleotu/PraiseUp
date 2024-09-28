@@ -1,12 +1,19 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
+    GoogleSignin,
+    statusCodes,
+} from "@react-native-google-signin/google-signin";
+import Constants from "expo-constants";
+import {
     createUserWithEmailAndPassword,
     EmailAuthProvider,
     sendPasswordResetEmail as firebaseSendPasswordResetEmail,
     updatePassword as firebaseUpdatePassword,
+    GoogleAuthProvider,
     linkWithCredential,
     reauthenticateWithCredential,
     signInAnonymously,
+    signInWithCredential,
     signInWithEmailAndPassword,
     updateProfile,
 } from "firebase/auth";
@@ -32,8 +39,20 @@ export const AuthProvider = ({
     const { setUser } = useContext(UserContext);
     const { setLoading, setSyncLoading } = useContext(LoadingContext);
     const { activateTutorial } = useContext(TutorialContext);
+    const { webClientId, iosClientId, androidClientId } =
+        Constants.expoConfig?.extra || {};
+
+    const configureGoogleSignIn = async () => {
+        GoogleSignin.configure({
+            webClientId: webClientId,
+            iosClientId: iosClientId,
+            // androidClientId: androidClientId,
+        });
+    };
 
     useEffect(() => {
+        configureGoogleSignIn();
+
         const loadAuth = async () => {
             const user = await AsyncStorage.getItem("user");
 
@@ -74,16 +93,6 @@ export const AuthProvider = ({
                     email,
                     password
                 );
-
-                const userDocRef = doc(db, "users", response.user.uid);
-                const userDoc = await getDoc(userDocRef);
-
-                let favorites: string[] = [];
-
-                if (userDoc.exists()) {
-                    const userData = userDoc.data();
-                    favorites = userData.favorites || [];
-                }
 
                 setSyncLoading(true);
 
@@ -296,6 +305,63 @@ export const AuthProvider = ({
         });
     };
 
+    const googleLogin = async (): Promise<any> => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                await GoogleSignin.hasPlayServices();
+                const user = (await GoogleSignin.signIn()).data;
+
+                const idToken = user?.idToken;
+                const accessToken = (await GoogleSignin.getTokens())
+                    .accessToken;
+
+                if (!idToken) {
+                    throw new Error("No idToken received from Google");
+                }
+
+                const googleCredential = GoogleAuthProvider.credential(
+                    idToken,
+                    accessToken
+                );
+
+                const response = await signInWithCredential(
+                    auth,
+                    googleCredential
+                );
+
+                const userDocRef = doc(db, "users", response.user.uid);
+                const userDoc = await getDoc(userDocRef);
+
+                if (!userDoc.exists()) {
+                    await initializeUserDocument(response.user.uid);
+                }
+
+                setSyncLoading(true);
+
+                setUser(response.user);
+
+                await syncFavorites(response.user);
+                await syncPersonalAlbums(response.user);
+
+                setSyncLoading(false);
+                resolve(response.user);
+            } catch (error: any) {
+                if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+                    console.log("User cancelled the login process");
+                } else if (error.code === statusCodes.IN_PROGRESS) {
+                    console.log("Sign-in is already in progress");
+                } else if (
+                    error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE
+                ) {
+                    console.log("Play Services not available or outdated");
+                } else {
+                    console.log("Some other error happened:", error);
+                    reject(error);
+                }
+            }
+        });
+    };
+
     return (
         <AuthContext.Provider
             value={{
@@ -308,6 +374,7 @@ export const AuthProvider = ({
                 sendPasswordResetEmail,
                 deleteAccount,
                 updatePassword,
+                googleLogin,
             }}>
             {children}
         </AuthContext.Provider>

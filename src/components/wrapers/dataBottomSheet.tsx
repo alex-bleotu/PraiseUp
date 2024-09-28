@@ -202,7 +202,7 @@ const DataBottomSheet = ({
                                 activeOpacity={theme.activeOpacity}
                                 onPress={async () => {
                                     if (data !== null) {
-                                        await setFavorite(
+                                        const array = await setFavorite(
                                             data.id,
                                             !data.favorite
                                         );
@@ -212,8 +212,10 @@ const DataBottomSheet = ({
                                         updateRefresh();
 
                                         if (extraData?.type === "favorite") {
-                                            const fav =
+                                            let fav =
                                                 await getFavoriteSongsAlbum();
+
+                                            fav.songs = array;
 
                                             updateData && updateData(fav);
                                         }

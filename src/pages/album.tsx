@@ -454,17 +454,20 @@ const Album = ({ route, navigation }: AlbumProps) => {
                     }
                 }}
                 updateData={(newAlbum: AlbumType) => {
-                    setAlbum(newAlbum);
+                    console.log(newAlbum);
 
                     if (
-                        newAlbum.songs.length === 0 &&
-                        newAlbum.type === "favorite"
+                        newAlbum === null ||
+                        (newAlbum.songs.length === 0 &&
+                            newAlbum.type === "favorite")
                     )
                         try {
                             navigation.goBack();
                         } catch {
                             navigation.navigate("Home");
                         }
+
+                    setAlbum(newAlbum);
                 }}
                 extraData={album}
                 extraActions2={() => {

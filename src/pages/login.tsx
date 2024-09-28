@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import Button from "../components/wrapers/button";
 import IconInput from "../components/wrapers/iconInput";
+import ImageButton from "../components/wrapers/imageButton";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
 import { AuthContext } from "../context/auth";
@@ -17,8 +18,8 @@ import { validateEmail } from "../utils/util";
 
 const Login = ({ navigation, route }: { navigation: any; route: any }) => {
     const { loading } = useContext(LoadingContext);
-    const { login, loginAsGuest } = useContext(AuthContext);
-    const { theme, themeType } = useContext(ThemeContext);
+    const { login, loginAsGuest, googleLogin } = useContext(AuthContext);
+    const { theme, themeType, systemTheme } = useContext(ThemeContext);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -184,20 +185,45 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                     </View>
 
                     <View style={{ width: "100%" }}>
-                        {/* <ImageButton
+                        <ImageButton
                             src={require("../../assets/images/auth/google.png")}
                             bgcolor={
-                                themeType === "light"
+                                themeType === "system"
+                                    ? systemTheme === "dark"
+                                        ? theme.colors.darkGrey
+                                        : theme.colors.white
+                                    : themeType === "light"
                                     ? theme.colors.white
                                     : theme.colors.darkGrey
                             }
                             color={
-                                themeType === "light"
+                                themeType === "system"
+                                    ? systemTheme === "dark"
+                                        ? theme.colors.white
+                                        : theme.colors.black
+                                    : themeType === "light"
                                     ? theme.colors.black
                                     : theme.colors.white
                             }
                             text={t`Continue with Google`}
-                        /> */}
+                            onPress={() => {
+                                googleLogin()
+                                    .then(() => {
+                                        setError("");
+                                    })
+                                    .catch((error: any) => {
+                                        if (
+                                            error.message.includes(
+                                                "auth/network-request-failed"
+                                            )
+                                        )
+                                            setError(
+                                                t`Network error. Please try again later.`
+                                            );
+                                        else setError(t`Something went wrong.`);
+                                    });
+                            }}
+                        />
                         <Button
                             mode="contained"
                             text={t`Continue as Guest`}

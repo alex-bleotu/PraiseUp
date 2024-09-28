@@ -83,6 +83,7 @@ const AlbumCover = ({
                         {
                             width: !fullWidth ? width : "auto",
                             marginTop: vertical ? 5 : 0,
+                            marginLeft: vertical ? 0 : 8,
                         },
                     ]}>
                     <Text

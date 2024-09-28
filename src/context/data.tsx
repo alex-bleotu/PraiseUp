@@ -978,22 +978,45 @@ export const DataProvider = ({
 
         if (isFavorite && update) {
             addFavorite(id);
-            setFavoriteIds((prevArray: any) => {
-                if (!prevArray.includes(id)) {
-                    return [...prevArray, id];
-                }
-                return prevArray;
-            });
 
-            updateRefresh();
+            if (favoriteIds) {
+                let newArray;
+
+                if (!favoriteIds.includes(id)) newArray = [...favoriteIds, id];
+                else newArray = favoriteIds;
+
+                setFavoriteIds(newArray);
+
+                updateRefresh();
+
+                return newArray;
+            } else
+                setFavoriteIds((prevArray: any) => {
+                    if (!prevArray.includes(id)) {
+                        return [...prevArray, id];
+                    }
+                    return prevArray;
+                });
         } else if (update) {
             removeFavorite(id);
-            setFavoriteIds((prevArray: any) =>
-                prevArray.filter((favoriteId: string) => favoriteId !== id)
-            );
 
-            updateRefresh();
+            if (favoriteIds) {
+                const newArray = favoriteIds.filter(
+                    (favoriteId: string) => favoriteId !== id
+                );
+
+                setFavoriteIds(newArray);
+
+                updateRefresh();
+
+                return newArray;
+            } else
+                setFavoriteIds((prevArray: any) =>
+                    prevArray.filter((favoriteId: string) => favoriteId !== id)
+                );
         }
+
+        updateRefresh();
     };
 
     const getFavoriteSongsAlbum = async () => {
