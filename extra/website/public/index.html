@@ -112,7 +112,7 @@
                     const scheme = segments[1];
 
                     if (navigator.userAgent.includes("Android")) {
-                        window.location.href = `praiseup://${scheme}/${id}`;
+                        window.location.href = `praiseup://home/${scheme}/${id}`;
                     } else {
                         document.querySelector("#message h1").textContent =
                             "This link only works on Android devices.";

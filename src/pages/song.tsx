@@ -156,7 +156,7 @@ export const renderLyrics = (
                     style={{
                         marginVertical: 5,
                     }}
-                    fontSize={fontSize}
+                    fontSize={fontSize + 2}
                     bold
                     color={theme.colors.grey}>
                     {line}
@@ -261,6 +261,7 @@ export const renderLyrics = (
                                         )}
                                     </View>
                                     <Text
+                                        bold
                                         style={[
                                             styles.lyricsLine,
                                             {
@@ -279,7 +280,11 @@ export const renderLyrics = (
         } else {
             const cleanedLine = line.replace(/\[.*?\]/g, "");
             return (
-                <Text key={index} style={styles.lyricsLine} fontSize={fontSize}>
+                <Text
+                    key={index}
+                    style={styles.lyricsLine}
+                    fontSize={fontSize}
+                    bold>
                     {cleanedLine}
                 </Text>
             );

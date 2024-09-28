@@ -1,6 +1,6 @@
 const covers = {
     default: require("../../assets/images/covers/default.png"),
-    favorites: require("../../assets/images/covers/default.png"),
+    favorites: require("../../assets/images/covers/favorites.png"),
 };
 
 export const coversList = Object.keys(covers);

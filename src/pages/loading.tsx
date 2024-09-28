@@ -13,7 +13,7 @@ import { darkTheme, lightTheme } from "../utils/theme";
 
 const Loading = ({
     background = true,
-    text = "Loading",
+    text,
 }: {
     background?: boolean;
     text?: string;
@@ -69,11 +69,13 @@ const Loading = ({
             <Background center color={bgColor}>
                 <ActivityIndicator animating={true} size={50} color={color} />
                 <View style={styles.textContainer}>
-                    <View style={styles.first}>
-                        <Text bold center color={textColor}>
-                            {text}
-                        </Text>
-                    </View>
+                    {text && (
+                        <View style={styles.first}>
+                            <Text bold center color={textColor}>
+                                {text}
+                            </Text>
+                        </View>
+                    )}
                     <View style={styles.second}>
                         <Text color={textColor} bold>
                             {dots}

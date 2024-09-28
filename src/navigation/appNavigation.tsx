@@ -11,9 +11,10 @@ const linking: LinkingOptions<any> = {
             Tabs: {
                 screens: {
                     HomeStack: {
-                        path: "",
+                        path: "home",
+                        initialRouteName: "Home",
                         screens: {
-                            Home: "home",
+                            Home: "",
                             Song: "song/:id",
                             Album: "album/:id",
                         },

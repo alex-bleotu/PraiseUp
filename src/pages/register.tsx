@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import Button from "../components/wrapers/button";
 import IconInput from "../components/wrapers/iconInput";
-import ImageButton from "../components/wrapers/imageButton";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
 import { AuthContext } from "../context/auth";
@@ -178,7 +177,7 @@ const Register = ({ navigation }: { navigation: any }) => {
                     </View>
 
                     <View style={{ width: "100%" }}>
-                        <ImageButton
+                        {/* <ImageButton
                             src={require("../../assets/images/auth/google.png")}
                             bgcolor={
                                 themeType === "light"
@@ -191,7 +190,7 @@ const Register = ({ navigation }: { navigation: any }) => {
                                     : theme.colors.white
                             }
                             text={t`Continue with Google`}
-                        />
+                        /> */}
                         <Button
                             mode="contained"
                             text={t`Continue as Guest`}

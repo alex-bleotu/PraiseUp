@@ -23,9 +23,11 @@ const uploadFileWithMetadata = async (filePath, storagePath) => {
 
         const fileRef = ref(storage, storagePath);
 
+        const data = JSON.parse(fileBuffer.toString());
+
         const metadata = {
             customMetadata: {
-                version: "1.0.1",
+                version: data.version,
                 author: "Alex Bleotu",
                 created_at: new Date().toISOString(),
             },
