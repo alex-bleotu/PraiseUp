@@ -36,28 +36,14 @@ const Link = ({ navigation }: { navigation: any }) => {
     }, [email]);
 
     return (
-        <StackPage title={""} navigation={navigation} noBottom>
+        <StackPage
+            title={t`Link Account`}
+            navigation={navigation}
+            noBottom
+            variant
+            description={t`Link your account to save your data and access it from any device.`}>
             <View style={styles.container}>
                 <View style={styles.top}>
-                    <View
-                        style={{
-                            alignSelf: "flex-start",
-                            marginTop: 10,
-                            marginBottom: 20,
-                        }}>
-                        <Text bold fontSize={30}>{t`Link Account`}</Text>
-                    </View>
-                    <View
-                        style={{
-                            alignSelf: "flex-start",
-                            marginBottom: 20,
-                        }}>
-                        <Text
-                            fontSize={18}
-                            color={
-                                theme.colors.textVariant
-                            }>{t`Link your account to save your data and access it from any device.`}</Text>
-                    </View>
                     <IconInput
                         icon="account"
                         placeholder={t`Your Name`}
@@ -192,7 +178,6 @@ const Link = ({ navigation }: { navigation: any }) => {
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 20,
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",

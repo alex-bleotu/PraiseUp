@@ -18,6 +18,8 @@ interface StackPageProps {
     noBottom?: boolean;
     action?: () => void;
     buttonRef?: React.RefObject<any>;
+    variant?: boolean;
+    description?: string;
 }
 
 const StackPage = ({
@@ -29,6 +31,8 @@ const StackPage = ({
     back = true,
     noBottom = false,
     buttonRef,
+    variant = false,
+    description,
 }: StackPageProps) => {
     const { theme } = useContext(ThemeContext);
 
@@ -54,44 +58,77 @@ const StackPage = ({
                         />
                     </AnimatedTouchable>
                 )}
-                <View
-                    style={[
-                        styles.textContainer,
-                        {
-                            marginRight: icon || !back ? 0 : iconSize + 15,
-                            marginLeft: !back ? iconSize + 5 : 0,
-                        },
-                    ]}>
-                    <Text center fontSize={24}>
-                        {title}
-                    </Text>
-                </View>
-                {icon && (
-                    <View ref={buttonRef} collapsable={false}>
-                        <AnimatedTouchable
-                            style={{
-                                ...styles.cornerButton,
-                            }}
-                            onPress={() => {
-                                action && action();
-                            }}>
-                            <MCIcons
-                                name={icon}
-                                size={iconSize}
-                                color={theme.colors.text}
-                            />
-                        </AnimatedTouchable>
-                    </View>
+
+                {!variant && (
+                    <>
+                        <View
+                            style={[
+                                styles.textContainer,
+                                {
+                                    marginRight:
+                                        icon || !back ? 0 : iconSize + 15,
+                                    marginLeft: !back ? iconSize + 5 : 0,
+                                },
+                            ]}>
+                            <Text center fontSize={24}>
+                                {title}
+                            </Text>
+                        </View>
+                        {icon && (
+                            <View ref={buttonRef} collapsable={false}>
+                                <AnimatedTouchable
+                                    style={{
+                                        ...styles.cornerButton,
+                                    }}
+                                    onPress={() => {
+                                        action && action();
+                                    }}>
+                                    <MCIcons
+                                        name={icon}
+                                        size={iconSize}
+                                        color={theme.colors.text}
+                                    />
+                                </AnimatedTouchable>
+                            </View>
+                        )}
+                    </>
                 )}
             </View>
-            <View
-                style={[
-                    styles.container,
-                    {
-                        marginBottom: noBottom ? 0 : 5,
-                    },
-                ]}>
-                {children}
+            <View style={variant ? styles.container2 : { flex: 1 }}>
+                {variant && (
+                    <View style={styles.top}>
+                        <View
+                            style={{
+                                alignSelf: "flex-start",
+                                marginTop: 10,
+                                marginBottom: 20,
+                            }}>
+                            <Text bold fontSize={30}>
+                                {title}
+                            </Text>
+                        </View>
+                        <View
+                            style={{
+                                alignSelf: "flex-start",
+                                marginBottom: 20,
+                            }}>
+                            <Text
+                                fontSize={18}
+                                color={theme.colors.textVariant}>
+                                {description}
+                            </Text>
+                        </View>
+                    </View>
+                )}
+                <View
+                    style={[
+                        styles.container,
+                        {
+                            marginBottom: noBottom ? 0 : 5,
+                        },
+                    ]}>
+                    {children}
+                </View>
             </View>
         </Background>
     );
@@ -117,5 +154,18 @@ const styles = StyleSheet.create({
     },
     cornerButton: {
         marginRight: 10,
+    },
+    top: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+    },
+    container2: {
+        paddingHorizontal: 20,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        flex: 1,
     },
 });

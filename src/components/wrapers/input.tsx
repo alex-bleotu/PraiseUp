@@ -19,6 +19,8 @@ interface InputProps {
     autoCapitalize?: boolean;
     keyboardType?: any;
     maxLength?: number;
+    multiline?: boolean;
+    lines?: number;
 }
 
 const Input = ({
@@ -36,6 +38,8 @@ const Input = ({
     autoCapitalize = false,
     keyboardType,
     maxLength,
+    multiline = false,
+    lines,
 }: InputProps) => {
     const { theme } = useContext(ThemeContext);
 
@@ -52,6 +56,7 @@ const Input = ({
                         backgroundColor: theme.colors.darkPaper,
                         borderWidth: 2,
                         borderColor: "transparent",
+                        height: multiline ? undefined : 50,
                     },
                     error && {
                         borderColor: theme.colors.danger,
@@ -64,6 +69,7 @@ const Input = ({
                             letterSpacing,
                             color: theme.colors.text,
                             fontSize: 16,
+                            textAlignVertical: "top",
                         },
                     ]}
                     secureTextEntry={isHidden}
@@ -82,6 +88,8 @@ const Input = ({
                     editable={editable}
                     autoCapitalize={autoCapitalize ? "words" : "none"}
                     maxLength={maxLength}
+                    multiline={multiline}
+                    numberOfLines={lines}
                 />
                 {hidden && (
                     <View style={styles.eyeIconContainer}>
@@ -115,14 +123,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 12,
         width: "100%",
-        height: 50,
         paddingHorizontal: 10,
     },
     input: {
         flex: 1,
         fontSize: 15,
         paddingVertical: 10,
-        paddingRight: 5,
+        paddingRight: 8,
         paddingLeft: 10,
     },
     iconContainer: {

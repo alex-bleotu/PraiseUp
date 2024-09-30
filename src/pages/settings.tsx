@@ -73,7 +73,6 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     style={{
                         marginBottom: 20,
                     }}>{t`General Settings`}</Text>
-
                 <Button
                     mode="contained"
                     fullWidth
@@ -158,52 +157,54 @@ const Settings = ({ navigation }: { navigation: any }) => {
                         />
                     }
                 />
-
-                <Text
-                    fontSize={15}
-                    color={theme.colors.textVariant}
-                    style={styles.spacer}>{t`Account`}</Text>
-
-                <Button
-                    mode="contained"
-                    fullWidth
-                    bold
-                    backgroundColor={theme.colors.paper}
-                    text={t`Reset your password`}
-                    onPress={() => {
-                        navigation.navigate("ResetPassword");
-                    }}
-                    color={theme.colors.text}
-                    center={false}
-                    fontSize={15}
-                    style={{ marginBottom: 10 }}
-                    icon={
-                        <MIcons
-                            name="password"
-                            size={26}
+                {!user.isAnonymous && (
+                    <>
+                        <Text
+                            fontSize={15}
+                            color={theme.colors.textVariant}
+                            style={styles.spacer}>{t`Account`}</Text>
+                        <Button
+                            mode="contained"
+                            fullWidth
+                            bold
+                            backgroundColor={theme.colors.paper}
+                            text={t`Reset your password`}
+                            onPress={() => {
+                                navigation.navigate("ResetPassword");
+                            }}
                             color={theme.colors.text}
+                            center={false}
+                            fontSize={15}
+                            style={{ marginBottom: 10 }}
+                            icon={
+                                <MIcons
+                                    name="password"
+                                    size={26}
+                                    color={theme.colors.text}
+                                />
+                            }
                         />
-                    }
-                />
-                <Button
-                    mode="contained"
-                    fullWidth
-                    bold
-                    backgroundColor={theme.colors.paper}
-                    text={t`Invite Friends`}
-                    onPress={() => {}}
-                    color={theme.colors.text}
-                    center={false}
-                    fontSize={15}
-                    style={{ marginBottom: 10 }}
-                    icon={
-                        <FIcons
-                            name="users"
-                            size={26}
+                        <Button
+                            mode="contained"
+                            fullWidth
+                            bold
+                            backgroundColor={theme.colors.paper}
+                            text={t`Invite Friends`}
+                            onPress={() => {}}
                             color={theme.colors.text}
+                            center={false}
+                            fontSize={15}
+                            style={{ marginBottom: 10 }}
+                            icon={
+                                <FIcons
+                                    name="users"
+                                    size={26}
+                                    color={theme.colors.text}
+                                />
+                            }
                         />
-                    }
-                />
+                    </>
+                )}
 
                 <Text
                     fontSize={15}
@@ -270,7 +271,6 @@ const Settings = ({ navigation }: { navigation: any }) => {
                         />
                     }
                 />
-
                 {user.isAnonymous ? (
                     <View>
                         <Button
@@ -334,7 +334,6 @@ const Settings = ({ navigation }: { navigation: any }) => {
                         />
                     </View>
                 )}
-
                 <View style={styles.version}>
                     <Text color={theme.colors.textVariant}>{t`Version: `}</Text>
                     <View style={{ width: 10 }} />

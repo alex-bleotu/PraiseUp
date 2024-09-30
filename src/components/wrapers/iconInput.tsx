@@ -19,6 +19,8 @@ interface IconInputProps {
     editable?: boolean;
     autoCapitalize?: boolean;
     keyboardType?: any;
+    multiline?: boolean;
+    lines?: number;
 }
 
 const IconInput = ({
@@ -36,6 +38,8 @@ const IconInput = ({
     editable = true,
     autoCapitalize = false,
     keyboardType,
+    multiline = false,
+    lines,
 }: IconInputProps) => {
     const { theme } = useContext(ThemeContext);
 
@@ -52,12 +56,22 @@ const IconInput = ({
                         backgroundColor: theme.colors.darkPaper,
                         borderWidth: 2,
                         borderColor: "transparent",
+                        height: multiline ? undefined : 50,
                     },
                     error && {
                         borderColor: theme.colors.danger,
                     },
                 ]}>
-                <View style={styles.iconContainer}>
+                <View
+                    style={[
+                        styles.iconContainer,
+                        {
+                            justifyContent: multiline
+                                ? "flex-start"
+                                : undefined,
+                            marginTop: multiline ? 20 : 0,
+                        },
+                    ]}>
                     <MCIcons
                         name={icon}
                         color={theme.colors.grey}
@@ -72,6 +86,7 @@ const IconInput = ({
                             letterSpacing,
                             color: theme.colors.text,
                             fontSize: 16,
+                            textAlignVertical: "top",
                         },
                     ]}
                     secureTextEntry={isHidden}
@@ -89,6 +104,8 @@ const IconInput = ({
                     selectionColor={theme.colors.grey}
                     editable={editable}
                     autoCapitalize={autoCapitalize ? "words" : "none"}
+                    multiline={multiline}
+                    numberOfLines={lines}
                 />
                 {hidden && (
                     <View style={styles.eyeIconContainer}>
@@ -122,14 +139,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 12,
         width: "100%",
-        height: 50,
         paddingHorizontal: 10,
     },
     input: {
         flex: 1,
         fontSize: 15,
         paddingVertical: 10,
-        paddingRight: 5,
+        paddingRight: 8,
         paddingLeft: 10,
     },
     iconContainer: {

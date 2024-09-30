@@ -43,29 +43,14 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
     }, [route.params]);
 
     return (
-        <StackPage title={""} navigation={navigation} noBottom>
+        <StackPage
+            title={t`Sign In`}
+            navigation={navigation}
+            noBottom
+            variant
+            description={t`Type in the email and password you used to create your account.`}>
             <View style={styles.container}>
                 <View style={styles.top}>
-                    <View
-                        style={{
-                            alignSelf: "flex-start",
-                            marginTop: 10,
-                            marginBottom: 20,
-                        }}>
-                        <Text bold fontSize={30}>{t`Sign In`}</Text>
-                    </View>
-                    <View
-                        style={{
-                            alignSelf: "flex-start",
-                            marginBottom: 20,
-                        }}>
-                        <Text
-                            fontSize={18}
-                            color={
-                                theme.colors.textVariant
-                            }>{t`Type in the email and password you used to create your account.`}</Text>
-                    </View>
-
                     <IconInput
                         icon="email"
                         placeholder={t`Email`}
@@ -270,7 +255,6 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 20,
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",

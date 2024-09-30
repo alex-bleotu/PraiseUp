@@ -104,7 +104,7 @@ export default Onboard;
 const styles = StyleSheet.create({
     paginator: {
         position: "absolute",
-        bottom: 100, // Ensuring the paginator does not overlap the buttons
+        bottom: 100,
     },
     buttons: {
         marginBottom: 20,
