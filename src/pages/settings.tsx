@@ -234,7 +234,9 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     bold
                     backgroundColor={theme.colors.paper}
                     text={t`Give us Feedback`}
-                    onPress={() => {}}
+                    onPress={() => {
+                        // open link to
+                    }}
                     color={theme.colors.text}
                     center={false}
                     fontSize={15}
@@ -253,7 +255,9 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     bold
                     backgroundColor={theme.colors.paper}
                     text={t`Contact Us`}
-                    onPress={() => {}}
+                    onPress={() => {
+                        navigation.navigate("ContactUs");
+                    }}
                     color={theme.colors.text}
                     center={false}
                     fontSize={15}

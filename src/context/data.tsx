@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Network from "expo-network";
 import React, {
     createContext,
     ReactNode,
@@ -51,7 +52,8 @@ export const DataProvider = ({
 }) => {
     const { user, setUser } = useContext(UserContext);
     const { updateRefresh } = useContext(RefreshContext);
-    const { history, removeFromHistory } = useContext(HistoryContext);
+    const { history, removeFromHistory, deleteHistory } =
+        useContext(HistoryContext);
     const {
         getUserData,
         addFavorite,
@@ -210,20 +212,29 @@ export const DataProvider = ({
         const initialize = async () => {
             // await clear();
 
+            setLoadingData(true);
+
+            const networkState = await Network.getNetworkStateAsync();
+            const hasInternet = networkState.isConnected;
+
             const lists = await readLists();
 
             const loaded = await AsyncStorage.getItem("loaded");
 
-            if (loaded === null) await firstLoad();
-            else await checkForUpdates(lists.songs, lists.albums);
+            if (hasInternet) {
+                if (loaded === null) await firstLoad();
+                else await checkForUpdates(lists.songs, lists.albums);
+            } else console.warn("No internet connection");
 
             if (user) {
                 filterHistory();
 
                 (async () => {
                     try {
-                        await syncFavorites(lists.favorites);
-                        await syncPersonalAlbums(lists.personalAlbums);
+                        if (hasInternet) {
+                            await syncFavorites(lists.favorites);
+                            await syncPersonalAlbums(lists.personalAlbums);
+                        }
 
                         updateRefresh();
                     } catch (error) {
@@ -1223,6 +1234,7 @@ export const DataProvider = ({
 
         setPersonalAlbumsIds([]);
         setFavoriteIds([]);
+        deleteHistory([]);
 
         resetTutorial();
         resetConstants();
@@ -1230,7 +1242,6 @@ export const DataProvider = ({
         await AsyncStorage.multiRemove([
             "version",
             "recent",
-            "history",
             "user",
             "favoriteIds",
             "personalAlbumsIds",

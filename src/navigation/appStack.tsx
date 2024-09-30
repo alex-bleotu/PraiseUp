@@ -6,6 +6,7 @@ import React, { useContext } from "react";
 import { ThemeContext } from "../context/theme";
 import AddSong from "../pages/addSong";
 import AddToAlbum from "../pages/addToAlbum";
+import ContactUs from "../pages/contactUs";
 import ForgotPassword from "../pages/forgotPassword";
 import Link from "../pages/link";
 import ResetPassword from "../pages/resetPassword";
@@ -35,6 +36,7 @@ const AppStack = () => {
             <S.Screen name="ForgotPassword" component={ForgotPassword} />
             <S.Screen name="AddSong" component={AddSong} />
             <S.Screen name="AddToAlbum" component={AddToAlbum} />
+            <S.Screen name="ContactUs" component={ContactUs} />
             <S.Screen
                 name="Slideshow"
                 component={Slideshow}

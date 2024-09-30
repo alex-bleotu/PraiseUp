@@ -462,8 +462,6 @@ const Album = ({ route, navigation }: AlbumProps) => {
                     }
                 }}
                 updateData={(newAlbum: AlbumType) => {
-                    console.log(newAlbum);
-
                     if (
                         newAlbum === null ||
                         (newAlbum.songs.length === 0 &&

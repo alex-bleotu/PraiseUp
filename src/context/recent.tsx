@@ -36,7 +36,7 @@ export const RecentProvider = ({
     };
 
     useEffect(() => {
-        if (recent === null || recent.length === 0) return;
+        if (recent === null) return;
         AsyncStorage.setItem("recent", JSON.stringify(recent));
     }, [recent]);
 

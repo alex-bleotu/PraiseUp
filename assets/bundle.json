@@ -1,5 +1,5 @@
 {
-    "version": "1.0.4",
+    "version": "1.0.3",
     "songs": [
         {
             "id": "S8384698f-7c39-4339-8d3e-5621e6aa0ed6",
@@ -491,6 +491,22 @@
             "lyrics": "S1\r\nCând nu Te cunoșteam Tu m-ai chemat,\r\nCu dragoste M-ai ridicat.\r\nPrin jertfa Ta, Isus, am fost sfințit\r\nCe haine noi mi-ai dăruit!\r\n\r\nR\r\nDoamne, vreau să Te slujesc cât voi trăi,\r\nDrumul Tău să îl urmez în fiecare zi!\r\nPână-n ziua când la cer mă vei chema\r\nSunt aici Isus la dispoziția Ta!\r\n\r\nS2\r\nPărinte mare har mi-ai dăruit:\r\nCa să-Ți slujesc, Domn, infinit.\r\nEu doar un simplu rob neînsemnat,\r\nTu - Domn al Vieții, Împărat!\r\n\r\nS3\r\nCu tot ce am Isus mă dăruiesc\r\nMireasma Ta s-o răspândesc\r\nTrăind mereu, cu zel, al Tău Cuvânt,\r\nÎnaintând prin Duhul Sfânt!\r\n\r\nB\r\nȘi prigoniri de vor veni\r\nȘi încercat voi fi\r\nVreau lângă Tine credincios să râmăn\r\nPân' la sfârșit, pân' la sfârșit.",
             "extraData": {
                 "link": "https://youtu.be/mQomQZ2LJc0",
+                "year": null,
+                "originalTitle": null,
+                "verses": null
+            }
+        },
+        {
+            "id": "S38235dc7-a0f4-4233-9868-1232d0bffc1e",
+            "type": "song",
+            "title": "Test",
+            "artist": "Eu",
+            "cover": null,
+            "initialChord": "",
+            "order": "S1 R S2 R S3 Rx2 B Rx2",
+            "lyrics": "",
+            "extraData": {
+                "link": null,
                 "year": null,
                 "originalTitle": null,
                 "verses": null

@@ -42,7 +42,6 @@ export const ConstantsProvider = ({
 
             // TODO: Fix tabs height
             let appHeight;
-            console.log(screenHeight, windowHeight);
             if (screenHeight - windowHeight < 70) appHeight = screenHeight - 15;
             else appHeight = screenHeight - 48;
 

@@ -30,12 +30,12 @@ export default function App() {
                                             <RefreshProvider>
                                                 <ServerProvider>
                                                     <DataProvider>
-                                                        <AuthProvider>
-                                                            <RecentProvider>
+                                                        <RecentProvider>
+                                                            <AuthProvider>
                                                                 <AppContainer />
                                                                 <StatusBar style="auto" />
-                                                            </RecentProvider>
-                                                        </AuthProvider>
+                                                            </AuthProvider>
+                                                        </RecentProvider>
                                                     </DataProvider>
                                                 </ServerProvider>
                                             </RefreshProvider>

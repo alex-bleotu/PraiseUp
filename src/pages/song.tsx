@@ -349,7 +349,6 @@ const Song = ({ route, navigation }: SongProps) => {
         if (song) return;
 
         const load = async () => {
-            console.log("Loading song", id);
             if (id) {
                 setSong(await getSongById(id));
             }

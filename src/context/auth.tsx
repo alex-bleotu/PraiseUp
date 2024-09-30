@@ -22,6 +22,7 @@ import React, { createContext, ReactNode, useContext, useEffect } from "react";
 import { auth, db } from "../../firebaseConfig";
 import { DataContext } from "./data";
 import { LoadingContext } from "./loading";
+import { RecentContext } from "./recent";
 import { ServerContext } from "./server";
 import { TutorialContext } from "./tutorial";
 import { UserContext } from "./user";
@@ -40,6 +41,7 @@ export const AuthProvider = ({
     const { setLoading, setSyncLoading } = useContext(LoadingContext);
     const { activateTutorial } = useContext(TutorialContext);
     const { webClientId, iosClientId } = Constants.expoConfig?.extra || {};
+    const { deleteRecent } = useContext(RecentContext);
 
     const configureGoogleSignIn = async () => {
         GoogleSignin.configure({
@@ -172,6 +174,7 @@ export const AuthProvider = ({
         try {
             await auth.signOut();
             await clearData();
+            deleteRecent();
             setUser(null);
         } finally {
             setLoading(false);
@@ -187,6 +190,7 @@ export const AuthProvider = ({
                 await auth.currentUser.delete();
             }
             await clearData();
+            deleteRecent();
             setUser(null);
         } finally {
             setLoading(false);
