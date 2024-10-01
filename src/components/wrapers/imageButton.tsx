@@ -1,4 +1,6 @@
-import { Image, StyleSheet, View } from "react-native";
+import { useContext } from "react";
+import { ActivityIndicator, Image, StyleSheet, View } from "react-native";
+import { ThemeContext } from "../../context/theme";
 import AnimatedTouchable from "./animatedTouchable";
 import Text from "./text";
 
@@ -9,6 +11,8 @@ interface IconButtonProps {
     text: string;
     style?: any;
     onPress?: any;
+    disabled?: boolean;
+    loading?: boolean;
 }
 
 const ImageButton = ({
@@ -17,17 +21,31 @@ const ImageButton = ({
     color,
     text,
     style,
+    disabled,
     onPress,
+    loading,
 }: IconButtonProps) => {
+    const { theme } = useContext(ThemeContext);
+
     return (
         <AnimatedTouchable
+            disabled={disabled}
             onPress={onPress}
             style={{
                 width: "100%",
             }}>
             <View
                 style={[{ backgroundColor: bgcolor }, styles.container, style]}>
-                <Image style={styles.image} source={src} />
+                {loading ? (
+                    <ActivityIndicator
+                        animating={true}
+                        size={22}
+                        color={theme.colors.textOnPrimary}
+                        style={styles.image}
+                    />
+                ) : (
+                    <Image style={styles.image} source={src} />
+                )}
                 <Text
                     color={color}
                     fontSize={14}

@@ -13,14 +13,16 @@ import { validateEmail } from "../utils/util";
 
 const Link = ({ navigation }: { navigation: any }) => {
     const { loading } = useContext(LoadingContext);
-    const { linkGuest }: any = useContext(AuthContext);
-    const { theme } = useContext(ThemeContext);
+    const { linkGuest, linkGuestWithGoogle }: any = useContext(AuthContext);
+    const { theme, themeType, systemTheme } = useContext(ThemeContext);
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const [emailValid, setEmailValid] = useState(true);
+
+    const [googleLoading, setGoogleLoading] = useState(false);
 
     const [showEmailError, setShowEmailError] = useState(false);
     const [showPasswordError, setShowPasswordError] = useState(false);
@@ -95,7 +97,12 @@ const Link = ({ navigation }: { navigation: any }) => {
                             fullWidth
                             fontSize={14}
                             bold
-                            disabled={!email || !password || !emailValid}
+                            disabled={
+                                !email ||
+                                !password ||
+                                !emailValid ||
+                                googleLoading
+                            }
                             style={{
                                 paddingVertical: loading ? 13 : 14.5,
                             }}
@@ -105,7 +112,7 @@ const Link = ({ navigation }: { navigation: any }) => {
                                     <ActivityIndicator
                                         animating={true}
                                         size={22}
-                                        color={theme.colors.textInverted}
+                                        color={theme.colors.textOnPrimary}
                                     />
                                 )
                             }
@@ -158,17 +165,66 @@ const Link = ({ navigation }: { navigation: any }) => {
                     <View style={{ width: "100%" }}>
                         <ImageButton
                             src={require("../../assets/images/auth/google.png")}
-                            bgcolor={theme.colors.white}
-                            color={"black"}
+                            disabled={loading}
+                            bgcolor={
+                                themeType === "system"
+                                    ? systemTheme === "dark"
+                                        ? theme.colors.darkGrey
+                                        : theme.colors.white
+                                    : themeType === "light"
+                                    ? theme.colors.white
+                                    : theme.colors.darkGrey
+                            }
+                            color={
+                                themeType === "system"
+                                    ? systemTheme === "dark"
+                                        ? theme.colors.white
+                                        : theme.colors.black
+                                    : themeType === "light"
+                                    ? theme.colors.black
+                                    : theme.colors.white
+                            }
+                            loading={googleLoading}
                             text={t`Continue with Google`}
+                            onPress={() => {
+                                if (googleLoading) return;
+
+                                setGoogleLoading(true);
+                                setError("");
+                                linkGuestWithGoogle()
+                                    .then(() => {
+                                        navigation.navigate("Tabs", {
+                                            screen: "HomeStack",
+                                        });
+                                        setError("");
+                                    })
+                                    .catch((error: any) => {
+                                        if (
+                                            error.message.includes(
+                                                "auth/network-request-failed"
+                                            )
+                                        )
+                                            setError(
+                                                t`Network error. Please try again later.`
+                                            );
+                                        else if (
+                                            error.message.includes(
+                                                "This Google account is already linked with another account."
+                                            ) ||
+                                            error.message.includes(
+                                                "auth/credential-already-in-use"
+                                            )
+                                        )
+                                            setError(
+                                                t`Account already exists with different credentials.`
+                                            );
+                                        else setError(t`Something went wrong.`);
+                                    })
+                                    .finally(() => {
+                                        setGoogleLoading(false);
+                                    });
+                            }}
                         />
-                        {/* <ImageButton
-                            src={require("../../assets/images/auth/facebook.png")}
-                            bgcolor={theme.colors.blue}
-                            color={"white"}
-                            text={t`Continue with Facebook`}
-                            style={{ marginTop: 15 }}
-                        /> */}
                     </View>
                 </View>
             </View>

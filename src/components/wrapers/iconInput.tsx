@@ -66,10 +66,8 @@ const IconInput = ({
                     style={[
                         styles.iconContainer,
                         {
-                            justifyContent: multiline
-                                ? "flex-start"
-                                : undefined,
-                            marginTop: multiline ? 20 : 0,
+                            justifyContent: multiline ? "flex-start" : "center",
+                            marginTop: multiline ? 20 : -1,
                         },
                     ]}>
                     <MCIcons
@@ -86,7 +84,7 @@ const IconInput = ({
                             letterSpacing,
                             color: theme.colors.text,
                             fontSize: 16,
-                            textAlignVertical: "top",
+                            textAlignVertical: multiline ? "top" : undefined,
                         },
                     ]}
                     secureTextEntry={isHidden}
@@ -150,7 +148,6 @@ const styles = StyleSheet.create({
     },
     iconContainer: {
         height: "100%",
-        justifyContent: "center",
         alignItems: "center",
     },
     eyeIconContainer: {

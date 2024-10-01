@@ -24,7 +24,9 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [emailValid, setEmailValid] = useState(true);
+
     const [guestLoading, setGuestLoading] = useState(false);
+    const [googleLoading, setGoogleLoading] = useState(false);
 
     const [error, setError] = useState<string>("");
 
@@ -116,7 +118,13 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                             fullWidth
                             fontSize={14}
                             bold
-                            disabled={!email || !password || !emailValid}
+                            disabled={
+                                !email ||
+                                !password ||
+                                !emailValid ||
+                                guestLoading ||
+                                googleLoading
+                            }
                             style={{
                                 paddingVertical: loading ? 13 : 14.5,
                             }}
@@ -172,6 +180,7 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                     <View style={{ width: "100%" }}>
                         <ImageButton
                             src={require("../../assets/images/auth/google.png")}
+                            disabled={loading || guestLoading}
                             bgcolor={
                                 themeType === "system"
                                     ? systemTheme === "dark"
@@ -190,8 +199,13 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                                     ? theme.colors.black
                                     : theme.colors.white
                             }
+                            loading={googleLoading}
                             text={t`Continue with Google`}
                             onPress={() => {
+                                if (googleLoading) return;
+
+                                setGoogleLoading(true);
+                                setError("");
                                 googleLogin()
                                     .then(() => {
                                         setError("");
@@ -206,6 +220,9 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                                                 t`Network error. Please try again later.`
                                             );
                                         else setError(t`Something went wrong.`);
+                                    })
+                                    .finally(() => {
+                                        setGoogleLoading(false);
                                     });
                             }}
                         />
@@ -217,12 +234,13 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                             fullWidth
                             fontSize={14}
                             bold
+                            disabled={loading || googleLoading}
                             style={{
                                 paddingVertical: guestLoading ? 13 : 14.5,
                                 marginTop: 15,
                             }}
                             onPress={() => {
-                                if (loading || guestLoading) return;
+                                if (guestLoading) return;
 
                                 setError("");
                                 setGuestLoading(true);
@@ -279,6 +297,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         width: "100%",
         marginBottom: 15,
+        marginTop: 20,
     },
     error: {
         alignSelf: "flex-start",

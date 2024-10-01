@@ -7,6 +7,7 @@ import Constants from "expo-constants";
 import {
     createUserWithEmailAndPassword,
     EmailAuthProvider,
+    fetchSignInMethodsForEmail,
     sendPasswordResetEmail as firebaseSendPasswordResetEmail,
     updatePassword as firebaseUpdatePassword,
     GoogleAuthProvider,
@@ -364,6 +365,74 @@ export const AuthProvider = ({
         });
     };
 
+    const linkGuestWithGoogle = async (): Promise<any> => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                await GoogleSignin.hasPlayServices();
+                const userInfo = (await GoogleSignin.signIn()).data;
+
+                const idToken = userInfo?.idToken;
+                const accessToken = (await GoogleSignin.getTokens())
+                    .accessToken;
+
+                if (!idToken) {
+                    throw new Error("No idToken received from Google");
+                }
+
+                const googleCredential = GoogleAuthProvider.credential(
+                    idToken,
+                    accessToken
+                );
+                const email = userInfo.user.email;
+
+                const signInMethods = await fetchSignInMethodsForEmail(
+                    auth,
+                    email
+                );
+                if (signInMethods.length > 0) {
+                    reject(
+                        "This Google account is already linked with another account."
+                    );
+                }
+
+                const user = auth.currentUser;
+
+                if (user) {
+                    const response = await linkWithCredential(
+                        user,
+                        googleCredential
+                    );
+
+                    const userDocRef = doc(db, "users", response.user.uid);
+                    const userDoc = await getDoc(userDocRef);
+
+                    if (!userDoc.exists()) {
+                        await initializeUserDocument(response.user.uid);
+                    }
+
+                    setUser(response.user);
+
+                    resolve(response);
+                } else {
+                    throw new Error("No user is currently signed in.");
+                }
+            } catch (error: any) {
+                if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+                    console.log("User cancelled the login process");
+                } else if (error.code === statusCodes.IN_PROGRESS) {
+                    console.log("Sign-in is already in progress");
+                } else if (
+                    error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE
+                ) {
+                    console.log("Play Services not available or outdated");
+                } else {
+                    console.log("Some other error happened:", error);
+                    reject(error);
+                }
+            }
+        });
+    };
+
     return (
         <AuthContext.Provider
             value={{
@@ -377,6 +446,7 @@ export const AuthProvider = ({
                 deleteAccount,
                 updatePassword,
                 googleLogin,
+                linkGuestWithGoogle,
             }}>
             {children}
         </AuthContext.Provider>

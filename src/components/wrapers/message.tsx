@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
+import { ThemeContext } from "../../context/theme";
 import Text from "./text";
 
 interface MessageProps {
@@ -9,6 +10,8 @@ interface MessageProps {
 }
 
 const Message = ({ variant, message, setShow: disappear }: MessageProps) => {
+    const { theme } = useContext(ThemeContext);
+
     const [show, setShow] = useState(true);
 
     useEffect(() => {
@@ -25,12 +28,33 @@ const Message = ({ variant, message, setShow: disappear }: MessageProps) => {
     if (!show) return <></>;
 
     return (
-        <View>
-            <Text>{message}</Text>
+        <View
+            style={[
+                styles.container,
+                {
+                    backgroundColor:
+                        variant === "success"
+                            ? theme.colors.successBackground
+                            : variant === "error"
+                            ? theme.colors.errorBackground
+                            : "transparent",
+                },
+            ]}>
+            <Text bold color={"white"}>
+                {message}
+            </Text>
         </View>
     );
 };
 
 export default Message;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    container: {
+        width: "100%",
+        borderRadius: 12,
+        height: 40,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+});

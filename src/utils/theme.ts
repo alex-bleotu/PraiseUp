@@ -39,6 +39,9 @@ export const lightTheme = {
         textInverted: "#f2f2f2",
         textVariant: "#9f9f9f",
         textOnPrimary: "#f2f2f2",
+
+        successBackground: "rgba(46, 125, 50, 0.6)",
+        errorBackground: "rgba(150, 20, 20, 0.6)",
     },
 };
 
@@ -58,6 +61,9 @@ export const darkTheme = {
         textInverted: "#121212",
         textVariant: "#9f9f9f",
         textOnPrimary: "#f2f2f2",
+
+        successBackground: "rgba(46, 125, 50, 0.25)",
+        errorBackground: "rgba(150, 20, 20, 0.25)",
     },
 };
 

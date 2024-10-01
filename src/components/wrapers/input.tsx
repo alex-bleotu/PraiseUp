@@ -69,7 +69,7 @@ const Input = ({
                             letterSpacing,
                             color: theme.colors.text,
                             fontSize: 16,
-                            textAlignVertical: "top",
+                            textAlignVertical: multiline ? "top" : undefined,
                         },
                     ]}
                     secureTextEntry={isHidden}

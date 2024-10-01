@@ -20,7 +20,9 @@ const Register = ({ navigation }: { navigation: any }) => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
     const [guestLoading, setGuestLoading] = useState(false);
+    const [googleLoading, setGoogleLoading] = useState(false);
 
     const [emailValid, setEmailValid] = useState(true);
 
@@ -99,7 +101,13 @@ const Register = ({ navigation }: { navigation: any }) => {
                             color={theme.colors.textOnPrimary}
                             fontSize={14}
                             bold
-                            disabled={!email || !password || !emailValid}
+                            disabled={
+                                !email ||
+                                !password ||
+                                !emailValid ||
+                                guestLoading ||
+                                googleLoading
+                            }
                             style={{
                                 paddingVertical: loading ? 13 : 14.5,
                             }}
@@ -167,6 +175,7 @@ const Register = ({ navigation }: { navigation: any }) => {
                     <View style={{ width: "100%" }}>
                         <ImageButton
                             src={require("../../assets/images/auth/google.png")}
+                            disabled={loading || guestLoading}
                             bgcolor={
                                 themeType === "system"
                                     ? systemTheme === "dark"
@@ -185,8 +194,13 @@ const Register = ({ navigation }: { navigation: any }) => {
                                     ? theme.colors.black
                                     : theme.colors.white
                             }
+                            loading={googleLoading}
                             text={t`Continue with Google`}
                             onPress={() => {
+                                if (googleLoading) return;
+
+                                setGoogleLoading(true);
+                                setError("");
                                 googleLogin()
                                     .then(() => {
                                         setError("");
@@ -201,6 +215,9 @@ const Register = ({ navigation }: { navigation: any }) => {
                                                 t`Network error. Please try again later.`
                                             );
                                         else setError(t`Something went wrong.`);
+                                    })
+                                    .finally(() => {
+                                        setGoogleLoading(false);
                                     });
                             }}
                         />
@@ -209,6 +226,7 @@ const Register = ({ navigation }: { navigation: any }) => {
                             text={t`Continue as Guest`}
                             upper
                             fullWidth
+                            disabled={loading || googleLoading}
                             color={theme.colors.textOnPrimary}
                             fontSize={14}
                             bold
@@ -217,10 +235,11 @@ const Register = ({ navigation }: { navigation: any }) => {
                                 marginTop: 15,
                             }}
                             onPress={() => {
-                                if (loading || guestLoading) return;
+                                if (guestLoading) return;
 
                                 setError("");
                                 setGuestLoading(true);
+
                                 loginAsGuest()
                                     .then(() => {
                                         setError("");
@@ -274,6 +293,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         width: "100%",
         marginBottom: 15,
+        marginTop: 20,
     },
     error: {
         alignSelf: "flex-start",

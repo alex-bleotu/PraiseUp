@@ -62,5 +62,6 @@ export default ({ config }) => ({
         iosClientId: process.env.IOS_CLIENT_ID,
         androidClientId: process.env.ANDROID_CLIENT_ID,
         expoClientId: process.env.EXPO_CLIENT_ID,
+        emailjsToken: process.env.EMAILJS_TOKEN,
     },
 });
