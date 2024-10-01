@@ -1,16 +1,48 @@
+import emailjs from "@emailjs/browser";
 import { t } from "@lingui/macro";
-import React, { useContext, useState } from "react";
+import React, { createRef, useContext, useState } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import Button from "../components/wrapers/button";
 import Input from "../components/wrapers/input";
+import Message from "../components/wrapers/message";
 import StackPage from "../components/wrapers/stackPage";
 import { ThemeContext } from "../context/theme";
 
 const ContactUs = ({ navigation }: { navigation: any }) => {
     const { theme } = useContext(ThemeContext);
 
-    const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState("");
+    const [loading, setLoading] = useState<boolean>(false);
+    const [message, setMessage] = useState<string>("");
+    const [state, setState] = useState<"success" | "error">();
+    const [show, setShow] = useState<boolean>(false);
+
+    const form = createRef<HTMLFormElement>();
+
+    const sendEmail = () => {
+        if (form.current === null) return;
+
+        setLoading(true);
+
+        emailjs
+            .sendForm(
+                "service_aguv79r",
+                "template_hfpki5l",
+                form.current,
+                "X7eJatn7kvJUL5CWU"
+            )
+            .then(
+                () => {
+                    setLoading(false);
+                    setState("success");
+                    setShow(true);
+                },
+                () => {
+                    setLoading(false);
+                    setState("error");
+                    setShow(true);
+                }
+            );
+    };
 
     return (
         <StackPage
@@ -20,47 +52,60 @@ const ContactUs = ({ navigation }: { navigation: any }) => {
             variant
             description={t`If you have any questions or problems with the app or its content, please contact us.`}>
             <View style={styles.container}>
-                <View style={styles.top}>
-                    <Input
-                        placeholder={t`Message`}
-                        value={message}
-                        onChange={setMessage}
-                        multiline
-                        lines={12}
-                    />
-                </View>
-
-                <View style={styles.bottom}>
-                    <View
-                        style={{
-                            width: "100%",
-                        }}>
-                        <Button
-                            mode="contained"
-                            text={t`Send the message`}
-                            disabled={loading || !message}
-                            upper
-                            color={theme.colors.textOnPrimary}
-                            fullWidth
-                            fontSize={14}
-                            bold
-                            style={{
-                                paddingVertical: loading ? 13 : 14.5,
-                                marginTop: 15,
-                            }}
-                            onPress={() => {}}
-                            icon={
-                                loading && (
-                                    <ActivityIndicator
-                                        animating={true}
-                                        size={22}
-                                        color={theme.colors.textOnPrimary}
-                                    />
-                                )
-                            }
+                <form>
+                    <View style={styles.top}>
+                        <Input
+                            placeholder={t`Message`}
+                            value={message}
+                            onChange={setMessage}
+                            multiline
+                            lines={12}
                         />
+                        {show && (
+                            <Message
+                                variant={state}
+                                message={
+                                    state === "success"
+                                        ? t`Message sent successfully!`
+                                        : t`Message failed to send!`
+                                }
+                                setShow={setShow}
+                            />
+                        )}
                     </View>
-                </View>
+
+                    <View style={styles.bottom}>
+                        <View
+                            style={{
+                                width: "100%",
+                            }}>
+                            <Button
+                                mode="contained"
+                                text={t`Send the message`}
+                                disabled={loading || !message}
+                                upper
+                                color={theme.colors.textOnPrimary}
+                                fullWidth
+                                fontSize={14}
+                                bold
+                                style={{
+                                    paddingVertical: loading ? 13 : 14.5,
+                                    marginTop: 15,
+                                }}
+                                onPress={sendEmail}
+                                icon={
+                                    loading && (
+                                        <ActivityIndicator
+                                            animating={true}
+                                            size={22}
+                                            color={theme.colors.textOnPrimary}
+                                        />
+                                    )
+                                }
+                            />
+                        </View>
+                    </View>
+                </form>
             </View>
         </StackPage>
     );
