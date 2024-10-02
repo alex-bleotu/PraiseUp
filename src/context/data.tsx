@@ -26,6 +26,7 @@ export interface AlbumType {
     type: "album" | "personal" | "favorite" | "extra";
     title: string;
     songs: string[];
+    creatorName: string | null;
     creator: string | null;
     favorite: boolean;
     date: string;
@@ -385,6 +386,7 @@ export const DataProvider = ({
                     ...bundle.albums[i],
                     favorite: false,
                     date: new Date().toISOString(),
+                    creatorName: null,
                     type: bundle.albums[i].type as
                         | "album"
                         | "extra"
@@ -466,6 +468,7 @@ export const DataProvider = ({
                             cover: uri,
                             favorite: false,
                             date: new Date().toISOString(),
+                            creatorName: null,
                             type: data.albums[i].type as
                                 | "album"
                                 | "extra"
@@ -477,6 +480,7 @@ export const DataProvider = ({
                             ...data.albums[i],
                             favorite: false,
                             date: new Date().toISOString(),
+                            creatorName: null,
                             type: data.albums[i].type as
                                 | "album"
                                 | "extra"
@@ -1049,6 +1053,7 @@ export const DataProvider = ({
             id: "F",
             type: "favorite",
             title: "Favorite Songs",
+            creatorName: null,
             creator: null,
             songs: favoriteSongs,
             favorite: true,
@@ -1068,7 +1073,8 @@ export const DataProvider = ({
                     id: `P${uniqueId}`,
                     type: "personal",
                     title: title,
-                    creator: user.displayName,
+                    creatorName: user.displayName,
+                    creator: user.uid,
                     songs: [],
                     favorite: false,
                     date: new Date().toISOString(),
@@ -1340,7 +1346,8 @@ export const DataProvider = ({
                         type: "personal",
                         title: data.title,
                         songs: data.songs,
-                        creator: displayName,
+                        creator: user.uid,
+                        creatorName: displayName,
                         favorite: false,
                         date: new Date().toISOString(),
                         cover: null,
@@ -1382,7 +1389,8 @@ export const DataProvider = ({
                 type: "personal",
                 title: albumData.title,
                 songs: albumData.songs,
-                creator: displayName,
+                creator: albumData.creator,
+                creatorName: displayName,
                 favorite: false,
                 date: new Date().toISOString(),
                 cover: null,

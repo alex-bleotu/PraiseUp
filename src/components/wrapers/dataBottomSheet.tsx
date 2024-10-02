@@ -7,6 +7,7 @@ import { AlbumType, DataContext, SongType } from "../../context/data";
 import { RecentContext } from "../../context/recent";
 import { RefreshContext } from "../../context/refresh";
 import { ThemeContext } from "../../context/theme";
+import { UserContext } from "../../context/user";
 import AlbumImage from "../items/albumImage";
 import SongImage from "../items/songImage";
 import BottomSheetModal from "./bottomSheetModal";
@@ -50,6 +51,7 @@ const DataBottomSheet = ({
     } = useContext(DataContext);
     const { refresh, updateRefresh } = useContext(RefreshContext);
     const { updateRecent } = useContext(RecentContext);
+    const { user } = useContext(UserContext);
 
     const [data, setData] = useState<SongType | AlbumType | null>(null);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -81,6 +83,9 @@ const DataBottomSheet = ({
                             ? 5
                             : removeSong && data?.type === "song"
                             ? 4
+                            : data?.type === "personal" &&
+                              data?.creator !== user.uid
+                            ? 1
                             : 3
                         : 2
                 }>
@@ -123,12 +128,12 @@ const DataBottomSheet = ({
                             )}
                             {(data?.type === "album" ||
                                 data?.type === "personal") &&
-                                data?.creator && (
+                                data?.creatorName && (
                                     <Text
                                         fontSize={15}
                                         numberOfLines={1}
                                         ellipsizeMode="tail">
-                                        {data.creator}
+                                        {data.creatorName}
                                     </Text>
                                 )}
                         </View>
@@ -240,40 +245,50 @@ const DataBottomSheet = ({
                             </TouchableOpacity>
                         ) : (
                             <>
-                                <TouchableOpacity
-                                    activeOpacity={theme.activeOpacity}
-                                    onPress={async () => {
-                                        if (data !== null) {
-                                            setEditAlbum(true);
-                                        }
-                                    }}>
-                                    <View style={styles.button}>
-                                        <MCIcons
-                                            name={"pencil-outline"}
-                                            size={30}
-                                            color={theme.colors.text}
-                                        />
-                                        <Text fontSize={17} style={styles.text}>
-                                            {t`Edit album`}
-                                        </Text>
-                                    </View>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    activeOpacity={theme.activeOpacity}
-                                    onPress={async () => {
-                                        setIsDeleteModalOpen(true);
-                                    }}>
-                                    <View style={styles.button}>
-                                        <MCIcons
-                                            name={"delete-empty-outline"}
-                                            size={30}
-                                            color={theme.colors.text}
-                                        />
-                                        <Text fontSize={17} style={styles.text}>
-                                            {t`Delete album`}
-                                        </Text>
-                                    </View>
-                                </TouchableOpacity>
+                                {data.creator === user.uid && (
+                                    <>
+                                        <TouchableOpacity
+                                            activeOpacity={theme.activeOpacity}
+                                            onPress={async () => {
+                                                if (data !== null) {
+                                                    setEditAlbum(true);
+                                                }
+                                            }}>
+                                            <View style={styles.button}>
+                                                <MCIcons
+                                                    name={"pencil-outline"}
+                                                    size={30}
+                                                    color={theme.colors.text}
+                                                />
+                                                <Text
+                                                    fontSize={17}
+                                                    style={styles.text}>
+                                                    {t`Edit album`}
+                                                </Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity
+                                            activeOpacity={theme.activeOpacity}
+                                            onPress={async () => {
+                                                setIsDeleteModalOpen(true);
+                                            }}>
+                                            <View style={styles.button}>
+                                                <MCIcons
+                                                    name={
+                                                        "delete-empty-outline"
+                                                    }
+                                                    size={30}
+                                                    color={theme.colors.text}
+                                                />
+                                                <Text
+                                                    fontSize={17}
+                                                    style={styles.text}>
+                                                    {t`Delete album`}
+                                                </Text>
+                                            </View>
+                                        </TouchableOpacity>{" "}
+                                    </>
+                                )}
                             </>
                         )}
                         {data?.type === "song" && (

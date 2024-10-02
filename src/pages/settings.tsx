@@ -8,7 +8,7 @@ import {
 import { t } from "@lingui/macro";
 import Constants from "expo-constants";
 import React, { useContext, useEffect, useState } from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Image, Share, StyleSheet, TouchableOpacity, View } from "react-native";
 import { RadioButton } from "react-native-paper";
 import BottomSheetModal from "../components/wrapers/bottomSheetModal";
 import Button from "../components/wrapers/button";
@@ -190,7 +190,15 @@ const Settings = ({ navigation }: { navigation: any }) => {
                             bold
                             backgroundColor={theme.colors.paper}
                             text={t`Invite Friends`}
-                            onPress={() => {}}
+                            onPress={async () => {
+                                const url = "https://praiseup.alexbleotu.com";
+
+                                await Share.share({
+                                    message: `${
+                                        t`Check this out on PraiseUp!` + "\n\n"
+                                    }${url}`,
+                                });
+                            }}
                             color={theme.colors.text}
                             center={false}
                             fontSize={15}
@@ -216,7 +224,9 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     bold
                     backgroundColor={theme.colors.paper}
                     text={t`About Us`}
-                    onPress={() => {}}
+                    onPress={() => {
+                        navigation.navigate("AboutUs");
+                    }}
                     color={theme.colors.text}
                     center={false}
                     fontSize={15}
@@ -234,9 +244,9 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     fullWidth
                     bold
                     backgroundColor={theme.colors.paper}
-                    text={t`Give us Feedback`}
+                    text={t`Rate Us`}
                     onPress={() => {
-                        // open link to
+                        // open link to rating
                     }}
                     color={theme.colors.text}
                     center={false}

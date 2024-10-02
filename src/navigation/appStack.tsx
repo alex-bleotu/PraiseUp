@@ -4,6 +4,7 @@ import {
 } from "@react-navigation/stack";
 import React, { useContext } from "react";
 import { ThemeContext } from "../context/theme";
+import AboutUs from "../pages/aboutUs";
 import AddSong from "../pages/addSong";
 import AddToAlbum from "../pages/addToAlbum";
 import ContactUs from "../pages/contactUs";
@@ -37,6 +38,7 @@ const AppStack = () => {
             <S.Screen name="AddSong" component={AddSong} />
             <S.Screen name="AddToAlbum" component={AddToAlbum} />
             <S.Screen name="ContactUs" component={ContactUs} />
+            <S.Screen name="AboutUs" component={AboutUs} />
             <S.Screen
                 name="Slideshow"
                 component={Slideshow}
