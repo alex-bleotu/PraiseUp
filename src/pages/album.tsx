@@ -33,9 +33,10 @@ const Album = ({ route, navigation }: AlbumProps) => {
     const { refresh, updateRefresh } = useContext(RefreshContext);
     const {
         getSongById,
-        getPersonalAlbumsById,
+        getPersonalAlbumById,
         getFavoriteSongsAlbum,
         getAlbumById,
+        getNotOwnedPersonalAlbum,
     } = useContext(DataContext);
     const { language } = useContext(LanguageContext);
     const { theme } = useContext(ThemeContext);
@@ -65,8 +66,13 @@ const Album = ({ route, navigation }: AlbumProps) => {
             const load = async () => {
                 let album;
 
-                if (id.startsWith("P")) album = await getPersonalAlbumsById(id);
-                else if (id.startsWith("A")) album = await getAlbumById(id);
+                if (id.startsWith("P")) {
+                    album = await getPersonalAlbumById(id);
+
+                    if (album === null) {
+                        album = await getNotOwnedPersonalAlbum(id);
+                    }
+                } else if (id.startsWith("A")) album = await getAlbumById(id);
 
                 if (album) {
                     setAlbum(album);
@@ -83,7 +89,7 @@ const Album = ({ route, navigation }: AlbumProps) => {
             let loaded: SongType[] = [];
 
             if (album?.type === "personal") {
-                const personalAlbum = await getPersonalAlbumsById(album.id);
+                const personalAlbum = await getPersonalAlbumById(album.id);
                 setAlbum(personalAlbum);
 
                 if (personalAlbum !== null)

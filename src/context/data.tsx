@@ -728,7 +728,7 @@ export const DataProvider = ({
     const getById = async (id: string) => {
         if (id.startsWith("S")) return getSongById(id);
         if (id.startsWith("A")) return getAlbumById(id);
-        if (id.startsWith("P")) return getPersonalAlbumsById(id);
+        if (id.startsWith("P")) return getPersonalAlbumById(id);
 
         return null;
     };
@@ -745,7 +745,7 @@ export const DataProvider = ({
         return album;
     };
 
-    const getPersonalAlbumsById = async (id: string) => {
+    const getPersonalAlbumById = async (id: string) => {
         const album = await readAlbum(id);
 
         return album;
@@ -1092,7 +1092,7 @@ export const DataProvider = ({
         const personalAlbumsArray: AlbumType[] = [];
 
         for (let i = 0; i < personalAlbumsIds.length; i++) {
-            const album = await getPersonalAlbumsById(personalAlbumsIds[i]);
+            const album = await getPersonalAlbumById(personalAlbumsIds[i]);
 
             personalAlbumsArray.push(album);
         }
@@ -1260,7 +1260,7 @@ export const DataProvider = ({
         const albumsThatDontContainSong: AlbumType[] = [];
 
         for (let i = 0; i < personalAlbumsIds.length; i++) {
-            const album = await getPersonalAlbumsById(personalAlbumsIds[i]);
+            const album = await getPersonalAlbumById(personalAlbumsIds[i]);
 
             if (album.songs.includes(song.id)) {
                 albumsThatContainSong.push(album);
@@ -1359,6 +1359,51 @@ export const DataProvider = ({
         }
     };
 
+    const getNotOwnedPersonalAlbum = async (
+        id: string
+    ): Promise<AlbumType | null> => {
+        if (!personalAlbumsIds || personalAlbumsIds.includes(id)) {
+            console.log("Album is already owned by the user.");
+            return null;
+        }
+
+        try {
+            const albumData = await getPersonalAlbumServer(id);
+
+            if (!albumData) {
+                console.log("Personal album not found on the server.");
+                return null;
+            }
+
+            const displayName = await getUserDisplayName(albumData.creator);
+
+            const newAlbum: AlbumType = {
+                id,
+                type: "personal",
+                title: albumData.title,
+                songs: albumData.songs,
+                creator: displayName,
+                favorite: false,
+                date: new Date().toISOString(),
+                cover: null,
+            };
+
+            await writePersonalAlbum(newAlbum);
+
+            setPersonalAlbumsIds((prevArray: any) => {
+                const updatedArray = [...prevArray, id];
+                updatePersonalAlbumsList(updatedArray);
+                return updatedArray;
+            });
+
+            console.log("Personal album added to user's list:", newAlbum);
+            return newAlbum;
+        } catch (error) {
+            console.error("Error fetching or saving personal album:", error);
+            return null;
+        }
+    };
+
     return (
         <DataContext.Provider
             value={{
@@ -1387,7 +1432,7 @@ export const DataProvider = ({
                 createPersonalAlbum,
                 writePersonalAlbum,
                 getPersonalAlbums,
-                getPersonalAlbumsById,
+                getPersonalAlbumById,
                 deletePersonalAlbum,
                 updatePersonalAlbum,
                 filterSongsNotInAlbum,
@@ -1400,6 +1445,7 @@ export const DataProvider = ({
                 syncPersonalAlbums,
                 updateData,
                 loadData,
+                getNotOwnedPersonalAlbum,
             }}>
             {children}
         </DataContext.Provider>

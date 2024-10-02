@@ -1,6 +1,5 @@
 import { EmailJSResponseStatus, send } from "@emailjs/react-native";
 import { t } from "@lingui/macro";
-import Constants from "expo-constants";
 import React, { useContext, useState } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import Button from "../components/wrapers/button";
@@ -13,7 +12,6 @@ import { UserContext } from "../context/user";
 const ContactUs = ({ navigation }: { navigation: any }) => {
     const { theme } = useContext(ThemeContext);
     const { user } = useContext(UserContext);
-    const { emailjsToken } = Constants.expoConfig?.extra || {};
 
     const [loading, setLoading] = useState<boolean>(false);
     const [message, setMessage] = useState<string>("");

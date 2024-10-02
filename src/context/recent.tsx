@@ -15,7 +15,7 @@ export const RecentProvider = ({
 
     const {
         getRandom,
-        getPersonalAlbumsById,
+        getPersonalAlbumById,
         getSongById,
         personalAlbumsIds,
         getAlbumById,
@@ -101,7 +101,7 @@ export const RecentProvider = ({
         const newRecent = await Promise.all(
             recent.map(async (item) => {
                 if (item.id.startsWith("P")) {
-                    const album = await getPersonalAlbumsById(item.id);
+                    const album = await getPersonalAlbumById(item.id);
 
                     if (album === null) return null;
 
@@ -127,7 +127,7 @@ export const RecentProvider = ({
         const newRecent = await Promise.all(
             recent.map(async (item) => {
                 if (item.id.startsWith("P")) {
-                    const album = await getPersonalAlbumsById(item.id);
+                    const album = await getPersonalAlbumById(item.id);
 
                     if (album === null) return null;
 
