@@ -5,6 +5,7 @@ import {
 import React, { useContext } from "react";
 import { ThemeContext } from "../context/theme";
 import AboutUs from "../pages/aboutUs";
+import Account from "../pages/account";
 import AddSong from "../pages/addSong";
 import AddToAlbum from "../pages/addToAlbum";
 import ContactUs from "../pages/contactUs";
@@ -39,6 +40,7 @@ const AppStack = () => {
             <S.Screen name="AddToAlbum" component={AddToAlbum} />
             <S.Screen name="ContactUs" component={ContactUs} />
             <S.Screen name="AboutUs" component={AboutUs} />
+            <S.Screen name="Account" component={Account} />
             <S.Screen
                 name="Slideshow"
                 component={Slideshow}

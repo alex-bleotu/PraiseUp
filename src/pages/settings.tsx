@@ -168,6 +168,27 @@ const Settings = ({ navigation }: { navigation: any }) => {
                             fullWidth
                             bold
                             backgroundColor={theme.colors.paper}
+                            text={t`Account details`}
+                            onPress={async () => {
+                                navigation.navigate("Account");
+                            }}
+                            color={theme.colors.text}
+                            center={false}
+                            fontSize={15}
+                            style={{ marginBottom: 10 }}
+                            icon={
+                                <FIcons
+                                    name="user"
+                                    size={26}
+                                    color={theme.colors.text}
+                                />
+                            }
+                        />
+                        <Button
+                            mode="contained"
+                            fullWidth
+                            bold
+                            backgroundColor={theme.colors.paper}
                             text={t`Reset your password`}
                             onPress={() => {
                                 navigation.navigate("ResetPassword");
@@ -189,7 +210,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                             fullWidth
                             bold
                             backgroundColor={theme.colors.paper}
-                            text={t`Invite Friends`}
+                            text={t`Invite friends`}
                             onPress={async () => {
                                 const url = "https://praiseup.alexbleotu.com";
 

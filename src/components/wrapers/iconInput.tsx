@@ -21,6 +21,7 @@ interface IconInputProps {
     keyboardType?: any;
     multiline?: boolean;
     lines?: number;
+    color?: string;
 }
 
 const IconInput = ({
@@ -40,8 +41,9 @@ const IconInput = ({
     keyboardType,
     multiline = false,
     lines,
+    color,
 }: IconInputProps) => {
-    const { theme } = useContext(ThemeContext);
+    const { theme, themeType, systemTheme } = useContext(ThemeContext);
 
     const [isFocused, setIsFocused] = useState(false);
     const [isHidden, setIsHidden] = useState(hidden);
@@ -72,7 +74,13 @@ const IconInput = ({
                     ]}>
                     <MCIcons
                         name={icon}
-                        color={theme.colors.grey}
+                        color={
+                            editable ||
+                            themeType === "dark" ||
+                            (systemTheme === "dark" && themeType === "system")
+                                ? theme.colors.grey
+                                : theme.colors.lightGrey
+                        }
                         style={{ marginLeft: 5 }}
                         size={26}
                     />
@@ -82,7 +90,11 @@ const IconInput = ({
                         styles.input,
                         {
                             letterSpacing,
-                            color: theme.colors.text,
+                            color: color
+                                ? color
+                                : editable
+                                ? theme.colors.text
+                                : theme.colors.grey,
                             fontSize: 16,
                             textAlignVertical: multiline ? "top" : undefined,
                         },

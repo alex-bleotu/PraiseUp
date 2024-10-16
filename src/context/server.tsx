@@ -1,4 +1,5 @@
 import * as FileSystem from "expo-file-system";
+import { updateProfile, verifyBeforeUpdateEmail } from "firebase/auth";
 import {
     arrayRemove,
     arrayUnion,
@@ -10,7 +11,7 @@ import {
 } from "firebase/firestore";
 import { getDownloadURL, getMetadata, getStorage, ref } from "firebase/storage";
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import { app, db } from "../../firebaseConfig";
+import { app, auth, db } from "../../firebaseConfig";
 import { UserContext } from "./user";
 
 export const ServerContext = createContext<any>(null);
@@ -20,7 +21,7 @@ export const ServerProvider = ({
 }: {
     children: ReactNode | ReactNode[];
 }) => {
-    const { user } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const [loading, setLoading] = useState<boolean>(false);
 
     const [error, setError] = useState<string | null>(null);
@@ -362,6 +363,42 @@ export const ServerProvider = ({
         }
     };
 
+    const updateUser = async (username: string, email: string) => {
+        if (!user || !auth.currentUser) return;
+
+        setLoading(true);
+        setError(null);
+
+        try {
+            if (email) {
+                try {
+                    await verifyBeforeUpdateEmail(auth.currentUser, email);
+                } catch (error: any) {
+                    console.log(error);
+                    return;
+                }
+            }
+
+            await updateProfile(auth.currentUser, {
+                displayName: username,
+            });
+
+            setUser({ ...user, displayName: username });
+
+            const userDocRef = doc(db, "users", user.uid);
+            await updateDoc(userDocRef, {
+                displayName: username,
+            });
+
+            console.log("User updated successfully");
+        } catch (error: any) {
+            console.error("Error updating user: ", error);
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <ServerContext.Provider
             value={{
@@ -384,6 +421,7 @@ export const ServerProvider = ({
                 setUserDisplayName,
                 getVersion,
                 removePersonalAlbum,
+                updateUser,
             }}>
             {children}
         </ServerContext.Provider>

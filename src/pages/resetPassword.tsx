@@ -11,14 +11,13 @@ import IconInput from "../components/wrapers/iconInput";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
 import { AuthContext } from "../context/auth";
-import { LoadingContext } from "../context/loading";
 import { ThemeContext } from "../context/theme";
 
 const ResetPassword = ({ navigation }: { navigation: any }) => {
-    const { loading } = useContext(LoadingContext);
     const { updatePassword } = useContext(AuthContext);
     const { theme } = useContext(ThemeContext);
 
+    const [loading, setLoading] = useState<boolean>(false);
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [newPasswordError, setNewPasswordError] = useState<boolean>(false);
@@ -130,7 +129,7 @@ const ResetPassword = ({ navigation }: { navigation: any }) => {
                             fontSize={14}
                             bold
                             color={theme.colors.textOnPrimary}
-                            disabled={!oldPassword || !newPassword}
+                            disabled={!oldPassword || !newPassword || loading}
                             style={{
                                 paddingVertical: loading ? 13 : 14.5,
                             }}
@@ -146,6 +145,7 @@ const ResetPassword = ({ navigation }: { navigation: any }) => {
                             onPress={() => {
                                 setError("");
                                 setNewPasswordError(false);
+                                setLoading(true);
 
                                 if (loading) return;
 
@@ -158,6 +158,7 @@ const ResetPassword = ({ navigation }: { navigation: any }) => {
                                             setError(
                                                 t`The password has been changed successfully.`
                                             );
+                                            setLoading(false);
                                         })
                                         .catch((error: any) => {
                                             if (
@@ -180,6 +181,7 @@ const ResetPassword = ({ navigation }: { navigation: any }) => {
                                                 setError(
                                                     t`Something went wrong.`
                                                 );
+                                            setLoading(false);
                                         });
                                 }
                             }}
