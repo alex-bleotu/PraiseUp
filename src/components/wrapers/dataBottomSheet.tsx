@@ -48,6 +48,7 @@ const DataBottomSheet = ({
         updatePersonalAlbum,
         removeSongFromPersonalAlbum,
         getFavoriteSongsAlbum,
+        removePersonalAlbumFromUser,
     } = useContext(DataContext);
     const { refresh, updateRefresh } = useContext(RefreshContext);
     const { updateRecent } = useContext(RecentContext);
@@ -55,6 +56,7 @@ const DataBottomSheet = ({
 
     const [data, setData] = useState<SongType | AlbumType | null>(null);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false);
     const [editAlbum, setEditAlbum] = useState(false);
     const [name, setName] = useState("");
 
@@ -85,7 +87,7 @@ const DataBottomSheet = ({
                             ? 4
                             : data?.type === "personal" &&
                               data?.creator !== user.uid
-                            ? 1
+                            ? 2
                             : 3
                         : 2
                 }>
@@ -245,7 +247,7 @@ const DataBottomSheet = ({
                             </TouchableOpacity>
                         ) : (
                             <>
-                                {data.creator === user.uid && (
+                                {data.creator === user.uid ? (
                                     <>
                                         <TouchableOpacity
                                             activeOpacity={theme.activeOpacity}
@@ -286,7 +288,30 @@ const DataBottomSheet = ({
                                                     {t`Delete album`}
                                                 </Text>
                                             </View>
-                                        </TouchableOpacity>{" "}
+                                        </TouchableOpacity>
+                                    </>
+                                ) : (
+                                    <>
+                                        <TouchableOpacity
+                                            activeOpacity={theme.activeOpacity}
+                                            onPress={async () => {
+                                                setIsRemoveModalOpen(true);
+                                            }}>
+                                            <View style={styles.button}>
+                                                <MCIcons
+                                                    name={
+                                                        "heart-remove-outline"
+                                                    }
+                                                    size={30}
+                                                    color={theme.colors.text}
+                                                />
+                                                <Text
+                                                    fontSize={17}
+                                                    style={styles.text}>
+                                                    {t`Remove album`}
+                                                </Text>
+                                            </View>
+                                        </TouchableOpacity>
                                     </>
                                 )}
                             </>
@@ -395,7 +420,7 @@ const DataBottomSheet = ({
                                 color={theme.colors.textVariant}
                                 center
                                 style={{
-                                    width: 250,
+                                    width: 220,
                                 }}>{t`Are you sure you want to delete this album?`}</Text>
                         </View>
                     </View>
@@ -453,6 +478,86 @@ const DataBottomSheet = ({
                                     center
                                     color={theme.colors.white}>
                                     {t`Delete`}
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
+                <Modal
+                    visible={isRemoveModalOpen}
+                    onClose={() => {}}
+                    setVisible={setIsRemoveModalOpen}>
+                    <View>
+                        <View
+                            style={{
+                                width: "100%",
+                                alignItems: "center",
+                                paddingHorizontal: 20,
+                                paddingVertical: 10,
+                            }}>
+                            <Text
+                                fontSize={18}
+                                color={theme.colors.textVariant}
+                                center
+                                style={{
+                                    width: 220,
+                                }}>{t`Are you sure you want to remove this album from your library?`}</Text>
+                        </View>
+                    </View>
+                    <View
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            marginTop: 30,
+                        }}>
+                        <View style={{ width: "47%" }}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    setIsRemoveModalOpen(false);
+                                }}
+                                activeOpacity={theme.activeOpacity}
+                                style={[
+                                    styles.buttonModal,
+                                    {
+                                        backgroundColor: theme.colors.darkPaper,
+                                    },
+                                ]}>
+                                <Text fontSize={14} bold upper center>
+                                    {t`Cancel`}
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{ width: "47%" }}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    if (data !== null) {
+                                        removePersonalAlbumFromUser(
+                                            data.id
+                                        ).then(() => {
+                                            updateRecent();
+                                            updateRefresh();
+                                            onClose();
+                                            setIsRemoveModalOpen(false);
+                                            extraActions && extraActions();
+                                        });
+                                    }
+                                }}
+                                activeOpacity={theme.activeOpacity}
+                                style={[
+                                    styles.buttonModal,
+                                    {
+                                        backgroundColor: theme.colors.danger,
+                                    },
+                                ]}>
+                                <Text
+                                    fontSize={14}
+                                    bold
+                                    upper
+                                    center
+                                    color={theme.colors.white}>
+                                    {t`Remove`}
                                 </Text>
                             </TouchableOpacity>
                         </View>

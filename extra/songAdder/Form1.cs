@@ -10,8 +10,21 @@ using System.Threading.Tasks;
 
 namespace PraiseUp {
     public partial class Form1 : Form {
+        string token;
+
         public Form1() {
             InitializeComponent();
+
+            string filePath = "github_oauth_token.txt";
+
+            if (!File.Exists(filePath)) {
+                File.WriteAllText(filePath, "");
+            }
+
+            token = File.ReadAllText(filePath);
+
+            textBox12.Text = token;
+
 
             textBox1.TabIndex = 0;
             textBox2.TabIndex = 1;
@@ -219,7 +232,6 @@ namespace PraiseUp {
                         }
                     }
 
-
                     var extraData = new ExtraData {
                         link = textBox8.Text.Length == 0 ? null : textBox8.Text.Trim(),
                         year = textBox9.Text.Length == 0 ? null : textBox9.Text.Trim(),
@@ -285,7 +297,7 @@ namespace PraiseUp {
         }
 
         private async Task<bool> CheckIfGistExists(string fileName) {
-            string githubToken = Environment.GetEnvironmentVariable("GITHUB_OAUTH_TOKEN");
+            string githubToken = token;
 
             if (string.IsNullOrEmpty(githubToken)) {
                 MessageBox.Show("GitHub OAuth token is missing!");
@@ -322,7 +334,7 @@ namespace PraiseUp {
 
 
         private async Task<string> UploadJsonToGist(string fileName, string jsonData) {
-            string githubToken = Environment.GetEnvironmentVariable("GITHUB_OAUTH_TOKEN");
+            string githubToken = token;
 
             if (string.IsNullOrEmpty(githubToken)) {
                 MessageBox.Show("GitHub OAuth token is missing!");
@@ -405,8 +417,6 @@ namespace PraiseUp {
             return result.ToString();
         }
 
-
-
         private void button3_Click(object sender, EventArgs e) {
             try {
                 if (textBox5.Text.Length == 0) return;
@@ -418,7 +428,6 @@ namespace PraiseUp {
                 else textBox7.Text = textBox5.Text;
 
                 textBox7.Text = InsertNewLines(textBox7.Text);
-                textBox7.Text = RemoveExtraChords(textBox7.Text);
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);
             }
@@ -440,12 +449,19 @@ namespace PraiseUp {
                     chord.Append(text[i]);
                     i++;
 
-                    result.Append(chord);
-
-                    if (char.IsLower(lastChar) && char.IsUpper(text[i]) || Regex.IsMatch(lastChar.ToString(), @"[`”""'.!?]") && char.IsUpper(text[i])) {
+                    if (char.IsLower(lastChar) && char.IsUpper(text[i]) || 
+                        Regex.IsMatch(lastChar.ToString(), @"[”""'.!?]") && char.IsUpper(text[i]) || 
+                        text[i] == '-' && i + 1 < text.Length && text[i + 1] == '-' && Regex.IsMatch(lastChar.ToString(), @"[”""'.!?]"))
+                    {
                         result.Append("\r\n\r\n");
                     }
-                } else if (char.IsLower(lastChar) && char.IsUpper(text[i]) || Regex.IsMatch(lastChar.ToString(), @"[`”""'.!?]") && char.IsUpper(text[i])) {
+
+                    result.Append(chord);
+                }
+                else if (char.IsLower(lastChar) && char.IsUpper(text[i]) || 
+                    Regex.IsMatch(lastChar.ToString(), @"[”""'.!?]") && char.IsUpper(text[i]) || 
+                    text[i] == '-' && i + 1 < text.Length && text[i + 1] == '-' && i > 1 && Regex.IsMatch(lastChar.ToString(), @"[”""'.!?]")) 
+                {
                     result.Append("\r\n\r\n");
                 }
 
@@ -455,6 +471,7 @@ namespace PraiseUp {
 
             return result.ToString();
         }
+
 
         string RemoveExtraChords(string text) {
             StringBuilder result = new StringBuilder();
@@ -599,7 +616,6 @@ namespace PraiseUp {
             var content = new StringContent(JsonConvert.SerializeObject(gistUpdateData), Encoding.UTF8, "application/json");
 
             using (HttpClient client = new HttpClient()) {
-                string token = Environment.GetEnvironmentVariable("GITHUB_OAUTH_TOKEN");
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
                 client.DefaultRequestHeaders.Add("User-Agent", "CSharp-App");
 
@@ -622,7 +638,7 @@ namespace PraiseUp {
 
 
         private async Task<string> GetGistIdByFileName(string fileName) {
-            string githubToken = Environment.GetEnvironmentVariable("GITHUB_OAUTH_TOKEN");
+            string githubToken = token;
 
             if (string.IsNullOrEmpty(githubToken)) {
                 MessageBox.Show("GitHub OAuth token is missing!");
@@ -655,6 +671,17 @@ namespace PraiseUp {
             }
 
             return null;
+        }
+
+        private void textBox12_TextChanged(object sender, EventArgs e) {
+            string pattern = @"^github_pat_[A-Za-z0-9_]{22}_[A-Za-z0-9_]{59}$";
+            Regex regex = new Regex(pattern);
+
+            if (regex.IsMatch(textBox12.Text)) {
+                string filePath = "github_oauth_token.txt";
+
+                File.WriteAllText(filePath, textBox12.Text);
+            }
         }
     }
 }

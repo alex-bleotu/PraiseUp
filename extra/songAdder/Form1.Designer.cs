@@ -53,6 +53,8 @@
             this.label13 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
+            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBox1
@@ -169,7 +171,7 @@
             // 
             // textBox7
             // 
-            this.textBox7.Location = new System.Drawing.Point(22, 337);
+            this.textBox7.Location = new System.Drawing.Point(21, 337);
             this.textBox7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox7.Multiline = true;
             this.textBox7.Name = "textBox7";
@@ -333,11 +335,31 @@
     "\n- adauga S1, S2, R etc";
             this.label12.Visible = false;
             // 
+            // textBox12
+            // 
+            this.textBox12.Location = new System.Drawing.Point(459, 47);
+            this.textBox12.Multiline = true;
+            this.textBox12.Name = "textBox12";
+            this.textBox12.Size = new System.Drawing.Size(230, 73);
+            this.textBox12.TabIndex = 31;
+            this.textBox12.TextChanged += new System.EventHandler(this.textBox12_TextChanged);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(462, 18);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(227, 16);
+            this.label14.TabIndex = 32;
+            this.label14.Text = "Schimba doar daca primesti altul nou";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(701, 687);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.textBox12);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label10);
@@ -369,7 +391,7 @@
             this.Controls.Add(this.button5);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "PraiseUp";
             this.ResumeLayout(false);
@@ -408,6 +430,8 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.Label label14;
     }
 }
 

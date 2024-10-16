@@ -80,13 +80,13 @@ const AlbumCover = ({
                     ellipsizeMode="tail">
                     {album.id !== "F" ? album.title : t`Favorite songs`}
                 </Text>
-                {album.creator && !vertical && (
+                {album.creatorName && !vertical && (
                     <Text
                         fontSize={14}
                         center={vertical}
                         numberOfLines={1}
                         ellipsizeMode="tail">
-                        {album.creator}
+                        {album.creatorName}
                     </Text>
                 )}
             </View>

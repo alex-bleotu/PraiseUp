@@ -69,6 +69,7 @@ export const DataProvider = ({
         saveCover,
         deleteCover,
         getUserDisplayName,
+        removePersonalAlbum,
     } = useContext(ServerContext);
     const { resetConstants } = useContext(ConstantsContext);
     const { resetTutorial } = useContext(TutorialContext);
@@ -1106,7 +1107,7 @@ export const DataProvider = ({
         return personalAlbumsArray;
     };
 
-    const deletePersonalAlbum = async (id: string) => {
+    const deletePersonalAlbum = async (id: string, server: boolean = true) => {
         if (!personalAlbumsIds) return;
 
         try {
@@ -1116,7 +1117,7 @@ export const DataProvider = ({
                 personalAlbumsIds.filter((albumId: any) => albumId !== id)
             );
 
-            deletePersonalAlbumServer(id);
+            if (server) deletePersonalAlbumServer(id);
         } catch (error) {
             console.error("Error deleting personal album file:", error);
         }
@@ -1316,28 +1317,23 @@ export const DataProvider = ({
         try {
             const userData = await getUserData(passedUser);
 
-            if (
-                !userData ||
-                !userData.personalAlbumsIds ||
-                !personalAlbumsIds
-            ) {
+            if (!userData || !userData.personalAlbumsIds || !personalAlbumsIds)
                 return;
-            }
 
-            for (let i = 0; i < personalAlbumsIds.length; i++) {
-                if (
-                    !userData.personalAlbumsIds.includes(personalAlbumsIds[i])
-                ) {
+            for (let i = 0; i < personalAlbumsIds.length; i++)
+                if (!userData.personalAlbumsIds.includes(personalAlbumsIds[i]))
                     await removeId(personalAlbumsIds[i]);
-                }
-            }
 
-            setPersonalAlbumsIds(userData.personalAlbumsIds);
+            const ids = userData.personalAlbumsIds;
 
             const albumPromises = userData.personalAlbumsIds.map(
                 async (id: string) => {
                     const data = await getPersonalAlbumServer(id);
-                    if (!data) return null;
+                    if (!data) {
+                        removePersonalAlbum(id);
+                        ids.splice(ids.indexOf(id), 1);
+                        return null;
+                    }
 
                     const displayName = await getUserDisplayName(data.creator);
 
@@ -1346,7 +1342,7 @@ export const DataProvider = ({
                         type: "personal",
                         title: data.title,
                         songs: data.songs,
-                        creator: user.uid,
+                        creator: data.creator,
                         creatorName: displayName,
                         favorite: false,
                         date: new Date().toISOString(),
@@ -1357,6 +1353,8 @@ export const DataProvider = ({
                     return album;
                 }
             );
+
+            setPersonalAlbumsIds(ids);
 
             setSyncLoading(false);
 
@@ -1398,17 +1396,25 @@ export const DataProvider = ({
 
             await writePersonalAlbum(newAlbum);
 
-            setPersonalAlbumsIds((prevArray: any) => {
-                const updatedArray = [...prevArray, id];
-                updatePersonalAlbumsList(updatedArray);
-                return updatedArray;
-            });
-
             console.log("Personal album added to user's list:", newAlbum);
             return newAlbum;
         } catch (error) {
             console.error("Error fetching or saving personal album:", error);
             return null;
+        }
+    };
+
+    const removePersonalAlbumFromUser = async (id: string) => {
+        if (!personalAlbumsIds || !personalAlbumsIds.includes(id)) {
+            console.log("Album is not owned by the user.");
+            return;
+        }
+
+        try {
+            await deletePersonalAlbum(id, false);
+            await removePersonalAlbum(id);
+        } catch (error) {
+            console.error("Error removing personal album from user:", error);
         }
     };
 
@@ -1454,6 +1460,7 @@ export const DataProvider = ({
                 updateData,
                 loadData,
                 getNotOwnedPersonalAlbum,
+                removePersonalAlbumFromUser,
             }}>
             {children}
         </DataContext.Provider>

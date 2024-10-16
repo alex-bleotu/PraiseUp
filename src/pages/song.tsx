@@ -350,7 +350,10 @@ const Song = ({ route, navigation }: SongProps) => {
 
         const load = async () => {
             if (id) {
-                setSong(await getSongById(id));
+                const song = await getSongById(id);
+
+                if (song) setSong(song);
+                else navigation.navigate("Home");
             }
         };
 
@@ -408,7 +411,8 @@ const Song = ({ route, navigation }: SongProps) => {
         );
     }, [song?.lyrics, lyricsSize, steps, theme, chords]);
 
-    if (song === null || song === undefined) return <Loading />;
+    if (song === null || song === undefined)
+        return <Loading text={t`Loading the song`} />;
 
     return (
         <StackPage

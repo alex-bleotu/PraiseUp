@@ -77,7 +77,7 @@ const Album = ({ route, navigation }: AlbumProps) => {
                 if (album) {
                     setAlbum(album);
                     updateRefresh();
-                }
+                } else navigation.navigate("Home");
             };
 
             load();
@@ -155,7 +155,8 @@ const Album = ({ route, navigation }: AlbumProps) => {
         return [];
     }, [songs, sortBy]);
 
-    if (album === null || album === undefined) return <Loading />;
+    if (album === null || album === undefined)
+        return <Loading text={t`Loading the album`} />;
 
     return (
         <StackPage

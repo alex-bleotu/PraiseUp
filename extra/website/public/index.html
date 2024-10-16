@@ -105,15 +105,19 @@
                 const segments = url.split("/");
 
                 const uuidRegex =
-                    /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+                    /^[AaPpSs]{1}[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 
                 if (
                     segments.length >= 3 &&
-                    (segments[1] === "song" || segments[1] === "album") &&
+                    (segments[1] === "song" ||
+                        segments[1] === "album" ||
+                        segments[1] === "personal") &&
                     uuidRegex.test(segments[2])
                 ) {
                     const id = segments[2];
-                    const scheme = segments[1];
+                    let scheme = segments[1];
+
+                    if (scheme === "personal") scheme = "album";
 
                     if (navigator.userAgent.includes("Android")) {
                         window.location.href = `praiseup://home/${scheme}/${id}`;
@@ -134,7 +138,7 @@
             <h1>Redirecting to PraiseUp...</h1>
             <div id="loading-spinner"></div>
             <p>
-                If you are not redirected, please ensure the app is installed.
+                If you are not redirected, please ensure PraiseUp is installed.
             </p>
         </div>
     </body>

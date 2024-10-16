@@ -71,6 +71,7 @@ const Library = ({ navigation }: { navigation: any }) => {
                     creator: "",
                     songs: [],
                     favorite: false,
+                    creatorName: "",
                     date: "",
                     cover: null,
                 };
@@ -90,10 +91,10 @@ const Library = ({ navigation }: { navigation: any }) => {
     }, [loading, refresh, sortBy]);
 
     const sortAlbums = (albumsList: AlbumType[]) => {
-        const favorite = albumsList.find((album) => album.type === "favorite");
-        const button = albumsList.find((album) => album.type === "extra");
+        const favorite = albumsList.find((album) => album?.type === "favorite");
+        const button = albumsList.find((album) => album?.type === "extra");
         const rest = albumsList.filter(
-            (album) => album.type !== "favorite" && album.type !== "extra"
+            (album) => album?.type !== "favorite" && album?.type !== "extra"
         );
 
         if (sortBy === "date") {

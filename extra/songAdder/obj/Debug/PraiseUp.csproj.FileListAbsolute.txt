@@ -36,3 +36,28 @@ D:\Projects\GitHub\PraiseUp\extra\PraiseUp - Song Adder\bin\Debug\System.Runtime
 D:\Projects\GitHub\PraiseUp\extra\PraiseUp - Song Adder\bin\Debug\System.Threading.Tasks.Extensions.xml
 D:\Projects\GitHub\PraiseUp\extra\PraiseUp - Song Adder\bin\Debug\System.ValueTuple.xml
 D:\Projects\GitHub\PraiseUp\extra\PraiseUp - Song Adder\obj\Debug\PraiseUp.csproj.CopyComplete
+D:\Projects\GitHub\PraiseUp\extra\songAdder\obj\Debug\PraiseUp.csproj.AssemblyReference.cache
+D:\Projects\GitHub\PraiseUp\extra\songAdder\obj\Debug\PraiseUp.Form1.resources
+D:\Projects\GitHub\PraiseUp\extra\songAdder\obj\Debug\PraiseUp.Properties.Resources.resources
+D:\Projects\GitHub\PraiseUp\extra\songAdder\obj\Debug\PraiseUp.csproj.GenerateResource.cache
+D:\Projects\GitHub\PraiseUp\extra\songAdder\obj\Debug\PraiseUp.csproj.CoreCompileInputs.cache
+D:\Projects\GitHub\PraiseUp\extra\songAdder\obj\Debug\PraiseUp.exe
+D:\Projects\GitHub\PraiseUp\extra\songAdder\obj\Debug\PraiseUp.pdb
+D:\Projects\GitHub\PraiseUp\extra\songAdder\bin\Debug\PraiseUp.exe.config
+D:\Projects\GitHub\PraiseUp\extra\songAdder\bin\Debug\PraiseUp.exe
+D:\Projects\GitHub\PraiseUp\extra\songAdder\bin\Debug\PraiseUp.pdb
+D:\Projects\GitHub\PraiseUp\extra\songAdder\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Projects\GitHub\PraiseUp\extra\songAdder\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Projects\GitHub\PraiseUp\extra\songAdder\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\GitHub\PraiseUp\extra\songAdder\bin\Debug\System.CodeDom.dll
+D:\Projects\GitHub\PraiseUp\extra\songAdder\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\Projects\GitHub\PraiseUp\extra\songAdder\bin\Debug\System.Threading.Tasks.Extensions.dll
+D:\Projects\GitHub\PraiseUp\extra\songAdder\bin\Debug\System.ValueTuple.dll
+D:\Projects\GitHub\PraiseUp\extra\songAdder\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+D:\Projects\GitHub\PraiseUp\extra\songAdder\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.xml
+D:\Projects\GitHub\PraiseUp\extra\songAdder\bin\Debug\Newtonsoft.Json.xml
+D:\Projects\GitHub\PraiseUp\extra\songAdder\bin\Debug\System.CodeDom.xml
+D:\Projects\GitHub\PraiseUp\extra\songAdder\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+D:\Projects\GitHub\PraiseUp\extra\songAdder\bin\Debug\System.Threading.Tasks.Extensions.xml
+D:\Projects\GitHub\PraiseUp\extra\songAdder\bin\Debug\System.ValueTuple.xml
+D:\Projects\GitHub\PraiseUp\extra\songAdder\obj\Debug\PraiseUp.csproj.Up2Date

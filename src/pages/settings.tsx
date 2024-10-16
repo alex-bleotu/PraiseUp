@@ -239,7 +239,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                         />
                     }
                 />
-                <Button
+                {/* <Button
                     mode="contained"
                     fullWidth
                     bold
@@ -259,7 +259,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                             color={theme.colors.text}
                         />
                     }
-                />
+                /> */}
                 <Button
                     mode="contained"
                     fullWidth
@@ -734,7 +734,7 @@ Seeking stories yet untold.`}
                             color={theme.colors.textVariant}
                             center
                             style={{
-                                width: 250,
+                                width: 220,
                             }}>{t`Are you sure you want to leave?`}</Text>
                     </View>
                 </View>
@@ -802,14 +802,14 @@ Seeking stories yet untold.`}
                             color={theme.colors.textVariant}
                             center
                             style={{
-                                width: 250,
+                                width: 220,
                             }}>{t`Are you sure you want to exit guest mode?`}</Text>
                         <Text
                             fontSize={18}
                             color={theme.colors.textVariant}
                             center
                             style={{
-                                width: 250,
+                                width: 220,
                                 marginTop: 5,
                             }}>{t`All your data will be lost.`}</Text>
                     </View>
@@ -884,14 +884,14 @@ Seeking stories yet untold.`}
                             color={theme.colors.textVariant}
                             center
                             style={{
-                                width: 250,
+                                width: 220,
                             }}>{t`Deleting your account will lose all your data.`}</Text>
                         <Text
                             fontSize={18}
                             color={theme.colors.textVariant}
                             center
                             style={{
-                                width: 250,
+                                width: 220,
                                 marginTop: 20,
                             }}>
                             {t`Type your`}

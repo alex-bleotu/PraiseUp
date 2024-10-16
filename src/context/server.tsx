@@ -37,7 +37,7 @@ export const ServerProvider = ({
                 favorites: arrayUnion(id),
             });
         } catch (err: any) {
-            console.error("Error adding favorite: ", err);
+            console.log("Error adding favorite: ", err);
             setError(err.message);
         } finally {
             setLoading(false);
@@ -56,7 +56,7 @@ export const ServerProvider = ({
                 favorites: arrayRemove(id),
             });
         } catch (err: any) {
-            console.error("Error removing favorite: ", err);
+            console.log("Error removing favorite: ", err);
             setError(err.message);
         } finally {
             setLoading(false);
@@ -77,11 +77,11 @@ export const ServerProvider = ({
                 const userData = userDoc.data();
                 return userData?.favorites || [];
             } else {
-                console.error("User document does not exist.");
+                console.log("User document does not exist.");
                 return [];
             }
         } catch (err: any) {
-            console.error("Error fetching favorites: ", err);
+            console.log("Error fetching favorites: ", err);
             setError(err.message);
             return [];
         } finally {
@@ -112,7 +112,7 @@ export const ServerProvider = ({
                 personalAlbumsIds: arrayUnion(albumId),
             });
         } catch (err: any) {
-            console.error("Error adding personal album: ", err);
+            console.log("Error adding personal album: ", err);
             setError(err.message);
         } finally {
             setLoading(false);
@@ -136,7 +136,7 @@ export const ServerProvider = ({
                 ...(songs && { songs }),
             });
         } catch (err: any) {
-            console.error("Error updating personal album: ", err);
+            console.log("Error updating personal album: ", err);
             setError(err.message);
         } finally {
             setLoading(false);
@@ -156,7 +156,7 @@ export const ServerProvider = ({
                 personalAlbumsIds: personalAlbumsIds,
             });
         } catch (err: any) {
-            console.error("Error syncing personal albums IDs: ", err);
+            console.log("Error syncing personal albums IDs: ", err);
             setError(err.message);
         } finally {
             setLoading(false);
@@ -177,11 +177,11 @@ export const ServerProvider = ({
                 const userData = userDoc.data();
                 return userData?.personalAlbumsIds || [];
             } else {
-                console.error("User document does not exist.");
+                console.log("User document does not exist.");
                 return [];
             }
         } catch (err: any) {
-            console.error("Error fetching personal albums IDs: ", err);
+            console.log("Error fetching personal albums IDs: ", err);
             setError(err.message);
             return [];
         } finally {
@@ -204,7 +204,7 @@ export const ServerProvider = ({
                 personalAlbumsIds: arrayRemove(albumId),
             });
         } catch (err: any) {
-            console.error("Error deleting personal album: ", err);
+            console.log("Error deleting personal album: ", err);
             setError(err.message);
         } finally {
             setLoading(false);
@@ -224,11 +224,11 @@ export const ServerProvider = ({
             if (personalAlbumDoc.exists()) {
                 return personalAlbumDoc.data();
             } else {
-                console.error("Personal album document does not exist.");
+                console.log("Personal album document does not exist.");
                 return null;
             }
         } catch (err: any) {
-            console.error("Error fetching personal album: ", err);
+            console.log("Error fetching personal album: ", err);
             setError(err.message);
             return null;
         } finally {
@@ -250,7 +250,7 @@ export const ServerProvider = ({
 
             return data;
         } catch (err: any) {
-            console.error("Error checking for updates: ", err);
+            console.log("Error checking for updates: ", err);
             return null;
         }
     };
@@ -272,7 +272,7 @@ export const ServerProvider = ({
                 return null;
             }
         } catch (err: any) {
-            console.error("Error checking for updates: ", err);
+            console.log("Error checking for updates: ", err);
             return null;
         }
     };
@@ -291,7 +291,7 @@ export const ServerProvider = ({
 
             return uri;
         } catch (err: any) {
-            console.error("Error fetching cover: ", err);
+            console.log("Error fetching cover: ", err);
             return null;
         }
     };
@@ -300,7 +300,7 @@ export const ServerProvider = ({
         try {
             await FileSystem.deleteAsync(uri);
         } catch (err: any) {
-            console.error("Error deleting cover: ", err);
+            console.log("Error deleting cover: ", err);
         }
     };
 
@@ -314,7 +314,7 @@ export const ServerProvider = ({
             const userData = userDoc.data();
             return userData;
         } else {
-            console.error("User document does not exist.");
+            console.log("User document does not exist.");
             return null;
         }
     };
@@ -330,11 +330,11 @@ export const ServerProvider = ({
                 const userData = userDoc.data();
                 return userData?.displayName || null;
             } else {
-                console.error("User document does not exist.");
+                console.log("User document does not exist.");
                 return null;
             }
         } catch (error) {
-            console.error("Error fetching user:", error);
+            console.log("Error fetching user:", error);
         }
     };
 
@@ -345,7 +345,20 @@ export const ServerProvider = ({
                 displayName: displayName,
             });
         } catch (error) {
-            console.error("Error fetching user:", error);
+            console.log("Error fetching user:", error);
+        }
+    };
+
+    const removePersonalAlbum = async (albumId: string) => {
+        if (!user) return;
+
+        try {
+            const userDocRef = doc(db, "users", user.uid);
+            await updateDoc(userDocRef, {
+                personalAlbumsIds: arrayRemove(albumId),
+            });
+        } catch (error) {
+            console.log("Error removing personal album from user:", error);
         }
     };
 
@@ -370,6 +383,7 @@ export const ServerProvider = ({
                 getUserDisplayName,
                 setUserDisplayName,
                 getVersion,
+                removePersonalAlbum,
             }}>
             {children}
         </ServerContext.Provider>

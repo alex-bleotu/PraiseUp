@@ -10,6 +10,10 @@
             {
                 "source": "/album/**",
                 "destination": "/index.html"
+            },
+            {
+                "source": "/personal/**",
+                "destination": "/index.html"
             }
         ],
         "headers": [
