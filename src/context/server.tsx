@@ -399,6 +399,18 @@ export const ServerProvider = ({
         }
     };
 
+    const checkIfUserExists = async () => {
+        try {
+            const userDocRef = doc(db, "users", user.uid);
+            const userDoc = await getDoc(userDocRef);
+
+            return userDoc.exists();
+        } catch (error) {
+            console.log("Error fetching user:", error);
+            return false;
+        }
+    };
+
     return (
         <ServerContext.Provider
             value={{
@@ -422,6 +434,7 @@ export const ServerProvider = ({
                 getVersion,
                 removePersonalAlbum,
                 updateUser,
+                checkIfUserExists,
             }}>
             {children}
         </ServerContext.Provider>

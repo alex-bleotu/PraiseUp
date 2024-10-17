@@ -40,7 +40,7 @@ const ImageButton = ({
                     <ActivityIndicator
                         animating={true}
                         size={22}
-                        color={theme.colors.textOnPrimary}
+                        color={theme.colors.grey}
                         style={styles.image}
                     />
                 ) : (

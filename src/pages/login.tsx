@@ -133,7 +133,7 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                                     <ActivityIndicator
                                         animating={true}
                                         size={22}
-                                        color={theme.colors.textOnPrimary}
+                                        color={theme.colors.grey}
                                     />
                                 )
                             }

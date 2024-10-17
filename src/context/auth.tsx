@@ -37,12 +37,13 @@ export const AuthProvider = ({
 }) => {
     const { clearData, syncFavorites, syncPersonalAlbums } =
         useContext(DataContext);
-    const { setUserDisplayName } = useContext(ServerContext);
+    const { setUserDisplayName, getUserDisplayName } =
+        useContext(ServerContext);
     const { setUser } = useContext(UserContext);
     const { setLoading, setSyncLoading } = useContext(LoadingContext);
     const { activateTutorial } = useContext(TutorialContext);
     const { webClientId, iosClientId } = Constants.expoConfig?.extra || {};
-    const { deleteRecent } = useContext(RecentContext);
+    const { deleteRecent, fullyUpdateRecent } = useContext(RecentContext);
 
     const configureGoogleSignIn = async () => {
         GoogleSignin.configure({
@@ -98,6 +99,7 @@ export const AuthProvider = ({
                 setSyncLoading(true);
 
                 setUser(response.user);
+                fullyUpdateRecent([]);
 
                 await syncFavorites(response.user);
                 await syncPersonalAlbums(response.user);
@@ -161,6 +163,7 @@ export const AuthProvider = ({
                 await initializeUserDocument(userCredential.user.uid);
 
                 setUser(userCredential.user);
+                fullyUpdateRecent([]);
 
                 resolve(userCredential.user);
             } catch (error) {
@@ -332,6 +335,13 @@ export const AuthProvider = ({
                     googleCredential
                 );
 
+                const savedName = await getUserDisplayName(response.user.uid);
+
+                if (!savedName)
+                    await updateProfile(response.user, {
+                        displayName: user.user.name,
+                    });
+
                 const userDocRef = doc(db, "users", response.user.uid);
                 const userDoc = await getDoc(userDocRef);
 
@@ -339,9 +349,13 @@ export const AuthProvider = ({
                     await initializeUserDocument(response.user.uid);
                 }
 
+                if (!savedName)
+                    await setUserDisplayName(response.user.uid, user.user.name);
+
                 setSyncLoading(true);
 
                 setUser(response.user);
+                fullyUpdateRecent([]);
 
                 await syncFavorites(response.user);
                 await syncPersonalAlbums(response.user);
@@ -389,6 +403,7 @@ export const AuthProvider = ({
                     auth,
                     email
                 );
+
                 if (signInMethods.length > 0) {
                     reject(
                         "This Google account is already linked with another account."
@@ -403,6 +418,15 @@ export const AuthProvider = ({
                         googleCredential
                     );
 
+                    const savedName = await getUserDisplayName(
+                        response.user.uid
+                    );
+
+                    if (!savedName)
+                        await updateProfile(response.user, {
+                            displayName: userInfo.user.name,
+                        });
+
                     const userDocRef = doc(db, "users", response.user.uid);
                     const userDoc = await getDoc(userDocRef);
 
@@ -411,6 +435,13 @@ export const AuthProvider = ({
                     }
 
                     setUser(response.user);
+                    fullyUpdateRecent([]);
+
+                    if (!savedName)
+                        await setUserDisplayName(
+                            response.user.uid,
+                            userInfo.user.name
+                        );
 
                     resolve(response);
                 } else {

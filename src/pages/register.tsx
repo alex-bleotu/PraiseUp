@@ -110,6 +110,7 @@ const Register = ({ navigation }: { navigation: any }) => {
                             }
                             style={{
                                 paddingVertical: loading ? 13 : 14.5,
+                                marginTop: 20,
                             }}
                             icon={
                                 loading && (

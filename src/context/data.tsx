@@ -10,6 +10,7 @@ import React, {
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import bundle from "../../assets/bundle.json";
+import { auth } from "../../firebaseConfig";
 import { coversList } from "../utils/covers";
 import { ConstantsContext } from "./constants";
 import { HistoryContext } from "./history";
@@ -70,6 +71,7 @@ export const DataProvider = ({
         deleteCover,
         getUserDisplayName,
         removePersonalAlbum,
+        checkIfUserExists,
     } = useContext(ServerContext);
     const { resetConstants } = useContext(ConstantsContext);
     const { resetTutorial } = useContext(TutorialContext);
@@ -224,6 +226,14 @@ export const DataProvider = ({
             const loaded = await AsyncStorage.getItem("loaded");
 
             if (hasInternet) {
+                if (!(await checkIfUserExists())) {
+                    console.log("User not found");
+                    await auth.signOut();
+                    await clearData();
+                    setUser(null);
+                    return;
+                }
+
                 if (loaded === null) await firstLoad();
                 else await checkForUpdates(lists.songs, lists.albums);
             } else console.warn("No internet connection");
@@ -1233,11 +1243,9 @@ export const DataProvider = ({
     };
 
     const clearData = async () => {
-        if (!songIds || !albumIds || !personalAlbumsIds || !favoriteIds) return;
-
-        for (let i = 0; i < personalAlbumsIds.length; i++) {
-            await AsyncStorage.removeItem(personalAlbumsIds[i]);
-        }
+        if (songIds && albumIds && personalAlbumsIds && favoriteIds)
+            for (let i = 0; i < personalAlbumsIds.length; i++)
+                await AsyncStorage.removeItem(personalAlbumsIds[i]);
 
         setPersonalAlbumsIds([]);
         setFavoriteIds([]);
@@ -1420,8 +1428,6 @@ export const DataProvider = ({
 
     const getAllSongsOrdered = async () => {
         if (!songIds) return [];
-
-        console.log(songIds);
 
         const songs = await Promise.all(
             songIds.map(async (id) => {

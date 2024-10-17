@@ -122,7 +122,7 @@ export const RecentProvider = ({
     };
 
     const fullyUpdateRecent = async (recent: (SongType | AlbumType)[]) => {
-        if (recent === null) return;
+        if (recent === null || recent === undefined) return;
 
         const newRecent = await Promise.all(
             recent.map(async (item) => {
