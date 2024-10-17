@@ -66,7 +66,7 @@ const StackPage = ({
     const animateMoveUp = (moveUp: boolean) => {
         Animated.timing(translateYAnim, {
             toValue: moveUp ? -120 : 0,
-            duration: 250,
+            duration: 200,
             useNativeDriver: true,
         }).start();
     };
@@ -141,6 +141,7 @@ const StackPage = ({
             </Animated.View>
             <Animated.View
                 style={{
+                    flex: 1,
                     transform: variant
                         ? [
                               {
