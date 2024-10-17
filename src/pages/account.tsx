@@ -8,7 +8,6 @@ import Text from "../components/wrapers/text";
 import { ServerContext } from "../context/server";
 import { ThemeContext } from "../context/theme";
 import { UserContext } from "../context/user";
-import { validateEmail } from "../utils/util";
 
 const Account = ({ navigation }: { navigation: any }) => {
     const { theme } = useContext(ThemeContext);
@@ -18,6 +17,7 @@ const Account = ({ navigation }: { navigation: any }) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [username, setUsername] = useState<string>(user.displayName);
     const [email, setEmail] = useState<string>(user.email);
+    const [usernameError, setUsernameError] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
 
     return (
@@ -35,7 +35,6 @@ const Account = ({ navigation }: { navigation: any }) => {
                         value={email}
                         onChange={setEmail}
                         editable={false}
-                        error={error.includes("Email")}
                     />
 
                     <View
@@ -55,7 +54,7 @@ const Account = ({ navigation }: { navigation: any }) => {
                         placeholder={t`Your Name`}
                         value={username}
                         onChange={setUsername}
-                        error={error.includes("Name")}
+                        error={usernameError}
                         style={{ marginTop: 10 }}
                     />
 
@@ -105,16 +104,12 @@ const Account = ({ navigation }: { navigation: any }) => {
                                 setLoading(true);
                                 setError("");
 
-                                if (!validateEmail(email)) {
-                                    setError(t`Invalid email address!`);
-                                    setLoading(false);
-                                    return;
-                                }
                                 if (username.length < 4) {
                                     setError(t`Name is too short!`);
+                                    setUsernameError(true);
                                     setLoading(false);
                                     return;
-                                }
+                                } else setUsernameError(false);
 
                                 updateUser(username)
                                     .then(() => {

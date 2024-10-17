@@ -23,6 +23,9 @@ const ResetPassword = ({ navigation }: { navigation: any }) => {
     const [newPasswordError, setNewPasswordError] = useState<boolean>(false);
 
     const [error, setError] = useState<string>("");
+    const [errorState, setErrorState] = useState<"success" | "error" | null>(
+        null
+    );
 
     useEffect(() => {
         setError("");
@@ -59,11 +62,7 @@ const ResetPassword = ({ navigation }: { navigation: any }) => {
                         value={oldPassword}
                         onChange={setOldPassword}
                         hidden={true}
-                        error={
-                            error.length > 0 &&
-                            !error.includes("successfully") &&
-                            !error.includes("temporarily disabled")
-                        }
+                        error={error.length > 0 && errorState === "error"}
                         errorText={""}
                     />
                     <IconInput
@@ -83,7 +82,7 @@ const ResetPassword = ({ navigation }: { navigation: any }) => {
                         <View style={styles.error}>
                             <Text
                                 color={
-                                    error.includes("successfully")
+                                    errorState === "success"
                                         ? theme.colors.success
                                         : theme.colors.danger
                                 }
@@ -145,6 +144,7 @@ const ResetPassword = ({ navigation }: { navigation: any }) => {
                             onPress={() => {
                                 setError("");
                                 setNewPasswordError(false);
+                                setErrorState(null);
                                 setLoading(true);
 
                                 if (loading) return;
@@ -158,6 +158,7 @@ const ResetPassword = ({ navigation }: { navigation: any }) => {
                                             setError(
                                                 t`The password has been changed successfully.`
                                             );
+                                            setErrorState("success");
                                             setLoading(false);
                                         })
                                         .catch((error: any) => {
@@ -165,22 +166,26 @@ const ResetPassword = ({ navigation }: { navigation: any }) => {
                                                 error.message.includes(
                                                     "auth/invalid-credential"
                                                 )
-                                            )
+                                            ) {
                                                 setError(
                                                     t`The password you entered is incorrect.`
                                                 );
-                                            else if (
+                                                setErrorState("error");
+                                            } else if (
                                                 error.message.includes(
                                                     "Access to this account has been temporarily disabled"
                                                 )
-                                            )
+                                            ) {
                                                 setError(
                                                     t`Access to this account has been temporarily disabled due to many failed attempts. Please try again later.`
                                                 );
-                                            else
+                                                setErrorState(null);
+                                            } else {
                                                 setError(
                                                     t`Something went wrong.`
                                                 );
+                                                setErrorState(null);
+                                            }
                                             setLoading(false);
                                         });
                                 }

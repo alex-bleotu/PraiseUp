@@ -26,6 +26,7 @@ const Link = ({ navigation }: { navigation: any }) => {
 
     const [showEmailError, setShowEmailError] = useState(false);
     const [showPasswordError, setShowPasswordError] = useState(false);
+    const [showNameError, setShowNameError] = useState(false);
     const [error, setError] = useState("");
 
     useEffect(() => {
@@ -53,6 +54,8 @@ const Link = ({ navigation }: { navigation: any }) => {
                         onChange={setUsername}
                         style={{ marginTop: 10 }}
                         autoCapitalize
+                        error={showNameError}
+                        errorText={t`Name is too short!`}
                     />
                     <IconInput
                         icon="email"
@@ -120,6 +123,12 @@ const Link = ({ navigation }: { navigation: any }) => {
                                 if (loading) return;
 
                                 setError("");
+
+                                if (username.length < 4) {
+                                    setShowNameError(true);
+                                    return;
+                                } else setShowNameError(false);
+
                                 if (password.length > 5) {
                                     linkGuest(
                                         email.trim(),

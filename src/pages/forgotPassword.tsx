@@ -19,6 +19,9 @@ const ForgotPassword = ({ navigation }: { navigation: any }) => {
     const [emailValid, setEmailValid] = useState(true);
 
     const [error, setError] = useState<string>("");
+    const [errorState, setErrorState] = useState<"success" | "error" | null>(
+        null
+    );
 
     useEffect(() => {
         setError("");
@@ -52,16 +55,14 @@ const ForgotPassword = ({ navigation }: { navigation: any }) => {
                         validate={validateEmail}
                         onValidateChange={setEmailValid}
                         keyboardType={"email-address"}
-                        error={
-                            error.length > 0 && !error.includes("successfully")
-                        }
+                        error={error.length > 0 && errorState === "error"}
                     />
 
                     {error.length > 0 && (
                         <View style={styles.error}>
                             <Text
                                 color={
-                                    error.includes("successfully")
+                                    errorState === "success"
                                         ? theme.colors.success
                                         : theme.colors.danger
                                 }
@@ -101,14 +102,19 @@ const ForgotPassword = ({ navigation }: { navigation: any }) => {
                             onPress={() => {
                                 if (loading) return;
 
+                                setError("");
+                                setErrorState(null);
+
                                 sendPasswordResetEmail(email)
                                     .then(() => {
                                         setError(
                                             "Password reset email sent successfully."
                                         );
+                                        setErrorState("success");
                                     })
                                     .catch((error: any) => {
                                         setError(t`Something went wrong.`);
+                                        setErrorState("error");
                                     });
                             }}
                         />
