@@ -1418,6 +1418,27 @@ export const DataProvider = ({
         }
     };
 
+    const getAllSongsOrdered = async () => {
+        if (!songIds) return [];
+
+        console.log(songIds);
+
+        const songs = await Promise.all(
+            songIds.map(async (id) => {
+                const song = await getSongById(id);
+                return song;
+            })
+        );
+
+        songs.sort((a, b) => {
+            if (a.title < b.title) return -1;
+            if (a.title > b.title) return 1;
+            return 0;
+        });
+
+        return songs;
+    };
+
     return (
         <DataContext.Provider
             value={{
@@ -1461,6 +1482,7 @@ export const DataProvider = ({
                 loadData,
                 getNotOwnedPersonalAlbum,
                 removePersonalAlbumFromUser,
+                getAllSongsOrdered,
             }}>
             {children}
         </DataContext.Provider>

@@ -264,8 +264,11 @@ const Library = ({ navigation }: { navigation: any }) => {
                                             {data.type === "extra" ? (
                                                 <AnimatedTouchable
                                                     onPress={() => {
-                                                        setIsCreateBottomSheetOpen(
-                                                            true
+                                                        // setIsCreateBottomSheetOpen(
+                                                        //     true
+                                                        // );
+                                                        navigation.navigate(
+                                                            "AllSongs"
                                                         );
                                                     }}>
                                                     <View

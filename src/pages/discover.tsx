@@ -105,7 +105,7 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                             return (
                                                 <View
                                                     key={index}
-                                                    style={styles.songs}>
+                                                    style={styles.items}>
                                                     {data.type === "song" ? (
                                                         <SongCover
                                                             key={index}
@@ -208,7 +208,7 @@ const Discover = ({ navigation }: { navigation: any }) => {
                                             (data: any, index: number) => (
                                                 <View
                                                     key={index}
-                                                    style={styles.songs}>
+                                                    style={styles.items}>
                                                     {data.type === "song" ? (
                                                         <SongCover
                                                             key={index}
@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingLeft: 15,
     },
-    songs: { marginTop: 15, paddingRight: 15 },
+    items: { marginTop: 15, paddingRight: 15 },
     placeHolderContainer: {
         display: "flex",
         flex: 1,
