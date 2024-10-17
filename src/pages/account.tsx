@@ -35,9 +35,7 @@ const Account = ({ navigation }: { navigation: any }) => {
                         value={email}
                         onChange={setEmail}
                         editable={false}
-                        // validate={validateEmail}
-                        // error={error.includes("email")}
-                        // keyboardType={"email-address"}
+                        error={error.includes("Email")}
                     />
 
                     <View
@@ -51,14 +49,16 @@ const Account = ({ navigation }: { navigation: any }) => {
                                 theme.colors.textVariant
                             }>{t`Editable:`}</Text>
                     </View>
+
                     <IconInput
                         icon="account"
-                        placeholder={t`Username`}
+                        placeholder={t`Your Name`}
                         value={username}
                         onChange={setUsername}
-                        error={error.includes("Username")}
+                        error={error.includes("Name")}
                         style={{ marginTop: 10 }}
                     />
+
                     {error.length > 0 && (
                         <View style={styles.error}>
                             <Text
@@ -111,21 +111,13 @@ const Account = ({ navigation }: { navigation: any }) => {
                                     return;
                                 }
                                 if (username.length < 4) {
-                                    setError(t`Username is too short!`);
+                                    setError(t`Name is too short!`);
                                     setLoading(false);
                                     return;
                                 }
 
                                 updateUser(username)
                                     .then(() => {
-                                        // if (user.email !== email) {
-                                        //     setError(
-                                        //         t`Please check your email to verify your email address first.`
-                                        //     );
-                                        // } else
-                                        //     setError(
-                                        //         t`Account details updated successfully!`
-                                        //     );
                                         setError(
                                             t`Account details updated successfully!`
                                         );

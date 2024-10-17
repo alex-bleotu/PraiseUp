@@ -27,6 +27,7 @@ const Register = ({ navigation }: { navigation: any }) => {
     const [emailValid, setEmailValid] = useState(true);
 
     const [showEmailError, setShowEmailError] = useState(false);
+    const [showNameError, setShowNameError] = useState(false);
     const [showPasswordError, setShowPasswordError] = useState(false);
     const [error, setError] = useState("");
 
@@ -55,6 +56,8 @@ const Register = ({ navigation }: { navigation: any }) => {
                         onChange={setUsername}
                         style={{ marginTop: 10 }}
                         autoCapitalize
+                        error={showNameError}
+                        errorText={t`Name is too short!`}
                     />
                     <IconInput
                         icon="email"
@@ -125,6 +128,11 @@ const Register = ({ navigation }: { navigation: any }) => {
                                 if (loading) return;
 
                                 setError("");
+
+                                if (username.length < 4) {
+                                    setShowNameError(true);
+                                    return;
+                                } else setShowNameError(false);
 
                                 if (password.length > 5) {
                                     register(
