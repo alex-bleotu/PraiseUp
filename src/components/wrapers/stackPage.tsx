@@ -115,7 +115,7 @@ const StackPage = ({
                                     marginLeft: !back ? iconSize + 5 : 0,
                                 },
                             ]}>
-                            <Text center fontSize={24}>
+                            <Text center fontSize={26} bold>
                                 {title}
                             </Text>
                         </View>

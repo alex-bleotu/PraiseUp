@@ -308,9 +308,9 @@ const styles = StyleSheet.create({
         width: "100%",
         display: "flex",
         flex: 1,
-        paddingLeft: 15,
+        paddingLeft: 20,
     },
-    items: { marginTop: 15, paddingRight: 15 },
+    items: { marginTop: 15, paddingRight: 20 },
     placeHolderContainer: {
         display: "flex",
         flex: 1,

@@ -629,9 +629,10 @@ const Song = ({ route, navigation }: SongProps) => {
                                 <Text
                                     bold
                                     color="white"
+                                    fontSize={18}
                                     style={{
                                         marginTop: -30,
-                                        marginLeft: -70,
+                                        marginLeft: -80,
                                     }}>{t`Enable chords`}</Text>
                             </View>
                         </View>
@@ -694,7 +695,7 @@ const Song = ({ route, navigation }: SongProps) => {
                             <View
                                 style={{
                                     marginLeft: -100,
-                                    marginTop: 30,
+                                    marginTop: 35,
                                 }}>
                                 <Image
                                     style={{
@@ -707,7 +708,9 @@ const Song = ({ route, navigation }: SongProps) => {
                                     source={require("../../assets/images/arrows/loop.png")}
                                 />
                                 <Text
+                                    fontSize={18}
                                     bold
+                                    style={{ marginLeft: -20 }}
                                     color="white">{t`Change the chords`}</Text>
                             </View>
                         </View>
@@ -756,7 +759,6 @@ const Song = ({ route, navigation }: SongProps) => {
                                         height: 70,
                                         marginTop: -40,
                                         marginLeft: 30,
-                                        marginBottom: 5,
                                         transform: [
                                             { rotate: "90deg" },
                                             { scaleX: -1 },
@@ -765,7 +767,8 @@ const Song = ({ route, navigation }: SongProps) => {
                                     source={require("../../assets/images/arrows/curved.png")}
                                 />
                                 <Text
-                                    style={{ marginLeft: -30 }}
+                                    style={{ marginLeft: -45 }}
+                                    fontSize={18}
                                     bold
                                     color="white">{t`See more options here`}</Text>
                             </View>

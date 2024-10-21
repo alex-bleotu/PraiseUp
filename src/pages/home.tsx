@@ -1,8 +1,10 @@
+import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import AlbumCover from "../components/items/albumCover";
 import SongCover from "../components/items/songCover";
+import AnimatedTouchable from "../components/wrapers/animatedTouchable";
 import Background from "../components/wrapers/background";
 import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
@@ -10,6 +12,8 @@ import Text from "../components/wrapers/text";
 import { AlbumType, DataContext, SongType } from "../context/data";
 import { RecentContext } from "../context/recent";
 import { RefreshContext } from "../context/refresh";
+import { ThemeContext } from "../context/theme";
+import { UserContext } from "../context/user";
 import Loading from "./loading";
 
 const Home = ({ navigation }: { navigation: any }) => {
@@ -17,6 +21,8 @@ const Home = ({ navigation }: { navigation: any }) => {
     const { getRandomSongs, getFavoriteSongsAlbum, getFavoriteAlbums } =
         useContext(DataContext);
     const { refresh } = useContext(RefreshContext);
+    const { user } = useContext(UserContext);
+    const { theme } = useContext(ThemeContext);
 
     const [randomSongs, setRandomSongs] = useState<SongType[] | null>(null);
     const [favoriteAlbums, setFavoriteAlbums] = useState<AlbumType[] | null>(
@@ -66,6 +72,17 @@ const Home = ({ navigation }: { navigation: any }) => {
 
     return (
         <Background noPadding>
+            <View style={styles.topBar}>
+                <Text fontSize={26} bold style={{ marginLeft: 5 }}>
+                    {user.displayName ? user.displayName : t`Guest`}
+                </Text>
+                <AnimatedTouchable
+                    onPress={() => {
+                        navigation.navigate("Settings");
+                    }}>
+                    <MCIcons name={"cog"} size={30} color={theme.colors.text} />
+                </AnimatedTouchable>
+            </View>
             <ScrollView bottom={15} showScroll={false}>
                 <View style={styles.recent}>
                     {recent.map((data: SongType | AlbumType, index: number) => {
@@ -198,5 +215,13 @@ const styles = StyleSheet.create({
     },
     recent: {
         marginHorizontal: 20,
+    },
+    topBar: {
+        paddingBottom: 20,
+        paddingHorizontal: 20,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
     },
 });
