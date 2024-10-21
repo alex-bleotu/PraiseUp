@@ -519,7 +519,6 @@ const Song = ({ route, navigation }: SongProps) => {
                         </View>
                     </View>
                 )}
-
                 <View
                     style={{
                         width: "100%",
@@ -781,8 +780,7 @@ const Song = ({ route, navigation }: SongProps) => {
                 isOpen={isChordBottomSheetOpen}
                 onClose={() => {
                     setChordBottomSheetOpen(false);
-                }}
-                height={175}>
+                }}>
                 <View style={styles.chordButtonsLine}>
                     <TouchableOpacity
                         activeOpacity={theme.activeOpacity}

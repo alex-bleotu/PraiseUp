@@ -25,7 +25,6 @@ namespace PraiseUp {
 
             textBox12.Text = token;
 
-
             textBox1.TabIndex = 0;
             textBox2.TabIndex = 1;
             textBox3.TabIndex = 2;

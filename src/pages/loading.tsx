@@ -61,13 +61,13 @@ const Loading = ({
                 <View style={styles.textContainer}>
                     {text && (
                         <View style={styles.first}>
-                            <Text bold center color={colors.text}>
+                            <Text bold center color={colors.text} fontSize={18}>
                                 {text}
                             </Text>
                         </View>
                     )}
                     <View style={styles.second}>
-                        <Text color={colors.text} bold>
+                        <Text color={colors.text} bold fontSize={18}>
                             {dotText}
                         </Text>
                     </View>
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 20,
+        marginTop: 30,
     },
     first: {
         marginLeft: 20,

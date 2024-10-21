@@ -126,7 +126,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     }}
                     color={theme.colors.text}
                     center={false}
-                    fontSize={15}
+                    fontSize={16}
                     style={{ marginBottom: 10 }}
                     icon={
                         <MCIcons
@@ -377,18 +377,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                 isOpen={isSettingsOpen}
                 onClose={() => {
                     setIsSettingsOpen(false), setSettings(null);
-                }}
-                height={
-                    settings === "theme"
-                        ? 180
-                        : settings === "language"
-                        ? 200
-                        : settings === "zoom"
-                        ? 290
-                        : settings === "chords"
-                        ? 280
-                        : 0
-                }>
+                }}>
                 <View style={styles.bottomSheetContainer}>
                     {settings === "theme" ? (
                         <View style={styles.choices}>
@@ -584,7 +573,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                     }}>
                                     <Text
                                         bold
-                                        fontSize={17}
+                                        fontSize={18}
                                         style={{
                                             marginRight: 10,
                                         }}>
@@ -1044,7 +1033,6 @@ const styles = StyleSheet.create({
     },
     choices: {
         flexDirection: "row",
-        marginBottom: 20,
     },
     choiceContainer: {
         alignItems: "center",
@@ -1057,7 +1045,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         width: "100%",
         flexDirection: "row",
-        marginBottom: 30,
     },
     image: {
         width: 60,
@@ -1109,13 +1096,14 @@ const styles = StyleSheet.create({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        marginBottom: 15,
     },
     lyrics: {
         width: "90%",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: 160,
+        height: 170,
     },
     error: {
         alignSelf: "flex-start",

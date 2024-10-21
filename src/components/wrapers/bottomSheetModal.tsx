@@ -25,7 +25,7 @@ const BottomSheetModal = ({
     isOpen,
     onClose,
     children,
-    numberOfButtons = 3,
+    numberOfButtons,
     height,
 }: BottomSheetModalProps) => {
     const [modalVisible, setModalVisible] = useState(isOpen);
@@ -117,7 +117,9 @@ const BottomSheetModal = ({
                             backgroundColor: theme.colors.paper,
                             height: height
                                 ? height
-                                : 125 + 50 * numberOfButtons,
+                                : numberOfButtons
+                                ? 125 + 50 * numberOfButtons
+                                : "auto",
                         },
                     ]}
                     {...panResponder.panHandlers}>

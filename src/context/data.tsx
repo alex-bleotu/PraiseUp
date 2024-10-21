@@ -45,6 +45,12 @@ export interface SongType {
     date: string;
     order: string | null;
     initialChord: string | null;
+    extraData: {
+        link: string | null;
+        year: string | null;
+        originalTitle: string | null;
+        verses: string[] | null;
+    } | null;
 }
 
 export const DataProvider = ({

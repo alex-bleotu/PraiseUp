@@ -362,8 +362,7 @@ const Library = ({ navigation }: { navigation: any }) => {
                 onClose={() => {
                     setIsCreateBottomSheetOpen(false);
                     setName("");
-                }}
-                height={225}>
+                }}>
                 <View style={styles.bottomSheet}>
                     <Text bold fontSize={20}>
                         {t`Give your album a name`}

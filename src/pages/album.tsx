@@ -124,6 +124,7 @@ const Album = ({ route, navigation }: AlbumProps) => {
                 date: "",
                 order: null,
                 initialChord: null,
+                extraData: null,
             };
 
             setSongs([...loaded, buttonSong]);

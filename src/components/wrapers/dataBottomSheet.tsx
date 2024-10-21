@@ -2,12 +2,20 @@ import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useState } from "react";
 
-import { Share, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+    Linking,
+    Share,
+    StyleSheet,
+    TouchableOpacity,
+    View,
+} from "react-native";
 import { AlbumType, DataContext, SongType } from "../../context/data";
+import { LanguageContext } from "../../context/language";
 import { RecentContext } from "../../context/recent";
 import { RefreshContext } from "../../context/refresh";
 import { ThemeContext } from "../../context/theme";
 import { UserContext } from "../../context/user";
+import { getBibleLink, translateVerse } from "../../utils/util";
 import AlbumImage from "../items/albumImage";
 import SongImage from "../items/songImage";
 import BottomSheetModal from "./bottomSheetModal";
@@ -53,11 +61,13 @@ const DataBottomSheet = ({
     const { refresh, updateRefresh } = useContext(RefreshContext);
     const { updateRecent } = useContext(RecentContext);
     const { user } = useContext(UserContext);
+    const { language } = useContext(LanguageContext);
 
     const [data, setData] = useState<SongType | AlbumType | null>(null);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false);
     const [editAlbum, setEditAlbum] = useState(false);
+    const [moreInfo, setMoreInfo] = useState(false);
     const [name, setName] = useState("");
 
     useEffect(() => {
@@ -74,23 +84,24 @@ const DataBottomSheet = ({
 
     if (data === null || data === undefined) return <></>;
 
+    let numberOfButtons;
+
+    if (data.type === "personal") {
+        if (data.creator === user.uid) numberOfButtons = 3;
+        else numberOfButtons = 2;
+    } else if (data.type === "album") numberOfButtons = 2;
+    else if (data.type === "song") {
+        if (zoom) numberOfButtons = 6;
+        else if (removeSong) numberOfButtons = 5;
+        else numberOfButtons = 4;
+    } else numberOfButtons = 3;
+
     return (
         <>
             <BottomSheetModal
-                isOpen={isOpen && !editAlbum}
+                isOpen={isOpen && !editAlbum && !moreInfo}
                 onClose={onClose}
-                numberOfButtons={
-                    data?.type === "personal" || data?.type === "song"
-                        ? zoom && data?.type === "song"
-                            ? 5
-                            : removeSong && data?.type === "song"
-                            ? 4
-                            : data?.type === "personal" &&
-                              data?.creator !== user.uid
-                            ? 2
-                            : 3
-                        : 2
-                }>
+                numberOfButtons={numberOfButtons}>
                 <View>
                     <View style={styles.top}>
                         {data?.type === "song" ? (
@@ -365,6 +376,28 @@ const DataBottomSheet = ({
                                         </View>
                                     </TouchableOpacity>
                                 )}
+                                {data.extraData && (
+                                    <TouchableOpacity
+                                        activeOpacity={theme.activeOpacity}
+                                        onPress={() => {
+                                            if (data !== null) {
+                                                setMoreInfo(true);
+                                            }
+                                        }}>
+                                        <View style={styles.button}>
+                                            <MCIcons
+                                                name="information-outline"
+                                                size={30}
+                                                color={theme.colors.text}
+                                            />
+                                            <Text
+                                                fontSize={17}
+                                                style={styles.text}>
+                                                {t`More info`}
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                )}
                             </>
                         )}
                         <TouchableOpacity
@@ -564,58 +597,168 @@ const DataBottomSheet = ({
                     </View>
                 </Modal>
             </BottomSheetModal>
-            <BottomSheetModal
-                isOpen={editAlbum}
-                onClose={() => {
-                    setEditAlbum(false);
-                }}
-                height={225}>
-                <View
-                    style={{
-                        marginHorizontal: 20,
+            {data.type === "personal" && (
+                <BottomSheetModal
+                    isOpen={editAlbum}
+                    onClose={() => {
+                        setEditAlbum(false);
                     }}>
-                    <Text bold fontSize={20}>
-                        {t`Edit your album`}
-                    </Text>
-                    <Input
-                        placeholder={t`Album Name`}
-                        value={name}
-                        onChange={setName}
-                        style={{ marginTop: 20 }}
-                        maxLength={32}
-                        autoCapitalize
-                    />
-                    <View style={styles.buttonContainer}>
-                        <View style={{ width: "47%" }}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    setEditAlbum(false);
-                                    setName(data.title);
-                                }}
-                                activeOpacity={theme.activeOpacity}
-                                style={[
-                                    styles.buttonModal,
-                                    {
-                                        backgroundColor: theme.colors.darkPaper,
-                                    },
-                                ]}>
-                                <Text fontSize={14} bold upper center>
-                                    {t`Cancel`}
-                                </Text>
-                            </TouchableOpacity>
+                    <View
+                        style={{
+                            marginHorizontal: 20,
+                        }}>
+                        <Text bold fontSize={20}>
+                            {t`Edit your album`}
+                        </Text>
+                        <Input
+                            placeholder={t`Album Name`}
+                            value={name}
+                            onChange={setName}
+                            style={{ marginTop: 20 }}
+                            maxLength={32}
+                            autoCapitalize
+                        />
+                        <View style={styles.buttonContainer}>
+                            <View style={{ width: "47%" }}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        setEditAlbum(false);
+                                        setName(data.title);
+                                    }}
+                                    activeOpacity={theme.activeOpacity}
+                                    style={[
+                                        styles.buttonModal,
+                                        {
+                                            backgroundColor:
+                                                theme.colors.darkPaper,
+                                        },
+                                    ]}>
+                                    <Text fontSize={14} bold upper center>
+                                        {t`Cancel`}
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{ width: "47%" }}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        updatePersonalAlbum(data, name).then(
+                                            (newAlbum: AlbumType) => {
+                                                setData(newAlbum);
+                                                setEditAlbum(false);
+                                                updateRefresh();
+                                                updateRecent();
+                                                updateData &&
+                                                    updateData(newAlbum);
+                                            }
+                                        );
+                                    }}
+                                    activeOpacity={theme.activeOpacity}
+                                    disabled={name.length === 0}
+                                    style={[
+                                        styles.buttonModal,
+                                        {
+                                            backgroundColor:
+                                                theme.colors.primary,
+                                            opacity: name.length > 0 ? 1 : 0.5,
+                                        },
+                                    ]}>
+                                    <Text
+                                        fontSize={14}
+                                        bold
+                                        upper
+                                        center
+                                        color={theme.colors.textOnPrimary}>
+                                        {t`Save`}
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                        <View style={{ width: "47%" }}>
+                    </View>
+                </BottomSheetModal>
+            )}
+            {data.type === "song" && data.extraData && (
+                <BottomSheetModal
+                    isOpen={moreInfo}
+                    onClose={() => {
+                        setMoreInfo(false);
+                    }}>
+                    <View
+                        style={{
+                            marginHorizontal: 20,
+                        }}>
+                        <Text bold fontSize={22}>
+                            {data.title}
+                        </Text>
+
+                        <View style={{ marginTop: 15 }} />
+                        {data.extraData.year && (
+                            <Text fontSize={16}>
+                                {t`Created in` + " "}
+                                <Text bold fontSize={16}>
+                                    {data.extraData.year}
+                                </Text>
+                                {"."}
+                            </Text>
+                        )}
+                        {data.extraData.originalTitle && (
+                            <Text fontSize={16}>
+                                {t`Original title is` + " "}
+                                <Text bold fontSize={16}>
+                                    {data.extraData.originalTitle}
+                                </Text>
+                                {"."}
+                            </Text>
+                        )}
+                        {data.extraData.verses && (
+                            <>
+                                <View style={styles.verseContainer}>
+                                    {data.extraData?.verses?.map(
+                                        (verse, index) => (
+                                            <TouchableOpacity
+                                                activeOpacity={
+                                                    theme.activeOpacity
+                                                }
+                                                onPress={() => {
+                                                    if (
+                                                        data.extraData?.verses
+                                                    ) {
+                                                        Linking.openURL(
+                                                            getBibleLink(
+                                                                verse,
+                                                                language
+                                                            )
+                                                        );
+                                                    }
+                                                }}
+                                                style={[
+                                                    styles.verse,
+                                                    {
+                                                        backgroundColor:
+                                                            theme.colors
+                                                                .darkPaper,
+                                                    },
+                                                ]}
+                                                key={index}>
+                                                <Text
+                                                    key={index}
+                                                    bold
+                                                    fontSize={15}>
+                                                    {language === "en"
+                                                        ? verse
+                                                        : translateVerse(verse)}
+                                                </Text>
+                                            </TouchableOpacity>
+                                        )
+                                    )}
+                                </View>
+                            </>
+                        )}
+                        {data.extraData.link && (
                             <TouchableOpacity
                                 onPress={() => {
-                                    updatePersonalAlbum(data, name).then(
-                                        (newAlbum: AlbumType) => {
-                                            setData(newAlbum);
-                                            setEditAlbum(false);
-                                            updateRefresh();
-                                            updateRecent();
-                                            updateData && updateData(newAlbum);
-                                        }
-                                    );
+                                    if (data.extraData?.link) {
+                                        Linking.openURL(data.extraData.link);
+                                    }
                                 }}
                                 activeOpacity={theme.activeOpacity}
                                 disabled={name.length === 0}
@@ -624,6 +767,7 @@ const DataBottomSheet = ({
                                     {
                                         backgroundColor: theme.colors.primary,
                                         opacity: name.length > 0 ? 1 : 0.5,
+                                        marginTop: 25,
                                     },
                                 ]}>
                                 <Text
@@ -632,13 +776,13 @@ const DataBottomSheet = ({
                                     upper
                                     center
                                     color={theme.colors.textOnPrimary}>
-                                    {t`Save`}
+                                    {t`Watch the video`}
                                 </Text>
                             </TouchableOpacity>
-                        </View>
+                        )}
                     </View>
-                </View>
-            </BottomSheetModal>
+                </BottomSheetModal>
+            )}
         </>
     );
 };
@@ -688,5 +832,17 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         marginTop: 20,
+    },
+    verseContainer: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        marginTop: 15,
+    },
+    verse: {
+        borderRadius: 10,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        marginTop: 8,
+        marginRight: 10,
     },
 });
