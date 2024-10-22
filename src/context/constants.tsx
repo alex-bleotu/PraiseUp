@@ -17,7 +17,6 @@ export const ConstantsProvider = ({
     >(null);
     const [appHeight, setAppHeight] = useState(0);
     const [songTab, setSongTab] = useState<"lyrics" | "chords">("lyrics");
-    const [europeanVersion, setEuropeanVersion] = useState<boolean>(false);
 
     useEffect(() => {
         const loadConstants = async () => {
@@ -26,9 +25,6 @@ export const ConstantsProvider = ({
             const lyricsSize = await AsyncStorage.getItem("lyricsSize");
             const chords = await AsyncStorage.getItem("chords");
             const songTab = await AsyncStorage.getItem("songTab");
-            const europeanVersion = await AsyncStorage.getItem(
-                "europeanVersion"
-            );
 
             if (sortBy) setSortBy(sortBy as "date" | "name");
             else setSortBy("date");
@@ -40,8 +36,6 @@ export const ConstantsProvider = ({
             else setChords("combined");
             if (songTab) setSongTab(songTab as "lyrics" | "chords");
             else setSongTab("lyrics");
-            if (europeanVersion) setEuropeanVersion(europeanVersion === "true");
-            else setEuropeanVersion(false);
 
             const { height: windowHeight } = Dimensions.get("window");
             const { height: screenHeight } = Dimensions.get("screen");
@@ -78,25 +72,18 @@ export const ConstantsProvider = ({
         if (songTab !== null) AsyncStorage.setItem("songTab", songTab);
     }, [songTab]);
 
-    useEffect(() => {
-        if (europeanVersion !== null)
-            AsyncStorage.setItem("europeanVersion", europeanVersion.toString());
-    }, [europeanVersion]);
-
     const resetConstants = async () => {
         await AsyncStorage.removeItem("sortBy");
         await AsyncStorage.removeItem("display");
         await AsyncStorage.removeItem("lyricsSize");
         await AsyncStorage.removeItem("chords");
         await AsyncStorage.removeItem("songTab");
-        await AsyncStorage.removeItem("europeanVersion");
 
         setSortBy("date");
         setDisplay("grid");
         setLyricsSize(16);
         setChords("combined");
         setSongTab("lyrics");
-        setEuropeanVersion(false);
     };
 
     return (
@@ -113,8 +100,6 @@ export const ConstantsProvider = ({
                 setChords,
                 songTab,
                 setSongTab,
-                europeanVersion,
-                setEuropeanVersion,
                 resetConstants,
             }}>
             {children}

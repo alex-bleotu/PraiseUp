@@ -2,6 +2,10 @@ import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
+import Animated, {
+    useAnimatedStyle,
+    withTiming,
+} from "react-native-reanimated";
 import AlbumCover from "../components/items/albumCover";
 import SongCover from "../components/items/songCover";
 import AnimatedTouchable from "../components/wrapers/animatedTouchable";
@@ -43,6 +47,9 @@ const Home = ({ navigation }: { navigation: any }) => {
     const [bbsoSongs, setBbsoSongs] = useState<SongType[] | null>(null);
     const [tabaraSongs, setTabaraSongs] = useState<SongType[] | null>(null);
 
+    const [expended, setExpended] = useState(false);
+    const [color, setColor] = useState(false);
+
     useEffect(() => {
         const load = async () => {
             const favoriteAlbum = await getFavoriteSongsAlbum();
@@ -64,7 +71,6 @@ const Home = ({ navigation }: { navigation: any }) => {
             if (bbso) {
                 let songsList: SongType[] = [];
                 for (let i = 0; i < bbso.songs.length; i++) {
-                    console.log(bbso.songs[i]);
                     const songData = await getSongById(bbso.songs[i]);
                     if (songData) songsList = [...songsList, songData];
                 }
@@ -101,6 +107,44 @@ const Home = ({ navigation }: { navigation: any }) => {
         load();
     }, [refresh]);
 
+    const animatedStyle = useAnimatedStyle(() => {
+        const animatedHeight = expended
+            ? withTiming(100, { duration: 400 })
+            : withTiming(0, { duration: 400 });
+
+        return {
+            height: animatedHeight,
+        };
+    });
+
+    const fillStyle = useAnimatedStyle(() => {
+        const animatedRadius = color
+            ? withTiming(500, { duration: 1300 })
+            : withTiming(0, { duration: 1300 });
+
+        return {
+            width: animatedRadius,
+            height: animatedRadius,
+            borderRadius: 80,
+            backgroundColor: theme.colors.primary,
+            position: "absolute",
+            top: -70,
+            left: -30,
+        };
+    });
+
+    useEffect(() => {
+        setColor(true);
+
+        const timeout = setTimeout(() => {
+            setExpended(true);
+        }, 150);
+
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, []);
+
     if (
         !favoriteAlbums ||
         !randomSongs ||
@@ -124,7 +168,12 @@ const Home = ({ navigation }: { navigation: any }) => {
                     <MCIcons name={"cog"} size={30} color={theme.colors.text} />
                 </AnimatedTouchable>
             </View>
-            <ScrollView bottom={15} showScroll={false}>
+            <ScrollView
+                bottom={15}
+                showScroll={false}
+                onScroll={() => {
+                    setExpended(false);
+                }}>
                 <View style={styles.recent}>
                     {recent.map((data: SongType | AlbumType, index: number) => {
                         if (index > 2) return null;
@@ -159,42 +208,58 @@ const Home = ({ navigation }: { navigation: any }) => {
                     })}
                 </View>
 
-                <View
-                    style={[
-                        styles.allSongsContainer,
-                        {
-                            backgroundColor: theme.colors.primary,
-                        },
-                    ]}>
-                    <View>
+                <AnimatedTouchable
+                    onPress={() => {
+                        setExpended(true);
+                    }}
+                    style={{
+                        borderRadius: 12,
+                        marginHorizontal: 20,
+                        marginTop: 20,
+                        overflow: "hidden",
+                    }}>
+                    <Animated.View
+                        style={[fillStyle, { position: "absolute" }]}
+                    />
+                    <View style={{ padding: 20 }}>
                         <Text
-                            fontSize={20}
                             bold
-                            color={theme.colors.textOnPrimary}>
+                            color={theme.colors.textOnPrimary}
+                            fontSize={20}>
                             {t`Looking for more?`}
                         </Text>
-                        <Text
-                            fontSize={16}
-                            style={{ marginTop: 5 }}
-                            color={theme.colors.textOnPrimary}>
-                            {t`Find all songs and albums here`}
-                        </Text>
-                        <Button
-                            text="Explore"
-                            upper
-                            bold
-                            backgroundColor={theme.colors.paper}
-                            color={theme.colors.text}
-                            fullWidth
-                            mode="contained"
-                            onPress={() => {
-                                navigation.navigate("AllSongs");
-                            }}
-                            style={{ marginTop: 30 }}
-                            contentStyle={{ paddingVertical: 10 }}
-                        />
+
+                        <Animated.View
+                            style={[animatedStyle, { position: "relative" }]}>
+                            <View>
+                                <Text
+                                    bold
+                                    color={theme.colors.textOnPrimary}
+                                    fontSize={16}
+                                    style={{
+                                        marginTop: 5,
+                                    }}>
+                                    {t`Find all the songs here`}
+                                </Text>
+                                <Button
+                                    text="Explore"
+                                    upper
+                                    bold
+                                    backgroundColor={theme.colors.paper}
+                                    color={theme.colors.text}
+                                    fullWidth
+                                    mode="contained"
+                                    onPress={() => {
+                                        navigation.navigate("AllSongs");
+                                        // if (expended) setExpended(false);
+                                    }}
+                                    style={{ marginTop: 30 }}
+                                    contentStyle={{ paddingVertical: 10 }}
+                                />
+                            </View>
+                        </Animated.View>
                     </View>
-                </View>
+                </AnimatedTouchable>
 
                 {randomSongs.length !== 0 && (
                     <View style={styles.container}>
@@ -227,7 +292,6 @@ const Home = ({ navigation }: { navigation: any }) => {
                         </View>
                     </View>
                 )}
-
                 {favoriteAlbums.length !== 0 && (
                     <View style={styles.container}>
                         <Text fontSize={20} bold style={{ marginLeft: 20 }}>
@@ -258,7 +322,6 @@ const Home = ({ navigation }: { navigation: any }) => {
                         </View>
                     </View>
                 )}
-
                 {bbsoSongs.length !== 0 && (
                     <View style={styles.container}>
                         <Text fontSize={20} bold style={{ marginLeft: 20 }}>
@@ -289,7 +352,6 @@ const Home = ({ navigation }: { navigation: any }) => {
                         </View>
                     </View>
                 )}
-
                 {tabaraSongs.length !== 0 && (
                     <View style={styles.container}>
                         <Text fontSize={20} bold style={{ marginLeft: 20 }}>
@@ -365,11 +427,5 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-    },
-    allSongsContainer: {
-        borderRadius: 12,
-        padding: 20,
-        marginHorizontal: 20,
-        marginTop: 20,
     },
 });

@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginRight: 5,
         zIndex: 1000,
+        height: "100%",
     },
     alphabetLetter: {
         paddingVertical: 1,

@@ -1049,7 +1049,7 @@ Seeking stories yet untold.`}
                             center
                             style={{
                                 width: 220,
-                            }}>{t`This will reload all the songs and albums.`}</Text>
+                            }}>{t`The songs and albums will be reloaded.`}</Text>
                     </View>
                 </View>
                 <View

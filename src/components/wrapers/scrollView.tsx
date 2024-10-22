@@ -11,6 +11,7 @@ interface ScrollViewProps {
     showScroll?: boolean;
     scrollEnabled?: boolean;
     waitFor?: any;
+    onScroll?: (event: any) => void;
 }
 
 const ScrollView = ({
@@ -22,6 +23,7 @@ const ScrollView = ({
     showScroll = true,
     scrollEnabled = true,
     waitFor,
+    onScroll,
 }: ScrollViewProps) => {
     return (
         <SV
@@ -31,6 +33,8 @@ const ScrollView = ({
             showsVerticalScrollIndicator={showScroll}
             scrollEnabled={scrollEnabled}
             waitFor={waitFor}
+            onScroll={onScroll}
+            scrollEventThrottle={16}
             horizontal={horizontal}>
             <View style={{ margin: top }} />
             {children}
