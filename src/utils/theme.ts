@@ -27,7 +27,7 @@ export const lightTheme = {
     ...defaultTheme,
     colors: {
         ...defaultTheme.colors,
-        primary: "#499ed4",
+        primary: "#4491c2",
         primaryVariant: "#c7d6fc",
         secondary: "#CCE490",
 

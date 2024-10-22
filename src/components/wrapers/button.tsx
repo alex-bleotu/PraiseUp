@@ -18,6 +18,7 @@ interface ButtonProps {
     disabled?: boolean;
     backgroundColor?: string;
     center?: boolean;
+    contentStyle?: ViewStyle;
 }
 
 const Button = ({
@@ -34,6 +35,7 @@ const Button = ({
     disabled,
     backgroundColor,
     center = true,
+    contentStyle,
 }: ButtonProps) => {
     const { theme } = useContext(ThemeContext);
 
@@ -56,6 +58,7 @@ const Button = ({
                     mode === "outlined"
                         ? [styles.border, { borderColor: theme.colors.text }]
                         : [styles.border, { borderColor: "transparent" }],
+                    contentStyle,
                 ]}>
                 <View
                     style={{
@@ -63,17 +66,19 @@ const Button = ({
                         justifyContent: "center",
                         alignItems: "center",
                     }}>
-                    <View
-                        style={{
-                            marginRight: icon === undefined ? 0 : 10,
-                            marginLeft: center ? 0 : -5,
-                            width: 30,
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}>
-                        {icon}
-                    </View>
+                    {icon && (
+                        <View
+                            style={{
+                                marginRight: 10,
+                                marginLeft: center ? 0 : -5,
+                                width: 30,
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}>
+                            {icon}
+                        </View>
+                    )}
                     <Text
                         fontSize={fontSize ? fontSize : 16}
                         bold={bold ? bold : false}

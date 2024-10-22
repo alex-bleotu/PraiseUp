@@ -6,6 +6,7 @@ import AlbumCover from "../components/items/albumCover";
 import SongCover from "../components/items/songCover";
 import AnimatedTouchable from "../components/wrapers/animatedTouchable";
 import Background from "../components/wrapers/background";
+import Button from "../components/wrapers/button";
 import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import ScrollView from "../components/wrapers/scrollView";
 import Text from "../components/wrapers/text";
@@ -156,6 +157,43 @@ const Home = ({ navigation }: { navigation: any }) => {
                             </View>
                         );
                     })}
+                </View>
+
+                <View
+                    style={[
+                        styles.allSongsContainer,
+                        {
+                            backgroundColor: theme.colors.primary,
+                        },
+                    ]}>
+                    <View>
+                        <Text
+                            fontSize={20}
+                            bold
+                            color={theme.colors.textOnPrimary}>
+                            {t`Looking for more?`}
+                        </Text>
+                        <Text
+                            fontSize={16}
+                            style={{ marginTop: 5 }}
+                            color={theme.colors.textOnPrimary}>
+                            {t`Find all songs and albums here`}
+                        </Text>
+                        <Button
+                            text="Explore"
+                            upper
+                            bold
+                            backgroundColor={theme.colors.paper}
+                            color={theme.colors.text}
+                            fullWidth
+                            mode="contained"
+                            onPress={() => {
+                                navigation.navigate("AllSongs");
+                            }}
+                            style={{ marginTop: 30 }}
+                            contentStyle={{ paddingVertical: 10 }}
+                        />
+                    </View>
                 </View>
 
                 {randomSongs.length !== 0 && (
@@ -322,9 +360,16 @@ const styles = StyleSheet.create({
     topBar: {
         paddingBottom: 20,
         paddingHorizontal: 20,
+        marginTop: -1.5,
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
+    },
+    allSongsContainer: {
+        borderRadius: 12,
+        padding: 20,
+        marginHorizontal: 20,
+        marginTop: 20,
     },
 });
