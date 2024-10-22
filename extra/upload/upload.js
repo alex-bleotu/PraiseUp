@@ -1,4 +1,5 @@
 const { initializeApp } = require("firebase/app");
+const { getAuth, signInWithCustomToken } = require("firebase/auth");
 const { getStorage, ref, uploadBytes } = require("firebase/storage");
 const fs = require("fs");
 const path = require("path");
@@ -14,33 +15,43 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
+const auth = getAuth(app);
 const storage = getStorage(app);
 
-const uploadFileWithMetadata = async (filePath, storagePath) => {
-    try {
-        const fileBuffer = fs.readFileSync(filePath);
+const customToken = "";
 
-        const fileRef = ref(storage, storagePath);
+signInWithCustomToken(auth, customToken)
+    .then((userCredential) => {
+        console.log("Admin user signed in!");
 
-        const data = JSON.parse(fileBuffer.toString());
+        const uploadFileWithMetadata = async (filePath, storagePath) => {
+            try {
+                const fileBuffer = fs.readFileSync(filePath);
 
-        const metadata = {
-            customMetadata: {
-                version: data.version,
-                author: "Alex Bleotu",
-                created_at: new Date().toISOString(),
-            },
+                const fileRef = ref(storage, storagePath);
+
+                const data = JSON.parse(fileBuffer.toString());
+
+                const metadata = {
+                    customMetadata: {
+                        version: data.version,
+                        author: "Alex Bleotu",
+                        created_at: new Date().toISOString(),
+                    },
+                };
+
+                await uploadBytes(fileRef, fileBuffer, metadata);
+                console.log("File uploaded with metadata!");
+            } catch (err) {
+                console.error("Error uploading the file:", err);
+            }
         };
 
-        await uploadBytes(fileRef, fileBuffer, metadata);
-        console.log("File uploaded with metadata!");
-    } catch (err) {
-        console.error("Error uploading the file:", err);
-    }
-};
+        const localFilePath = path.join(__dirname, "../../assets/bundle.json");
+        const firebaseStoragePath = "bundle.json";
 
-const localFilePath = path.join(__dirname, "../../assets/bundle.json");
-const firebaseStoragePath = "bundle.json";
-
-uploadFileWithMetadata(localFilePath, firebaseStoragePath);
+        uploadFileWithMetadata(localFilePath, firebaseStoragePath);
+    })
+    .catch((error) => {
+        console.error("Error signing in with custom token:", error);
+    });

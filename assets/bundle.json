@@ -1,5 +1,5 @@
 {
-    "version": "1.0.3",
+    "version": "1.0.0",
     "songs": [
         {
             "id": "S8384698f-7c39-4339-8d3e-5621e6aa0ed6",
@@ -307,7 +307,7 @@
                 "link": "https://www.youtube.com/watch?v=kNPxhgAR8TU",
                 "year": "2009",
                 "originalTitle": "Once Again",
-                "verses": ["Ephesians 5:2\r\nFilipeni"]
+                "verses": ["Ephesians 5:2", "Philippians 2:8"]
             }
         },
         {
@@ -355,7 +355,14 @@
                 "link": "https://www.youtube.com/watch?v=gljs4N7ZoD4",
                 "year": "2009",
                 "originalTitle": "Heart of Worship",
-                "verses": ["Isaiah 6:3\r\nColoseni"]
+                "verses": [
+                    "Isaiah 29:13",
+                    "John 1:12",
+                    "1 Corinthians 6:19",
+                    "Revelation 22:9",
+                    "Mark 12:30",
+                    "John 14:19-24"
+                ]
             }
         },
         {
@@ -372,8 +379,10 @@
                 "year": "2022",
                 "originalTitle": "Ancient of Days",
                 "verses": [
-                    "Daniel 7:14\r\nDaniel",
-                    "Unknown Book 14:11\r\nFilipeni"
+                    "Daniel 7:14",
+                    "Daniel 7:14",
+                    "Romans 14:11",
+                    "Philippians 2:10"
                 ]
             }
         },
@@ -391,8 +400,10 @@
                 "year": "2023",
                 "originalTitle": "With All I Am",
                 "verses": [
-                    "Romans 12:2\r\nPsalmul",
-                    "Unknown Book 22:5\r\nGalateni"
+                    "Romans 12:2",
+                    "Psalms 51",
+                    "Joshua 22:5",
+                    "Galatians 5:24"
                 ]
             }
         },
@@ -491,22 +502,6 @@
             "lyrics": "S1\r\nCând nu Te cunoșteam Tu m-ai chemat,\r\nCu dragoste M-ai ridicat.\r\nPrin jertfa Ta, Isus, am fost sfințit\r\nCe haine noi mi-ai dăruit!\r\n\r\nR\r\nDoamne, vreau să Te slujesc cât voi trăi,\r\nDrumul Tău să îl urmez în fiecare zi!\r\nPână-n ziua când la cer mă vei chema\r\nSunt aici Isus la dispoziția Ta!\r\n\r\nS2\r\nPărinte mare har mi-ai dăruit:\r\nCa să-Ți slujesc, Domn, infinit.\r\nEu doar un simplu rob neînsemnat,\r\nTu - Domn al Vieții, Împărat!\r\n\r\nS3\r\nCu tot ce am Isus mă dăruiesc\r\nMireasma Ta s-o răspândesc\r\nTrăind mereu, cu zel, al Tău Cuvânt,\r\nÎnaintând prin Duhul Sfânt!\r\n\r\nB\r\nȘi prigoniri de vor veni\r\nȘi încercat voi fi\r\nVreau lângă Tine credincios să râmăn\r\nPân' la sfârșit, pân' la sfârșit.",
             "extraData": {
                 "link": "https://youtu.be/mQomQZ2LJc0",
-                "year": null,
-                "originalTitle": null,
-                "verses": null
-            }
-        },
-        {
-            "id": "S38235dc7-a0f4-4233-9868-1232d0bffc1e",
-            "type": "song",
-            "title": "Test",
-            "artist": "Eu",
-            "cover": null,
-            "initialChord": "",
-            "order": "S1 R S2 R S3 Rx2 B Rx2",
-            "lyrics": "",
-            "extraData": {
-                "link": null,
                 "year": null,
                 "originalTitle": null,
                 "verses": null

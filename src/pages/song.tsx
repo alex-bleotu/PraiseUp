@@ -414,6 +414,8 @@ const Song = ({ route, navigation }: SongProps) => {
     if (song === null || song === undefined)
         return <Loading text={t`Loading the song`} />;
 
+    console.log(song.extraData.verses);
+
     return (
         <StackPage
             navigation={navigation}

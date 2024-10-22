@@ -36,7 +36,7 @@ const BottomSheetModal = ({
 
     const panResponder = useRef(
         PanResponder.create({
-            onStartShouldSetPanResponder: () => false,
+            onStartShouldSetPanResponder: () => true, // Allow starting pan from the handle or the sheet
             onMoveShouldSetPanResponder: (evt, gestureState) => {
                 return Math.abs(gestureState.dy) > 10;
             },
@@ -110,28 +110,35 @@ const BottomSheetModal = ({
                     onPress={closeBottomSheet}
                 />
                 <Animated.View
-                    style={[
-                        styles.bottomSheetContainer,
-                        {
-                            transform: [{ translateY }],
-                            backgroundColor: theme.colors.paper,
-                            height: height
-                                ? height
-                                : numberOfButtons
-                                ? 125 + 50 * numberOfButtons
-                                : "auto",
-                        },
-                    ]}
-                    {...panResponder.panHandlers}>
+                    {...panResponder.panHandlers}
+                    style={{
+                        transform: [{ translateY }],
+                    }}>
                     <View
                         style={[
-                            styles.bottomSheetHandle,
-                            { backgroundColor: theme.colors.grey },
-                        ]}
-                    />
-                    <TouchableWithoutFeedback>
-                        <View style={styles.sheetContent}>{children}</View>
-                    </TouchableWithoutFeedback>
+                            styles.bottomSheetContainer,
+                            {
+                                backgroundColor: theme.colors.paper,
+                                height: height
+                                    ? height
+                                    : numberOfButtons
+                                    ? 125 + 50 * numberOfButtons
+                                    : "auto",
+                            },
+                        ]}>
+                        <View style={styles.bottomSheetHandleContainer}>
+                            <View
+                                style={[
+                                    styles.bottomSheetHandle,
+                                    { backgroundColor: theme.colors.grey },
+                                ]}
+                                {...panResponder.panHandlers}
+                            />
+                        </View>
+                        <TouchableWithoutFeedback>
+                            <View style={styles.sheetContent}>{children}</View>
+                        </TouchableWithoutFeedback>
+                    </View>
                 </Animated.View>
             </View>
         </Modal>
@@ -153,12 +160,17 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
     },
+    bottomSheetHandleContainer: {
+        width: "100%",
+        paddingVertical: 10,
+        justifyContent: "center",
+        alignItems: "center",
+    },
     bottomSheetHandle: {
         width: 40,
         height: 5,
         borderRadius: 3,
-        alignSelf: "center",
-        marginTop: 10,
+        backgroundColor: "#CCC",
     },
     sheetContent: {
         marginVertical: 20,
