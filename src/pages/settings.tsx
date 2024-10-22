@@ -9,7 +9,7 @@ import { t } from "@lingui/macro";
 import Constants from "expo-constants";
 import React, { useContext, useEffect, useState } from "react";
 import { Image, Share, StyleSheet, TouchableOpacity, View } from "react-native";
-import { RadioButton } from "react-native-paper";
+import { ActivityIndicator, RadioButton } from "react-native-paper";
 import BottomSheetModal from "../components/wrapers/bottomSheetModal";
 import Button from "../components/wrapers/button";
 import Input from "../components/wrapers/input";
@@ -19,6 +19,7 @@ import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
 import { AuthContext } from "../context/auth";
 import { ConstantsContext } from "../context/constants";
+import { DataContext } from "../context/data";
 import { LanguageContext } from "../context/language";
 import { ThemeContext } from "../context/theme";
 import { UserContext } from "../context/user";
@@ -33,6 +34,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
         useContext(ConstantsContext);
     const { user } = useContext(UserContext);
     const { logout, exitGuest, deleteAccount } = useContext(AuthContext);
+    const { reloadAllData } = useContext(DataContext);
 
     const [settings, setSettings] = useState<
         "theme" | "language" | "zoom" | "chords" | null
@@ -41,9 +43,11 @@ const Settings = ({ navigation }: { navigation: any }) => {
     const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
     const [isExitModalOpen, setIsExitModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isReloadModalOpen, setIsReloadModalOpen] = useState(false);
     const [password, setPassword] = useState<string>("");
     const [passwordError, setPasswordError] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
+    const [reloadLoading, setReloadLoading] = useState<boolean>(false);
 
     const lyricToRender = t`glo[F#m][E]ri[D]fy`;
 
@@ -154,6 +158,28 @@ const Settings = ({ navigation }: { navigation: any }) => {
                             name="itunes-note"
                             size={25}
                             color={theme.colors.text}
+                        />
+                    }
+                />
+                <Button
+                    mode="contained"
+                    fullWidth
+                    bold
+                    backgroundColor={theme.colors.paper}
+                    text={t`Reload all data`}
+                    onPress={() => {
+                        setIsReloadModalOpen(true);
+                    }}
+                    color={theme.colors.text}
+                    center={false}
+                    fontSize={15}
+                    style={{ marginBottom: 10 }}
+                    icon={
+                        <MCIcons
+                            name="delete-empty-outline"
+                            size={32}
+                            color={theme.colors.text}
+                            style={{ marginVertical: -4 }}
                         />
                     }
                 />
@@ -999,6 +1025,91 @@ Seeking stories yet untold.`}
                                 center
                                 color={theme.colors.white}>
                                 {t`Delete`}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
+
+            <Modal
+                visible={isReloadModalOpen}
+                onClose={() => {}}
+                setVisible={setIsReloadModalOpen}>
+                <View>
+                    <View
+                        style={{
+                            width: "100%",
+                            alignItems: "center",
+                            paddingHorizontal: 20,
+                            paddingVertical: 10,
+                        }}>
+                        <Text
+                            fontSize={18}
+                            color={theme.colors.textVariant}
+                            center
+                            style={{
+                                width: 220,
+                            }}>{t`This will reload all the songs and albums.`}</Text>
+                    </View>
+                </View>
+                <View
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        marginTop: 30,
+                    }}>
+                    <View style={{ width: "47%" }}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                setIsReloadModalOpen(false);
+                            }}
+                            activeOpacity={theme.activeOpacity}
+                            style={[
+                                styles.button,
+                                {
+                                    backgroundColor: theme.colors.darkPaper,
+                                },
+                            ]}>
+                            <Text fontSize={14} bold upper center>
+                                {t`Cancel`}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ width: "47%" }}>
+                        <TouchableOpacity
+                            disabled={reloadLoading}
+                            onPress={async () => {
+                                if (reloadLoading) return;
+
+                                setReloadLoading(true);
+                                await reloadAllData();
+                                setReloadLoading(false);
+                            }}
+                            activeOpacity={theme.activeOpacity}
+                            style={[
+                                styles.button,
+                                {
+                                    backgroundColor: theme.colors.danger,
+                                    flexDirection: "row",
+                                    opacity: !reloadLoading ? 1 : 0.5,
+                                },
+                            ]}>
+                            {reloadLoading && (
+                                <ActivityIndicator
+                                    size={16}
+                                    style={{ marginRight: 10 }}
+                                    color={theme.colors.white}
+                                />
+                            )}
+                            <Text
+                                fontSize={14}
+                                bold
+                                upper
+                                center
+                                color={theme.colors.white}>
+                                {t`Reload`}
                             </Text>
                         </TouchableOpacity>
                     </View>

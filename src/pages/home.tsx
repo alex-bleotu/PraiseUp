@@ -18,8 +18,13 @@ import Loading from "./loading";
 
 const Home = ({ navigation }: { navigation: any }) => {
     const { recent } = useContext(RecentContext);
-    const { getRandomSongs, getFavoriteSongsAlbum, getFavoriteAlbums } =
-        useContext(DataContext);
+    const {
+        getRandomSongs,
+        getFavoriteSongsAlbum,
+        getFavoriteAlbums,
+        getAlbumById,
+        getSongById,
+    } = useContext(DataContext);
     const { refresh } = useContext(RefreshContext);
     const { user } = useContext(UserContext);
     const { theme } = useContext(ThemeContext);
@@ -33,6 +38,9 @@ const Home = ({ navigation }: { navigation: any }) => {
     const [currentData, setCurrentData] = useState<SongType | AlbumType | null>(
         null
     );
+
+    const [bbsoSongs, setBbsoSongs] = useState<SongType[] | null>(null);
+    const [tabaraSongs, setTabaraSongs] = useState<SongType[] | null>(null);
 
     useEffect(() => {
         const load = async () => {
@@ -48,6 +56,31 @@ const Home = ({ navigation }: { navigation: any }) => {
 
             if (songs) setRandomSongs(songs);
             else setRandomSongs([]);
+
+            const bbso = await getAlbumById(
+                "A5e7720ae-ccfe-4188-9820-e3290075bd2b"
+            );
+            if (bbso) {
+                let songsList: SongType[] = [];
+                for (let i = 0; i < bbso.songs.length; i++) {
+                    console.log(bbso.songs[i]);
+                    const songData = await getSongById(bbso.songs[i]);
+                    if (songData) songsList = [...songsList, songData];
+                }
+                setBbsoSongs(songsList);
+            }
+
+            const tabara = await getAlbumById(
+                "A6d43abad-ae19-466a-aa76-003a77e92590"
+            );
+            if (tabara) {
+                let songsList: SongType[] = [];
+                for (let i = 0; i < tabara.songs.length; i++) {
+                    const songData = await getSongById(tabara.songs[i]);
+                    if (songData) songsList = [...songsList, songData];
+                }
+                setTabaraSongs(songsList);
+            }
         };
 
         load();
@@ -67,7 +100,14 @@ const Home = ({ navigation }: { navigation: any }) => {
         load();
     }, [refresh]);
 
-    if (!favoriteAlbums || !randomSongs || !recent || recent.length === 0)
+    if (
+        !favoriteAlbums ||
+        !randomSongs ||
+        !recent ||
+        recent.length === 0 ||
+        bbsoSongs === null ||
+        tabaraSongs === null
+    )
         return <Loading text={t`Finishing things`} />;
 
     return (
@@ -149,6 +189,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                         </View>
                     </View>
                 )}
+
                 {favoriteAlbums.length !== 0 && (
                     <View style={styles.container}>
                         <Text fontSize={20} bold style={{ marginLeft: 20 }}>
@@ -170,6 +211,68 @@ const Home = ({ navigation }: { navigation: any }) => {
                                             vertical
                                             onLongPress={() => {
                                                 setCurrentData(album);
+                                                setBottomSheetOpen(true);
+                                            }}
+                                        />
+                                    </View>
+                                ))}
+                            </ScrollView>
+                        </View>
+                    </View>
+                )}
+
+                {bbsoSongs.length !== 0 && (
+                    <View style={styles.container}>
+                        <Text fontSize={20} bold style={{ marginLeft: 20 }}>
+                            BBSO
+                        </Text>
+                        <View style={styles.songsContainer}>
+                            <ScrollView
+                                horizontal
+                                showScroll={false}
+                                top={10}
+                                bottom={10}>
+                                {bbsoSongs.map((song: SongType) => (
+                                    <View
+                                        key={song.id}
+                                        style={{ marginHorizontal: 5 }}>
+                                        <SongCover
+                                            song={song}
+                                            navigation={navigation}
+                                            vertical
+                                            onLongPress={() => {
+                                                setCurrentData(song);
+                                                setBottomSheetOpen(true);
+                                            }}
+                                        />
+                                    </View>
+                                ))}
+                            </ScrollView>
+                        </View>
+                    </View>
+                )}
+
+                {tabaraSongs.length !== 0 && (
+                    <View style={styles.container}>
+                        <Text fontSize={20} bold style={{ marginLeft: 20 }}>
+                            Tabăra 447
+                        </Text>
+                        <View style={styles.songsContainer}>
+                            <ScrollView
+                                horizontal
+                                showScroll={false}
+                                top={10}
+                                bottom={10}>
+                                {tabaraSongs.map((song: SongType) => (
+                                    <View
+                                        key={song.id}
+                                        style={{ marginHorizontal: 5 }}>
+                                        <SongCover
+                                            song={song}
+                                            navigation={navigation}
+                                            vertical
+                                            onLongPress={() => {
+                                                setCurrentData(song);
                                                 setBottomSheetOpen(true);
                                             }}
                                         />

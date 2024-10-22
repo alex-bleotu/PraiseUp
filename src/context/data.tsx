@@ -1451,6 +1451,15 @@ export const DataProvider = ({
         return songs;
     };
 
+    const reloadAllData = async () => {
+        setLoadingData(true);
+
+        const networkState = await Network.getNetworkStateAsync();
+        const hasInternet = networkState.isConnected;
+
+        if (hasInternet) await addData();
+    };
+
     return (
         <DataContext.Provider
             value={{
@@ -1495,6 +1504,7 @@ export const DataProvider = ({
                 getNotOwnedPersonalAlbum,
                 removePersonalAlbumFromUser,
                 getAllSongsOrdered,
+                reloadAllData,
             }}>
             {children}
         </DataContext.Provider>

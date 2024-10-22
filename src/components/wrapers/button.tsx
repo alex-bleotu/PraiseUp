@@ -67,6 +67,10 @@ const Button = ({
                         style={{
                             marginRight: icon === undefined ? 0 : 10,
                             marginLeft: center ? 0 : -5,
+                            width: 30,
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
                         }}>
                         {icon}
                     </View>
