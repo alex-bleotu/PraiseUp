@@ -80,7 +80,7 @@ msgstr "Adaugă la alt album"
 msgid "Album Name"
 msgstr "Numele albumului"
 
-#: src/pages/allAlbums.tsx:75
+#: src/pages/allAlbums.tsx:74
 #: src/pages/home.tsx:271
 msgid "Albums"
 msgstr "Albume"

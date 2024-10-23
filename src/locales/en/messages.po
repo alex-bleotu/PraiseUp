@@ -80,7 +80,7 @@ msgstr "Add to other album"
 msgid "Album Name"
 msgstr "Album Name"
 
-#: src/pages/allAlbums.tsx:75
+#: src/pages/allAlbums.tsx:74
 #: src/pages/home.tsx:271
 msgid "Albums"
 msgstr "Albums"

@@ -14,6 +14,7 @@ import { AlbumType, DataContext } from "../context/data";
 import { ThemeContext } from "../context/theme";
 
 const alphabet = "ABCDEFGHIÎJKLMNOPQRSȘTȚUVWXYZ";
+const alphabetSplit = alphabet.split("");
 
 const groupSongsByLetter = (songs: AlbumType[]) => {
     const groupedAlbums: { [key: string]: AlbumType[] } = {};
@@ -49,8 +50,6 @@ const AllAlbums = ({ navigation }: { navigation: any }) => {
     }>({});
     const sectionRefs = useRef<{ [key: string]: any }>({});
     const scrollViewRef = useRef<RNScrollView>(null);
-
-    const alphabetSplit = alphabet.split("");
 
     useEffect(() => {
         const getSongs = async () => {
