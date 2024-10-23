@@ -109,7 +109,7 @@ const Home = ({ navigation }: { navigation: any }) => {
 
     const animatedStyle = useAnimatedStyle(() => {
         const animatedHeight = expended
-            ? withTiming(100, { duration: 400 })
+            ? withTiming(120, { duration: 400 })
             : withTiming(0, { duration: 400 });
 
         return {
@@ -226,7 +226,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                             bold
                             color={theme.colors.textOnPrimary}
                             fontSize={20}>
-                            {t`Looking for more?`}
+                            {t`Looking for something else?`}
                         </Text>
 
                         <Animated.View
@@ -238,24 +238,54 @@ const Home = ({ navigation }: { navigation: any }) => {
                                     fontSize={16}
                                     style={{
                                         marginTop: 5,
+                                        width: "75%",
                                     }}>
-                                    {t`Find all the songs here`}
+                                    {t`Explore everything PraiseUp has to offer!`}
                                 </Text>
-                                <Button
-                                    text="Explore"
-                                    upper
-                                    bold
-                                    backgroundColor={theme.colors.paper}
-                                    color={theme.colors.text}
-                                    fullWidth
-                                    mode="contained"
-                                    onPress={() => {
-                                        navigation.navigate("AllSongs");
-                                        // if (expended) setExpended(false);
-                                    }}
-                                    style={{ marginTop: 30 }}
-                                    contentStyle={{ paddingVertical: 10 }}
-                                />
+                                <View
+                                    style={{
+                                        marginTop: 30,
+                                        flexDirection: "row",
+                                        width: "100%",
+                                        justifyContent: "space-between",
+                                    }}>
+                                    <View style={{ width: "47%" }}>
+                                        <Button
+                                            text={t`Songs`}
+                                            upper
+                                            bold
+                                            backgroundColor={theme.colors.paper}
+                                            color={theme.colors.text}
+                                            mode="contained"
+                                            fullWidth
+                                            onPress={() => {
+                                                navigation.navigate("AllSongs");
+                                            }}
+                                            contentStyle={{
+                                                paddingVertical: 10,
+                                            }}
+                                        />
+                                    </View>
+                                    <View style={{ width: "47%" }}>
+                                        <Button
+                                            text={t`Albums`}
+                                            upper
+                                            bold
+                                            backgroundColor={theme.colors.paper}
+                                            color={theme.colors.text}
+                                            fullWidth
+                                            mode="contained"
+                                            onPress={() => {
+                                                navigation.navigate(
+                                                    "AllAlbums"
+                                                );
+                                            }}
+                                            contentStyle={{
+                                                paddingVertical: 10,
+                                            }}
+                                        />
+                                    </View>
+                                </View>
                             </View>
                         </Animated.View>
                     </View>

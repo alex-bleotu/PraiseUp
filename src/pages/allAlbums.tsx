@@ -39,7 +39,7 @@ const groupSongsByLetter = (songs: AlbumType[]) => {
     return groupedAlbums;
 };
 
-const AllSongs = ({ navigation }: { navigation: any }) => {
+const AllAlbums = ({ navigation }: { navigation: any }) => {
     const { theme } = useContext(ThemeContext);
     const { getAllAlbumsOrdered } = useContext(DataContext);
 
@@ -72,7 +72,7 @@ const AllSongs = ({ navigation }: { navigation: any }) => {
     };
 
     return (
-        <StackPage navigation={navigation} title={t`All Albums`} noBottom>
+        <StackPage navigation={navigation} title={t`Albums`} noBottom>
             {albums.length > 0 ? (
                 <View style={styles.container}>
                     <View style={styles.alphabetContainer}>
@@ -136,7 +136,7 @@ const AllSongs = ({ navigation }: { navigation: any }) => {
     );
 };
 
-export default AllSongs;
+export default AllAlbums;
 
 const styles = StyleSheet.create({
     container: {

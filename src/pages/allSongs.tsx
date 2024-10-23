@@ -72,7 +72,7 @@ const AllSongs = ({ navigation }: { navigation: any }) => {
     };
 
     return (
-        <StackPage navigation={navigation} title={t`All Songs`} noBottom>
+        <StackPage navigation={navigation} title={t`Songs`} noBottom>
             {songs.length > 0 ? (
                 <View style={styles.container}>
                     <View style={styles.alphabetContainer}>
