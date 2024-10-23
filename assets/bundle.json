@@ -1,5 +1,5 @@
 {
-    "version": "1.0.0",
+    "version": "1.0.4",
     "songs": [
         {
             "id": "S8384698f-7c39-4339-8d3e-5621e6aa0ed6",
@@ -506,6 +506,150 @@
                 "originalTitle": null,
                 "verses": null
             }
+        },
+        {
+            "id": "Sfb5f08d8-791a-4383-b39d-9e142226506b",
+            "type": "song",
+            "title": "El îmi schimbă inima",
+            "artist": "Răzvan Rește & Emi Ocoș",
+            "cover": null,
+            "initialChord": "G",
+            "order": "S1 R1 R2 S2 R3x2 Bx3 R1x2 O",
+            "lyrics": "S1\r\n[G]Când sunt dezamă[Gsus2/B]git și pără[C]sit, cu sufletul [Cm6/D]frânt,\r\n[G]Când sunt descura[Gsus2/B]jat și întris[C]tat, de oameni ui[Cm6/d]tat,\r\n[G]Privesc spre E[m7E]l, spre Domnul [C]m[aj7m]eu,\r\nSpre Cel ce-mi dă [Cm/D]viață\r\n[G]Și-nvăț să [Em7]cred din nou în C[maj7C]el\r\nCe mă izbă[Cm/D]vește.\r\n\r\nR1\r\nEl îmi [G]schimbă inima,\r\nMă păs[Em7]trează-n mila Sa\r\nȘi îmi [A9]umple viața de bucu[Cm6/D]rie.\r\nCând a[G]leg să Îl urmez\r\nMă în[Em7]vață să zâmbesc\r\nSi să [A9]cred că sunt în [D]mâna [G]Sa.\r\n\r\nR2\r\nEl îmi [G]schimbă inima,\r\nMă păs[Em7]trează-n mila Sa\r\nȘi îmi [A9]umple viața de bucu[Cm6/D]rie.\r\nCând a[G]leg să Îl urmez\r\nMă în[Em7]vață să zâmbesc\r\nSi să [A9]cred că sunt în [C]m[6/Dm]âna [G]Sa.\r\n\r\nS2\r\n[G]Nu descura[Gsus2/B]ja, nu renun[C]ța, El te va scă[Cm6/D]pa!\r\n[G]Nu-nceta să [Gsus2/B]crezi că, în cu[C]rând, te va ridi[Cm6/D]ca!\r\n[G]Privește spre E[m7E]l, spre Domnul [Cmaj7]tău\r\nSpre Cel ce-ți dă [Cm/D]viață!\r\n[G]Să-nveți să [Em7]crezi din nou în C[maj7C]el\r\nCe te izbă[Cm/D]vește.\r\n\r\nR3\r\nEl îți [G]schimbă inima,\r\nTe păs[Em7]trează-n mila Sa\r\nȘi îți [A9]umple viața de bucu[Cm6/D]rie.\r\nCând a[G]legi să ll urmezi\r\nTe în[Em7]vață să zâmbești\r\nȘi să [A9]crezi că ești în [D]mâna [G]Sa.\r\n\r\nB\r\n[Em]Iubirea [Dm7]Sa m-a sal[Cmaj7]vat,\r\nAzi sunt al [Cm6/D]Său.\r\n[Em]Nu m-a ui[Dm7]tat, nu m-a lă[Cmaj7]sat,\r\nM-a ridi[Cm6/D]cat.\r\n\r\nO\r\n[Bm]-- [Em7]---Si să [A9]cred că sunt în [C]m[6/Dm]âna [G]Sa. --- [Bm]---[Em7]\r\nDa, eu [A9]cred că sunt în [C]m[6/Dm]âna [G]Sa.",
+            "extraData": {
+                "link": "https://youtu.be/66stebhOSpY",
+                "year": null,
+                "originalTitle": null,
+                "verses": ["Psalms 40:1-3"]
+            }
+        },
+        {
+            "id": "S15a82e97-bd96-4da6-a67c-b0438eb192e8",
+            "type": "song",
+            "title": "Mulțumesc (Azi vreau)",
+            "artist": "Joy Gardner",
+            "cover": null,
+            "initialChord": "Eb",
+            "order": "R1 R2 S1 R2 S2 R2 Pc R3x2 O",
+            "lyrics": "R1\r\nA[Eb]zi, v[Bb]reau s[Eb]ă-ți mulțum[Ab]esc\r\nPentru t[Ab]ot c[Eb]e mi-ai d[F]at.[Bb]\r\nS[Eb]unt feric[Bb]it căci v[Eb]iață-am prim[Ab]it.\r\nO D[Eb]oamne, î[Bb]ți mulțum[Eb]esc!\r\n\r\nR2\r\nA[Eb]zi, v[Bb]reau s[Eb]ă-ți mulțum[Ab]esc\r\nPentru t[Ab]ot c[Eb]e mi-ai d[F]at.[Bb]\r\nS[Eb]unt feric[Bb]it căci v[Eb]iață-am prim[Ab]it.\r\nO D[Eb]oamne, î[Bb]ți mulțum[Eb]esc!\r\n\r\nS1\r\nM[Eb]ulțumesc fiindcă m[Gm]-ai purtat, m[Bbm]ereu m-ai aju[Ab]tat\r\nȘi prin î[Fm]ncercări și p[Eb]rovocări nicic[F]ând nu m-ai lăs[Bb]at.\r\nM[Eb]ereu ești lângă m[Fm]ine, când mă r[Eb]og, Tu ești prez[Ab]ent.\r\nȘi chiar din primul ceas, prieten [Eb]mi-ai ră[C]m[m]as,\r\nD[Fm]e-aceea-Ți mulț[Bb]ume[Eb]sc!\r\n\r\nS2\r\nÎ[Eb]ți mulțumesc si p[Gm]entru azi, si pentru t[Bbm]ot ce va v[Ab]eni,\r\nFiindcă în o[Fm]rice zi și-n o[Eb]rice ceas cu m[F]ine Tu vei f[Bb]i!\r\nN[Eb]u voi uita vreod[Fm]ată cum viața î[Eb]ntreagă mi-ai transf[Ab]ormat\r\nCând Duhul Tău mi-ai dat tot[Eb]ul s-a s[Cm]chimbat.\r\nD[Fm]e-aceea-Ți mulț[Bb]ume[Eb]sc!\r\n\r\nPc\r\nO[B]ooooooo\r\n\r\nR3\r\nA[E]zi, v[B]reau s[E]ă-ți mulțum[A]esc\r\nPentru t[A]ot c[E]e mi-ai d[Gb]at.[B]\r\nS[E]unt feric[B]it căci v[E]iață-am prim[A]it.\r\nO D[E]oamne, î[B]ți mulțum[E]esc!\r\n\r\nO\r\nO[Gbm]ooooo\r\nO D[E]oamne, îți mulțum[Dbm]esc!\r\nO[C]ooooo\r\nO D[E]oamne, î[B]ți mulțum[E]esc!\r\nA[E]zi, v[Gbm]reau s[E]ă-ți mulțum[A]esc[E]!",
+            "extraData": {
+                "link": "https://youtu.be/bcUfABKbhqQ",
+                "year": null,
+                "originalTitle": null,
+                "verses": null
+            }
+        },
+        {
+            "id": "S0d504529-6be7-4985-9beb-e12b42ba4c97",
+            "type": "song",
+            "title": "Colaj Piese",
+            "artist": "BBSO",
+            "cover": null,
+            "initialChord": "G",
+            "order": "S1 R1 S2 R1 S3 R2 S4 S5 R3 S6 S7 R3x2 R4 R5 S8 R6 S9 R7 S10x3 R8",
+            "lyrics": "S1\r\nCând [G]am pacea [Am]Domnului\r\n[C]În [D]viața [G]mea\r\nDe [Em]vifor eu [A]nu sunt ră[D]pus.\r\nIar [G]inima [C]mea\r\nTot a[A]șa va cân[D]ta:\r\nBine [G]e, [C]bine [D]e în I[G]sus!\r\n\r\nR1\r\nStânca [C]mea [Em]e Cris[D]tos,\r\n[G]Lui-i ră[C]mân veșnic [Em]credin[D]cios.\r\n[G]Prin fur[C]tună [Em]Tu ră[D]mâi,\r\nVeșnic [G]Domn.\r\nBine [G]e, (bine [D]e) în I[D]sus (în I[G]sus)!\r\nBine e, [C]bine [D]e în I[G]sus!\r\n\r\nS2\r\nChiar [G]dacă cel [Am]rău\r\nSă mă--nfr[C]i[—D]ce ar [G]vrea,\r\nMă--n[Em]cred în Di[A/C#]vinul Cu[D]vânt.\r\nI[G]sus a plă[C]tit\r\nLa Cal[A/C#]var vina [D]mea\r\nȘi cu[G/B]rat sunt prin [C]sân[D]gele [G]sfânt.\r\n\r\nS3\r\nAș[G]tept, Doamne,\r\n[Am]Ziua când [C]vei [D]reve[G]ni,\r\nCând [Em]trâmbița [A]va răsu[D]na;\r\nÎn [G]slavă, pe [C]nori,\r\nFața [A]Ta voi ve[D]dea\r\nȘi-al meu [G]suflet a[C]tunci [D]va cân[G]ta\r\n\r\nR2\r\nBine [G]e, (bine [D]e) în I[D]sus (în I[G]sus)!\r\nBine [C]e, bine [D]e în I[G]sus!\r\n\r\nS4\r\nVa[D]loarea mea nu [G]e-n ce [D]am\r\nCăci [D]tot ce-am strâns se [G]scurge-n [D]van\r\nCi-n [D]Cel ce, fiindcă [A]m-a iu[Bm]bit,\r\n[G]S-a jert[D]fit\r\n\r\nS5\r\n[D]N-am preț în ce pot [G]eu să [D]fac,\r\nPrin [D]fapte sunt cel [G]mai să[D]rac.\r\nMu[D]rind, mi-a dat un [A]preț prin [Bm]har,\r\n[G]La Cal[D]var\r\n\r\nR3\r\n[G]Astăzi cânt de bucu[Bm]rie,\r\nEu sunt [G]liber, sunt sal[D]vat, ce [A]dar!\r\n[G]Te-oi lăuda în veșni[Bm]cie,\r\nMi-ai dat ier[G]tare-n veci prin [A]al Tău [D]har!\r\n\r\nS6\r\nCa floarea toți ne-om ofili\r\nȘi frumusețea s-a sfârși,\r\nVom fi curând acolo sus,\r\nCu Isus.\r\n\r\nS7\r\nNu mă voi lăuda nicicând\r\nCu-nțelepciune pe pământ,\r\nDar azi mă laud bucuros,\r\nÎn Cristos.\r\n\r\nR4\r\nDo[C]ar Cristos mi-e b[D]ucuri[Em]e,\r\nApă v[C]ie, și com[G]oara m[D]ea!\r\nM[C]ă încred în E[D]l, nu-n a[Em]ltul,\r\nCăci numai E[G]l îmi u[C]mple i[D]nim[G]a!\r\n\r\nR5\r\nDo[C]ar Cristos mi-e b[D]ucuri[Em]e,\r\nApă v[C]ie, și com[G]oara m[D]ea!\r\nM[C]ă încred în E[D]l, nu-n a[Em]ltul,\r\nCăci numai E[G]l îmi u[C]mple i[D]nim[C]a! [Em]----[D]\r\nIni[C]ma[Em]----[D]\r\nIni[E]m[m]a[D]--[C]--[D]\r\n\r\nS8\r\nMirarea mea de la sfârșit\r\nE că Isus m-a mântuit,\r\nCă S-a jertfit pentr-un tâlhar —\r\nLa Calvar\r\n\r\nR6\r\nȘi când mă [C]lupt, mă [G]lupt pe genu[D]nchi,\r\nMâini spre [Em]cer voi 'nă[C]lța,\r\nDoam[G]ne, căci lupta e [D]doar a [Em]Ta!\r\nȘi orice [C]teamă [G]Ție-ți voi [D]da\r\nȘi-n [Em]noapte-am să [C]cânt,\r\nDoam[G]ne, lupta e [D]doar a [G]Ta!\r\n\r\nS9\r\n[G]Când lupta mă înconjoară\r\nTu vezi vic[C]toria\r\n[Em]Când munți înalți se ridică\r\nTu [D]îi îndepăr[C]tezi\r\n[G]Iubirea Ta mă-nconjoară în încer[C]care\r\n[Em]Cum aș putea să mă tem\r\nCând [D]Tu mă ocro[G]tești?\r\n\r\nR7\r\nȘi când mă [C]lupt, mă [G]lupt pe genu[D]nchi,\r\nMâini spre [Em]cer voi 'nă[C]lța,\r\nDoam[G]ne, căci lupta e [D]doar a [Em]Ta!\r\nȘi orice [C]teamă [G]Ție-ți voi [D]da\r\nȘi-n [Em]noapte-am să [C]cânt,\r\nDoam[G]ne, lupta e [D]doar a [G]Ta!\r\n\r\nS10\r\nO, sufle[G]te-al meu canta si nu te opri\r\nStri[D]ga-ti voios muzica inimii\r\nIn bra[C]te de cer revarsa-Ti lau[G/D]da!\r\n\r\nR8\r\nMaini sp[G]re cer voi-nalta si Te voi slavi ne-nce[D]tat\r\nPrimeste-nchinarea mea,\r\nA[C]leluia! [Em]Alel[D]uia!\r\nDoamne, [G]stiu ca-i putin pentr-un Rege ce merita [D]tot\r\nDar imi canta inima,\r\nA[C]leluia! [Em]Alel[D]uia!\r\nA[Am]leluia! [G]Alel[D]uia[G]!",
+            "extraData": {
+                "link": null,
+                "year": null,
+                "originalTitle": null,
+                "verses": null
+            }
+        },
+        {
+            "id": "Sf2a3a5f0-7649-48d0-892e-6191bd6049ea",
+            "type": "song",
+            "title": "Victoria în Isus",
+            "artist": "BBSO",
+            "cover": null,
+            "initialChord": "G",
+            "order": "S1 R S2 R S3 Rx2",
+            "lyrics": "S1\r\nAm a[G]uzit o veste, că I[F]sus ven[C]i din sla[G]vă\r\nȘi la G[Em7]olgota în locul meu, a f[D]ost crucificat,\r\nEl m[G]i-a luat povara și mi-a d[F]at în d[C]ar iertar[G]ea,\r\nPrin j[Em]ertfa Lui, vict[G]oria, de-ac[F]um am c[C]âștig[G]at.\r\n\r\nR\r\nVict[G]oria în Isus mi-a d[F]at a[C]zi salv[G]area,\r\nPrin s[Em]fântul Său sânge, El m[D]-a răscumpărat,\r\nÎntre[G]aga mea iubire, doar L[F]ui I s[C]e cuvin[G]e,\r\nPrin E[Em]l am victori[G]a, spăl[F]at sunt d[C]e păc[G]at!\r\n\r\nS2\r\nAm auzit de Domnul, de puterea Lui cea mare,\r\nCum pe cei bolnavi i-a vindecat, pe morți i-a înviat,\r\nEu am strigat: O, Doamne, Te-ndură și de mine!\r\nȘi-n viața mea victoria, Isus a câștigat!\r\n\r\nS3\r\nAm auz[G]it că Domnul, mi-a zid[C]it o casă-n Ceruri\r\nȘi-n ac[G]el locaș de s[Em]trăluciri, la m[G]asa Lui voi st[D]a,\r\nCu îngerii în coruri, în măr[C]ire-I vom da s[G]lavă\r\nȘi cântecul vict[Em]oriei, at[F]unci îl v[C]om cânt[G]a!",
+            "extraData": {
+                "link": "https://youtu.be/XHgOywRt1kw",
+                "year": null,
+                "originalTitle": null,
+                "verses": null
+            }
+        },
+        {
+            "id": "S7f6a79dc-e487-4781-8e16-dd6e8e18e6f5",
+            "type": "song",
+            "title": "Prin sfânt sânge",
+            "artist": "BBSO",
+            "cover": null,
+            "initialChord": "Bb",
+            "order": "S1 R1 S2 R2 B R3x3 O",
+            "lyrics": "S1\r\nIntro: x2 [Gm]----[F]----[Bb]----[Eb]\r\n\r\nM[Gm]ă găseam pe-al m[Eb]orții d[Bb]rum\r\nA[F]păsat de vina g[Eb]rea,\r\nC[Gm]ând Isus pe al dur[Eb]erii dea[Bb]l\r\nD[F]in iad m-a răscumpă[Gm]rat\r\nCu vieție de lut și p[Eb]umnii s[Bb]trânși\r\nG[F]lasul mi l-am crucif[Eb]icat\r\nRuș[Gm]inea m-a batjoc[Bb]orit\r\nDar prin îndur[F]area Lui am fost i[Eb]ertat\r\n\r\nR1\r\nMi-a vorb[Bb]it prin s[Eb]fânt s[Bb]ânge\r\nȘi păm[F]ântul s-a cl[Bb]intit\r\nDin păc[Gm]at și rob[Eb]ie\r\nAm fost eliber[F]at și mântui[Gm]t! -[F]----[Bb]----[Eb]\r\n\r\nS2\r\nM[Gm]-a cuprins l[Eb]umina S[Bb]a\r\nDe v[F]iață am fost u[Eb]mplut\r\nI[Gm]nima mi-a de[Eb]spietri[Bb]t\r\nȘi prin D[F]uhul sfânt am ren[Eb]ăscut\r\nDa! Prin D[F]uhul Sfânt am ren[Eb]ăscut\r\n\r\nR2\r\n[Bb]Mi-a [Eb]vorb[Bb]it prin s[Eb]fânt s[Bb]ânge\r\nȘi păm[F]ântul s-a cl[Bb]intit\r\nDin păc[Gm]at și rob[Eb]ie\r\nAm fost eliber[F]at și mântui[Bb]t! --[Eb]--[Bb]\r\n\r\nB\r\nA[Gm]tât de mult Tu m[F]-ai iubit\r\nCă pe F[Bb]iul Său l[Eb]umii l-a dat\r\nC[Gm]a să moară p[F]e Calvar\r\nȘi in l[Bb]ocul meu cruc[Eb]ificat\r\nI[Bb]sus m-a el[F]iber[Bb]at.\r\n\r\nR3\r\n[Bb]Mi-a [Eb]vorb[Bb]it prin s[Eb]fânt s[Bb]ânge\r\nȘi păm[F]ântul s-a cl[Bb]intit\r\nDin păc[Gm]at și rob[Eb]ie\r\nAm fost eliber[F]at și mântui[Bb]t!\r\n\r\nO\r\nDin păc[Gm]at și rob[Eb]ie\r\nAm fost eliber[F]at și mânt[Gm]uit![C]\r\nAm fost eliber[F]at și mânt[Gm]uit![C]\r\nAm fost eliber[F]at și mântui[Bb]t!",
+            "extraData": {
+                "link": "https://youtu.be/6caQ5JQs6JE",
+                "year": null,
+                "originalTitle": null,
+                "verses": null
+            }
+        },
+        {
+            "id": "S0162238b-8374-4912-814f-228e8e1b71fb",
+            "type": "song",
+            "title": "Multă vreme eu am rătăcit",
+            "artist": "BBSO",
+            "cover": null,
+            "initialChord": "Ab",
+            "order": "S1 R1 S2 S3 R2 S4 R3 S1 R1 S2 S3 R2 S4 R3",
+            "lyrics": "S1\r\nM[Ab]ultă vreme e[Db]u am r[Ab]ătăcit\r\nN[Eb]eștiind că Isus a[Ab] murit\r\nPentru mine că S-a răstignit pe [Bbm]Gol[Eb7]got[Ab]a!\r\n\r\nR1\r\nS[Db]us pe cruce al Său s[Ab]ânge-a curs,\r\nT[Eb]rupul, inima I l[Ab]e-au străpuns\r\nD[Db]ar pentru păcatul m[Ab]eu muri pe [Bbm]Gol[Eb7]got[Ab]a!\r\n\r\nS2\r\nD[Db]in Cuvântul D[Gb]omnul[Db]ui cunosc\r\nA[Ab]stăzi că eu sunt un p[Db]ăcătos\r\nȘi în locul m[Gb]eu m[Db]uri Hristos pe G[bG]ol[Ab7]got[Db]a!\r\n\r\nS3\r\nModulatie Pian [A]----[G]----[Cm]----[A]\r\nA[D]m venit la El și-am c[G]ăpăt[D]at[E]\r\nM[A7]ulte binecuvânt[D]ări mi-a dat\r\nM-a făcut copilul Său bogat pe [Em]Gol[A7]go[Am7]ta! -[D7]\r\n\r\nR2\r\nS[G]us pe cruce al Său s[D]ânge-a cur[E]s,\r\nT[A]rupul, inima I l[D]e-au străp[A7]un[D]s\r\nD[G]ar pentru păcatul m[D]eu muri pe G[mG]ol[A]got[D]a!\r\n\r\nS4\r\nO[C]oo[F]oo D[Bb]omnului de azi eu m-am predat[C]\r\nȘ[F]i în veci de El nu m[Bb]ă despart\r\nAl meu suflet Domnul mi-a salvat pe [Eb]Gol[F]go[Fm7]ta! -[Bb7]\r\n\r\nR3\r\n[Eb]Sus pe cruce al Său s[Bb]ânge-a curs,\r\nT[F]rupul, inima I l[Bb]e-au străpuns\r\nD[Eb]ar pentru păcatul m[Bb]eu muri pe [Cm]Golg[F]ot[Bb]a!\r\nD[Eb]ar pentru păcatul m[Bb]eu muri pe [Cm]Golg[F]ot[Bb]a!",
+            "extraData": {
+                "link": "https://youtu.be/NgFCIMMG91Q",
+                "year": null,
+                "originalTitle": null,
+                "verses": null
+            }
+        },
+        {
+            "id": "Sf0311d75-ae37-49d4-8008-420efe14a052",
+            "type": "song",
+            "title": "Do It Again",
+            "artist": "BBSO",
+            "cover": null,
+            "initialChord": "Bb",
+            "order": "S1 R1 S2 R2 R3 B1 B2 B3",
+            "lyrics": "S1\r\n[Eb]Ziduri s-au înălțat ș[Bb]i m-au înconjurat\r\n[Eb]Tu, Doamne, le vei prăbuș[Bb]i\r\n[Eb]Credincioșia Ta l[Bb]upta va câștiga\r\n[Eb]Știu că nu mă vei părăs[Bb]i\r\n\r\nR1\r\n[Eb]Și tot ce-ai prom[F]is\r\nCred că vei î[Bb]mplini î[Eb]ntr-o zi\r\nMă simt ocrot[F]it de brațul T[Bb]ău cel sfânt\r\nTu n[Eb]u mă lași nicic[Bb]ând\r\n\r\nS2\r\n[Eb]Știu că vei preschimba n[Bb]oaptea din viața mea\r\n[Eb]Cântecul meu Te va cinst[Bb]i\r\n[Eb]Doamne, mă întregești c[Bb]ând spui că mă iubești\r\n[Eb]Inima mea Te va slăv[Bb]i\r\n\r\nR2\r\nȘi t[Eb]ot ce-ai prom[F]is\r\nCred că vei î[Bb]mplini î[Eb]ntr-o zi\r\n[Gm]Mă simt ocrot[F]it de brațul T[Bb]ău cel sfânt\r\nTu n[Eb]u mă laș[Gm]i\r\n\r\nR3\r\nȘi t[Gm]ot ce-ai prom[F]is\r\nCred că vei î[Bb]mplini î[Eb]ntr-o z[Ebm]i\r\nMă simt ocrot[F]it de brațul T[Bb]ău cel sfânt\r\nTu n[Eb]u mă lași nicicând\r\n\r\nB1\r\n[Eb]Puterea Ta ce mută munții\r\n[Bb]Mă va-ntări și mă va pune pe stânci\r\n[Eb]Iar brațul Tău ce-mparte mar[Bb]ea\r\nMă va scăpa d[B]in văi și ape ad[E]ânci\r\n\r\nB2\r\n[E]Puterea Ta ce mută munț[B]ii\r\nMă va-ntări și mă va pune pe st[E]ânci\r\nIar brațul Tău ce-mparte mar[B]ea\r\nMă va scăpa d[C]in văi și ape ad[F]ânci\r\n\r\nB3\r\n[F]Puterea Ta ce mută munț[G]ii\r\n[C]Mă va-ntări și mă va pune pe st[F]ânci\r\nIar brațul T[C]ău c[F]e-mparte marea\r\n[C]Mă va scăpa din văi și ape ad[F]ânci",
+            "extraData": {
+                "link": null,
+                "year": null,
+                "originalTitle": null,
+                "verses": ["Psalms 9:9-10", "Deuteronomy 31:6"]
+            }
+        },
+        {
+            "id": "S263ef746-cfd0-469a-b525-8c916ba039ec",
+            "type": "song",
+            "title": "Tot ce sunt, sunt prin harul Său",
+            "artist": "Deea Axinte",
+            "cover": null,
+            "initialChord": "C",
+            "order": "S1 R1 S2 R2 S3 R3 S4 R4x2 O",
+            "lyrics": "S1\r\nC[C]e dar măreț e Isus, Salva[F]torul\r\nE tot ce [C]poate cerul [Am]să îmi [G]dea\r\nE bucur[C]ie și neprihă[F]nire\r\nE-o dragos[C]te ce-mi [G]umple ini[C]ma\r\n\r\nR1\r\nSperanța [F]mea e doar în Domnul I[C]sus\r\nViața [F]mea-i le[C]gată doar de [G]El\r\nPot să [C]spun că [Dm]Isus pace-n [C]dar mi-a a[F]dus\r\nTot ce [C]sunt, sunt prin [G]Harul [C]Său\r\n\r\nS2\r\nChiar dacă noaptea-n jurul meu se lasă\r\nIsus va fi mereu de partea mea\r\nIn slăbiciuni puterea Lui se-arata\r\nPrin El trăiesc, e bucuria mea\r\n\r\nR2\r\nEl e Pastorul bun ce mă păzește\r\nChiar de-ar fi să trec prin vai adânci\r\nNu mă tem, știu că El nu mă va părăsi\r\nTot ce sunt, sunt prin Harul Sau\r\n\r\nS3\r\nEu nu mă tem, destinul meu îl ține\r\nȘtiu că-s iertat, El prețul la plătit\r\nEl a murit pe cruce pentru mine\r\nȘi-a Înviat din morți a treia zi\r\n\r\nR3\r\nEl a murit ca eu să am viața\r\nAzi trăiesc, prin Har sunt mântuit\r\nPot acum să declar: 'Liber sunt în Hristos'\r\nTot ce sunt, sunt prin Harul Sau\r\n\r\nS4\r\nCu tot ce am îl voi urma pe Isus\r\nEl mi-a promis că mă va duce-n cer\r\nȘi zi de zi mă va-ntari, știu bine\r\nPan' voi ajunge-n fața tronului\r\n\r\nR4\r\nCredința mea în Domnul va rămâne\r\nToată gloria e doar a Lui\r\nCând se va termina alergarea voi striga:\r\n”Sunt al Tău, Ți-aparțin pe veci”\r\n\r\nO\r\nCând se v[C]a termin[Dm]a alerg[C]area voi strig[F]a:\r\n„Sunt al [C]Tău, Ți-apar[G]tin pe veci'[Am/G/F]”\r\n„Sunt al [C]Tău, Ți-apar[G]tin pe veci'[Am/G/F]”\r\n”Sunt al [C]Tău, Ți-apar[G]tin pe vec[C]i'”",
+            "extraData": {
+                "link": "https://youtu.be/FOzO0uG6eDs",
+                "year": null,
+                "originalTitle": null,
+                "verses": null
+            }
+        },
+        {
+            "id": "Seda80631-5169-4fd2-bc6f-d04e44cd4f27",
+            "type": "song",
+            "title": "Eu voi zbura",
+            "artist": "Albert E. Brumley",
+            "cover": null,
+            "initialChord": "D",
+            "order": "S1 R1 S2 R1 S3 R1 S4 R2",
+            "lyrics": "S1\r\n[D]Într-o zi când viața va-nceta, eu[G] voi zb[D]ura,\r\n[D]Către malul mării de cristal, eu[A] voi zbu[D]ra.\r\n\r\nR1\r\n[D]Eu voi zbura în glorie, eu v[G]oi zb[D]ura\r\n[D]Într-o zi, nimeni nu mă va opri, eu[A] voi zbu[D]ra!\r\n\r\nS2\r\nUmbra vieții când se va topi, eu voi zbura\r\nDezlegat ca o pasăre voi fi, eu voi zbura.\r\n\r\nS3\r\nBucuroși, în cer ne vom vedea, noi vom zbura\r\nSfărâmat, lanțul rece va cădea, eu voi zbura.\r\n\r\nS4\r\nÎn curând spre ceruri vom porni, noi vom zbura\r\nUnde numai bucurii vor fii, noi vom zbura.\r\n\r\nR2\r\nNoi, vom zbura în glorie, noi vom zbura\r\nÎntr-o zi, nimeni nu ne va opri, noi vom zbura.",
+            "extraData": {
+                "link": "https://youtu.be/192W0bhJNEg",
+                "year": "1929",
+                "originalTitle": "I'll fly away",
+                "verses": ["1 Thessalonians 4:17"]
+            }
         }
     ],
     "albums": [
@@ -532,11 +676,33 @@
                 "S8258423d-a58d-490d-8cf3-d895df91c9f7",
                 "Saa30b298-c3cb-42a7-b36e-cecbf0d3b55c",
                 "S45cfb07d-1cec-4721-9a3f-9bd0967dbcef",
-                "S99e0a296-b74a-4422-ab2c-872be300e31f"
+                "S99e0a296-b74a-4422-ab2c-872be300e31f",
+                "S0d504529-6be7-4985-9beb-e12b42ba4c97",
+                "Sf2a3a5f0-7649-48d0-892e-6191bd6049ea",
+                "S7f6a79dc-e487-4781-8e16-dd6e8e18e6f5",
+                "S0162238b-8374-4912-814f-228e8e1b71fb",
+                "Sf0311d75-ae37-49d4-8008-420efe14a052"
+            ],
+            "cover": null
+        },
+        {
+            "id": "A171f1d21-9129-426c-bf77-a1ad3d598b90",
+            "type": "album",
+            "title": "Tineret B1",
+            "creator": null,
+            "songs": [
+                "S263ef746-cfd0-469a-b525-8c916ba039ec",
+                "Seda80631-5169-4fd2-bc6f-d04e44cd4f27",
+                "Saa30b298-c3cb-42a7-b36e-cecbf0d3b55c",
+                "Sd76ad79a-2dd2-40cd-9fbf-c9b0747184e5",
+                "Sc5f71251-5573-4e91-a7d7-aa424dec4fcf",
+                "Sb62b0a72-6b67-44ff-8cf8-841d92466472",
+                "S7a43979a-d7bc-4bef-8f56-1d5c41fa5c5b",
+                "Sef30baa4-0bf6-4fa3-9819-5249889a30a4"
             ],
             "cover": null
         }
     ],
-    "updated": [],
+    "updated": ["A5e7720ae-ccfe-4188-9820-e3290075bd2b"],
     "deleted": []
 }

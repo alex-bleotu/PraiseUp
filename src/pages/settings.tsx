@@ -21,6 +21,7 @@ import { AuthContext } from "../context/auth";
 import { ConstantsContext } from "../context/constants";
 import { DataContext } from "../context/data";
 import { LanguageContext } from "../context/language";
+import { RecentContext } from "../context/recent";
 import { ThemeContext } from "../context/theme";
 import { UserContext } from "../context/user";
 import { darkTheme, lightTheme } from "../utils/theme";
@@ -35,6 +36,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
     const { user } = useContext(UserContext);
     const { logout, exitGuest, deleteAccount } = useContext(AuthContext);
     const { reloadAllData } = useContext(DataContext);
+    const { fullyUpdateRecent } = useContext(RecentContext);
 
     const [settings, setSettings] = useState<
         "theme" | "language" | "zoom" | "chords" | null
@@ -1085,7 +1087,10 @@ Seeking stories yet untold.`}
 
                                 setReloadLoading(true);
                                 await reloadAllData();
+                                await fullyUpdateRecent();
                                 setReloadLoading(false);
+
+                                setIsReloadModalOpen(false);
                             }}
                             activeOpacity={theme.activeOpacity}
                             style={[

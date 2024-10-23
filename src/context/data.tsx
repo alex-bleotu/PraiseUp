@@ -449,62 +449,83 @@ export const DataProvider = ({
 
         if (!songs || !albums) return;
 
+        let extraSongs = [];
+        let extraAlbums = [];
+
         if (data) {
-            for (let i = 0; i < data.songs.length; i++)
+            for (let i = 0; i < data.songs.length; i++) {
                 if (!songs.find((id) => id === data.songs[i].id)) {
                     const cover = data.songs[i].cover;
 
                     if (cover && !coversList.includes(cover)) {
                         const uri = await saveCover(cover);
 
-                        await writeSong({
-                            ...data.songs[i],
-                            cover: uri,
-                            favorite: false,
-                            date: new Date().toISOString(),
-                            type: data.songs[i].type as "song" | "extra",
-                        });
+                        await writeSong(
+                            {
+                                ...data.songs[i],
+                                cover: uri,
+                                favorite: false,
+                                date: new Date().toISOString(),
+                                type: data.songs[i].type as "song" | "extra",
+                            },
+                            false
+                        );
                     } else
-                        await writeSong({
-                            ...data.songs[i],
-                            favorite: false,
-                            date: new Date().toISOString(),
-                            type: data.songs[i].type as "song" | "extra",
-                        });
-                }
+                        await writeSong(
+                            {
+                                ...data.songs[i],
+                                favorite: false,
+                                date: new Date().toISOString(),
+                                type: data.songs[i].type as "song" | "extra",
+                            },
+                            false
+                        );
 
-            for (let i = 0; i < data.albums.length; i++)
+                    extraSongs.push(data.songs[i].id);
+                }
+            }
+
+            for (let i = 0; i < data.albums.length; i++) {
                 if (!albums.find((id) => id === data.albums[i].id)) {
                     const cover = data.albums[i].cover;
 
                     if (cover && !coversList.includes(cover)) {
                         const uri = await saveCover(cover);
 
-                        await writeAlbum({
-                            ...data.albums[i],
-                            cover: uri,
-                            favorite: false,
-                            date: new Date().toISOString(),
-                            creatorName: null,
-                            type: data.albums[i].type as
-                                | "album"
-                                | "extra"
-                                | "favorite"
-                                | "personal",
-                        });
+                        await writeAlbum(
+                            {
+                                ...data.albums[i],
+                                cover: uri,
+                                favorite: false,
+                                date: new Date().toISOString(),
+                                creatorName: null,
+                                type: data.albums[i].type as
+                                    | "album"
+                                    | "extra"
+                                    | "favorite"
+                                    | "personal",
+                            },
+                            false
+                        );
                     } else
-                        await writeAlbum({
-                            ...data.albums[i],
-                            favorite: false,
-                            date: new Date().toISOString(),
-                            creatorName: null,
-                            type: data.albums[i].type as
-                                | "album"
-                                | "extra"
-                                | "favorite"
-                                | "personal",
-                        });
+                        await writeAlbum(
+                            {
+                                ...data.albums[i],
+                                favorite: false,
+                                date: new Date().toISOString(),
+                                creatorName: null,
+                                type: data.albums[i].type as
+                                    | "album"
+                                    | "extra"
+                                    | "favorite"
+                                    | "personal",
+                            },
+                            false
+                        );
+
+                    extraAlbums.push(data.albums[i].id);
                 }
+            }
 
             for (let i = 0; i < data.updated.length; i++) {
                 if (data.updated[i].startsWith("S")) {
@@ -580,6 +601,22 @@ export const DataProvider = ({
 
             updateRefresh();
         }
+
+        setSongIds((prevArray: any) => {
+            if (extraSongs.length > 0) {
+                const updatedArray = [...prevArray, ...extraSongs];
+                return Array.from(new Set(updatedArray));
+            }
+            return prevArray;
+        });
+
+        setAlbumIds((prevArray: any) => {
+            if (extraAlbums.length > 0) {
+                const updatedArray = [...prevArray, ...extraAlbums];
+                return Array.from(new Set(updatedArray));
+            }
+            return prevArray;
+        });
 
         setVersion(newVersion);
     };
@@ -1451,13 +1488,44 @@ export const DataProvider = ({
         return songs;
     };
 
+    const getAllAlbumsOrdered = async () => {
+        if (!albumIds) return [];
+
+        const albums = await Promise.all(
+            albumIds.map(async (id) => {
+                const album = await getAlbumById(id);
+                return album;
+            })
+        );
+
+        albums.sort((a, b) => {
+            if (a.title < b.title) return -1;
+            if (a.title > b.title) return 1;
+            return 0;
+        });
+
+        return albums;
+    };
+
     const reloadAllData = async () => {
+        if (!songIds || !albumIds) return;
+
         setLoadingData(true);
 
         const networkState = await Network.getNetworkStateAsync();
         const hasInternet = networkState.isConnected;
 
+        for (let i = 0; i < songIds.length; i++) removeId(songIds[i]);
+        setSongIds([]);
+
+        for (let i = 0; i < albumIds.length; i++) removeId(albumIds[i]);
+        setAlbumIds([]);
+
+        deleteHistory();
+
         if (hasInternet) await addData();
+
+        setLoadingData(false);
     };
 
     return (
@@ -1505,6 +1573,7 @@ export const DataProvider = ({
                 removePersonalAlbumFromUser,
                 getAllSongsOrdered,
                 reloadAllData,
+                getAllAlbumsOrdered,
             }}>
             {children}
         </DataContext.Provider>

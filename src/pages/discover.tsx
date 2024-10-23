@@ -35,7 +35,7 @@ const Discover = ({ navigation }: { navigation: any }) => {
         let loadingTimeout: NodeJS.Timeout | null = null;
 
         const loadSongs = async () => {
-            if (searchQuery.length === 0) {
+            if (searchQuery.trim().length === 0) {
                 setFilteredData(null);
                 setLoading(false);
                 return;
@@ -47,7 +47,7 @@ const Discover = ({ navigation }: { navigation: any }) => {
                 }
             }, 100);
 
-            const filtered = await filter(searchQuery);
+            const filtered = await filter(searchQuery.trim());
 
             if (loadingTimeout) {
                 clearTimeout(loadingTimeout);

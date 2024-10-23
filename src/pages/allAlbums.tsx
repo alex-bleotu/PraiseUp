@@ -7,18 +7,18 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-import SongCover from "../components/items/songCover";
+import AlbumCover from "../components/items/albumCover";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
-import { DataContext, SongType } from "../context/data";
+import { AlbumType, DataContext } from "../context/data";
 import { ThemeContext } from "../context/theme";
 
 const alphabet = "ABCDEFGHIÎJKLMNOPQRSȘTȚUVWXYZ";
 
-const groupSongsByLetter = (songs: SongType[]) => {
-    const groupedSongs: { [key: string]: SongType[] } = {};
+const groupSongsByLetter = (songs: AlbumType[]) => {
+    const groupedAlbums: { [key: string]: AlbumType[] } = {};
 
-    for (const letter of alphabet) groupedSongs[letter] = [];
+    for (const letter of alphabet) groupedAlbums[letter] = [];
 
     songs.forEach((song) => {
         let firstLetter = song.title.charAt(0).toUpperCase();
@@ -27,25 +27,25 @@ const groupSongsByLetter = (songs: SongType[]) => {
             firstLetter = "#";
         }
 
-        if (!groupedSongs[firstLetter]) {
-            groupedSongs[firstLetter] = [];
+        if (!groupedAlbums[firstLetter]) {
+            groupedAlbums[firstLetter] = [];
         }
-        groupedSongs[firstLetter].push(song);
+        groupedAlbums[firstLetter].push(song);
     });
 
-    for (const letter in groupedSongs)
-        if (groupedSongs[letter].length === 0) delete groupedSongs[letter];
+    for (const letter in groupedAlbums)
+        if (groupedAlbums[letter].length === 0) delete groupedAlbums[letter];
 
-    return groupedSongs;
+    return groupedAlbums;
 };
 
 const AllSongs = ({ navigation }: { navigation: any }) => {
     const { theme } = useContext(ThemeContext);
-    const { getAllSongsOrdered } = useContext(DataContext);
+    const { getAllAlbumsOrdered } = useContext(DataContext);
 
-    const [songs, setSongs] = useState<SongType[]>([]);
-    const [groupedSongs, setGroupedSongs] = useState<{
-        [key: string]: SongType[];
+    const [albums, setAlbums] = useState<AlbumType[]>([]);
+    const [groupedAlbums, setGroupedAlbums] = useState<{
+        [key: string]: AlbumType[];
     }>({});
     const sectionRefs = useRef<{ [key: string]: any }>({});
     const scrollViewRef = useRef<RNScrollView>(null);
@@ -54,10 +54,10 @@ const AllSongs = ({ navigation }: { navigation: any }) => {
 
     useEffect(() => {
         const getSongs = async () => {
-            const allSongs = await getAllSongsOrdered();
-            const grouped = groupSongsByLetter(allSongs);
-            setGroupedSongs(grouped);
-            setSongs(allSongs);
+            const allAlbums = await getAllAlbumsOrdered();
+            const grouped = groupSongsByLetter(allAlbums);
+            setGroupedAlbums(grouped);
+            setAlbums(allAlbums);
         };
         getSongs();
     }, []);
@@ -72,8 +72,8 @@ const AllSongs = ({ navigation }: { navigation: any }) => {
     };
 
     return (
-        <StackPage navigation={navigation} title={t`All Songs`} noBottom>
-            {songs.length > 0 ? (
+        <StackPage navigation={navigation} title={t`All Albums`} noBottom>
+            {albums.length > 0 ? (
                 <View style={styles.container}>
                     <View style={styles.alphabetContainer}>
                         {alphabetSplit.map((letter) => (
@@ -95,7 +95,7 @@ const AllSongs = ({ navigation }: { navigation: any }) => {
                         style={{
                             paddingRight: 35,
                         }}>
-                        {Object.keys(groupedSongs).map((letter) => (
+                        {Object.keys(groupedAlbums).map((letter) => (
                             <View
                                 key={letter}
                                 ref={(ref) =>
@@ -108,13 +108,13 @@ const AllSongs = ({ navigation }: { navigation: any }) => {
                                     fontSize={20}>
                                     {letter}
                                 </Text>
-                                {groupedSongs[letter].map((data, index) => (
+                                {groupedAlbums[letter].map((data, index) => (
                                     <View
                                         style={{ marginBottom: 10 }}
                                         key={index}>
-                                        <SongCover
+                                        <AlbumCover
                                             key={index}
-                                            song={data}
+                                            album={data}
                                             navigation={navigation}
                                             fullWidth
                                         />
