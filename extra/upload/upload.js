@@ -1,42 +1,53 @@
 const { Storage } = require("@google-cloud/storage");
+const fs = require("fs");
+const path = require("path");
 const https = require("https");
+require("dotenv").config();
 
-const customAgent = new https.Agent({
-    keepAlive: true,
-    timeout: 60000,
-});
+const serviceAccount = JSON.parse(process.env.SERVICE_ACCOUNT);
 
 const storage = new Storage({
-    projectId: "praiseup-37c47",
-    keyFilename: "./admin.json",
-    agent: customAgent,
+    credentials: serviceAccount,
+    projectId: serviceAccount.project_id,
+    agent: new https.Agent({
+        keepAlive: true,
+        timeout: 120000,
+    }),
 });
 
-const bucket = storage.bucket("praiseup-37c47.appspot.com");
+const bucketName = "praiseup-37c47.appspot.com";
 const localFilePath = path.join(__dirname, "../../assets/bundle.json");
 const firebaseStoragePath = "bundle.json";
 
-const uploadFileWithMetadata = async (filePath, storagePath) => {
+const uploadFileWithMetadata = async () => {
     try {
-        const fileBuffer = fs.readFileSync(filePath);
+        const fileBuffer = fs.readFileSync(localFilePath);
         const data = JSON.parse(fileBuffer.toString());
+        const version = data.version || "1.0";
+
+        const bucket = storage.bucket(bucketName);
+        const file = bucket.file(firebaseStoragePath);
 
         const metadata = {
             metadata: {
                 customMetadata: {
-                    version: data.version,
+                    version: version,
                     author: "Alex Bleotu",
                     created_at: new Date().toISOString(),
                 },
             },
         };
 
-        const file = bucket.file(storagePath);
-        await file.save(fileBuffer, metadata);
-        console.log("Uploaded the bundle. Current version:", data.version);
+        await file.save(fileBuffer, { resumable: false });
+        await file.setMetadata(metadata);
+
+        console.log("File uploaded and metadata set successfully.");
     } catch (err) {
-        console.error("Error uploading the file:", err.message);
+        console.error(
+            "Error uploading the file or setting metadata:",
+            err.message
+        );
     }
 };
 
-uploadFileWithMetadata(localFilePath, firebaseStoragePath);
+uploadFileWithMetadata();
