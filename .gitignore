@@ -36,3 +36,6 @@ yarn-error.*
 
 # firebase admin json
 extra/upload/admin.json
+
+
+extra/gists/.env
