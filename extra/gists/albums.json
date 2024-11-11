@@ -1,0 +1,26 @@
+{
+  "albums": [
+    {
+      "id": "A843731e0-6b79-4e35-bd76-ef50e5c36493",
+      "type": "album",
+      "title": "BBSO",
+      "creator": null,
+      "songs": [
+        "S41716ca0-25b1-433e-8ee5-934e8fc720f3",
+        "Sf0311d75-ae37-49d4-8008-420efe14a052",
+        "S0162238b-8374-4912-814f-228e8e1b71fb",
+        "S7f6a79dc-e487-4781-8e16-dd6e8e18e6f5",
+        "Sf2a3a5f0-7649-48d0-892e-6191bd6049ea",
+        "S0d504529-6be7-4985-9beb-e12b42ba4c97",
+        "Saa30b298-c3cb-42a7-b36e-cecbf0d3b55c",
+        "S45cfb07d-1cec-4721-9a3f-9bd0967dbcef",
+        "S99e0a296-b74a-4422-ab2c-872be300e31f",
+        "S8258423d-a58d-490d-8cf3-d895df91c9f7",
+        "S2fb6c725-33e2-462f-b710-6e0abbebdbf7",
+        "Sd4a9f0fc-0385-4841-975e-9c6d48b9c206",
+        "S93414e71-3764-4276-86b4-2d1c03e69e19"
+      ],
+      "cover": null
+    }
+  ]
+}

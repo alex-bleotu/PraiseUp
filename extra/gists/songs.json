@@ -1,5 +1,4 @@
 {
-    "version": "1.0.1",
     "songs": [
         {
             "id": "Safee2407-5d26-4c1e-98ce-9a4ec5b08944",
@@ -3595,60 +3594,5 @@
             "order": "S1 R S2 R B R O",
             "lyrics": "S1\r\n[A]Cine transformă în soare veșnic\r\n[D]Orice fărâmă de întuneric,\r\n[F#m]E Domnul gloriei, [E]e Domnul Domni[D]lor!\r\n[A]Cine vorbește și-a Lui vorbire\r\n[D]Zguduie munții din temelie,\r\n[F#m]E Domnul gloriei, [E]e Domnul Domni[D]lor!\r\n\r\nR\r\nCe dar nemeri[A]tat, ce drept să fiu sal[D]vat\r\nÎn ceasul cel mai [F#m]greu, ai luat păcatul [E]meu!\r\nMoartea ai biru[A]it, ca eu să fiu sfin[D]țit\r\n[F#m]Astăzi cânt liber, [E]Isus m-ai mântu[A]it!\r\n\r\nS2\r\n[A]Cine mai poate azi să ridice\r\n[D]Pe cei căzuți iar, ca fii și fiice,\r\n[F#m]E Domnul gloriei, [E]e Domnul Domni[D]lor!\r\n[A]Cine aduce la El popoare,\r\n[D]Plin de dreptate și îndurare\r\n[F#m]E Domnul gloriei, [E]e Domnul Domni[D]lor!\r\n\r\nB\r\n[A]Vrednic este Mielul junghiat,\r\n[D]Vrednic e Împăratul din morți înviat!\r\n[A]Vrednic este Mielul junghiat,\r\n[D]Vrednic e Împăratul din morți înviat!\r\n[A]Vrednic este Mielul junghiat,\r\n[D]Vrednic e Împăratul din morți înviat!\r\n[F#m]Vrednic este Mielul junghiat,\r\nVrednic, vrednic, vr[E]ednic!"
         }
-    ],
-    "albums": [
-        {
-            "id": "A6d43abad-ae19-466a-aa76-003a77e92590",
-            "type": "album",
-            "title": "Tabăra 477",
-            "creator": null,
-            "songs": [
-                "Sbdcd6c28-e624-4973-9512-df19b6931e68",
-                "S7a43979a-d7bc-4bef-8f56-1d5c41fa5c5b"
-            ],
-            "cover": null
-        },
-        {
-            "id": "A5e7720ae-ccfe-4188-9820-e3290075bd2b",
-            "type": "album",
-            "title": "BBSO",
-            "creator": null,
-            "songs": [
-                "S41716ca0-25b1-433e-8ee5-934e8fc720f3",
-                "Sf0311d75-ae37-49d4-8008-420efe14a052",
-                "S0162238b-8374-4912-814f-228e8e1b71fb",
-                "S7f6a79dc-e487-4781-8e16-dd6e8e18e6f5",
-                "Sf2a3a5f0-7649-48d0-892e-6191bd6049ea",
-                "S0d504529-6be7-4985-9beb-e12b42ba4c97",
-                "Saa30b298-c3cb-42a7-b36e-cecbf0d3b55c",
-                "S45cfb07d-1cec-4721-9a3f-9bd0967dbcef",
-                "S99e0a296-b74a-4422-ab2c-872be300e31f",
-                "S0d504529-6be7-4985-9beb-e12b42ba4c97",
-                "Sf2a3a5f0-7649-48d0-892e-6191bd6049ea",
-                "S7f6a79dc-e487-4781-8e16-dd6e8e18e6f5",
-                "S0162238b-8374-4912-814f-228e8e1b71fb",
-                "Sf0311d75-ae37-49d4-8008-420efe14a052"
-            ],
-            "cover": null
-        },
-        {
-            "id": "A171f1d21-9129-426c-bf77-a1ad3d598b90",
-            "type": "album",
-            "title": "Tineret B1",
-            "creator": null,
-            "songs": [
-                "S263ef746-cfd0-469a-b525-8c916ba039ec",
-                "Seda80631-5169-4fd2-bc6f-d04e44cd4f27",
-                "Saa30b298-c3cb-42a7-b36e-cecbf0d3b55c",
-                "Sd76ad79a-2dd2-40cd-9fbf-c9b0747184e5",
-                "Sc5f71251-5573-4e91-a7d7-aa424dec4fcf",
-                "Sb62b0a72-6b67-44ff-8cf8-841d92466472",
-                "S7a43979a-d7bc-4bef-8f56-1d5c41fa5c5b",
-                "Sef30baa4-0bf6-4fa3-9819-5249889a30a4"
-            ],
-            "cover": null
-        }
-    ],
-    "updated": ["A5e7720ae-ccfe-4188-9820-e3290075bd2b"],
-    "deleted": []
+    ]
 }
