@@ -5,6 +5,8 @@ import {
 import React, { useContext } from "react";
 import { ThemeContext } from "../context/theme";
 import Album from "../pages/album";
+import AllAlbums from "../pages/allAlbums";
+import AllSongs from "../pages/allSongs";
 import Home from "../pages/home";
 import Song from "../pages/song";
 
@@ -26,6 +28,8 @@ const HomeStack = () => {
             <S.Screen name="Home" component={Home} />
             <S.Screen name="Song" component={Song} />
             <S.Screen name="Album" component={Album} />
+            <S.Screen name="AllSongs" component={AllSongs} />
+            <S.Screen name="AllAlbums" component={AllAlbums} />
         </S.Navigator>
     );
 };

@@ -220,7 +220,7 @@ export const DataProvider = ({
         };
 
         const initialize = async () => {
-            await clear();
+            // await clear();
 
             setLoadingData(true);
 

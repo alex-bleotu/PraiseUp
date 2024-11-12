@@ -3,7 +3,14 @@ import {
     MaterialCommunityIcons as MCIcons,
 } from "@expo/vector-icons";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Animated, Keyboard, StyleSheet, View } from "react-native";
+import {
+    Animated,
+    Keyboard,
+    KeyboardAvoidingView,
+    Platform,
+    StyleSheet,
+    View,
+} from "react-native";
 import { ThemeContext } from "../../context/theme";
 import AnimatedTouchable from "./animatedTouchable";
 import Background from "./background";
@@ -65,7 +72,7 @@ const StackPage = ({
 
     const animateMoveUp = (moveUp: boolean) => {
         Animated.timing(translateYAnim, {
-            toValue: moveUp ? -120 : 0,
+            toValue: moveUp ? -60 : 0,
             duration: 200,
             useNativeDriver: true,
         }).start();
@@ -150,42 +157,58 @@ const StackPage = ({
                           ]
                         : [],
                 }}>
-                <View style={variant ? styles.container2 : { flex: 1 }}>
-                    {variant && (
-                        <View style={styles.top}>
+                <KeyboardAvoidingView
+                    style={{ flex: 1 }}
+                    behavior={Platform.OS === "ios" ? "padding" : "height"}>
+                    <Animated.View
+                        style={{
+                            flex: 1,
+                            transform: variant
+                                ? [
+                                      {
+                                          translateY: translateYAnim,
+                                      },
+                                  ]
+                                : [],
+                        }}>
+                        <View style={variant ? styles.container2 : { flex: 1 }}>
+                            {variant && (
+                                <View style={styles.top}>
+                                    <View
+                                        style={{
+                                            alignSelf: "flex-start",
+                                            marginTop: 10,
+                                            marginBottom: 20,
+                                        }}>
+                                        <Text bold fontSize={30}>
+                                            {title}
+                                        </Text>
+                                    </View>
+                                    <View
+                                        style={{
+                                            alignSelf: "flex-start",
+                                            marginBottom: 20,
+                                        }}>
+                                        <Text
+                                            fontSize={18}
+                                            color={theme.colors.textVariant}>
+                                            {description}
+                                        </Text>
+                                    </View>
+                                </View>
+                            )}
                             <View
-                                style={{
-                                    alignSelf: "flex-start",
-                                    marginTop: 10,
-                                    marginBottom: 20,
-                                }}>
-                                <Text bold fontSize={30}>
-                                    {title}
-                                </Text>
-                            </View>
-                            <View
-                                style={{
-                                    alignSelf: "flex-start",
-                                    marginBottom: 20,
-                                }}>
-                                <Text
-                                    fontSize={18}
-                                    color={theme.colors.textVariant}>
-                                    {description}
-                                </Text>
+                                style={[
+                                    styles.container,
+                                    {
+                                        marginBottom: noBottom ? 0 : 5,
+                                    },
+                                ]}>
+                                {children}
                             </View>
                         </View>
-                    )}
-                    <View
-                        style={[
-                            styles.container,
-                            {
-                                marginBottom: noBottom ? 0 : 5,
-                            },
-                        ]}>
-                        {children}
-                    </View>
-                </View>
+                    </Animated.View>
+                </KeyboardAvoidingView>
             </Animated.View>
         </Background>
     );

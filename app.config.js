@@ -21,6 +21,7 @@ export default ({ config }) => ({
         googleServicesFile: process.env.GOOGLE_SERVICE_INFO_PLIST,
     },
     android: {
+        softwareKeyboardLayoutMode: "pan",
         package: "com.praiseup.app",
         adaptiveIcon: {
             foregroundImage: "./assets/adaptive-icon.png",

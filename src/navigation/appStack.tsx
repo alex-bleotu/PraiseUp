@@ -8,8 +8,6 @@ import AboutUs from "../pages/aboutUs";
 import Account from "../pages/account";
 import AddSong from "../pages/addSong";
 import AddToAlbum from "../pages/addToAlbum";
-import AllAlbums from "../pages/allAlbums";
-import AllSongs from "../pages/allSongs";
 import ContactUs from "../pages/contactUs";
 import ForgotPassword from "../pages/forgotPassword";
 import Link from "../pages/link";
@@ -43,8 +41,6 @@ const AppStack = () => {
             <S.Screen name="ContactUs" component={ContactUs} />
             <S.Screen name="AboutUs" component={AboutUs} />
             <S.Screen name="Account" component={Account} />
-            <S.Screen name="AllSongs" component={AllSongs} />
-            <S.Screen name="AllAlbums" component={AllAlbums} />
             <S.Screen
                 name="Slideshow"
                 component={Slideshow}

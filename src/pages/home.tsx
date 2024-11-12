@@ -322,6 +322,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                         </View>
                     </View>
                 )}
+
                 {favoriteAlbums.length !== 0 && (
                     <View style={styles.container}>
                         <Text fontSize={20} bold style={{ marginLeft: 20 }}>
@@ -352,6 +353,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                         </View>
                     </View>
                 )}
+
                 {bbsoSongs.length !== 0 && (
                     <View style={styles.container}>
                         <Text fontSize={20} bold style={{ marginLeft: 20 }}>
@@ -382,6 +384,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                         </View>
                     </View>
                 )}
+
                 {tabaraSongs.length !== 0 && (
                     <View style={styles.container}>
                         <Text fontSize={20} bold style={{ marginLeft: 20 }}>

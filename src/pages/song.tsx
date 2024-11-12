@@ -46,21 +46,6 @@ const chords = [
     "B",
 ];
 
-const europeanChords = [
-    "Do",
-    "Di",
-    "Re",
-    "Me",
-    "Mi",
-    "Fa",
-    "Fi",
-    "Sol",
-    "Si",
-    "La",
-    "Te",
-    "Ti",
-];
-
 const chordCache: Record<string, string> = {};
 
 const chordChanger = (

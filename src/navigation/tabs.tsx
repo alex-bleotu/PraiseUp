@@ -3,6 +3,7 @@ import {
     MaterialCommunityIcons as MCIcons,
 } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import React, { useContext, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import AnimatedTouchable from "../components/wrapers/animatedTouchable";
@@ -31,6 +32,11 @@ const Tabs = () => {
             default:
                 return "question";
         }
+    };
+
+    const shouldHideTabBar = (route: any) => {
+        const routeName = getFocusedRouteNameFromRoute(route) ?? "";
+        return routeName === "AllSongs" || routeName === "AllAlbums";
     };
 
     return (
@@ -75,16 +81,18 @@ const Tabs = () => {
                             </AnimatedTouchable>
                         );
                     },
-                    tabBarStyle: {
-                        backgroundColor: theme.colors.paper,
-                        borderRadius: 12,
-                        height: 80,
-                        position: "absolute",
-                        marginBottom: 10,
-                        marginHorizontal: 10,
-                        borderTopWidth: 0,
-                        elevation: 0,
-                    },
+                    tabBarStyle: shouldHideTabBar(route)
+                        ? { display: "none" }
+                        : {
+                              backgroundColor: theme.colors.paper,
+                              borderRadius: 12,
+                              height: 80,
+                              position: "absolute",
+                              marginBottom: 10,
+                              marginHorizontal: 10,
+                              borderTopWidth: 0,
+                              elevation: 0,
+                          },
                     tabBarActiveTintColor: theme.colors.primary,
                     tabBarInactiveTintColor: "gray",
                     tabBarShowLabel: false,
