@@ -179,7 +179,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                         if (index > 2) return null;
 
                         return (
-                            <View key={index} style={styles.row}>
+                            <View key={index + "R"} style={styles.row}>
                                 <View>
                                     {data.type === "song" ? (
                                         <SongCover
@@ -304,7 +304,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                                 bottom={10}>
                                 {randomSongs.map((song: SongType) => (
                                     <View
-                                        key={song.id}
+                                        key={song.id + "S"}
                                         style={{ marginHorizontal: 5 }}>
                                         <SongCover
                                             song={song}
@@ -335,7 +335,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                                 bottom={10}>
                                 {favoriteAlbums.map((album: AlbumType) => (
                                     <View
-                                        key={album.id}
+                                        key={album.id + "F"}
                                         style={{ marginHorizontal: 5 }}>
                                         <AlbumCover
                                             album={album}
@@ -365,7 +365,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                                 bottom={10}>
                                 {bbsoSongs.map((song: SongType) => (
                                     <View
-                                        key={song.id}
+                                        key={song.id + "B"}
                                         style={{ marginHorizontal: 5 }}>
                                         <SongCover
                                             song={song}
@@ -395,7 +395,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                                 bottom={10}>
                                 {tabaraSongs.map((song: SongType) => (
                                     <View
-                                        key={song.id}
+                                        key={song.id + "T"}
                                         style={{ marginHorizontal: 5 }}>
                                         <SongCover
                                             song={song}

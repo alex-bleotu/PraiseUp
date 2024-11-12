@@ -38,7 +38,7 @@ export interface SongType {
     id: string;
     type: "song" | "extra";
     title: string;
-    artist: string;
+    artist: string | null;
     cover: string | null;
     lyrics: string;
     favorite: boolean;
@@ -220,7 +220,7 @@ export const DataProvider = ({
         };
 
         const initialize = async () => {
-            // await clear();
+            await clear();
 
             setLoadingData(true);
 
@@ -636,7 +636,7 @@ export const DataProvider = ({
                 });
             }
 
-            console.log("Wrote song file", song.id);
+            // console.log("Wrote song file", song.id);
         } catch (error) {
             console.error("Error writing song file:", error);
         }
@@ -687,7 +687,7 @@ export const DataProvider = ({
                 });
             }
 
-            console.log("Wrote album file", album.id);
+            // console.log("Wrote album file", album.id);
         } catch (error) {
             console.error("Error writing album file:", error);
         }
@@ -1480,9 +1480,7 @@ export const DataProvider = ({
         );
 
         songs.sort((a, b) => {
-            if (a.title < b.title) return -1;
-            if (a.title > b.title) return 1;
-            return 0;
+            return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
         });
 
         return songs;
@@ -1499,9 +1497,7 @@ export const DataProvider = ({
         );
 
         albums.sort((a, b) => {
-            if (a.title < b.title) return -1;
-            if (a.title > b.title) return 1;
-            return 0;
+            return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
         });
 
         return albums;

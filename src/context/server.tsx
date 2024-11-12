@@ -406,7 +406,7 @@ export const ServerProvider = ({
 
             return userDoc.exists();
         } catch (error) {
-            console.log("Error fetching user:", error);
+            console.log("Error fetching user exists:", error);
             return false;
         }
     };
