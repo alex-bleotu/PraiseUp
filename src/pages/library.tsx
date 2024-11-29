@@ -9,6 +9,7 @@ import {
     View,
 } from "react-native";
 import AlbumCover from "../components/items/albumCover";
+import SkeletonCover from "../components/items/skeletonCover";
 import AnimatedTouchable from "../components/wrapers/animatedTouchable";
 import BottomSheetModal from "../components/wrapers/bottomSheetModal";
 import DataBottomSheet from "../components/wrapers/dataBottomSheet";
@@ -21,7 +22,6 @@ import { AlbumType, DataContext, SongType } from "../context/data";
 import { RecentContext } from "../context/recent";
 import { RefreshContext } from "../context/refresh";
 import { ThemeContext } from "../context/theme";
-import Loading from "./loading";
 
 const Library = ({ navigation }: { navigation: any }) => {
     const { theme } = useContext(ThemeContext);
@@ -264,11 +264,8 @@ const Library = ({ navigation }: { navigation: any }) => {
                                             {data.type === "extra" ? (
                                                 <AnimatedTouchable
                                                     onPress={() => {
-                                                        // setIsCreateBottomSheetOpen(
-                                                        //     true
-                                                        // );
-                                                        navigation.navigate(
-                                                            "AllSongs"
+                                                        setIsCreateBottomSheetOpen(
+                                                            true
                                                         );
                                                     }}>
                                                     <View
@@ -342,8 +339,51 @@ const Library = ({ navigation }: { navigation: any }) => {
                             </ScrollView>
                         </View>
                     )
+                ) : display === "grid" ? (
+                    <View
+                        style={[
+                            styles.scrollContainer,
+                            {
+                                marginLeft:
+                                    Dimensions.get("screen").width > 400
+                                        ? 15
+                                        : 0,
+                            },
+                        ]}>
+                        <SV
+                            contentContainerStyle={styles.grid}
+                            showsVerticalScrollIndicator={false}>
+                            <View style={styles.gridContent}>
+                                {Array.from({ length: 4 }).map((_, index) => (
+                                    <View
+                                        key={`skeleton-grid-${index}`}
+                                        style={[
+                                            styles.item,
+                                            {
+                                                marginHorizontal:
+                                                    (index - 1) % 3 == 0
+                                                        ? horizontalMargin
+                                                        : 0,
+                                            },
+                                        ]}>
+                                        <SkeletonCover vertical />
+                                    </View>
+                                ))}
+                            </View>
+                        </SV>
+                    </View>
                 ) : (
-                    <Loading background={false} />
+                    <View style={styles.container}>
+                        <ScrollView bottom={5} showScroll={false}>
+                            {Array.from({ length: 10 }).map((_, index) => (
+                                <View
+                                    key={`skeleton-list-${index}`}
+                                    style={{ marginBottom: 10 }}>
+                                    <SkeletonCover fullWidth />
+                                </View>
+                            ))}
+                        </ScrollView>
+                    </View>
                 )}
             </View>
             <DataBottomSheet

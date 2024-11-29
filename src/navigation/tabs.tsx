@@ -43,9 +43,6 @@ const Tabs = () => {
         <View style={{ height: appHeight }}>
             <Tab.Navigator
                 initialRouteName="HomeStack"
-                sceneContainerStyle={{
-                    backgroundColor: "transparent",
-                }}
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ focused, color, size }) => {
                         const iconName = useMemo(

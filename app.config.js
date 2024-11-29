@@ -12,7 +12,12 @@ export default ({ config }) => ({
     splash: {
         image: "./assets/splash.png",
         resizeMode: "contain",
-        backgroundColor: "#ffffff",
+        backgroundColor: "#f4f4f4",
+        dark: {
+            image: "...",
+            resizeMode: "cover",
+            backgroundColor: "#1a1a1a",
+        },
     },
     ios: {
         supportsTablet: true,

@@ -18,9 +18,6 @@ const LibraryStack = () => {
             screenOptions={{
                 headerShown: false,
                 cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-                cardStyle: {
-                    backgroundColor: theme.colors.background,
-                },
             }}>
             <S.Screen name="Library" component={Library} />
             <S.Screen name="Song" component={Song} />

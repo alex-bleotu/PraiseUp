@@ -1,3 +1,4 @@
+import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { PaperProvider } from "react-native-paper";
@@ -15,6 +16,8 @@ import { TutorialProvider } from "./src/context/tutorial";
 import { UserProvider } from "./src/context/user";
 import AppContainer from "./src/navigation/appContainer";
 import { darkTheme } from "./src/utils/theme";
+
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
     return (

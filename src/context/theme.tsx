@@ -42,11 +42,15 @@ export const ThemeProvider = ({
     };
 
     useEffect(() => {
-        loadTheme();
+        const init = async () => {
+            await loadTheme();
+        };
 
         const appearanceListener = Appearance.addChangeListener(() => {
             updateSystemTheme();
         });
+
+        init();
 
         return () => {
             appearanceListener.remove();

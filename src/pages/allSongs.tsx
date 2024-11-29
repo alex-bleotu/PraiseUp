@@ -1,12 +1,12 @@
 import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import {
-    ActivityIndicator,
     ScrollView as RNScrollView,
     StyleSheet,
     TouchableOpacity,
     View,
 } from "react-native";
+import SkeletonCover from "../components/items/skeletonCover";
 import SongCover from "../components/items/songCover";
 import StackPage from "../components/wrapers/stackPage";
 import Text from "../components/wrapers/text";
@@ -125,11 +125,38 @@ const AllSongs = ({ navigation }: { navigation: any }) => {
                     </RNScrollView>
                 </View>
             ) : (
-                <View style={styles.loader}>
-                    <ActivityIndicator
-                        size="large"
-                        color={theme.colors.primary}
-                    />
+                <View style={styles.container}>
+                    <View style={styles.alphabetContainer}>
+                        {alphabetSplit.map((letter) => (
+                            <TouchableOpacity
+                                key={letter}
+                                onPress={() => handleScrollToSection(letter)}>
+                                <Text
+                                    style={styles.alphabetLetter}
+                                    bold
+                                    fontSize={15}>
+                                    {letter}
+                                </Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+
+                    <View style={styles.section}>
+                        <Text style={styles.sectionTitle} bold fontSize={20}>
+                            {"A"}
+                        </Text>
+                        <RNScrollView
+                            ref={scrollViewRef}
+                            style={{
+                                paddingRight: 35,
+                            }}>
+                            {Array.from({ length: 20 }).map((_, index) => (
+                                <View style={{ marginBottom: 10 }} key={index}>
+                                    <SkeletonCover fullWidth />
+                                </View>
+                            ))}
+                        </RNScrollView>
+                    </View>
                 </View>
             )}
         </StackPage>
@@ -160,6 +187,7 @@ const styles = StyleSheet.create({
     },
     section: {
         marginBottom: 15,
+        flex: 1,
     },
     sectionTitle: {
         marginBottom: 10,

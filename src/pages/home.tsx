@@ -7,6 +7,7 @@ import Animated, {
     withTiming,
 } from "react-native-reanimated";
 import AlbumCover from "../components/items/albumCover";
+import SkeletonCover from "../components/items/skeletonCover";
 import SongCover from "../components/items/songCover";
 import AnimatedTouchable from "../components/wrapers/animatedTouchable";
 import Background from "../components/wrapers/background";
@@ -19,7 +20,6 @@ import { RecentContext } from "../context/recent";
 import { RefreshContext } from "../context/refresh";
 import { ThemeContext } from "../context/theme";
 import { UserContext } from "../context/user";
-import Loading from "./loading";
 
 const Home = ({ navigation }: { navigation: any }) => {
     const { recent } = useContext(RecentContext);
@@ -144,16 +144,6 @@ const Home = ({ navigation }: { navigation: any }) => {
             clearTimeout(timeout);
         };
     }, []);
-
-    if (
-        !favoriteAlbums ||
-        !randomSongs ||
-        !recent ||
-        recent.length === 0 ||
-        bbsoSongs === null ||
-        tabaraSongs === null
-    )
-        return <Loading text={t`Finishing things`} />;
 
     return (
         <Background noPadding>
@@ -291,7 +281,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                     </View>
                 </AnimatedTouchable>
 
-                {randomSongs.length !== 0 && (
+                {randomSongs && randomSongs.length !== 0 ? (
                     <View style={styles.container}>
                         <Text fontSize={20} bold style={{ marginLeft: 20 }}>
                             {t`Suggested for you`}
@@ -321,9 +311,30 @@ const Home = ({ navigation }: { navigation: any }) => {
                             </ScrollView>
                         </View>
                     </View>
+                ) : (
+                    <View style={styles.container}>
+                        <Text fontSize={20} bold style={{ marginLeft: 20 }}>
+                            {t`Suggested for you`}
+                        </Text>
+                        <View style={styles.songsContainer}>
+                            <ScrollView
+                                horizontal
+                                showScroll={false}
+                                top={10}
+                                bottom={10}>
+                                {Array.from({ length: 10 }).map((_, index) => (
+                                    <View
+                                        key={`skeleton-${index}`}
+                                        style={{ marginHorizontal: 5 }}>
+                                        <SkeletonCover vertical />
+                                    </View>
+                                ))}
+                            </ScrollView>
+                        </View>
+                    </View>
                 )}
 
-                {favoriteAlbums.length !== 0 && (
+                {favoriteAlbums && favoriteAlbums.length !== 0 && (
                     <View style={styles.container}>
                         <Text fontSize={20} bold style={{ marginLeft: 20 }}>
                             {t`Favorite albums`}
@@ -354,7 +365,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                     </View>
                 )}
 
-                {bbsoSongs.length !== 0 && (
+                {bbsoSongs && bbsoSongs.length !== 0 ? (
                     <View style={styles.container}>
                         <Text fontSize={20} bold style={{ marginLeft: 20 }}>
                             BBSO
@@ -383,9 +394,30 @@ const Home = ({ navigation }: { navigation: any }) => {
                             </ScrollView>
                         </View>
                     </View>
+                ) : (
+                    <View style={styles.container}>
+                        <Text fontSize={20} bold style={{ marginLeft: 20 }}>
+                            BBSO
+                        </Text>
+                        <View style={styles.songsContainer}>
+                            <ScrollView
+                                horizontal
+                                showScroll={false}
+                                top={10}
+                                bottom={10}>
+                                {Array.from({ length: 10 }).map((_, index) => (
+                                    <View
+                                        key={`bbso-skeleton-${index}`}
+                                        style={{ marginHorizontal: 5 }}>
+                                        <SkeletonCover vertical />
+                                    </View>
+                                ))}
+                            </ScrollView>
+                        </View>
+                    </View>
                 )}
 
-                {tabaraSongs.length !== 0 && (
+                {tabaraSongs && tabaraSongs.length !== 0 ? (
                     <View style={styles.container}>
                         <Text fontSize={20} bold style={{ marginLeft: 20 }}>
                             Tabăra 447
@@ -409,6 +441,27 @@ const Home = ({ navigation }: { navigation: any }) => {
                                                 setBottomSheetOpen(true);
                                             }}
                                         />
+                                    </View>
+                                ))}
+                            </ScrollView>
+                        </View>
+                    </View>
+                ) : (
+                    <View style={styles.container}>
+                        <Text fontSize={20} bold style={{ marginLeft: 20 }}>
+                            Tabăra 447
+                        </Text>
+                        <View style={styles.songsContainer}>
+                            <ScrollView
+                                horizontal
+                                showScroll={false}
+                                top={10}
+                                bottom={10}>
+                                {Array.from({ length: 10 }).map((_, index) => (
+                                    <View
+                                        key={`tabara-skeleton-${index}`}
+                                        style={{ marginHorizontal: 5 }}>
+                                        <SkeletonCover vertical />
                                     </View>
                                 ))}
                             </ScrollView>

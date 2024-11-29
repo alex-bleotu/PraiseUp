@@ -122,7 +122,11 @@ const StackPage = ({
                                     marginLeft: !back ? iconSize + 5 : 0,
                                 },
                             ]}>
-                            <Text center fontSize={24} bold>
+                            <Text
+                                center
+                                fontSize={24}
+                                bold
+                                style={{ marginHorizontal: 10 }}>
                                 {title}
                             </Text>
                         </View>

@@ -18,9 +18,6 @@ const DiscoverStack = () => {
             screenOptions={{
                 headerShown: false,
                 cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-                cardStyle: {
-                    backgroundColor: theme.colors.background,
-                },
             }}>
             <S.Screen name="Discover" component={Discover} />
             <S.Screen name="Song" component={Song} />

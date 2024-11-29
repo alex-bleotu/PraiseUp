@@ -1,5 +1,7 @@
 import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import { useContext } from "react";
+import { Appearance } from "react-native";
+import { ThemeContext } from "../context/theme";
 import { UserContext } from "../context/user";
 import AppStack from "./appStack";
 import AuthStack from "./authStack";
@@ -27,9 +29,26 @@ const linking: LinkingOptions<any> = {
 
 const AppNavigation = () => {
     const { user } = useContext(UserContext);
+    const { theme } = useContext(ThemeContext);
 
     return (
-        <NavigationContainer linking={linking}>
+        <NavigationContainer
+            linking={linking}
+            theme={{
+                dark: false,
+                colors: {
+                    background: theme
+                        ? theme.colors.background
+                        : Appearance.getColorScheme() === "dark"
+                          ? "#1a1a1a"
+                          : "#f4f4f4",
+                    primary: "",
+                    card: "",
+                    text: "",
+                    border: "",
+                    notification: "",
+                },
+            }}>
             {user !== null ? <AppStack /> : <AuthStack />}
         </NavigationContainer>
     );

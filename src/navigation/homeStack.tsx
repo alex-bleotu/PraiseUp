@@ -21,9 +21,6 @@ const HomeStack = () => {
             screenOptions={{
                 headerShown: false,
                 cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-                cardStyle: {
-                    backgroundColor: theme.colors.background,
-                },
             }}>
             <S.Screen name="Home" component={Home} />
             <S.Screen name="Song" component={Song} />
