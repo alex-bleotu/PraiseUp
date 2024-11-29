@@ -76,12 +76,12 @@ msgid "Add to other album"
 msgstr "Adaugă la alt album"
 
 #: src/components/wrapers/dataBottomSheet.tsx:614
-#: src/pages/library.tsx:371
+#: src/pages/library.tsx:411
 msgid "Album Name"
 msgstr "Numele albumului"
 
 #: src/pages/allAlbums.tsx:74
-#: src/pages/home.tsx:271
+#: src/pages/home.tsx:261
 msgid "Albums"
 msgstr "Albume"
 
@@ -117,7 +117,7 @@ msgstr "Ești sigur că vrei să elimini acest album din biblioteca ta?"
 #: src/components/wrapers/dataBottomSheet.tsx:481
 #: src/components/wrapers/dataBottomSheet.tsx:561
 #: src/components/wrapers/dataBottomSheet.tsx:637
-#: src/pages/library.tsx:393
+#: src/pages/library.tsx:433
 #: src/pages/settings.tsx:800
 #: src/pages/settings.tsx:876
 #: src/pages/settings.tsx:984
@@ -125,7 +125,7 @@ msgstr "Ești sigur că vrei să elimini acest album din biblioteca ta?"
 msgid "Cancel"
 msgstr "Anulează"
 
-#: src/pages/song.tsx:728
+#: src/pages/song.tsx:713
 msgid "Change the chords"
 msgstr "Schimbă acordurile"
 
@@ -135,8 +135,8 @@ msgid "Check this out on PraiseUp!"
 msgstr "Intră aici pe PraiseUp!"
 
 #: src/pages/settings.tsx:150
-#: src/pages/song.tsx:490
-#: src/pages/song.tsx:617
+#: src/pages/song.tsx:475
+#: src/pages/song.tsx:602
 msgid "Chords"
 msgstr "Acorduri"
 
@@ -160,11 +160,11 @@ msgstr "Continuă ca oaspete"
 msgid "Continue with Google"
 msgstr "Continuă cu Google"
 
-#: src/pages/library.tsx:427
+#: src/pages/library.tsx:467
 msgid "Create"
 msgstr "Creează"
 
-#: src/pages/library.tsx:301
+#: src/pages/library.tsx:298
 msgid "Create album"
 msgstr "Creează album"
 
@@ -224,7 +224,7 @@ msgstr "Email"
 msgid "Email is already in use."
 msgstr "Emailul este deja folosit."
 
-#: src/pages/song.tsx:650
+#: src/pages/song.tsx:635
 msgid "Enable chords"
 msgstr "Activează acordurile"
 
@@ -236,7 +236,7 @@ msgstr "Ieșire"
 msgid "Exit Guest Mode"
 msgstr "Ieșire din modul oaspete"
 
-#: src/pages/home.tsx:243
+#: src/pages/home.tsx:233
 msgid "Explore everything PraiseUp has to offer!"
 msgstr "Explorează tot ce îți oferă PraiseUp!"
 
@@ -244,7 +244,7 @@ msgstr "Explorează tot ce îți oferă PraiseUp!"
 msgid "Favorite"
 msgstr "Favorite"
 
-#: src/pages/home.tsx:328
+#: src/pages/home.tsx:340
 msgid "Favorite albums"
 msgstr "Albume favorite"
 
@@ -253,8 +253,8 @@ msgid "Favorite songs"
 msgstr "Melodii favorite"
 
 #: src/pages/home.tsx:156
-msgid "Finishing things"
-msgstr "Lucrurile finalizează"
+#~ msgid "Finishing things"
+#~ msgstr "Lucrurile finalizează"
 
 #: src/pages/login.tsx:102
 #: src/pages/resetPassword.tsx:112
@@ -269,7 +269,7 @@ msgstr "Setări generale"
 msgid "Get in Touch"
 msgstr "Intră în contact"
 
-#: src/pages/library.tsx:368
+#: src/pages/library.tsx:408
 msgid "Give your album a name"
 msgstr "Dă un nume albumului tău"
 
@@ -277,7 +277,7 @@ msgstr "Dă un nume albumului tău"
 msgid "glo[F#m][E]ri[D]fy"
 msgstr "drep[F#m][E]ta[D]te"
 
-#: src/pages/home.tsx:162
+#: src/pages/home.tsx:152
 msgid "Guest"
 msgstr "Oaspete"
 
@@ -338,13 +338,29 @@ msgstr "Conectează contul"
 msgid "Link your account to save your data and access it from any device."
 msgstr "Conectează-ți contul pentru a-ți salva datele și a le accesa de pe orice dispozitiv."
 
+#: src/navigation/appContainer.tsx:33
+msgid "Loading data"
+msgstr "Se încarcă datele"
+
+#: src/navigation/appContainer.tsx:45
+msgid "Loading history"
+msgstr "Se încarcă istoricul"
+
+#: src/navigation/appContainer.tsx:48
+msgid "Loading recent data"
+msgstr "Se încarcă datele recente"
+
 #: src/pages/album.tsx:160
 msgid "Loading the album"
 msgstr "Se încarcă albumul"
 
-#: src/pages/song.tsx:430
+#: src/pages/song.tsx:415
 msgid "Loading the song"
 msgstr "Se încarcă melodia"
+
+#: src/navigation/appContainer.tsx:25
+msgid "Loading user data"
+msgstr ""
 
 #: src/pages/login.tsx:115
 msgid "Log in"
@@ -355,11 +371,11 @@ msgstr "Conectare"
 msgid "Log Out"
 msgstr "Deconectare"
 
-#: src/pages/home.tsx:229
+#: src/pages/home.tsx:219
 msgid "Looking for something else?"
 msgstr "Cauți altceva?"
 
-#: src/pages/song.tsx:455
+#: src/pages/song.tsx:440
 msgid "Lyrics"
 msgstr "Versuri"
 
@@ -509,7 +525,7 @@ msgstr "Salvat în"
 msgid "Search"
 msgstr "Caută"
 
-#: src/pages/song.tsx:787
+#: src/pages/song.tsx:772
 msgid "See more options here"
 msgstr "Vezi mai multe opțiuni aici"
 
@@ -552,7 +568,7 @@ msgid "Something went wrong."
 msgstr "Ceva nu a mers bine."
 
 #: src/pages/allSongs.tsx:75
-#: src/pages/home.tsx:254
+#: src/pages/home.tsx:244
 msgid "Songs"
 msgstr "Melodii"
 
@@ -560,11 +576,12 @@ msgstr "Melodii"
 msgid "Start searching for your favorite songs."
 msgstr "Începe să cauți melodiile tale preferate."
 
-#: src/pages/home.tsx:297
+#: src/pages/home.tsx:287
+#: src/pages/home.tsx:317
 msgid "Suggested for you"
 msgstr "Recomandat pentru tine"
 
-#: src/navigation/appContainer.tsx:71
+#: src/navigation/appContainer.tsx:70
 msgid "Syncing data"
 msgstr "Sincronizarea datelor"
 
@@ -624,7 +641,7 @@ msgstr "Actualizează detaliile"
 msgid "Update your account details here."
 msgstr "Actualizează-ți detaliile contului aici."
 
-#: src/navigation/appContainer.tsx:71
+#: src/navigation/appContainer.tsx:51
 msgid "Updating the content"
 msgstr "Actualizarea conținutului"
 

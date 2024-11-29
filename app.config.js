@@ -11,10 +11,10 @@ export default ({ config }) => ({
     scheme: "praiseup",
     splash: {
         image: "./assets/splash.png",
-        resizeMode: "contain",
+        resizeMode: "cover",
         backgroundColor: "#f4f4f4",
         dark: {
-            image: "...",
+            image: "./assets/splash.png",
             resizeMode: "cover",
             backgroundColor: "#1a1a1a",
         },

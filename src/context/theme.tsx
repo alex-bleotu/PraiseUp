@@ -11,15 +11,17 @@ export const ThemeProvider = ({
     children: ReactNode | ReactNode[];
 }) => {
     const [theme, setTheme] = useState<any>(null);
-    const [themeType, setThemeType] = useState<"light" | "dark" | "system">(
-        "system"
-    );
+    const [themeType, setThemeType] = useState<
+        "light" | "dark" | "system" | null
+    >(null);
     const [systemTheme, setSystemTheme] = useState<"light" | "dark">(
         Appearance.getColorScheme() || "light"
     );
 
     const loadTheme = async () => {
         const themeLoaded = await AsyncStorage.getItem("themeType");
+
+        console.log("themeLoaded", themeLoaded);
 
         if (themeLoaded === "dark") {
             setTheme(darkTheme);
@@ -42,15 +44,9 @@ export const ThemeProvider = ({
     };
 
     useEffect(() => {
-        const init = async () => {
-            await loadTheme();
-        };
-
         const appearanceListener = Appearance.addChangeListener(() => {
             updateSystemTheme();
         });
-
-        init();
 
         return () => {
             appearanceListener.remove();
@@ -58,6 +54,8 @@ export const ThemeProvider = ({
     }, []);
 
     useEffect(() => {
+        if (themeType === null) return;
+
         if (themeType === "light") {
             setTheme(lightTheme);
             AsyncStorage.setItem("themeType", "light");
@@ -82,6 +80,7 @@ export const ThemeProvider = ({
                 themeType,
                 systemTheme,
                 getSystemTheme,
+                loadTheme,
             }}>
             {children}
         </ThemeContext.Provider>

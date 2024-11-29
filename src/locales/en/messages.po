@@ -76,12 +76,12 @@ msgid "Add to other album"
 msgstr "Add to other album"
 
 #: src/components/wrapers/dataBottomSheet.tsx:614
-#: src/pages/library.tsx:371
+#: src/pages/library.tsx:411
 msgid "Album Name"
 msgstr "Album Name"
 
 #: src/pages/allAlbums.tsx:74
-#: src/pages/home.tsx:271
+#: src/pages/home.tsx:261
 msgid "Albums"
 msgstr "Albums"
 
@@ -117,7 +117,7 @@ msgstr "Are you sure you want to remove this album from your library?"
 #: src/components/wrapers/dataBottomSheet.tsx:481
 #: src/components/wrapers/dataBottomSheet.tsx:561
 #: src/components/wrapers/dataBottomSheet.tsx:637
-#: src/pages/library.tsx:393
+#: src/pages/library.tsx:433
 #: src/pages/settings.tsx:800
 #: src/pages/settings.tsx:876
 #: src/pages/settings.tsx:984
@@ -125,7 +125,7 @@ msgstr "Are you sure you want to remove this album from your library?"
 msgid "Cancel"
 msgstr "Cancel"
 
-#: src/pages/song.tsx:728
+#: src/pages/song.tsx:713
 msgid "Change the chords"
 msgstr "Change the chords"
 
@@ -135,8 +135,8 @@ msgid "Check this out on PraiseUp!"
 msgstr "Check this out on PraiseUp!"
 
 #: src/pages/settings.tsx:150
-#: src/pages/song.tsx:490
-#: src/pages/song.tsx:617
+#: src/pages/song.tsx:475
+#: src/pages/song.tsx:602
 msgid "Chords"
 msgstr "Chords"
 
@@ -160,11 +160,11 @@ msgstr "Continue as Guest"
 msgid "Continue with Google"
 msgstr "Continue with Google"
 
-#: src/pages/library.tsx:427
+#: src/pages/library.tsx:467
 msgid "Create"
 msgstr "Create"
 
-#: src/pages/library.tsx:301
+#: src/pages/library.tsx:298
 msgid "Create album"
 msgstr "Create album"
 
@@ -224,7 +224,7 @@ msgstr "Email"
 msgid "Email is already in use."
 msgstr "Email is already in use."
 
-#: src/pages/song.tsx:650
+#: src/pages/song.tsx:635
 msgid "Enable chords"
 msgstr "Enable chords"
 
@@ -236,7 +236,7 @@ msgstr "Exit"
 msgid "Exit Guest Mode"
 msgstr "Exit Guest Mode"
 
-#: src/pages/home.tsx:243
+#: src/pages/home.tsx:233
 msgid "Explore everything PraiseUp has to offer!"
 msgstr "Explore everything PraiseUp has to offer!"
 
@@ -244,17 +244,13 @@ msgstr "Explore everything PraiseUp has to offer!"
 msgid "Favorite"
 msgstr "Favorite"
 
-#: src/pages/home.tsx:328
+#: src/pages/home.tsx:340
 msgid "Favorite albums"
 msgstr "Favorite albums"
 
 #: src/components/items/albumCover.tsx:81
 msgid "Favorite songs"
 msgstr "Favorite songs"
-
-#: src/pages/home.tsx:156
-msgid "Finishing things"
-msgstr "Finishing things"
 
 #: src/pages/login.tsx:102
 #: src/pages/resetPassword.tsx:112
@@ -269,7 +265,7 @@ msgstr "General Settings"
 msgid "Get in Touch"
 msgstr "Get in Touch"
 
-#: src/pages/library.tsx:368
+#: src/pages/library.tsx:408
 msgid "Give your album a name"
 msgstr "Give your album a name"
 
@@ -277,7 +273,7 @@ msgstr "Give your album a name"
 msgid "glo[F#m][E]ri[D]fy"
 msgstr "glo[F#m][E]ri[D]fy"
 
-#: src/pages/home.tsx:162
+#: src/pages/home.tsx:152
 msgid "Guest"
 msgstr "Guest"
 
@@ -339,13 +335,29 @@ msgstr "Link Account"
 msgid "Link your account to save your data and access it from any device."
 msgstr "Link your account to save your data and access it from any device."
 
+#: src/navigation/appContainer.tsx:33
+msgid "Loading data"
+msgstr "Loading data"
+
+#: src/navigation/appContainer.tsx:45
+msgid "Loading history"
+msgstr "Loading history"
+
+#: src/navigation/appContainer.tsx:48
+msgid "Loading recent data"
+msgstr "Loading recent data"
+
 #: src/pages/album.tsx:160
 msgid "Loading the album"
 msgstr "Loading the album"
 
-#: src/pages/song.tsx:430
+#: src/pages/song.tsx:415
 msgid "Loading the song"
 msgstr "Loading the song"
+
+#: src/navigation/appContainer.tsx:25
+msgid "Loading user data"
+msgstr "Loading user data"
 
 #: src/pages/login.tsx:115
 msgid "Log in"
@@ -356,11 +368,11 @@ msgstr "Log in"
 msgid "Log Out"
 msgstr "Log Out"
 
-#: src/pages/home.tsx:229
+#: src/pages/home.tsx:219
 msgid "Looking for something else?"
 msgstr "Looking for something else?"
 
-#: src/pages/song.tsx:455
+#: src/pages/song.tsx:440
 msgid "Lyrics"
 msgstr "Lyrics"
 
@@ -510,7 +522,7 @@ msgstr "Saved in"
 msgid "Search"
 msgstr "Search"
 
-#: src/pages/song.tsx:787
+#: src/pages/song.tsx:772
 msgid "See more options here"
 msgstr "See more options here"
 
@@ -553,7 +565,7 @@ msgid "Something went wrong."
 msgstr "Something went wrong."
 
 #: src/pages/allSongs.tsx:75
-#: src/pages/home.tsx:254
+#: src/pages/home.tsx:244
 msgid "Songs"
 msgstr "Songs"
 
@@ -561,11 +573,12 @@ msgstr "Songs"
 msgid "Start searching for your favorite songs."
 msgstr "Start searching for your favorite songs."
 
-#: src/pages/home.tsx:297
+#: src/pages/home.tsx:287
+#: src/pages/home.tsx:317
 msgid "Suggested for you"
 msgstr "Suggested for you"
 
-#: src/navigation/appContainer.tsx:71
+#: src/navigation/appContainer.tsx:70
 msgid "Syncing data"
 msgstr "Syncing data"
 
@@ -625,7 +638,7 @@ msgstr "Update details"
 msgid "Update your account details here."
 msgstr "Update your account details here."
 
-#: src/navigation/appContainer.tsx:71
+#: src/navigation/appContainer.tsx:51
 msgid "Updating the content"
 msgstr "Updating the content"
 

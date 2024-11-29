@@ -27,9 +27,6 @@ const AppStack = () => {
             screenOptions={{
                 headerShown: false,
                 cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-                cardStyle: {
-                    backgroundColor: theme.colors.background,
-                },
             }}>
             <S.Screen name="Tabs" component={Tabs} />
             <S.Screen name="Settings" component={Settings} />

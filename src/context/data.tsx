@@ -130,9 +130,8 @@ export const DataProvider = ({
         const readLists = async () => {
             const storedSongs = await AsyncStorage.getItem("songIds");
             const storedAlbums = await AsyncStorage.getItem("albumIds");
-            const storedPersonalAlbums = await AsyncStorage.getItem(
-                "personalAlbumsIds"
-            );
+            const storedPersonalAlbums =
+                await AsyncStorage.getItem("personalAlbumsIds");
             const storedFavorites = await AsyncStorage.getItem("favoriteIds");
 
             let sortedSongs: string[] | null = [];
@@ -1519,7 +1518,7 @@ export const DataProvider = ({
 
         deleteHistory();
 
-        if (hasInternet) await addData();
+        await addData();
 
         setLoadingData(false);
     };

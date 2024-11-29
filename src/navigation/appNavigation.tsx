@@ -1,6 +1,6 @@
 import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import { useContext } from "react";
-import { Appearance } from "react-native";
+import { View } from "react-native";
 import { ThemeContext } from "../context/theme";
 import { UserContext } from "../context/user";
 import AppStack from "./appStack";
@@ -32,25 +32,27 @@ const AppNavigation = () => {
     const { theme } = useContext(ThemeContext);
 
     return (
-        <NavigationContainer
-            linking={linking}
-            theme={{
-                dark: false,
-                colors: {
-                    background: theme
-                        ? theme.colors.background
-                        : Appearance.getColorScheme() === "dark"
-                          ? "#1a1a1a"
-                          : "#f4f4f4",
-                    primary: "",
-                    card: "",
-                    text: "",
-                    border: "",
-                    notification: "",
-                },
+        <View
+            style={{
+                flex: 1,
+                backgroundColor: theme.colors.background,
             }}>
-            {user !== null ? <AppStack /> : <AuthStack />}
-        </NavigationContainer>
+            <NavigationContainer
+                linking={linking}
+                theme={{
+                    dark: false,
+                    colors: {
+                        background: theme.colors.background,
+                        primary: "",
+                        card: "",
+                        text: "",
+                        border: "",
+                        notification: "",
+                    },
+                }}>
+                {user !== null ? <AppStack /> : <AuthStack />}
+            </NavigationContainer>
+        </View>
     );
 };
 

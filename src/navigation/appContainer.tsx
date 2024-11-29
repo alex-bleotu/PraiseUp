@@ -7,12 +7,15 @@ import { HistoryContext } from "../context/history";
 import { LoadingContext } from "../context/loading";
 import { RecentContext } from "../context/recent";
 import { RefreshContext } from "../context/refresh";
+import { ThemeContext } from "../context/theme";
 import { UserContext } from "../context/user";
 import Loading from "../pages/loading";
 import AppNavigation from "./appNavigation";
 
 const AppContainer = () => {
     const [loading, setLoading] = useState<boolean>(false);
+    const [loadingText, setLoadingText] = useState<string>("");
+    const { theme, loadTheme } = useContext(ThemeContext);
     const { updateRefresh } = useContext(RefreshContext);
     const { user } = useContext(UserContext);
     const { loadingData, loadData } = useContext(DataContext);
@@ -21,7 +24,13 @@ const AppContainer = () => {
     const { syncLoading } = useContext(LoadingContext);
 
     useEffect(() => {
-        setLoading(true);
+        const load = async () => {
+            setLoading(true);
+            await loadTheme();
+            setLoadingText(t`Loading user theme`);
+        };
+
+        load();
     }, []);
 
     useEffect(() => {
@@ -29,6 +38,7 @@ const AppContainer = () => {
 
         const load = async () => {
             console.log("Loading data");
+            setLoadingText(t`Loading data`);
             await loadData();
         };
 
@@ -40,23 +50,22 @@ const AppContainer = () => {
 
         const load = async () => {
             console.log("Loading history");
+            setLoadingText(t`Loading history`);
             await loadHistory();
             console.log("Loading recent");
+            setLoadingText(t`Loading recent data`);
             await loadRecent();
 
+            setLoadingText(t`Updating the content`);
             updateRefresh();
 
             setLoading(false);
+
+            SplashScreen.hideAsync();
         };
 
         load();
     }, [loadingData]);
-
-    useEffect(() => {
-        if (!loading && history !== null && recent !== null && !syncLoading) {
-            SplashScreen.hideAsync();
-        }
-    }, [loading, history, recent, syncLoading]);
 
     return (
         <View
@@ -64,13 +73,12 @@ const AppContainer = () => {
                 flex: 1,
             }}>
             {(user !== null &&
-                (loading === null || history === null || recent === null)) ||
+                (theme === null ||
+                    loading === null ||
+                    history === null ||
+                    recent === null)) ||
             syncLoading ? (
-                <Loading
-                    text={
-                        syncLoading ? t`Syncing data` : t`Updating the content`
-                    }
-                />
+                <Loading text={syncLoading ? t`Syncing data` : loadingText} />
             ) : (
                 <AppNavigation />
             )}

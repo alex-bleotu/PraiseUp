@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { ActivityIndicator, Appearance, StyleSheet, View } from "react-native";
-import Background from "../components/wrapers/background";
 import Text from "../components/wrapers/text";
 import { ThemeContext } from "../context/theme";
 import { darkTheme, lightTheme } from "../utils/theme";
@@ -49,32 +48,34 @@ const Loading = ({
         );
 
     return (
-        // <RNModal animationType="none" transparent={true} visible={true}>
-        <View style={styles.modalWrapper}>
-            <Background center color={colors.background}>
-                <ActivityIndicator
-                    animating={true}
-                    size={50}
-                    color={colors.primary}
-                    accessibilityLabel="Loading content"
-                />
-                <View style={styles.textContainer}>
-                    {text && (
-                        <View style={styles.first}>
-                            <Text bold center color={colors.text} fontSize={18}>
-                                {text}
-                            </Text>
-                        </View>
-                    )}
-                    <View style={styles.second}>
-                        <Text color={colors.text} bold fontSize={18}>
-                            {dotText}
+        <View
+            style={[
+                styles.modalWrapper,
+                {
+                    backgroundColor: colors.background,
+                },
+            ]}>
+            <ActivityIndicator
+                animating={true}
+                size={50}
+                color={colors.primary}
+                accessibilityLabel="Loading content"
+            />
+            <View style={styles.textContainer}>
+                {text && (
+                    <View style={styles.first}>
+                        <Text bold center color={colors.text} fontSize={18}>
+                            {text}
                         </Text>
                     </View>
+                )}
+                <View style={styles.second}>
+                    <Text color={colors.text} bold fontSize={18}>
+                        {dotText}
+                    </Text>
                 </View>
-            </Background>
+            </View>
         </View>
-        // </RNModal>
     );
 };
 
