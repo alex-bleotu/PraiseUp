@@ -122,8 +122,8 @@ const BottomSheetModal = ({
                                 height: height
                                     ? height
                                     : numberOfButtons
-                                    ? 125 + 50 * numberOfButtons
-                                    : "auto",
+                                      ? 130 + 50 * numberOfButtons
+                                      : "auto",
                             },
                         ]}>
                         <View style={styles.bottomSheetHandleContainer}>

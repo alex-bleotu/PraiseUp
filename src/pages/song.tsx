@@ -127,13 +127,33 @@ const getStepsFromC = (chord: string) => {
     return steps !== -1 ? steps : null;
 };
 
+export const convertSection = (section: string) => {
+    const sectionMapping = {
+        V: t`Verse`,
+        C: t`Chorus`,
+        B: t`Bridge`,
+        P: t`Pre-Chorus`,
+    };
+
+    const match = section.match(/^([A-Za-z]+)(\d*)$/);
+    if (match) {
+        const [_, letter, number] = match;
+        const fullSection =
+            sectionMapping[letter as keyof typeof sectionMapping] || letter;
+        return number ? `${fullSection} ${number}` : fullSection;
+    }
+
+    return section;
+};
+
 export const renderLyrics = (
     lyrics: string,
     showChords: boolean,
     theme: any,
     fontSize: number = 16,
     steps: number = 0,
-    chords: "split" | "combined" | "separated" = "combined"
+    chords: "split" | "combined" | "separated" = "combined",
+    showSections: boolean = false
 ) => {
     if (!lyrics) return null;
 
@@ -149,19 +169,29 @@ export const renderLyrics = (
             return <View key={index} style={styles.emptyLine} />;
         }
 
-        if (line.length < 4)
-            return (
-                <Text
-                    key={index}
-                    style={{
-                        marginVertical: 5,
-                    }}
-                    fontSize={fontSize + 2}
-                    bold
-                    color={theme.colors.grey}>
-                    {line}
-                </Text>
-            );
+        if (line.length < 4) {
+            if (showSections)
+                return (
+                    <Text
+                        key={index}
+                        style={{
+                            marginVertical: 5,
+                        }}
+                        fontSize={fontSize + 2}
+                        bold
+                        color={theme.colors.grey}>
+                        {convertSection(line.trim())}
+                    </Text>
+                );
+            else
+                return (
+                    <View
+                        key={index}
+                        style={{
+                            marginVertical: 8,
+                        }}></View>
+                );
+        }
 
         if (hasChords && showChords) {
             const parts = line.split(/(\[.*?\])/g);
@@ -296,8 +326,14 @@ const Song = ({ route, navigation }: SongProps) => {
     const { song: s, id } = route.params;
 
     const { theme } = useContext(ThemeContext);
-    const { lyricsSize, setLyricsSize, chords, songTab, setSongTab } =
-        useContext(ConstantsContext);
+    const {
+        lyricsSize,
+        setLyricsSize,
+        chords,
+        songTab,
+        setSongTab,
+        showSections,
+    } = useContext(ConstantsContext);
     const { getSongById } = useContext(DataContext);
     const {
         chordsTutorial,
@@ -397,7 +433,15 @@ const Song = ({ route, navigation }: SongProps) => {
     const hasChords = song?.lyrics && song?.lyrics.match(/\[.*?\]/);
 
     const renderedLyrics = useMemo(() => {
-        return renderLyrics(song?.lyrics, false, theme, lyricsSize, steps);
+        return renderLyrics(
+            song?.lyrics,
+            false,
+            theme,
+            lyricsSize,
+            steps,
+            "combined",
+            showSections
+        );
     }, [song?.lyrics, lyricsSize, steps, theme]);
 
     const renderedChords = useMemo(() => {
@@ -407,7 +451,8 @@ const Song = ({ route, navigation }: SongProps) => {
             theme,
             lyricsSize,
             steps,
-            chords
+            chords,
+            showSections
         );
     }, [song?.lyrics, lyricsSize, steps, theme, chords]);
 
@@ -428,7 +473,7 @@ const Song = ({ route, navigation }: SongProps) => {
                             styles.selector,
                             {
                                 backgroundColor: theme.colors.paper,
-                                width: buttonsContainerWidth,
+                                // width: buttonsContainerWidth,
                             },
                         ]}>
                         <Button
@@ -766,7 +811,7 @@ const Song = ({ route, navigation }: SongProps) => {
                                     source={require("../../assets/images/arrows/curved.png")}
                                 />
                                 <Text
-                                    style={{ marginLeft: -45 }}
+                                    style={{ marginLeft: -80 }}
                                     fontSize={18}
                                     bold
                                     color="white">{t`See more options here`}</Text>

@@ -27,7 +27,7 @@ const AppContainer = () => {
         const load = async () => {
             setLoading(true);
             await loadTheme();
-            setLoadingText(t`Loading user theme`);
+            setLoadingText(t`App is loading`);
         };
 
         load();
@@ -38,7 +38,6 @@ const AppContainer = () => {
 
         const load = async () => {
             console.log("Loading data");
-            setLoadingText(t`Loading data`);
             await loadData();
         };
 
@@ -50,13 +49,10 @@ const AppContainer = () => {
 
         const load = async () => {
             console.log("Loading history");
-            setLoadingText(t`Loading history`);
             await loadHistory();
             console.log("Loading recent");
-            setLoadingText(t`Loading recent data`);
             await loadRecent();
 
-            setLoadingText(t`Updating the content`);
             updateRefresh();
 
             setLoading(false);

@@ -16,7 +16,8 @@ export const ConstantsProvider = ({
         "split" | "combined" | "separated" | null
     >(null);
     const [appHeight, setAppHeight] = useState(0);
-    const [songTab, setSongTab] = useState<"lyrics" | "chords">("lyrics");
+    const [songTab, setSongTab] = useState<"lyrics" | "chords" | null>(null);
+    const [showSections, setShowSections] = useState<boolean | null>(null);
 
     useEffect(() => {
         const loadConstants = async () => {
@@ -25,6 +26,7 @@ export const ConstantsProvider = ({
             const lyricsSize = await AsyncStorage.getItem("lyricsSize");
             const chords = await AsyncStorage.getItem("chords");
             const songTab = await AsyncStorage.getItem("songTab");
+            const showSections = await AsyncStorage.getItem("showSections");
 
             if (sortBy) setSortBy(sortBy as "date" | "name");
             else setSortBy("date");
@@ -36,6 +38,8 @@ export const ConstantsProvider = ({
             else setChords("combined");
             if (songTab) setSongTab(songTab as "lyrics" | "chords");
             else setSongTab("lyrics");
+            if (showSections) setShowSections(showSections === "true");
+            else setShowSections(false);
 
             const { height: windowHeight } = Dimensions.get("window");
             const { height: screenHeight } = Dimensions.get("screen");
@@ -72,18 +76,25 @@ export const ConstantsProvider = ({
         if (songTab !== null) AsyncStorage.setItem("songTab", songTab);
     }, [songTab]);
 
+    useEffect(() => {
+        if (showSections !== null)
+            AsyncStorage.setItem("showSections", showSections.toString());
+    }, [showSections]);
+
     const resetConstants = async () => {
         await AsyncStorage.removeItem("sortBy");
         await AsyncStorage.removeItem("display");
         await AsyncStorage.removeItem("lyricsSize");
         await AsyncStorage.removeItem("chords");
         await AsyncStorage.removeItem("songTab");
+        await AsyncStorage.removeItem("showSections");
 
         setSortBy("date");
         setDisplay("grid");
         setLyricsSize(16);
         setChords("combined");
         setSongTab("lyrics");
+        setShowSections(true);
     };
 
     return (
@@ -100,6 +111,8 @@ export const ConstantsProvider = ({
                 setChords,
                 songTab,
                 setSongTab,
+                showSections,
+                setShowSections,
                 resetConstants,
             }}>
             {children}

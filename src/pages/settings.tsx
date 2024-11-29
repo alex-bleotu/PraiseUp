@@ -31,15 +31,21 @@ const Settings = ({ navigation }: { navigation: any }) => {
     const { theme, setThemeType, themeType, getSystemTheme } =
         useContext(ThemeContext);
     const { language, setLanguage } = useContext(LanguageContext);
-    const { lyricsSize, setLyricsSize, chords, setChords } =
-        useContext(ConstantsContext);
+    const {
+        lyricsSize,
+        setLyricsSize,
+        chords,
+        setChords,
+        showSections,
+        setShowSections,
+    } = useContext(ConstantsContext);
     const { user } = useContext(UserContext);
     const { logout, exitGuest, deleteAccount } = useContext(AuthContext);
     const { reloadAllData } = useContext(DataContext);
     const { fullyUpdateRecent } = useContext(RecentContext);
 
     const [settings, setSettings] = useState<
-        "theme" | "language" | "zoom" | "chords" | null
+        "theme" | "language" | "zoom" | "chords" | "sections" | null
     >(null);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
@@ -160,6 +166,28 @@ const Settings = ({ navigation }: { navigation: any }) => {
                             name="itunes-note"
                             size={25}
                             color={theme.colors.text}
+                        />
+                    }
+                />
+                <Button
+                    mode="contained"
+                    fullWidth
+                    bold
+                    backgroundColor={theme.colors.paper}
+                    text={t`Show sections`}
+                    onPress={() => {
+                        setSettings("sections"), setIsSettingsOpen(true);
+                    }}
+                    color={theme.colors.text}
+                    center={false}
+                    fontSize={15}
+                    style={{ marginBottom: 10 }}
+                    icon={
+                        <MCIcons
+                            name="subtitles-outline"
+                            size={28}
+                            color={theme.colors.text}
+                            style={{ margin: -2 }}
                         />
                     }
                 />
@@ -584,13 +612,12 @@ const Settings = ({ navigation }: { navigation: any }) => {
                             <View style={styles.topBar}>
                                 <TouchableOpacity
                                     activeOpacity={theme.activeOpacity}
-                                    style={{ marginRight: 10 }}
                                     onPress={() => {
-                                        if (lyricsSize < 22)
-                                            setLyricsSize(lyricsSize + 1);
+                                        if (lyricsSize > 13)
+                                            setLyricsSize(lyricsSize - 1);
                                     }}>
                                     <MCIcons
-                                        name={"plus-circle-outline"}
+                                        name={"minus-circle-outline"}
                                         size={30}
                                         color={theme.colors.text}
                                     />
@@ -623,12 +650,13 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                 </View>
                                 <TouchableOpacity
                                     activeOpacity={theme.activeOpacity}
+                                    style={{ marginLeft: 10 }}
                                     onPress={() => {
-                                        if (lyricsSize > 13)
-                                            setLyricsSize(lyricsSize - 1);
+                                        if (lyricsSize < 22)
+                                            setLyricsSize(lyricsSize + 1);
                                     }}>
                                     <MCIcons
-                                        name={"minus-circle-outline"}
+                                        name={"plus-circle-outline"}
                                         size={30}
                                         color={theme.colors.text}
                                     />
@@ -670,7 +698,7 @@ Seeking stories yet untold.`}
                                     )}
                                 </View>
                                 <RadioButton
-                                    value="dark"
+                                    value="chords"
                                     color={theme.colors.primary}
                                     uncheckedColor={theme.colors.grey}
                                     status={
@@ -684,7 +712,10 @@ Seeking stories yet untold.`}
                                 />
                             </TouchableOpacity>
                             <TouchableOpacity
-                                style={styles.choiceContainer2}
+                                style={[
+                                    styles.choiceContainer2,
+                                    { marginVertical: 10 },
+                                ]}
                                 activeOpacity={1}
                                 onPress={() => {
                                     setChords("separated");
@@ -703,7 +734,7 @@ Seeking stories yet untold.`}
                                     )}
                                 </View>
                                 <RadioButton
-                                    value="dark"
+                                    value="chords"
                                     color={theme.colors.primary}
                                     uncheckedColor={theme.colors.grey}
                                     status={
@@ -736,7 +767,7 @@ Seeking stories yet untold.`}
                                     )}
                                 </View>
                                 <RadioButton
-                                    value="light"
+                                    value="chords"
                                     color={theme.colors.primary}
                                     uncheckedColor={theme.colors.grey}
                                     status={
@@ -748,6 +779,89 @@ Seeking stories yet untold.`}
                                         setChords("split");
                                     }}
                                 />
+                            </TouchableOpacity>
+                        </View>
+                    ) : settings === "sections" ? (
+                        <View style={styles.sections}>
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                style={styles.section}
+                                onPress={() => setShowSections(true)}>
+                                <View>
+                                    <Text
+                                        style={{
+                                            marginBottom: 5,
+                                        }}
+                                        fontSize={18}
+                                        bold
+                                        color={theme.colors.grey}>
+                                        {t`Verse`}
+                                    </Text>
+                                    <Text
+                                        fontSize={16}
+                                        color={theme.colors.text}
+                                        style={{}}>
+                                        {t`A step at night,
+Dreams so bright.
+A heart so bold,
+Chasing gold.`}
+                                    </Text>
+                                </View>
+                                <View style={styles.radioButton}>
+                                    <RadioButton
+                                        value="showSections"
+                                        color={theme.colors.primary}
+                                        uncheckedColor={theme.colors.grey}
+                                        status={
+                                            showSections
+                                                ? "checked"
+                                                : "unchecked"
+                                        }
+                                        onPress={() => {
+                                            setShowSections(true);
+                                        }}
+                                    />
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                style={styles.section}
+                                onPress={() => setShowSections(false)}>
+                                <View>
+                                    <Text
+                                        style={{
+                                            marginBottom: 5,
+                                        }}
+                                        fontSize={18}
+                                        bold
+                                        color={theme.colors.grey}>
+                                        {" "}
+                                    </Text>
+                                    <Text
+                                        fontSize={16}
+                                        color={theme.colors.text}
+                                        style={{}}>
+                                        {t`A step at night,
+Dreams so bright.
+A heart so bold,
+Chasing gold.`}
+                                    </Text>
+                                </View>
+                                <View style={styles.radioButton}>
+                                    <RadioButton
+                                        value="showSections"
+                                        color={theme.colors.primary}
+                                        uncheckedColor={theme.colors.grey}
+                                        status={
+                                            !showSections
+                                                ? "checked"
+                                                : "unchecked"
+                                        }
+                                        onPress={() => {
+                                            setShowSections(false);
+                                        }}
+                                    />
+                                </View>
                             </TouchableOpacity>
                         </View>
                     ) : (
@@ -1206,13 +1320,18 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
         marginBottom: 15,
-        width: "90%",
+        width: "95%",
     },
     zoomContainer: {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         marginBottom: 15,
+    },
+    error: {
+        alignSelf: "flex-start",
+        marginTop: 5,
+        marginLeft: 15,
     },
     lyrics: {
         width: "90%",
@@ -1221,9 +1340,20 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         height: 170,
     },
-    error: {
-        alignSelf: "flex-start",
-        marginTop: 5,
-        marginLeft: 15,
+    sections: {
+        height: 160,
+        display: "flex",
+        flexDirection: "row",
+        marginHorizontal: 10,
+    },
+    section: {
+        width: "50%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    radioButton: {
+        marginTop: 10,
+        marginLeft: -20,
     },
 });

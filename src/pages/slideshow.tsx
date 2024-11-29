@@ -9,7 +9,9 @@ import { Dimensions, StyleSheet, View } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import AnimatedTouchable from "../components/wrapers/animatedTouchable";
 import Text from "../components/wrapers/text";
+import { ConstantsContext } from "../context/constants";
 import { DataContext } from "../context/data";
+import { convertSection } from "./song";
 
 const isTooLarge = (str: string) => {
     const maxLines = 6;
@@ -25,6 +27,7 @@ const isTooLarge = (str: string) => {
 const Slideshow = ({ route, navigation }: { route: any; navigation: any }) => {
     const { song: s, id } = route.params;
     const { getSongById } = useContext(DataContext);
+    const { showSections } = useContext(ConstantsContext);
 
     const [rotation, setRotation] = useState<0 | 180>(0);
     const [currentVerse, setCurrentVerse] = useState(0);
@@ -138,41 +141,40 @@ const Slideshow = ({ route, navigation }: { route: any; navigation: any }) => {
                         styles.textContainer,
                         {
                             width: screenSize.width - 150,
+                            marginTop: isTooLarge(lyricsArray[currentVerse])
+                                ? 14
+                                : 17,
                         },
                     ]}>
-                    <View
-                        style={[
-                            styles.sectionLabel,
-                            {
-                                marginTop: isTooLarge(lyricsArray[currentVerse])
-                                    ? 14
-                                    : 17,
-                            },
-                        ]}>
+                    <View>
+                        {showSections && (
+                            <Text
+                                color="grey"
+                                bold
+                                fontSize={
+                                    isTooLarge(lyricsArray[currentVerse])
+                                        ? fontSize - 18
+                                        : fontSize - 12
+                                }>
+                                {convertSection(
+                                    lyricsArray[currentVerse].split("\r")[0]
+                                )}
+                            </Text>
+                        )}
                         <Text
-                            color="grey"
-                            bold
+                            color="white"
                             fontSize={
                                 isTooLarge(lyricsArray[currentVerse])
-                                    ? fontSize - 18
-                                    : fontSize - 12
+                                    ? fontSize - 8
+                                    : fontSize
                             }>
-                            {lyricsArray[currentVerse].split("\r")[0]}:
+                            {lyricsArray[currentVerse]
+                                .split("\r")
+                                .slice(1)
+                                .join("")
+                                .trim()}
                         </Text>
                     </View>
-                    <Text
-                        color="white"
-                        fontSize={
-                            isTooLarge(lyricsArray[currentVerse])
-                                ? fontSize - 8
-                                : fontSize
-                        }>
-                        {lyricsArray[currentVerse]
-                            .split("\r")
-                            .slice(1)
-                            .join("")
-                            .trim()}
-                    </Text>
                 </View>
             )}
 
@@ -270,13 +272,8 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         position: "absolute",
-        alignItems: "center",
         justifyContent: "center",
-        flexDirection: "row",
-    },
-    sectionLabel: {
-        height: "100%",
-        marginRight: 10,
+        alignItems: "center",
     },
     buttonContainer: {
         position: "absolute",
@@ -288,7 +285,9 @@ const styles = StyleSheet.create({
         zIndex: 100,
     },
     button: {
-        marginRight: 20,
+        marginRight: 5,
+        marginBottom: -10,
+        padding: 10,
     },
     touchableAreaContainer: {
         position: "absolute",
