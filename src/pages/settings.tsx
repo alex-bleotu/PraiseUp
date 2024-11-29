@@ -40,7 +40,8 @@ const Settings = ({ navigation }: { navigation: any }) => {
         setShowSections,
     } = useContext(ConstantsContext);
     const { user } = useContext(UserContext);
-    const { logout, exitGuest, deleteAccount } = useContext(AuthContext);
+    const { logout, exitGuest, deleteAccount, deleteGoogleAccount } =
+        useContext(AuthContext);
     const { reloadAllData } = useContext(DataContext);
     const { fullyUpdateRecent } = useContext(RecentContext);
 
@@ -56,6 +57,9 @@ const Settings = ({ navigation }: { navigation: any }) => {
     const [passwordError, setPasswordError] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
     const [reloadLoading, setReloadLoading] = useState<boolean>(false);
+    const [logoutLoading, setLogoutLoading] = useState<boolean>(false);
+    const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
+    const [exitLoading, setExitLoading] = useState<boolean>(false);
 
     const lyricToRender = t`glo[F#m][E]ri[D]fy`;
 
@@ -454,7 +458,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                         fontSize={30}
                                         bold
                                         color={getSystemTheme().colors.primary}
-                                        style={{ marginTop: -5 }}>
+                                        style={{ marginTop: -2 }}>
                                         S
                                     </Text>
                                 </View>
@@ -487,7 +491,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                         fontSize={30}
                                         bold
                                         color={lightTheme.colors.primary}
-                                        style={{ marginTop: -5 }}>
+                                        style={{ marginTop: -2 }}>
                                         A
                                     </Text>
                                 </View>
@@ -520,7 +524,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                                         fontSize={30}
                                         bold
                                         color={darkTheme.colors.primary}
-                                        style={{ marginTop: -5 }}>
+                                        style={{ marginTop: -2 }}>
                                         A
                                     </Text>
                                 </View>
@@ -872,7 +876,8 @@ Chasing gold.`}
 
             <Modal
                 visible={isLogoutModalOpen}
-                setVisible={setIsLogoutModalOpen}>
+                setVisible={setIsLogoutModalOpen}
+                disableClose={logoutLoading}>
                 <View>
                     <View
                         style={{
@@ -901,13 +906,16 @@ Chasing gold.`}
                     <View style={{ width: "47%" }}>
                         <TouchableOpacity
                             onPress={() => {
+                                if (logoutLoading) return;
                                 setIsLogoutModalOpen(false);
                             }}
+                            disabled={logoutLoading}
                             activeOpacity={theme.activeOpacity}
                             style={[
                                 styles.button,
                                 {
                                     backgroundColor: theme.colors.darkPaper,
+                                    opacity: !logoutLoading ? 1 : 0.5,
                                 },
                             ]}>
                             <Text fontSize={14} bold upper center>
@@ -917,16 +925,30 @@ Chasing gold.`}
                     </View>
                     <View style={{ width: "48%" }}>
                         <TouchableOpacity
-                            onPress={() => {
-                                logout();
+                            onPress={async () => {
+                                if (logoutLoading) return;
+
+                                setLogoutLoading(true);
+                                await logout();
+                                setLogoutLoading(false);
                             }}
                             activeOpacity={theme.activeOpacity}
+                            disabled={logoutLoading}
                             style={[
                                 styles.button,
                                 {
                                     backgroundColor: theme.colors.danger,
+                                    flexDirection: "row",
+                                    // opacity: !logoutLoading ? 1 : 0.5,
                                 },
                             ]}>
+                            {logoutLoading && (
+                                <ActivityIndicator
+                                    size={16}
+                                    style={{ marginRight: 10 }}
+                                    color={theme.colors.white}
+                                />
+                            )}
                             <Text
                                 fontSize={14}
                                 bold
@@ -940,7 +962,10 @@ Chasing gold.`}
                 </View>
             </Modal>
 
-            <Modal visible={isExitModalOpen} setVisible={setIsExitModalOpen}>
+            <Modal
+                visible={isExitModalOpen}
+                setVisible={setIsExitModalOpen}
+                disableClose={exitLoading}>
                 <View>
                     <View
                         style={{
@@ -977,13 +1002,17 @@ Chasing gold.`}
                     <View style={{ width: "47%" }}>
                         <TouchableOpacity
                             onPress={() => {
+                                if (exitLoading) return;
+
                                 setIsExitModalOpen(false);
                             }}
                             activeOpacity={theme.activeOpacity}
+                            disabled={exitLoading}
                             style={[
                                 styles.button,
                                 {
                                     backgroundColor: theme.colors.darkPaper,
+                                    opacity: !exitLoading ? 1 : 0.5,
                                 },
                             ]}>
                             <Text fontSize={14} bold upper center>
@@ -993,16 +1022,30 @@ Chasing gold.`}
                     </View>
                     <View style={{ width: "47%" }}>
                         <TouchableOpacity
-                            onPress={() => {
-                                exitGuest();
+                            onPress={async () => {
+                                if (exitLoading) return;
+
+                                setExitLoading(true);
+                                await exitGuest();
+                                setExitLoading(false);
                             }}
                             activeOpacity={theme.activeOpacity}
+                            disabled={exitLoading}
                             style={[
                                 styles.button,
                                 {
                                     backgroundColor: theme.colors.danger,
+                                    flexDirection: "row",
+                                    // opacity: !exitLoading ? 1 : 0.5,
                                 },
                             ]}>
+                            {exitLoading && (
+                                <ActivityIndicator
+                                    size={16}
+                                    style={{ marginRight: 10 }}
+                                    color={theme.colors.white}
+                                />
+                            )}
                             <Text
                                 fontSize={14}
                                 bold
@@ -1022,6 +1065,7 @@ Chasing gold.`}
                     setPassword("");
                     setError("");
                 }}
+                disableClose={deleteLoading}
                 setVisible={setIsDeleteModalOpen}>
                 <View>
                     <View
@@ -1038,40 +1082,44 @@ Chasing gold.`}
                             style={{
                                 width: 220,
                             }}>{t`Deleting your account will lose all your data.`}</Text>
-                        <Text
-                            fontSize={18}
-                            color={theme.colors.textVariant}
-                            center
-                            style={{
-                                width: 220,
-                                marginTop: 20,
-                            }}>
-                            {t`Type your`}
-                            <Text fontSize={18} bold>
-                                {" "}
-                                {t`password`}{" "}
+                        {!user.emailVerified && (
+                            <Text
+                                fontSize={18}
+                                color={theme.colors.textVariant}
+                                center
+                                style={{
+                                    width: 220,
+                                    marginTop: 20,
+                                }}>
+                                {t`Type your`}
+                                <Text fontSize={18} bold>
+                                    {" "}
+                                    {t`password`}{" "}
+                                </Text>
+                                {t` to proceed.`}
                             </Text>
-                            {t` to proceed.`}
-                        </Text>
+                        )}
                     </View>
                 </View>
-                <View>
-                    <Input
-                        placeholder={""}
-                        value={password}
-                        hidden
-                        onChange={setPassword}
-                        error={passwordError}
-                        errorText={t`The password is incorrect.`}
-                    />
-                    {error.length > 0 && (
-                        <View style={styles.error}>
-                            <Text color={theme.colors.danger} fontSize={14}>
-                                {error}
-                            </Text>
-                        </View>
-                    )}
-                </View>
+                {!user.emailVerified && (
+                    <View>
+                        <Input
+                            placeholder={""}
+                            value={password}
+                            hidden
+                            onChange={setPassword}
+                            error={passwordError}
+                            errorText={t`The password is incorrect.`}
+                        />
+                        {error.length > 0 && (
+                            <View style={styles.error}>
+                                <Text color={theme.colors.danger} fontSize={14}>
+                                    {error}
+                                </Text>
+                            </View>
+                        )}
+                    </View>
+                )}
                 <View
                     style={{
                         display: "flex",
@@ -1083,15 +1131,19 @@ Chasing gold.`}
                     <View style={{ width: "47%" }}>
                         <TouchableOpacity
                             onPress={() => {
+                                if (deleteLoading) return;
+
                                 setIsDeleteModalOpen(false);
                                 setPassword("");
                                 setError("");
                             }}
+                            disabled={deleteLoading}
                             activeOpacity={theme.activeOpacity}
                             style={[
                                 styles.button,
                                 {
                                     backgroundColor: theme.colors.darkPaper,
+                                    opacity: !deleteLoading ? 1 : 0.5,
                                 },
                             ]}>
                             <Text fontSize={14} bold upper center>
@@ -1102,38 +1154,78 @@ Chasing gold.`}
                     <View style={{ width: "47%" }}>
                         <TouchableOpacity
                             onPress={() => {
-                                setError("");
+                                if (deleteLoading) return;
 
-                                deleteAccount(password)
-                                    .then(() => {
-                                        setPasswordError(false);
-                                    })
-                                    .catch((error: any) => {
-                                        if (
-                                            error.message.includes(
-                                                "auth/invalid-credential"
+                                setError("");
+                                setDeleteLoading(true);
+
+                                if (user.emailVerified)
+                                    deleteGoogleAccount()
+                                        .then(() => {})
+                                        .catch((error: any) => {
+                                            if (
+                                                error.message.includes(
+                                                    "Access to this account has been temporarily disabled"
+                                                )
                                             )
-                                        )
-                                            setPasswordError(true);
-                                        else if (
-                                            error.message.includes(
-                                                "Access to this account has been temporarily disabled"
+                                                setError(
+                                                    t`Access to this account has been temporarily disabled due to many failed attempts. Please try again later.`
+                                                );
+                                        })
+                                        .finally(() => {
+                                            setDeleteLoading(false);
+                                        });
+                                else
+                                    deleteAccount(password)
+                                        .then(() => {
+                                            setPasswordError(false);
+                                        })
+                                        .catch((error: any) => {
+                                            if (
+                                                error.message.includes(
+                                                    "auth/invalid-credential"
+                                                )
                                             )
-                                        )
-                                            setError(
-                                                t`Access to this account has been temporarily disabled due to many failed attempts. Please try again later.`
-                                            );
-                                    });
+                                                setPasswordError(true);
+                                            else if (
+                                                error.message.includes(
+                                                    "Access to this account has been temporarily disabled"
+                                                )
+                                            )
+                                                setError(
+                                                    t`Access to this account has been temporarily disabled due to many failed attempts. Please try again later.`
+                                                );
+                                        })
+                                        .finally(() => {
+                                            setDeleteLoading(false);
+                                        });
                             }}
                             activeOpacity={theme.activeOpacity}
-                            disabled={password.length === 0}
+                            disabled={
+                                (!user.emailVerified &&
+                                    password.length === 0) ||
+                                deleteLoading
+                            }
                             style={[
                                 styles.button,
                                 {
                                     backgroundColor: theme.colors.danger,
-                                    opacity: password.length > 0 ? 1 : 0.5,
+                                    opacity:
+                                        (!deleteLoading || true) &&
+                                        (user.emailVerified ||
+                                            password.length > 0)
+                                            ? 1
+                                            : 0.5,
+                                    flexDirection: "row",
                                 },
                             ]}>
+                            {deleteLoading && (
+                                <ActivityIndicator
+                                    size={16}
+                                    style={{ marginRight: 10 }}
+                                    color={theme.colors.white}
+                                />
+                            )}
                             <Text
                                 fontSize={14}
                                 bold
@@ -1149,8 +1241,8 @@ Chasing gold.`}
 
             <Modal
                 visible={isReloadModalOpen}
-                onClose={() => {}}
-                setVisible={setIsReloadModalOpen}>
+                setVisible={setIsReloadModalOpen}
+                disableClose={reloadLoading}>
                 <View>
                     <View
                         style={{
@@ -1179,13 +1271,17 @@ Chasing gold.`}
                     <View style={{ width: "47%" }}>
                         <TouchableOpacity
                             onPress={() => {
+                                if (reloadLoading) return;
+
                                 setIsReloadModalOpen(false);
                             }}
+                            disabled={reloadLoading}
                             activeOpacity={theme.activeOpacity}
                             style={[
                                 styles.button,
                                 {
                                     backgroundColor: theme.colors.darkPaper,
+                                    opacity: !reloadLoading ? 1 : 0.5,
                                 },
                             ]}>
                             <Text fontSize={14} bold upper center>
@@ -1195,7 +1291,6 @@ Chasing gold.`}
                     </View>
                     <View style={{ width: "47%" }}>
                         <TouchableOpacity
-                            disabled={reloadLoading}
                             onPress={async () => {
                                 if (reloadLoading) return;
 
@@ -1207,12 +1302,13 @@ Chasing gold.`}
                                 setIsReloadModalOpen(false);
                             }}
                             activeOpacity={theme.activeOpacity}
+                            disabled={reloadLoading}
                             style={[
                                 styles.button,
                                 {
                                     backgroundColor: theme.colors.danger,
                                     flexDirection: "row",
-                                    opacity: !reloadLoading ? 1 : 0.5,
+                                    // opacity: !reloadLoading ? 1 : 0.5,
                                 },
                             ]}>
                             {reloadLoading && (

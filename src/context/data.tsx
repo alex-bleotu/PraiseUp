@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Network from "expo-network";
+import * as SplashScreen from "expo-splash-screen";
 import React, {
     createContext,
     ReactNode,
@@ -221,6 +222,11 @@ export const DataProvider = ({
         const initialize = async () => {
             // await clear();
 
+            if (user === null) {
+                setLoadingData(false);
+                return;
+            }
+
             setLoadingData(true);
 
             const networkState = await Network.getNetworkStateAsync();
@@ -232,10 +238,11 @@ export const DataProvider = ({
 
             if (hasInternet) {
                 if (!(await checkIfUserExists())) {
-                    console.log("User not found");
                     await auth.signOut();
                     await clearData();
                     setUser(null);
+
+                    SplashScreen.hideAsync();
                     return;
                 }
 
@@ -439,7 +446,11 @@ export const DataProvider = ({
     ) => {
         const newVersion = await getVersion();
 
-        if (newVersion === vers) {
+        if (vers && newVersion.split(".")[1] !== vers.split(".")[1]) {
+            console.log("Major updates available: " + newVersion);
+            await reloadAllData();
+            return;
+        } else if (newVersion === vers) {
             console.log("No updates available: " + newVersion);
             return;
         } else console.log("Updates available: " + newVersion);

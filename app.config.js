@@ -7,23 +7,28 @@ export default ({ config }) => ({
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/icon.png",
-    userInterfaceStyle: "light",
+    userInterfaceStyle: "automatic",
     scheme: "praiseup",
-    splash: {
-        image: "./assets/splash.png",
-        resizeMode: "cover",
-        backgroundColor: "#f4f4f4",
-        dark: {
-            image: "./assets/splash.png",
-            resizeMode: "cover",
-            backgroundColor: "#1a1a1a",
-        },
-    },
     ios: {
         supportsTablet: true,
         bundleIdentifier: "com.praiseup.app",
         associatedDomains: ["applinks:praiseup.alexbleotu.com"],
-        googleServicesFile: process.env.GOOGLE_SERVICE_INFO_PLIST,
+        splash: {
+            image: "./assets/splash.png",
+            resizeMode: "cover",
+            backgroundColor: "#f4f4f4",
+            dark: {
+                image: "./assets/splashDark.png",
+                resizeMode: "cover",
+                backgroundColor: "#1a1a1a",
+            },
+        },
+    },
+    androidStatusBar: {
+        barStyle: "auto",
+        backgroundColor: "#00000000",
+        hidden: false,
+        translucent: true,
     },
     android: {
         softwareKeyboardLayoutMode: "pan",
@@ -49,6 +54,16 @@ export default ({ config }) => ({
                 category: ["BROWSABLE", "DEFAULT"],
             },
         ],
+        splash: {
+            image: "./assets/splash.png",
+            resizeMode: "cover",
+            backgroundColor: "#f4f4f4",
+            dark: {
+                image: "./assets/splashDark.png",
+                resizeMode: "cover",
+                backgroundColor: "#1a1a1a",
+            },
+        },
     },
     plugins: [
         "@react-native-google-signin/google-signin",

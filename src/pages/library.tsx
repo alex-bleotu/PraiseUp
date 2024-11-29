@@ -195,7 +195,7 @@ const Library = ({ navigation }: { navigation: any }) => {
                                                                     : 0,
                                                         },
                                                     ]}>
-                                                    {data.type === "extra" ? (
+                                                    {data?.type === "extra" ? (
                                                         <AnimatedTouchable
                                                             onPress={() => {
                                                                 setIsCreateBottomSheetOpen(
@@ -261,7 +261,7 @@ const Library = ({ navigation }: { navigation: any }) => {
                                         <View
                                             key={data.id}
                                             style={{ marginBottom: 10 }}>
-                                            {data.type === "extra" ? (
+                                            {data?.type === "extra" ? (
                                                 <AnimatedTouchable
                                                     onPress={() => {
                                                         setIsCreateBottomSheetOpen(

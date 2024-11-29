@@ -1,4 +1,5 @@
 import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
+import { t } from "@lingui/macro";
 import React, { useContext, useMemo } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import { DataContext, SongType } from "../../context/data";
@@ -96,15 +97,13 @@ const SongCover = ({
                     ellipsizeMode="tail">
                     {song.title}
                 </Text>
-                {artist && (
-                    <Text
-                        fontSize={14}
-                        center={vertical}
-                        numberOfLines={1}
-                        ellipsizeMode="tail">
-                        {song.artist}
-                    </Text>
-                )}
+                <Text
+                    fontSize={14}
+                    center={vertical}
+                    numberOfLines={1}
+                    ellipsizeMode="tail">
+                    {song.artist ? song.artist : t`Unknown Artist`}
+                </Text>
             </View>
         );
     }, [song.title, song.artist, artist, vertical, verticalWidth]);

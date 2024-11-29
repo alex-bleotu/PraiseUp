@@ -136,7 +136,9 @@ const DataBottomSheet = ({
                                     fontSize={15}
                                     numberOfLines={1}
                                     ellipsizeMode="tail">
-                                    {data.artist}
+                                    {data.artist
+                                        ? data.artist
+                                        : t`Unknown Artist`}
                                 </Text>
                             )}
                             {(data?.type === "album" ||

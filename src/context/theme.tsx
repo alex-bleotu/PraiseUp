@@ -21,8 +21,6 @@ export const ThemeProvider = ({
     const loadTheme = async () => {
         const themeLoaded = await AsyncStorage.getItem("themeType");
 
-        console.log("themeLoaded", themeLoaded);
-
         if (themeLoaded === "dark") {
             setTheme(darkTheme);
             setThemeType("dark");
@@ -44,14 +42,19 @@ export const ThemeProvider = ({
     };
 
     useEffect(() => {
-        const appearanceListener = Appearance.addChangeListener(() => {
-            updateSystemTheme();
-        });
+        updateSystemTheme();
+
+        const appearanceListener = Appearance.addChangeListener(
+            ({ colorScheme }) => {
+                console.log("Appearance color scheme changed:", colorScheme);
+                updateSystemTheme();
+            }
+        );
 
         return () => {
             appearanceListener.remove();
         };
-    }, []);
+    }, [themeType]);
 
     useEffect(() => {
         if (themeType === null) return;

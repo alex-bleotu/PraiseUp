@@ -15,6 +15,7 @@ interface ModalProps {
     style?: any;
     width?: any;
     onClose?: () => void;
+    disableClose?: boolean;
 }
 
 const Modal = ({
@@ -24,6 +25,7 @@ const Modal = ({
     style,
     width,
     onClose,
+    disableClose = false,
 }: ModalProps) => {
     const { theme } = useContext(ThemeContext);
 
@@ -33,12 +35,16 @@ const Modal = ({
             transparent={true}
             visible={visible}
             onRequestClose={() => {
+                if (disableClose) return;
+
                 setVisible(false), onClose && onClose();
             }}
             style={{ top: 100 }}>
             <TouchableOpacity
                 style={{ width: "100%", height: "100%" }}
                 onPress={() => {
+                    if (disableClose) return;
+
                     setVisible(false), onClose && onClose();
                 }}
                 activeOpacity={1}>

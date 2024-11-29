@@ -165,37 +165,53 @@ const Home = ({ navigation }: { navigation: any }) => {
                     setExpended(false);
                 }}>
                 <View style={styles.recent}>
-                    {recent.map((data: SongType | AlbumType, index: number) => {
-                        if (index > 2) return null;
+                    {recent.length > 0
+                        ? recent.map(
+                              (data: SongType | AlbumType, index: number) => {
+                                  if (index > 2) return null;
 
-                        return (
-                            <View key={index + "R"} style={styles.row}>
-                                <View>
-                                    {data.type === "song" ? (
-                                        <SongCover
-                                            song={data}
-                                            fullWidth
-                                            navigation={navigation}
-                                            onLongPress={() => {
-                                                setCurrentData(data);
-                                                setBottomSheetOpen(true);
-                                            }}
-                                        />
-                                    ) : (
-                                        <AlbumCover
-                                            album={data}
-                                            fullWidth
-                                            navigation={navigation}
-                                            onLongPress={() => {
-                                                setCurrentData(data);
-                                                setBottomSheetOpen(true);
-                                            }}
-                                        />
-                                    )}
-                                </View>
-                            </View>
-                        );
-                    })}
+                                  return (
+                                      <View
+                                          key={index + "R"}
+                                          style={styles.row}>
+                                          <View>
+                                              {data.type === "song" ? (
+                                                  <SongCover
+                                                      song={data}
+                                                      fullWidth
+                                                      navigation={navigation}
+                                                      onLongPress={() => {
+                                                          setCurrentData(data);
+                                                          setBottomSheetOpen(
+                                                              true
+                                                          );
+                                                      }}
+                                                  />
+                                              ) : (
+                                                  <AlbumCover
+                                                      album={data}
+                                                      fullWidth
+                                                      navigation={navigation}
+                                                      onLongPress={() => {
+                                                          setCurrentData(data);
+                                                          setBottomSheetOpen(
+                                                              true
+                                                          );
+                                                      }}
+                                                  />
+                                              )}
+                                          </View>
+                                      </View>
+                                  );
+                              }
+                          )
+                        : Array.from({ length: 3 }).map((_, index) => (
+                              <View
+                                  key={`skeleton-${index}`}
+                                  style={styles.row}>
+                                  <SkeletonCover fullWidth />
+                              </View>
+                          ))}
                 </View>
 
                 <AnimatedTouchable

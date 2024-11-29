@@ -39,7 +39,7 @@ export const ConstantsProvider = ({
             if (songTab) setSongTab(songTab as "lyrics" | "chords");
             else setSongTab("lyrics");
             if (showSections) setShowSections(showSections === "true");
-            else setShowSections(false);
+            else setShowSections(true);
 
             const { height: windowHeight } = Dimensions.get("window");
             const { height: screenHeight } = Dimensions.get("screen");

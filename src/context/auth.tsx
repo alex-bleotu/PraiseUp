@@ -54,17 +54,6 @@ export const AuthProvider = ({
 
     useEffect(() => {
         configureGoogleSignIn();
-
-        const loadAuth = async () => {
-            const user = await AsyncStorage.getItem("user");
-
-            if (user) {
-                const userParsed = JSON.parse(user);
-                setUser(userParsed);
-            } else setUser(null);
-        };
-
-        loadAuth();
     }, []);
 
     const initializeUserDocument = async (uid: string) => {
@@ -300,10 +289,47 @@ export const AuthProvider = ({
                 await user.delete();
                 await AsyncStorage.removeItem("user");
 
+                deleteRecent();
                 setUser(null);
 
                 resolve("Account deleted successfully");
             } catch (error) {
+                console.log(error);
+                reject(error);
+            } finally {
+                setLoading(false);
+            }
+        });
+    };
+
+    const deleteGoogleAccount = async (): Promise<any> => {
+        setLoading(true);
+
+        return new Promise(async (resolve, reject) => {
+            try {
+                const user = auth.currentUser;
+                if (!user) throw new Error("No user is currently logged in.");
+
+                if (user.providerData[0].providerId !== "google.com") {
+                    throw new Error(
+                        "This account is not connected via Google."
+                    );
+                }
+
+                const { idToken } = await GoogleSignin.getTokens();
+                const credential = GoogleAuthProvider.credential(idToken);
+
+                await reauthenticateWithCredential(user, credential);
+
+                await deleteUserDocument(user.uid);
+                await user.delete();
+                await AsyncStorage.removeItem("user");
+
+                deleteRecent();
+                setUser(null);
+                resolve("Google account deleted successfully");
+            } catch (error) {
+                console.log(error);
                 reject(error);
             } finally {
                 setLoading(false);
@@ -478,6 +504,7 @@ export const AuthProvider = ({
                 updatePassword,
                 googleLogin,
                 linkGuestWithGoogle,
+                deleteGoogleAccount,
             }}>
             {children}
         </AuthContext.Provider>

@@ -12,6 +12,17 @@ export const UserProvider = ({
     const [user, setUser] = useState<User | null | undefined>(undefined);
 
     useEffect(() => {
+        const loadAuth = async () => {
+            const user = await AsyncStorage.getItem("user");
+
+            if (user) setUser(JSON.parse(user));
+            else setUser(null);
+        };
+
+        loadAuth();
+    }, []);
+
+    useEffect(() => {
         if (user === undefined) return;
         AsyncStorage.setItem("user", JSON.stringify(user));
     }, [user]);
