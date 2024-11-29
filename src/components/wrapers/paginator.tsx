@@ -12,7 +12,13 @@ const Paginator = ({
     style?: any;
 }) => {
     const { width } = useWindowDimensions();
-    const { theme } = useContext(ThemeContext);
+    const { theme, themeType, systemTheme } = useContext(ThemeContext);
+
+    const color =
+        (themeType === "system" && systemTheme === "light") ||
+        themeType === "light"
+            ? theme.colors.lightGrey
+            : theme.colors.darkGrey;
 
     return (
         <View style={[styles.container, style]}>
@@ -31,11 +37,7 @@ const Paginator = ({
 
                 const backgroundColor = scrollX.interpolate({
                     inputRange,
-                    outputRange: [
-                        theme.colors.lightGrey,
-                        theme.colors.primary,
-                        theme.colors.lightGrey,
-                    ],
+                    outputRange: [color, theme.colors.primary, color],
                     extrapolate: "clamp",
                 });
 

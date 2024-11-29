@@ -255,7 +255,7 @@ msgstr "Activează acordurile"
 
 #: src/pages/settings.tsx:1012
 msgid "Exit"
-msgstr "Ieșire"
+msgstr "Ieși"
 
 #: src/pages/settings.tsx:383
 msgid "Exit Guest Mode"
