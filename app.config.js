@@ -14,7 +14,7 @@ export default ({ config }) => ({
         bundleIdentifier: "com.praiseup.app",
         associatedDomains: ["applinks:praiseup.alexbleotu.com"],
         splash: {
-            image: "./assets/splash.png",
+            image: "./assets/splashLight.png",
             resizeMode: "cover",
             backgroundColor: "#f4f4f4",
             dark: {
@@ -55,7 +55,7 @@ export default ({ config }) => ({
             },
         ],
         splash: {
-            image: "./assets/splash.png",
+            image: "./assets/splashLight.png",
             resizeMode: "cover",
             backgroundColor: "#f4f4f4",
             dark: {

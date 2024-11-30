@@ -410,7 +410,7 @@ const Song = ({ route, navigation }: SongProps) => {
                 setMenuButtonPosition({ top: y, left: x });
             });
 
-            if (song.lyrics) setTutorial(true);
+            if (song?.lyrics) setTutorial(true);
         }, 500);
     }, []);
 

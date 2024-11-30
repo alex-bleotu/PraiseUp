@@ -378,28 +378,6 @@ const DataBottomSheet = ({
                                         </View>
                                     </TouchableOpacity>
                                 )}
-                                {data.extraData && (
-                                    <TouchableOpacity
-                                        activeOpacity={theme.activeOpacity}
-                                        onPress={() => {
-                                            if (data !== null) {
-                                                setMoreInfo(true);
-                                            }
-                                        }}>
-                                        <View style={styles.button}>
-                                            <MCIcons
-                                                name="information-outline"
-                                                size={30}
-                                                color={theme.colors.text}
-                                            />
-                                            <Text
-                                                fontSize={17}
-                                                style={styles.text}>
-                                                {t`More info`}
-                                            </Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                )}
                             </>
                         )}
                         <TouchableOpacity
@@ -418,7 +396,7 @@ const DataBottomSheet = ({
                                     await Share.share({
                                         message: `${
                                             t`Check this out on PraiseUp!` +
-                                            "\n\n"
+                                            "\n"
                                         }${url}`,
                                     });
                                 } catch (error) {
@@ -436,6 +414,26 @@ const DataBottomSheet = ({
                                 </Text>
                             </View>
                         </TouchableOpacity>
+                        {data.type === "song" && data.extraData && (
+                            <TouchableOpacity
+                                activeOpacity={theme.activeOpacity}
+                                onPress={() => {
+                                    if (data !== null) {
+                                        setMoreInfo(true);
+                                    }
+                                }}>
+                                <View style={styles.button}>
+                                    <MCIcons
+                                        name="information-outline"
+                                        size={30}
+                                        color={theme.colors.text}
+                                    />
+                                    <Text fontSize={17} style={styles.text}>
+                                        {t`More info`}
+                                    </Text>
+                                </View>
+                            </TouchableOpacity>
+                        )}
                     </View>
                 </View>
                 <Modal
@@ -613,7 +611,6 @@ const DataBottomSheet = ({
                             {t`Edit your album`}
                         </Text>
                         <Input
-                            key={editAlbum ? "open" : "close"}
                             placeholder={t`Album Name`}
                             value={name}
                             onChange={setName}
