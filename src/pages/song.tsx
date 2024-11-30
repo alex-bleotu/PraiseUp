@@ -133,6 +133,8 @@ export const convertSection = (section: string) => {
         C: t`Chorus`,
         B: t`Bridge`,
         P: t`Pre-Chorus`,
+        I: t`Intro`,
+        O: t`Outro`,
     };
 
     const match = section.match(/^([A-Za-z]+)(\d*)$/);

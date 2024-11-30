@@ -15,7 +15,7 @@ import { convertSection } from "./song";
 
 const isTooLarge = (str: string) => {
     const maxLines = 6;
-    const maxCharsPerLine = 80;
+    const maxCharsPerLine = 50;
 
     const lines = str.split("\n").filter((line) => line.trim() !== "");
     const hasTooManyLines = lines.length > maxLines;
@@ -27,7 +27,7 @@ const isTooLarge = (str: string) => {
 const Slideshow = ({ route, navigation }: { route: any; navigation: any }) => {
     const { song: s, id } = route.params;
     const { getSongById } = useContext(DataContext);
-    const { showSections } = useContext(ConstantsContext);
+    const { showSections, allowRepetition } = useContext(ConstantsContext);
 
     const [rotation, setRotation] = useState<0 | 180>(0);
     const [currentVerse, setCurrentVerse] = useState(0);
@@ -81,17 +81,28 @@ const Slideshow = ({ route, navigation }: { route: any; navigation: any }) => {
         const lyrics = removeChords(song.lyrics).split("\r\n\r\n");
         const order = song.order.split(" ");
 
-        const songVersesArray = order.map((section: string) => {
-            return (
-                lyrics.find((verse) =>
-                    verse.startsWith(section.split("x")[0])
-                ) || ""
-            );
+        const songVersesArray: string[] = [];
+
+        order.forEach((section: string) => {
+            const [sectionName, repeatCount] = section.split("x");
+            const verse =
+                lyrics.find((verse) => verse.startsWith(sectionName)) || "";
+
+            const repeatTimes = repeatCount ? parseInt(repeatCount, 10) : 1;
+
+            if (allowRepetition) {
+                for (let i = 0; i < repeatTimes; i++) {
+                    songVersesArray.push(verse);
+                }
+            } else {
+                songVersesArray.push(verse);
+            }
         });
+
         songVersesArray.push("");
 
         return songVersesArray;
-    }, [song]);
+    }, [song, allowRepetition]);
 
     const lockOrientation = async (
         orientation: ScreenOrientation.OrientationLock

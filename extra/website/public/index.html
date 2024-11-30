@@ -3,8 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <!-- icon -->
-        <link rel="icon" href="logo.png" />
+        <link rel="icon" href="/logo.png" />
         <title>PraiseUp</title>
 
         <script
@@ -40,57 +39,24 @@
         <script defer src="/__/firebase/init.js?useEmulator=true"></script>
 
         <script>
-            const secretKey = "secretKey";
-            const algorithm = "aes-256-cbc";
-            const ivLength = 16;
-
-            function restoreUUID(encryptedUUID, iv) {
-                const crypto = window.crypto.subtle;
-
-                const ivBuffer = hexStringToBuffer(iv);
-
-                const encoder = new TextEncoder();
-                const keyBuffer = encoder.encode(secretKey);
-
-                return crypto
-                    .importKey("raw", keyBuffer, { name: "AES-CBC" }, false, [
-                        "decrypt",
-                    ])
-                    .then(function (key) {
-                        return crypto.decrypt(
-                            { name: "AES-CBC", iv: ivBuffer },
-                            key,
-                            hexStringToBuffer(encryptedUUID)
-                        );
-                    })
-                    .then(function (decryptedBuffer) {
-                        const decoder = new TextDecoder();
-                        return decoder.decode(decryptedBuffer);
-                    })
-                    .catch(function (error) {
-                        console.error("Error during decryption:", error);
-                        return null;
-                    });
-            }
-
-            function hexStringToBuffer(hexString) {
-                const length = hexString.length / 2;
-                const buffer = new ArrayBuffer(length);
-                const view = new Uint8Array(buffer);
-
-                for (let i = 0; i < length; i++) {
-                    view[i] = parseInt(hexString.substr(i * 2, 2), 16);
-                }
-
-                return buffer;
-            }
-
             document.addEventListener("DOMContentLoaded", function () {
                 const url = window.location.pathname;
                 const segments = url.split("/");
 
                 const uuidRegex =
                     /^[AaPpSs]{1}[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+
+                const showNormalView = () => {
+                    document.querySelector("#logo").style.display = "block";
+                    document.querySelector("#message h1").textContent =
+                        "PraiseUp";
+                    document.querySelector("#loading-spinner").style.display =
+                        "none";
+                    document.querySelector("#retry-button").style.display =
+                        "none";
+                    document.querySelector("#message p").textContent =
+                        "Welcome to PraiseUp!";
+                };
 
                 if (
                     segments.length >= 3 &&
@@ -99,34 +65,26 @@
                         segments[1] === "personal") &&
                     uuidRegex.test(segments[2])
                 ) {
-                    const encryptedUUID = segments[2];
+                    const id = segments[2];
                     let scheme = segments[1];
 
-                    const iv = segments[3];
+                    if (scheme === "personal") scheme = "album";
 
-                    restoreUUID(encryptedUUID, iv).then(
-                        function (decryptedUUID) {
-                            if (decryptedUUID) {
-                                if (scheme === "personal") scheme = "album";
-
-                                if (navigator.userAgent.includes("Android")) {
-                                    window.location.href = `praiseup://home/${scheme}/${decryptedUUID}`;
-                                } else {
-                                    document.querySelector(
-                                        "#message h1"
-                                    ).textContent =
-                                        "This link only works on Android devices.";
-                                }
-                            } else {
-                                document.querySelector(
-                                    "#message h1"
-                                ).textContent = "Failed to decrypt the UUID.";
-                            }
-                        }
-                    );
+                    if (navigator.userAgent.includes("Android")) {
+                        window.location.href = `praiseup://home/${scheme}/${id}`;
+                    } else {
+                        document.querySelector("#message h1").textContent =
+                            "This link only works on Android devices.";
+                    }
+                } else if (segments.length === 1 || segments[1] === "") {
+                    showNormalView();
                 } else {
                     document.querySelector("#message h1").textContent =
                         "Invalid URL, please check the link.";
+                    document.querySelector("#loading-spinner").style.display =
+                        "none";
+                    document.querySelector("#retry-button").style.display =
+                        "block";
                 }
             });
         </script>
@@ -143,11 +101,7 @@
                 justify-content: center;
                 align-items: center;
                 height: 100vh;
-                background: linear-gradient(
-                    135deg,
-                    #039be5,
-                    #5e92f3
-                ); /* Subtle gradient background */
+                background: linear-gradient(135deg, #039be5, #5e92f3);
                 font-family: "Roboto", Helvetica, Arial, sans-serif;
                 color: #333;
             }
@@ -162,8 +116,8 @@
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* Soft shadow */
-                animation: fadeIn 1s ease-out; /* Smooth fade-in animation */
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+                animation: fadeIn 1s ease-out;
             }
 
             @keyframes fadeIn {
@@ -219,7 +173,6 @@
                 }
             }
 
-            /* Button to go back to homepage or re-try */
             #retry-button {
                 background-color: #039be5;
                 color: white;
@@ -246,6 +199,7 @@
                 #message {
                     padding: 25px 20px;
                     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+                    max-width: 300px;
                 }
 
                 #logo {
@@ -272,21 +226,16 @@
 
     <body>
         <div id="message">
-            <!-- Logo image -->
-            <img src="logo.png" alt="Logo" id="logo" />
+            <img src="/logo.png" alt="Logo" id="logo" />
 
-            <!-- Message Heading -->
-            <h1>Redirecting to PraiseUp...</h1>
+            <h1>PraiseUp</h1>
 
-            <!-- Loading Spinner -->
             <div id="loading-spinner"></div>
 
-            <!-- Instructions Text -->
             <p>
                 If you are not redirected, please ensure PraiseUp is installed.
             </p>
 
-            <!-- Retry Button (optional) -->
             <button id="retry-button" onclick="window.location.reload()">
                 Retry
             </button>

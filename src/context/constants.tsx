@@ -18,6 +18,9 @@ export const ConstantsProvider = ({
     const [appHeight, setAppHeight] = useState(0);
     const [songTab, setSongTab] = useState<"lyrics" | "chords" | null>(null);
     const [showSections, setShowSections] = useState<boolean | null>(null);
+    const [allowRepetition, setAllowRepetition] = useState<boolean | null>(
+        null
+    );
 
     useEffect(() => {
         const loadConstants = async () => {
@@ -27,6 +30,8 @@ export const ConstantsProvider = ({
             const chords = await AsyncStorage.getItem("chords");
             const songTab = await AsyncStorage.getItem("songTab");
             const showSections = await AsyncStorage.getItem("showSections");
+            const allowRepetitions =
+                await AsyncStorage.getItem("allowRepetitions");
 
             if (sortBy) setSortBy(sortBy as "date" | "name");
             else setSortBy("date");
@@ -40,6 +45,9 @@ export const ConstantsProvider = ({
             else setSongTab("lyrics");
             if (showSections) setShowSections(showSections === "true");
             else setShowSections(true);
+            if (allowRepetitions)
+                setAllowRepetition(allowRepetitions === "true");
+            else setAllowRepetition(false);
 
             const { height: windowHeight } = Dimensions.get("window");
             const { height: screenHeight } = Dimensions.get("screen");
@@ -81,6 +89,14 @@ export const ConstantsProvider = ({
             AsyncStorage.setItem("showSections", showSections.toString());
     }, [showSections]);
 
+    useEffect(() => {
+        if (allowRepetition !== null)
+            AsyncStorage.setItem(
+                "allowRepetitions",
+                allowRepetition.toString()
+            );
+    }, [allowRepetition]);
+
     const resetConstants = async () => {
         await AsyncStorage.removeItem("sortBy");
         await AsyncStorage.removeItem("display");
@@ -88,6 +104,7 @@ export const ConstantsProvider = ({
         await AsyncStorage.removeItem("chords");
         await AsyncStorage.removeItem("songTab");
         await AsyncStorage.removeItem("showSections");
+        await AsyncStorage.removeItem("allowRepetitions");
 
         setSortBy("date");
         setDisplay("grid");
@@ -95,6 +112,7 @@ export const ConstantsProvider = ({
         setChords("combined");
         setSongTab("lyrics");
         setShowSections(true);
+        setAllowRepetition(false);
     };
 
     return (
@@ -113,6 +131,8 @@ export const ConstantsProvider = ({
                 setSongTab,
                 showSections,
                 setShowSections,
+                allowRepetition,
+                setAllowRepetition,
                 resetConstants,
             }}>
             {children}

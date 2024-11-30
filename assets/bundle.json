@@ -1,5 +1,5 @@
 {
-    "version": "0.0.26",
+    "version": "0.0.27",
     "songs": [
         {
             "id": "S237e50bb-c1f1-4dfe-aa75-43efd6297db0",
@@ -95,7 +95,7 @@
             "artist": "Andrei Prodan, Claudiu Ursache, Cristina Popa, Claud",
             "cover": null,
             "initialChord": "A",
-            "order": "V1 P C V2 P Rx2 Bx2 Rx2",
+            "order": "V1 P C V2 P Cx2 Bx2 Cx2",
             "lyrics": "[A]Vreau mereu să-mi [D]amintesc\r\n[A]Cine sunt și [D]cine ești\r\n[A]Tu mi-ai spus de [D]la-nceput\r\n[A]Cine ești și [D]cine sunt\r\n\r\n[Bm]Mi-ai promis:\r\n[A/]C[#C]er deschis\r\n[D]Cu Tine să fiu…A[A]bba, Tatăl meu,\r\nPri[F#m]vesc spre chipul Tău,\r\nÎn [D]Tine știu că sunt\r\n[E]Fiu de Dumnezeu.\r\n[A]Tu ești credincios,\r\n[F#m]Așa ai fost mereu.\r\nTu ești [D]mare, ești [E]tare.\r\n\r\n[A]Creator de g[D]alaxii,\r\n[A]Tu în mine-ai [D]vrut să fi.\r\n[A]În dragoste m-ai [D]înfiat,\r\n[A]Iubirea Tu mi-ai [D]câștigat.\r\n\r\n[Bm]Și-mi doresc fier[A/C#]binte\r\n[D]Mai aproape să [E]fiu,\r\n[Bm]Să-Ți văd frumu[A/C#]sețea, toată\r\n[D]Și una să [E]fim…",
             "extraData": {
                 "link": null,
@@ -134,7 +134,7 @@
             "artist": "Rob Still",
             "cover": null,
             "initialChord": "Em",
-            "order": "V1 C V2 C B Rx2",
+            "order": "V1 C V2 C B Cx2",
             "lyrics": "[Em7]Acum e timpul pentru-o ungere [D]nouă,\r\n[Em7]Acum e timpul pentru-o revărsare [D]proaspătă.\r\nCa și [Am7]fii și fiice ale Regelui noi azi ne [Em7]ridicăm.\r\nCa și [Am7]fii și fiice ale Regelui noi azi ne [C]ridicăm, [D]decla[G]răm:[G]„Aceasta [C]e, aceasta [Em7]e, aceasta [D]e ziua Domnu[G]lui.\r\nMă voi bucu[C]ra, mă voi bucu[Em7]ra,\r\nMă voi bucu[D]ra, este ziua [G]Ta.\r\nAceasta [C]e, aceasta [Em7]e, aceasta [D]e ziua Domnu[Am7]lui.”\r\n\r\n—[Bm7 —Bm7]La început Domnul a creat,\r\nȘi pentru slava Lui creația cântă-n cor.\r\nFiecare fiu și fiică, Domnul vă ridică, fiți lumini!\r\nFiecare fiu și fiică, Domnul ne ridică-n acest neam, declarăm:[C]Lasă [G]gloria Ta [D]să curgă acum\r\n[C]Și să [G]umple-ntreg pă[D]mânt.\r\n[Am7]Lasă [Em7]gloria Ta [D/F#]să curgă a[G]cum\r\n[Am7]Și să [Em7]umple-ntreg pă[D]mânt.",
             "extraData": {
                 "link": null,
@@ -150,7 +150,7 @@
             "artist": "Lee Black, Paul Wilbur, Steve Merkel",
             "cover": null,
             "initialChord": "Am",
-            "order": "V1 P1 C V2 P2 Rx2 B C",
+            "order": "V1 P1 C V2 P2 Cx2 B C",
             "lyrics": "[Am]Doamne, în veci vei [G]fi\r\nMis[Dm]terul ce-l voi iu[Am]bi…\r\n[F]Domn peste cer și pă[C]mânt,\r\nDumnezeu minu[G]nat.\r\nVino-n lumina Ta,\r\nÎmbrăcat în onoarea Ta.\r\nStrigă acum inima:\r\n„Vino Rege din nou!”\r\n\r\nȘi [F]toți azi vom ve[G]dea,\r\nDin [F/A]ceruri gloria [G/B]Ta,Ado[Am]nai, Ado[F]nai,\r\nToți ge[C]nunchii astăzi se [G]vor pleca!\r\nAdo[Am]nai, Ado[F]nai,\r\nDumne[C]zeu doar Tu ești\r\nIar noi [G]vom striga: „Ado[Am]nai!”\r\n\r\nÎn Ierusalim stăm,\r\nLaude-Ți înălțăm.\r\nPorți deschise avem,\r\nNe e dor să revii.\r\n\r\nȘi tot Sionul cântă\r\nBaruch haba b'\r\n\r\nShem,Tu ești Domn peste-ntreg pământ!\r\nTu ești Domn peste-ntreg pământ!",
             "extraData": {
                 "link": null,
@@ -204,7 +204,7 @@
             "artist": "Paul Baloche",
             "cover": null,
             "initialChord": "E",
-            "order": "V P C V P Rx2",
+            "order": "V P C V P Cx2",
             "lyrics": "[E]Soare, nu [B/Eb]strălucești ca lu[A2/C#]mina Domnu[E/B]lui,\r\n[E/G#]Nu-i umbră [A]în a Sa pre[Bsus]zență.[B]\r\n[E]Nimeni nu [B/Eb]poate sta îna[A2/C#]intea Tronu[E/B]lui,\r\n[E/G#]În fața [A2]Sfântului din [Bsus]ceruri.\r\n\r\n[BA/C#]Doar prin [B/Eb]mila [E]Ta,\r\nȘi prin [G#]s[uss]ângele ce-a [C#m7]curs,\r\n[B]As—[E]tăzi [E]vin.\r\n\r\n[E/G#]Aduc ca [A]jertfă închi[B]nare Rege[E]lui,\r\n[E/G#]Doar El e [A]demn de laude[B]le ce eu le [E]cânt.\r\n[E/G#]Isus, pri[A]mește lauda [B]ce-o meriți doar [F#add4]Tu.\r\nO, [A2]Doamne, darul [Bsus]meu azi Ți-l [E]aduc.",
             "extraData": {
                 "link": null,
@@ -240,7 +240,7 @@
             "artist": "Chris Tomlin",
             "cover": null,
             "initialChord": "G",
-            "order": "V1 V2 C V3 Rx2",
+            "order": "V1 V2 C V3 Cx2",
             "lyrics": "Ad[G]uceți ca jertfă mulțumiri\r\nÎn veci e-a lui iubire!\r\n[C]El stăpânește peste-ntreg pământ\r\nÎn v[G]eci e-a lui iubire!\r\nCânt[D]ați lau[C]de!\r\n\r\nCu br[G]ațul Lui El ne-a condus\r\nÎn veci e-a Lui iubire!\r\n[C]El e viața cea de sus\r\nÎn v[G]eci e-a Lui Iubire!\r\nCânt[D]ați lau[C]de, cânt[D]ați lau[C]de!\r\n\r\nÎn ve[G]ci El e puternic!\r\nÎn ve[Em7]ci e credincios!\r\nÎn ve[D]ci cu noi rămâne!\r\nÎn ve[C]ci de veci, în ve[G]ci…Din zorii zilei până la apus,\r\nÎn veci e-a lui iubire!\r\nPurta-vom mesajul iubirii de sus,\r\nÎn veci e-a lui iubire!\r\nCântați laude, cântați laude!",
             "extraData": {
                 "link": null,
@@ -308,7 +308,7 @@
             "artist": "Chris",
             "cover": null,
             "initialChord": "C",
-            "order": "V1 V2 C V3 Rx2",
+            "order": "V1 V2 C V3 Cx2",
             "lyrics": "Ai [C]fost disprețu[Em7]it, de [F2]oameni părăsit,\r\n[C]Om al du[G]rerii, în sufe[Am7]rință zămis[F2]lit,\r\nC[C]a un miel jert[Em7]fit [F2]fără un cuvânt,\r\n[C]Respins și [G]singur pe pă[F2]mânt.\r\n\r\n[C]Te-am văzut că[Em7]zut [F2]în țărână jos\r\n[C]Și de la [G]Tine pri[Am7]virea mi-am în[F2]tors.\r\nCre[C]deam că ești lo[Em7]vit, sme[F2]rit de Dumnezeu,\r\nD[m7D]ar Tu pur[C/E]tai păcatul [G4]meu—[G3].\r\n\r\nCine [Am7]oare a cre[Em7]zut în [F2]ce ni s-a ves[C]tit?\r\n[G/B]Cine [Am7]oare-a cunos[Em7]cut [F2]glasul Celui [C]Sfânt?\r\n[G/B]Ai cres[Am7]cut ca un lăs[Em7]tar [C/E]pe pământ us[F2]cat,\r\n/: [Dm7]Respins, lo[G]vit și jude[Am7]cat,\r\n[F2]Prin moarte, [G]viață Tu ne-ai [C]dat! :/Ai [C]fost disprețu[Em7]it, de [F2]oameni părăsit,\r\n[C]Om al du[G]rerii, în sufe[Am7]rință zămis[F2]lit,\r\nCre[C]deam că ești lo[Em7]vit, sme[F2]rit de Dumnezeu,\r\nD[m7D]ar Tu pur[C/E]tai păcatul [G4]meu—[G3].",
             "extraData": {
                 "link": null,
@@ -324,7 +324,7 @@
             "artist": "Richard Cimino",
             "cover": null,
             "initialChord": "D",
-            "order": "V P C V P Rx2",
+            "order": "V P C V P Cx2",
             "lyrics": "Ai [D]fost răstignit și [Bm7]cuiele-mi spun\r\nCe [G2]mare Ți-a fost iu[A4]birea.\r\nCu[D]nuna de spini îmi [Bm7]spune și ea\r\nCe [G2]mare Ți-a fost iu[A4]birea.\r\n\r\nCând cer și [F#m7]stele vor [G2]pieri,\r\nSemne[F#m7]le vor dăinu[G]i\r\nȘi pe [F#m7]veci îmi vor șop[G2]ti cât m-ai iu[A4]bit,\r\nDe-aceea [A3]vreau să-Ți spun:„În [D]veci inima, în [Bm7]veci dragostea,\r\nÎn [G2]veci viața mea este-[A]a Ta.\r\nÎn [D]veci inima, în [Bm7]veci dragostea,\r\nÎn [G2]veci viața mea este-[A]a Ta.”",
             "extraData": {
                 "link": null,
@@ -542,7 +542,7 @@
             "artist": "Gaither Vocal Band",
             "cover": null,
             "initialChord": "F",
-            "order": "V1 C V2 Rx2",
+            "order": "V1 C V2 Cx2",
             "lyrics": "A[F]m in cer caminul, d[Bb]esi nicicand\r\nN[F]-am avut o casa pe acest p[C]amant\r\nM[F]i-a fost data cheia, d[Bb]e la un Tamplar din Galileea\r\nP[Gm]e-o cruce a platit dobanda g[C]rea\r\n\r\nL[F]oc unde noapte nu-i, l[Bb]oc unde slava Lui,\r\nL[F]ocul pe care l-am vis[C]at,\r\nC[Bb]ei dragi ma asteapta-n prag\r\nD[F]ar fata Lui i[Am]ntai am s-o priv[Dm]esc cu drag\r\nC[Bb]and sfarsi-voi alerg[C]area merg a[F]cas'\r\n\r\nStiu ca multi viseaza la o noua casa,\r\nNici chiar eu nu sunt exceptie, vreau sa stiti\r\nDar acasa, inseamna mai mult decat un zid de piatra,\r\nE un zambet cald si-mbratisarea lui Isus",
             "extraData": {
                 "link": null,
@@ -594,7 +594,7 @@
             "artist": "Chris",
             "cover": null,
             "initialChord": "G",
-            "order": "V1 C V2 Rx2",
+            "order": "V1 C V2 Cx2",
             "lyrics": "C[G]âtă vreme-a trec[D]ut? Câtă vreme-a răm[G]as?\r\nÎntre noapte și z[D]i, între drum și pop[G]as.\r\nNe mințim zi de z[C]i, că am fost, că v[G]om fi\r\nȘi uităm mult prea d[D]es să mai f[G]im.\r\nÎnsă vrem cât mai m[C]ult\r\nCa și cum n-am mai ș[G]tii,\r\nCe săraci lumea v[D]om pără[G]si.\r\n\r\n[G7]S[C]pune: de ce tot alergi?\r\nS[G]pune: ce vrei să culegi?\r\nP[D]ierzi rătăcind ani întregi în neș[G]tire[G7]!\r\nM[C]âine la capăt de drum\r\nT[G]u vei afla că oricum\r\nF[D]ără Isus t[C]oate sunt a[G]măgire!\r\n\r\nC[G]e iluzii s-au d[D]us? Ce iluzii mai s[G]unt?\r\nClipe care ne t[D]rec ca o umbră pe d[G]rum,\r\nAlergăm după n[C]ori, alergăm după v[G]ânt,\r\nȘi deschidem târz[D]iu pumnii g[G]oi.\r\nVrem un nou încep[C]ut,\r\nÎnsă timpul pierd[G]ut\r\nNu se întoarce nicic[D]ând înap[G]oi!",
             "extraData": {
                 "link": null,
@@ -610,7 +610,7 @@
             "artist": "Kari Jobe, Brian Johnson, Cody Carnes",
             "cover": null,
             "initialChord": "D",
-            "order": "V1 P C V2 P Rx2 Bx2 C",
+            "order": "V1 P C V2 P Cx2 Bx2 C",
             "lyrics": "[Bm]În orice vreme, [A]orice-anotimp,\r\nEști a[G]ici.\r\n[Bm]Când am necazuri, [A]mă întărești,\r\nEști a[G]ici.\r\n\r\n[Bm]Ești Pacea-n fur[A]tuni,\r\nUn glas ce mă [G]cheamă.\r\n[Bm]Să înain[A]tez,\r\nȘtiind că sus[G]ții lumea m[A]ea.\r\n\r\nÎn [D]Tine mă încred,\r\nPrin [A]harul Tău trăiesc.\r\nRe[Bm]nunț la ce sunt eu,\r\nMă su[G]pun la ce voiești.\r\nA [D]vieții ancoră,\r\nTată, [A]Tu ești neschimbat,\r\nTe [Em]ador, Te iu[G]besc!\r\n\r\nMântuitorul, Prieten constant,\r\nEști aici.\r\nTată din ceruri, Tu m-ai primit,\r\nEști aici.\r\n\r\nȘi [D]pot să fiu sigur: Îți [A]ții promisiunea!\r\nEști [Bm]tare, mă aperi, Tu-mi [G]ești ancora.\r\nTu ești [D/F#]Salvatorul, Spe[A]ranța, Refugiul!\r\nIu[Em]bire eternă, Tu-mi [G]ești ancora.",
             "extraData": {
                 "link": null,
@@ -626,7 +626,7 @@
             "artist": "Manuela Gruia",
             "cover": null,
             "initialChord": "E",
-            "order": "Rx2 V1 C V2 C",
+            "order": "Cx2 V1 C V2 C",
             "lyrics": "A[E]prinde-mi [B]ini[C#m]ma\r\nȘi [A]pune-n ea iu[E]birea [B]Ta,\r\nIar [E]focul [B]Tău di[C#m]vin\r\nSă [A]ardă-n [B]ea de[E]plin.\r\n\r\nRe[A]nunț deplin la vrerea [G#]mea\r\nȘi [F#]mă arunc spre [B]țintă.\r\nVreau, [A]Doamne, numai voia [G#]Ta\r\n[F#7]Să mă con[B]ducă!\r\n\r\nCrucificându-mi vechea fire,\r\nÎți dau viața-ntreagă Ție.\r\nIar focul dragostei divine\r\nSă ardă-n mine!",
             "extraData": {
                 "link": null,
@@ -713,7 +713,7 @@
             "artist": "Steven Curtis Chapman & Geoff Moore",
             "cover": null,
             "initialChord": "E",
-            "order": "V1 C V2 Rx2",
+            "order": "V1 C V2 Cx2",
             "lyrics": "Cum poți să-ți ex[A]plici, cum poți să [C#m7]descrii\r\nIubirea ce-a cre[A]at stele[B]le și apele a[C#m7]dânci?\r\nȘtii speranța [A]mea, Doamne, Tu-mi știi fri[C#m7]ca.\r\nÎn vorbe nu pot [A]să-Ți spun dragos[B]tea ce e în inima [C#]m[7m]ea.\r\n\r\n[ —B/Eb —E]Ascultă-mi ini[A]ma, cu tot ce am Îți [C#m7]cânt\r\nUn cânt de lau[A]dă, —[B ]pen[E]tru că-s mântuit.\r\nCuvinte voi ro[A]sti, de știu,\r\nSă [B]spun ce minu[E]nat Dum[B/Eb]nezeu [C#m7]am.\r\nDar cuvinte n-aj[A]ung, să-Ți spun iubirea [B]mea,\r\nAscultă-mi ini[E]ma.\r\n\r\nDin sufletul meu, râuri de ar curge,\r\nMilenii-ntregi de Ți-aș vorbi,\r\nÎndeajuns tot nu ar fi.\r\nDeci dac-asculți inima mea,\r\nEu Te voi lăuda.\r\nDoamne, mulțumesc,\r\nViață și-adevar, Calea mea Tu ești!",
             "extraData": {
                 "link": null,
@@ -903,7 +903,7 @@
             "artist": "William J. and Gloria Gaither",
             "cover": null,
             "initialChord": "D",
-            "order": "V1 Rx2 V2 Rx2 V3 Rx2",
+            "order": "V1 Cx2 V2 Cx2 V3 Cx2",
             "lyrics": "A[D]tât am cău[G]tat rostul [D]vieții\r\nC-am a[A]juns rob acestei cău[D]tări;\r\nDar I[D]sus mi-a des[G]chis ori[D]zont spre Cal[Bm]var,\r\nLoc de [A]har și de mari îndu[D]rări.\r\n\r\nMi-e [G]șters pentru veci tot tre[D]cutul\r\nPrin [A]sângele curs pe Cal[D]var!\r\nAm schim[G]bat temerile într-un [D]cânt glori[Bm]os,\r\nSunt [A]liber acum, o, ce [D]har!\r\n\r\nAcum, de trecut eu sunt liber,\r\nCăci Isus a-nnoit viata mea.\r\nBucurii am în inima mea ne-ncetat,\r\nO cântare spre lauda Sa.\r\n\r\nIar acum, Isus este în ceruri\r\nUnde locul El ne-a pregătit,\r\nÎn curând vom fi duși toți în slavă\r\nUnde-n veci cu El vom locui.",
             "extraData": {
                 "link": null,
@@ -919,7 +919,7 @@
             "artist": "Decean",
             "cover": null,
             "initialChord": "A",
-            "order": "V C V C B Rx2",
+            "order": "V C V C B Cx2",
             "lyrics": "A[A]tât de mult Tu m-ai iubit,\r\nÎn locul meu ai sufe[F#m7]rit.\r\n[A]Bătut, lovit, disprețuit chiar de Tatăl pără[E4]sit.\r\n[Bm7]Copleșit de [F#m7]dragostea-Ți\r\nCe-am simțit în viața [D2]mea, mă în[E4]chin,\r\n[Bm7]Vreau să fiu pe veci cu [F#m7]Tine, I[E4]sus.\r\n\r\nTot ce [A]am ești [D2]Tu,\r\nTot ce [F#m7]vreau ești [E/G#]Tu.\r\nÎmi do[A/C#]resc să [F#m7]fiu\r\nAl Tău pe de[E4]plin.\r\n\r\nVreau să [D2]fiu doar al [F#m7]Tău, al Tău pe depl[A]in vreau să [E4]fiu.\r\nVreau să [D2]fiu doar al [F#m7]Tău, al Tău pe depl[A]in, Domnul [E4]meu.\r\nVreau să [D2]fiu —[F#m7]al Tău pe de[A]plin, o, Domnul [E4]meu.\r\nVreau să [D2]fiu —[F#m7]al Tău pe de[A]plin.",
             "extraData": {
                 "link": null,
@@ -983,7 +983,7 @@
             "artist": "Florin Mesaros",
             "cover": null,
             "initialChord": "Bb",
-            "order": "V1 C V2 Rx2",
+            "order": "V1 C V2 Cx2",
             "lyrics": "Au porn[Bb]it magi în [Cm]grabă\r\nSă-L gă[F]sească pe-Împă[Eb]ratul nou năs[Bb]cut.\r\nUrmă[Bb]rind o lu[Cm]mină,\r\nE o [F]stea așa cum [Eb]nu s-a mai vă[Bb]zut.\r\nPiedici [Gm]multe-n calea lor și pri[Dm]mejdii mari\r\nLe-au ie[Eb]șit 'nainte [F]pentru a-i o[Bb]pri.\r\nDumne[Gm]zeu Cel veghetor s-a-ngri[Dm]jit de pașii lor\r\nȘi răs[Cm]punsuri El le-a [Eb]dat chiar când [F]ei s-au întrebat:Unde [Bb]oare-L vom afla? Unde [Bm]este curtea Sa?\r\nSteaua [Dm]ne conduce acol', dar în [Eb]cale se văd [F]nori.\r\nVrem doar [Bb]să ne închinăm, pe-Mpă[Gm]rat să-L înălțăm,\r\nTot ce a[Dm]vem noi Îi vom da dacă [Eb]doar Îl vom ve[F]dea.\r\n\r\nDe atunci orișicine\r\nPoate-ajunge pân' l-al slavei Împărat.\r\nDumnezeu ne conduce\r\nTot așa cum și pe magi i-a îndrumat.\r\nPiedici multe-n calea lor și primejdii mari\r\nLe-au ieșit 'nainte pentru a-i opri.\r\nDumnezeu Cel veghetor s-a-ngrijit de pașii lor\r\nȘi răspunsuri El le-a dat chiar când ei s-au întrebat:",
             "extraData": {
                 "link": null,
@@ -1031,7 +1031,7 @@
             "artist": "Trupa9",
             "cover": null,
             "initialChord": "G",
-            "order": "V1 Rx2 V1 Rx4 V2",
+            "order": "V1 Cx2 V1 Cx4 V2",
             "lyrics": "As fi [D]vrut sa bati la u[F#m]sa mea\r\nIn [G]noaptea cand Te-ai nascut\r\nAs fi [D]vrut sa vad min[F#m]unea cand\r\n[G]Ingerii-au coborat\r\nSi-o [Em]stea mai m[D]are decat toa[C]te\r\nCe [G]doar a[D]tunci a apar[C]ut\r\nSa [Em]duca v[D]estea cea mai [C]mare\r\n[F]Isus Me[C]sia s-a nasc[D]ut\r\n\r\nIar azi e Crac[G]iun din nou\r\nCand imi amint[C]esc mereu\r\nDe [Bb]noaptea in [F]care te-ai nasc[D]ut!\r\n\r\nAs fi [D]vrut sa bati la u[F#m]sa mea\r\nIn [G]noaptea cand Te-ai nascut\r\nAs fi [D]vrut sa vad min[F#m]unea cand\r\n[G]Ingerii-au coborat\r\nCand te-ai nasc[D]ut",
             "extraData": {
                 "link": null,
@@ -1047,7 +1047,7 @@
             "artist": "Dana Band",
             "cover": null,
             "initialChord": "D",
-            "order": "V Rx2 B V Rx2 B",
+            "order": "V Cx2 B V Cx2 B",
             "lyrics": "[D]Azi mă proștern, Doamne, [Bm7]la crucea Ta,\r\nCu între[G2]aga ființă mă-n[D]chin.\r\n[D]Să-Ți răsplătesc nicicând [Bm7]nu aș putea\r\n[G2]Pentru-al Tău har [D]divin.\r\n[G]Îți mulțu[D/F#]mesc [A]că Te-ai jert[Bm7]fit,\r\n[Em7]Un nume [D/F#]nou Tu [G]mi-ai [A]dat.\r\n[G]În locul [D/F#]meu —[D]ai sufe[Bm7]rit\r\nȘi [Em7]azi sunt [D/F#]liber, [G]sal—[A]vat.\r\n\r\nTu ești [D]Sfânt, Minu[Em7]nat, Sal[D/F#]va—[G]tor Preaî[D/F#]nalt\r\nEști [G]viu și dom[Bm7]nești în [A]veci.\r\nÎnăl[D]țat, ado[Em7]rat, în [D/F#]veci —[G]glorifi[D/F#]cat,\r\nEști [G]Rege în [Bm7]uni—[A]vers.\r\n\r\nȘi-n inima [D]mea.",
             "extraData": {
                 "link": null,
@@ -1191,7 +1191,7 @@
             "artist": "Reuben Morgan și Darlene Zschech",
             "cover": null,
             "initialChord": "G",
-            "order": "V1 V2 P C V2 P C Bx2 Rx2",
+            "order": "V1 V2 P C V2 P C Bx2 Cx2",
             "lyrics": "Binecu[D/C]vântați sunt a[C]cei\r\nCare stau în [D/G]templul [G]Său\r\nBinecuvân[D/C]tați sunt [C]acei[Am7]\r\nCe se în[Dsus]cred[D] în Domnul[G]\r\n--—[D]-- —[A]-- —[Bm7]-- —[G]-- —[D/F# ]-- —[Asus4]---- —[A]-- —[Bm7]--[ —G]\r\nBinecu[A/G]vântați sunt a[G]cei\r\nCare stau în [A/D]templul [D]Său\r\nBinecuvân[A/G]tați sunt [G]acei[Em7]\r\nCe se în[Asus]cred[A] în Domnul\r\n\r\n[D]Vom simți pu[G]terea [A]Sa\r\nFață-n față-L [G/B]vom ve[A]dea\r\n\r\nD[D]in î[A]nalt, as[Bm7]cultă-ne [G]Doamne\r\n[D]Când ne ru[A]găm, când Te [Bm7]căutăm, ne [G]închinăm\r\n\r\nD[D]oar Tu ești Sfânt, [A/C#]doar Tu ești Sfânt\r\n[Bm7]Numai [F#m]Tu ești [G]Sfânt…",
             "extraData": {
                 "link": null,
@@ -1239,7 +1239,7 @@
             "artist": "Studenți Poarta Cerului",
             "cover": null,
             "initialChord": "D",
-            "order": "V1 V2 C V3 C Bx2 Rx2",
+            "order": "V1 V2 C V3 C Bx2 Cx2",
             "lyrics": "V1\r\n[D]Pe câmpul de război Tu ești cu mine,\r\n[Bm]Mă-mbărbătezi să lupt ca un viteaz.\r\n[G]Îmi pui în mână sabia și scutul\r\n[A]Și îmi promiți că singur nu mă lași!\r\n\r\nV2\r\n[D]Mă ține tare-a Ta făgăduință,\r\n[Bm]Că lupta după ce-o voi termina,\r\n[G]Îmi voi primi din mâna Ta cununa\r\n[A]Și-n carul biruinței voi umbla!\r\n\r\nC\r\n[G]Biruitor eu voi umbl[D]a,\r\nNu e dușm[Bm]an împotrivă să-mi ste[A]a!\r\nTu mă cond[G]uci cu dreapta T[D]a,\r\nIsuse, a [Bm]Ta e victori[A]a!\r\n\r\nV3\r\nPe marea-nvolburată ești cu mine,\r\nCuvântul Tău mi-e ancoră și far.\r\nMă ține tare-a Ta promisiune:\r\nCă-n zori de zi ajunge-vom la mal![Em]\r\n\r\nB\r\nDe-i lupta-ncrâncenată\r\n[Bm]Și vin săgeți arzând,\r\n[D]Nu tremur, nu mi-e teamă,\r\n[A]Știu lângă Cine lupt!",
             "extraData": {
                 "link": "https://youtu.be/rgo4q4ac03Y",
@@ -1335,7 +1335,7 @@
             "artist": null,
             "cover": null,
             "initialChord": "G",
-            "order": "V C V Rx2",
+            "order": "V C V Cx2",
             "lyrics": "[G]Bunătatea Ta, o Doamne, [Am]nu se va sfârși,\r\n[D]Îndurările Tale la [G]capăt nu vor fi,\r\n[Em]Ci se înnoiesc în zori, în [A]fiecare zi\r\nCăci cre[C]dincioșia Ta este a[D]șa de mare\r\n\r\n[G]Aleluia, Aleluia, [Am]laudă Domnului!\r\n[D]Aleluia, Aleluia, [G]slavă numai Lui!\r\n[Em]Aleluia, Aleluia, [A]laudă Domnului,\r\nCăci cre[C]dincioșia Ta este a[D]șa de mare.",
             "extraData": {
                 "link": null,
@@ -1415,7 +1415,7 @@
             "artist": "Bob Hartman",
             "cover": null,
             "initialChord": "A",
-            "order": "V1 C V2 C V3 Rx2",
+            "order": "V1 C V2 C V3 Cx2",
             "lyrics": "Când e[F#m7]ram că[D]zut Tu [A]m-ai ridi[E]cat,\r\nCând plân[F#m7]geam ai ve[D]nit și [A]m-ai mângâ[E]iat.\r\nVin a[F#m7]cum îna[D]intea [A]Ta să-Ți [E]spun,\r\nTată, [D]cât îmi [E]ești de [F#m7]scump!\r\nTată, [D]cât îmi [E]ești de [A]scump!\r\n\r\nTe iu[D]besc din toată [A]ini[E]ma,\r\nVreau să [D]fiu lângă [F#m7]Tine me[E]reu.\r\nEști [D]vrednic de [A]toată [E]cins[F#m7]tea,\r\nTată, [D]cât îmi [E]ești de [F#m7]drag!\r\nTată, [D]cât îmi [E]ești de [A]drag!\r\n\r\nM-ai purtat spre culmi de glorie\r\nDar m-ai smerit în prag de victorie\r\nÎn cuvinte nu pot să-ți spun acum\r\nTată, cât îmi ești de scump!\r\nTată, cât îmi ești de scump!\r\n\r\nTe-am întristat prin păcate de\r\nmulte ori\r\nDar totdeauna Tu m-ai iertat\r\nMi-ai fost singurul sprijin\r\nprin furtună și nori\r\nÎți voi cânta laudă neîncetat\r\nTată, cât îmi ești de drag!",
             "extraData": {
                 "link": null,
@@ -1581,7 +1581,7 @@
             "artist": null,
             "cover": null,
             "initialChord": "",
-            "order": "V1 C V2 C V3 Rx2",
+            "order": "V1 C V2 C V3 Cx2",
             "lyrics": "Cândva demult în Betleem\r\nCum fusese profețit\r\nÎntr-o iesle întrupat,\r\nMesia a venit.\r\n\r\nSlavă Tatălui ceresc,\r\nPace pe pământ.\r\nRăsună-ntregul univers\r\nDe-al îngerilor cânt.\r\n\r\nPeste pământ nu va mai fi\r\nBezna nopții de păcat,\r\nSoarele din înălțimi\r\nAcum ne-a cercetat!\r\n\r\nVeniți cu toți la ieslea Lui\r\nPe Isus ca să-L vedem\r\nȘi în sufletul curat\r\nUn loc să-I dăruim!",
             "extraData": {
                 "link": null,
@@ -1667,7 +1667,7 @@
             "artist": "Jonas Myrin & Matt Redman",
             "cover": null,
             "initialChord": "D",
-            "order": "V1 C V2 C V3 Rx2",
+            "order": "V1 C V2 C V3 Cx2",
             "lyrics": "E-o [G]nouă [D]zi, soare[A]le ră[B7m]sare,\r\n[G]Din nou să-Ți [D]curgă [A]cântul [B7m]meu.\r\nPrin [G]orice [D]trec și ori[A]ce ar fi să [B7m]vină,\r\n[G]Aș vrea-n a[D]pus să fiu gă[A]sit cân[D]tând.\r\n\r\nCântă-I, [G]suflete-al [D]meu, [A]sufle[B7m]te,\r\n[G]Înalță-I N[D]ume[A]le!\r\nCântă-i [G]mai înfo[B7m]cat, [G]su—[A]fle—[B7m]te!\r\nMă-n[G]chin Numelui[A] Preasfâ[D]nt.\r\n\r\nBo[G]gat în [D]har și în[A]cet la mâ[B7m]nie,\r\nEști [G]mare [D]și smerit cu [A]ini[B7m]ma.\r\nPentru [G]bunătatea-Ți [D]toată voi cân[A]ta într[B7m]una,\r\n[G]Mii de co[D]mori în Tine [A]voi a[D]fla.\r\n\r\nȘi-n ziua când tăria-mi piere,\r\nSfârșitul văd, ceasul mi-a sosit,\r\nDuhul meu nu va-nceta să-Ți cânte\r\nChiar zeci de mii de ani și-apoi în veci.",
             "extraData": {
                 "link": null,
@@ -1769,7 +1769,7 @@
             "artist": "Brooke Ligertwood",
             "cover": null,
             "initialChord": "Bm",
-            "order": "V1 V2 C V3 C Bx2 Rx2 V4",
+            "order": "V1 V2 C V3 C Bx2 Cx2 V4",
             "lyrics": "La [Bm]Tine-mi în[A]alț rugă[G]ciunea\r\nCând [Bm]sufletul [A]meu e se[G]cat,\r\n[Bm]Doamne, spre [A]Tine mă-n[G]torc în ne[D]voi,\r\nTu, [Bm]singur, ești [A]susțină[G]tor.\r\n\r\nAceasta mi-e ruga din flăcări\r\nCând sunt în necaz sau dureri,\r\nVreau o credință-ncercată prin foc,\r\nAjută-mă să-ndur, Te rog\r\n\r\nEu voi cân[D]ta,\r\nEu voi cân[A/D]ta,\r\nNici o-ncer[G]care nu e prea [D]grea,\r\nVoi lău[A]da,\r\nVoi decla[Bm]ra:\r\nTu-mi ești vic[G]torie în [A]vreme [Bm]rea!\r\n\r\nAceasta mi-e ruga din lupte,\r\nSalvarea când încă-i pe drum.\r\nEu biruiesc prin Cuvântul Tău sfânt,\r\nAlături de Tine rămân.\r\n\r\n[D]Cât voi trăi, în orice vreme,\r\n[Bm]Ești Dumnezeu\r\nȘi-am un motiv să Îți [A]cânt,\r\n[G]Am un motiv să Te [D]laud.\r\n\r\nAceasta mi-e ruga-n belșug\r\nCând sufletul meu e umplut.\r\nȘtiu că-n curând voi fi iarăși zdrobit,\r\nSămânța din mine-a rodi.",
             "extraData": {
                 "link": null,
@@ -1908,7 +1908,7 @@
             "artist": "Brenton Brown, Paul Baloche",
             "cover": null,
             "initialChord": "G",
-            "order": "V1 P Rx2 V2 Px2 Rx2 O",
+            "order": "V1 P Cx2 V2 Px2 Cx2 O",
             "lyrics": "C[G]ătre Tine cântul nostru-năl[C2]țăm,\r\nTe lău[G]dăm\r\nEști Speranța, după Tine tân[C2]jim,\r\nNoi Te iu[G]bim.\r\n\r\nCăci lângă [D]Tine biru[C]im orice-ar ve[G]ni\r\nȘi doar în Tin[D]e mântui[C]rea o găsi[G]m, noi o găsi[D]m!\r\n\r\nO[G]sana, O[Em7]sa[C2]na Te lău[G]dăm Isu[D]se!\r\nViață ne-ai [Em7]dat la cru[C]ce\r\nO[G]sana, O[Em7]sa[C2]na, în veci de [G]veci mări[D]re\r\nNe închi[Em7]năm doar Ți[C2]e.\r\nCătre Tine, inima ne-ndreptăm,\r\nTe lăudăm\r\nEști Salvare, vieți înfrante Tu schimbi,\r\nTe proslăvim.\r\n\r\nOsana, Osana\r\nOsana, Osana",
             "extraData": {
                 "link": null,
@@ -1985,7 +1985,7 @@
             "artist": "Anthony Brown",
             "cover": null,
             "initialChord": "A",
-            "order": "V1 C V2 Rx2 Bx2 V3 Rx3",
+            "order": "V1 C V2 Cx2 Bx2 V3 Cx3",
             "lyrics": "[A]Ei spun mii [Asus]de cuvinte despre [A]Tine cum [Asus]cred că ești\r\nDar [A]eu știu prin [Asus]șoapte sfinte îmi spui [A]simplu că [Asus]mă iubești\r\nCând în [D2]juru-mi [A/C#]totu-i noapte îmi [Bm7]spui că mă pă[E]zești\r\n\r\nCe bun ești Tu, [D2]Tată,\r\nAșa ești Tu[A/C#], așa ești Tu[Bm7], așa ești Tu[E]\r\nȘi Tu mă iu[D2]bești,\r\nAșa sunt eu[A/C#], iubit mereu[Bm7],\r\nAșa vrei Tu[E].\r\n\r\n[A]Văd cum [Asus]lumea caută răs[A]punsuri în [Asus]lung și lat,\r\nDar eu [A]știu în [Asus]frământare răs[A]punsul doar [Asus]Tu mi-ai dat\r\nCăci Tu [D2]știi tot ce [A/C#]doare 'na[Bm7]inte să spunem [E]noi.\r\nDoamne [D]ești minunat, ne ui[F#]m[7m]ești\r\nDoar [Bm7]Tu ești perfect, nu gre[A]șești\r\nDoamne [D]Tu ești bun și ne pri[F#]m[7m]ești\r\nDoar [E]Tu.\r\n\r\n[A]Dragoste de [Asus]necuprins\r\nMai [A]mult nu pot [A]s[uss]ă rostesc\r\n[A]Pace ești de [Asus]nedescris\r\nMai [A]mult nu pot [A]s[uss]ă doresc\r\nȘtiu D[D]oamne [A/C#]Tu mă chemi să fiu [Bm7]doar al Tău\r\n[A/C#]Tu mă chemi pe [D2]calea Ta [A/C#]să arăt iu[Bm7]birea, iubirea [E]Ta.",
             "extraData": {
                 "link": null,
@@ -2069,7 +2069,7 @@
             "artist": "Ben McDonald, Casey Brown, David Frey, Jonathan Smit",
             "cover": null,
             "initialChord": "C",
-            "order": "V1 C V2 C B Rx2 V3",
+            "order": "V1 C V2 C B Cx2 V3",
             "lyrics": "[Am]Păstorii-au [F]alergat, [C]să vadă Pruncul,\r\n[Am]Cel care-a [F]fost ves[C]tit.\r\n[Am]Născut în [F]iesle, [C]Domn din vecie,\r\n[Am]Ce minu[F]nat Împă—[C]rat!\r\n[Am]Ce minu[F]nat Împă—[C]rat!\r\n\r\nAuzi cum [F]cântă [C]îngeri: [G]„Ale[Am]luia!”\r\nLaudă [F]Rege[C]lui I[G]sus!\r\nEl a ve[F]nit la [C]noi, —[G]din iu[Am]bire\r\n[F]S-a năs[C]cut I[G]sus!\r\n[F]S-a năs[C]cut I[G]sus!\r\n\r\nPăstorii s-au grăbit să ducă vestea\r\nCăci Isus S-a născut,\r\nSlăveau pe Dumnezeu, căci a venit din cer\r\nCe minunat Împărat!\r\nCe minunat Împărat!\r\n\r\n[C]Glorie! Glorie! S-a născut Isus!\r\n[F]Glori[C]e! [Am]Glor[G]ie! [F]S-a năs[C]cut I[G]sus\r\n\r\nToți să știe să cunoască,\r\nPruncul promis veni!\r\nEl cerul l-a lăsat să mântuiască,\r\nCe minunat Împărat!\r\nCe minunat Împărat!",
             "extraData": {
                 "link": null,
@@ -2208,7 +2208,7 @@
             "artist": "Adi Hentea",
             "cover": null,
             "initialChord": "C",
-            "order": "V1 C V2 Rx2",
+            "order": "V1 C V2 Cx2",
             "lyrics": "[C]Era o n[Dm]oapte cum [C/E]niciuna n-a mai fo[G]s[us4s]t\r\n[C]Într-o veche ce[F]tate, într-un [D]m[7m]ic ad[Gsus4]ăpost[C/E]\r\n[F]A venit în l[G]ume Mesia [C]cel mult [G/B]aștept[Am]at\r\n[Dm7]N-a venit în g[C/E]lorie, ci-ntr-un [F]staul întu[Gsus4]necat.[C/E]\r\n[F]Cel ce-avea să se n[G]ască e[C]ra M[G/B]ântuit[Am]orul,\r\n[F]Să ne izbăv[G]ească: Is[Am]us Sa[G]lvat[F]orul![C/E]\r\n[Dm7]Rostul Lui pe-a[G]cest pământ era[Am]m tu [G]și [F]eu[C/E]\r\n[Dm7]Ce minu[C/E]nat, c[F]e minun[G]at e Dumne[C]zeu!\r\n\r\n[C]El a cres[Dm]cut și-a a[C/E]juns om în pu[Gsus4]tere,\r\n[C]Era înțel[F]ept și bun și n-a[Dm7]vea nici o [Gsus4]avere.[C/E]\r\n[F]Însă bogă[G]ția Lui era [C]bună[G/B]tatea [Am]Sa,\r\n[Dm7]Multe boli a [C/E]vindecat și prin [F]jertfa Lui ne-a răsc[Gs]u[s4u]mpărat!",
             "extraData": {
                 "link": null,
@@ -2277,7 +2277,7 @@
             "artist": "Reuben Morgan",
             "cover": null,
             "initialChord": "C",
-            "order": "V C V Rx2",
+            "order": "V C V Cx2",
             "lyrics": "[C]Sfânt ești, [G/B]Sfânt ești [F/A]Domnul [C]meu,\r\nPă[F]mântul e [C/E]plin de [Dm]slava [G/B]Ta.\r\n[C]Nume[G/B]le Tău [F/A]e-năl[C/G]țat\r\nPe-n[F]tregul Pă[C/G]mânt ești [Esus]Domn —[E]!\r\n[Am]Lumi[D]nezi vi[G]a[F]ța [C/E]mea\r\nȘi prin [F]Tine [Dm7]strălu[G]cesc.\r\n\r\nCerul [C]cântă [Am]lau[F]dă,\r\n[Dm7]Minunat ești [G]Doamne!\r\nEști [Em]Rege-n Uni[Am]vers,\r\nAle[F]luia și-n [G]viața [C]mea!",
             "extraData": {
                 "link": null,
@@ -2293,7 +2293,7 @@
             "artist": "Noel & Tricia Richards",
             "cover": null,
             "initialChord": "A",
-            "order": "V1 C V2 Rx2",
+            "order": "V1 C V2 Cx2",
             "lyrics": "—[A]Ce[E]rul de[D]clară\r\n[E]Gloria Celui [D]învi[A]at,\r\n—[A]Cine [E]se com[D]pară\r\n[E]Cu frumusețea D[D]omnu[A]lui?\r\n\r\n—[A]În veci de veci ești [D]Tu,[E]\r\nDivinul Miel pe [A]tron[F#m],\r\nGenunchii îmi a[D]plec[E]\r\nȘi [D]Ție [E]mă în[A]chin.\r\n\r\nVoi proclama\r\nGloria Celui înviat,\r\nCe-a fost junghiat\r\nSă ne-mpace cu Dumnezeu.",
             "extraData": {
                 "link": null,
@@ -2309,7 +2309,7 @@
             "artist": null,
             "cover": null,
             "initialChord": "",
-            "order": "Rx2 V Rx2 V Rx2",
+            "order": "Cx2 V Cx2 V Cx2",
             "lyrics": "Cerul e un loc minunat,\r\nPlin de har și slavă,\r\nVreau să-l văd pe Domnul meu,\r\nCerul e un loc minunat.\r\n\r\nCând voi fi în ceruri sus umblând cu Isus,\r\nCând voi fi în ceruri sus, în slava Sa,\r\nCând voi fi în ceruri sus umblând cu Isus,\r\nBucuros voi cânta.\r\nPentru că: iertat, spălat de orice păcat\r\nPrin Domnul Isus eu sunt;\r\nIertat, spălat de orice păcat,\r\nDe-aceea vreau să-i cânt: Aleluia.\r\n\r\nCerul e un loc minunat",
             "extraData": {
                 "link": null,
@@ -2363,7 +2363,7 @@
             "artist": "Christy Nockels, Nathan Nockels",
             "cover": null,
             "initialChord": "C",
-            "order": "V1 P C V2 P C B Rx2",
+            "order": "V1 P C V2 P C B Cx2",
             "lyrics": "[Am]Noi știm că Do[G/B]mnul Dum[C]nezeu\r\nE-un foc mistu[Dm]itor, o [Am]flacără sf[G]ântă\r\n[Am]E-al nostru drept J[G/B]udecăt[C]or\r\nBun și-ndu[Dm]rător, din c[Am]er ne-asc[G]ultă\r\n\r\nCătre El noi [C]vom pri [F]vi\r\nOchii ni-i vom [Dm]ațint[G]i\r\n\r\nC[C]etate tare-i Dumn[F]ezeu\r\n[Dm]Un sfânt refugiu este [G]El\r\nC[C]u Tine, Doamne, vom [F]domni\r\n[Dm]Căci veșni[C]c vei împăr[G]ăți\r\n\r\nNoi știm că Domnul e gelos\r\nPe ai Săi copii în sfântă iubire\r\nMai sus de ceruri e-ntronat\r\nÎn slavă îmbrăcat și-n strălucire\r\n\r\nC[C]ătre El noi vom pr[F]ivi\r\nOchii ni-i vom [Dm]ațint[G]i\r\nInimile v[C]om lă[F]sa\r\nCuprinse d[Dm]e iubirea S[G]a",
             "extraData": {
                 "link": null,
@@ -2618,7 +2618,7 @@
             "artist": "Doru Gîrboan",
             "cover": null,
             "initialChord": "",
-            "order": "V1 C V2 C V3 Rx2 B Rx2",
+            "order": "V1 C V2 C V3 Cx2 B Cx2",
             "lyrics": "V1\r\nCând nu Te cunoșteam Tu m-ai chemat,\r\nCu dragoste M-ai ridicat.\r\nPrin jertfa Ta, Isus, am fost sfințit\r\nCe haine noi mi-ai dăruit!\r\n\r\nC\r\nDoamne, vreau să Te slujesc cât voi trăi,\r\nDrumul Tău să îl urmez în fiecare zi!\r\nPână-n ziua când la cer mă vei chema\r\nSunt aici Isus la dispoziția Ta!\r\n\r\nV2\r\nPărinte mare har mi-ai dăruit:\r\nCa să-Ți slujesc, Domn, infinit.\r\nEu doar un simplu rob neînsemnat,\r\nTu - Domn al Vieții, Împărat!\r\n\r\nV3\r\nCu tot ce am Isus mă dăruiesc\r\nMireasma Ta s-o răspândesc\r\nTrăind mereu, cu zel, al Tău Cuvânt,\r\nÎnaintând prin Duhul Sfânt!\r\n\r\nB\r\nȘi prigoniri de vor veni\r\nȘi încercat voi fi\r\nVreau lângă Tine credincios să râmăn\r\nPân' la sfârșit, pân' la sfârșit.",
             "extraData": {
                 "link": "https://youtu.be/mQomQZ2LJc0",
@@ -2650,7 +2650,7 @@
             "artist": "Rich Mullins",
             "cover": null,
             "initialChord": "Em",
-            "order": "V1 C V2 Rx2",
+            "order": "V1 C V2 Cx2",
             "lyrics": "V1\r\nCând [Em]în zare se ivește solul celui necurat,\r\nDum[C]nezeu e [D]tăria me[Em]a!\r\n[Em]Când armatele de duhuri cerul au întunecat,\r\n[C]Dumnezeu e [D]tăria[Em] mea!\r\n[Am]Când tot iadul stă-n picioare pregătit pentru război,\r\nCând[C] simt că sufletu-mi se zbate prins[D] în cursa[Em] grea;\r\n[Am]Mă aplec în rugăciune și-aștept ajutorul slavei,\r\n[C]Dumnezeu e [D]tăria[Em] mea!\r\n\r\nC\r\nDum[C]nezeu e tăria[G] mea,\r\nAdă[D]post, pentru sufletul[Em] meu;\r\nAjutor, [C]când povara e[G] grea,\r\nDum[C]nezeu e [D]tăria[Em] mea!\r\n\r\nV2\r\nDumnezeu are putere ca în cer și pe pământ,\r\nDumnezeu e tăria mea!\r\nTot ce-n lume se întâmplă este scris și în Cuvânt,\r\nDumnezeu e tăria mea!\r\nÎncercarea când e mare și se pare că mă-ngroapă,\r\nÎntunericul e gros și nu mai pot vedea.\r\nPlec și fruntea și genunchii,\r\nDar înalț spre ceruri duhul\r\nDumnezeu e scăparea mea!",
             "extraData": {
                 "link": "https://youtu.be/nBnzAepXOE8",
@@ -2702,7 +2702,7 @@
             "artist": "Tineret biserica baptistă ,,Sfanta Treime\" -Nisporeni",
             "cover": null,
             "initialChord": "C",
-            "order": "V1 C V2 C V3 Rx2",
+            "order": "V1 C V2 C V3 Cx2",
             "lyrics": "V1\r\n[C]Astăzi cânt voios că [F]Dumne[C]zeu\r\n[Am]E stăpânul [Em]vieții mele: [F]El e Domnul [G]meu!\r\n[C]Cine pe pă[C7]mânt, cine-n [F]ceruri [Dm]sus\r\n[Am]E ca Domnul [Em]meu, [Am]e ca Domnul [Em]meu, I[G]sus?\r\n[C]Fără El, flămând și [F]înse[C]tat\r\n[Am]Rătăceam în [Em]lumea largă, [Am]neajuto[Em]rat,\r\n[C]Dar când m-a gă[C7]sit, El m-a [F]sătu[Dm]rat\r\n[Am]Și mi-a dat să [Em]beau,\r\n[Am]El mi-a dat să [Em]beau din harul [G]Său!\r\n\r\nC1\r\n[C]El e fântâna [Am]cu ape vii,\r\n[F]Nimic în [C/E]lume nu-L [F]poate-nlocu[G]i!\r\n[C]Stânca de veacuri, [Am]Păstorul meu,\r\n[F]Râul vi[C/E]eții, de-a [F]pururi [G]Dumne[C]zeu!\r\n\r\nV2\r\nO, ce fericit sunt cu Domnul meu,\r\nNicăieri în lume nu-I altul ca și El!\r\nEl e mai de preț decât tot ce am,\r\nEl e slava mea, e comoara mea, în veci!\r\n\r\nV3\r\nChiar de n-ar mai fi râuri pe pământ,\r\nEl e râul vieții mele, limpede și sfânt;\r\nNiciodată El nu va seca\r\nȘi voi bea din El, eu voi bea din El mereu!",
             "extraData": {
                 "link": "https://www.youtube.com/watch?v=AbNRL2BJ0O4",
@@ -2821,7 +2821,7 @@
             "artist": "BBSO",
             "cover": null,
             "initialChord": "D",
-            "order": "V1 C V2 Rx2 Bx2 Rx2",
+            "order": "V1 C V2 Cx2 Bx2 Cx2",
             "lyrics": "V1\r\n[D]În brațul Tău[D/C#] [A/C#]mă dedic din [Bm]nou\r\nCu [Bm/A]tot ce [G]sunt, [A]Doamne.\r\n[D]Tu viața mea[D/C#] [A/C#]o ții în mâna [Bm]Ta\r\nȘi [Bm]sunt al [G]Tău, pe [A]veci[Em]…[Asus]\r\n\r\nC\r\nIsus eu mă-[D]ncre[A/C#]d în [G/B]Tin'\r\nIsus Ție-ți [D/F#]a[A/C#]par[G]țin\r\nPentru Tine eu tră[Em]iesc\r\nPe deplin mă dăru[A]iesc\r\nCu tot ce [D]sunt.\r\n\r\nV2\r\nTe voi avea mereu 'naintea mea\r\nÎn orice zi mă-ncred în Tine.\r\nȘi voi trăi în ale Tale căi\r\nCuvântul Tău, pe veci.\r\n\r\nB\r\nȚie [Em]mă [D]în[A]chin, \r\nȚie [Em]mă [D]în[Am]chin.",
             "extraData": {
                 "link": "https://www.youtube.com/watch?v=LkfvX_g7GEs",
@@ -2917,7 +2917,7 @@
             "artist": "Matt Redman",
             "cover": null,
             "initialChord": "D",
-            "order": "V1 P C V2 P Rx2",
+            "order": "V1 P C V2 P Cx2",
             "lyrics": "V1\r\n[D]Muzica-nce[A]/C#tat, totu-i nemișc[Em]at,\r\nDar eu vin spre Ti[A]n'.\r\n[D]Doamne, m-a dur[A/C#]ut tot ce n-am făc[Em]ut\r\nVoia să-Ți asc[A]ult.\r\n\r\nP\r\n[Em]Mai mult de-un c[D/F#]ântec Ți-ad[A]uc,\r\nCăci doar cântecul [Em]nu-i\r\nCeea ce [D/F#]Tu ai fi vr[A]ut.\r\n[Em]Tu cauți m[D/F#]ult mai adâ[A]nc\r\nDecât se poate ve[Em]dea,\r\nTe uiți în i[D/F#]nima me[A]a![\r\n\r\nC\r\n[D]Mă-ntorc la inima [A/C#]închinării,\r\nVreau să v[Em]ăd Fața T[D/F#]a,\r\n[G]Doar Fața T[A]a Isu[D]s.\r\n[D]Îmi pare rău de a m[A/C#]ea greșeală,\r\nCă nu T[Em]e-am că[D/F#]utat\r\nȘi nu [G]m-am închin[A]at dest[D]ul.\r\n\r\nV2\r\nOamenii nu pot înțelege tot\r\nCe Tu ai jertfit.\r\nTot ce am primit, Tu ne-ai dăruit,\r\nDoamne, prin Isus.",
             "extraData": {
                 "link": "https://www.youtube.com/watch?v=gljs4N7ZoD4",
@@ -2949,7 +2949,7 @@
             "artist": "BBSO",
             "cover": null,
             "initialChord": "D",
-            "order": "V1 C V2 C P Rx2 O",
+            "order": "V1 C V2 C P Cx2 O",
             "lyrics": "V1\r\n[D]Împlinesc, alergând, al visărilor pas\r\nȘi trud[A]esc încercând un semn s[D]ă l[G]as\r\nPentru-a lumii ne[D]uitare\r\nDar lumea-i un pustiu și tot ce-mi poate da\r\nS[A]unt amăgiri ce spun că stă-n puterea m[D]ea[G]\r\nSă-mi făuresc un nume m[D]are\r\nI[Bm]sus este singur[G]ul ce rămâne[D]\r\n\r\nC\r\nȘ[D]i vreau tot ce voi lăsa în u[A]rma mea\r\nS-amintească lumii-n[G]tregi cândva\r\nDoar de I[D]sus\r\nȘi stiu, am doar o viață d[A]e trăit\r\nDar voi spune până l[G]a sfârșit\r\nDespre I[D]sus\r\n\r\nV2\r\nG[D]lorii pământești, vaste-mpărății\r\nC[A]a trupul meu de lut se vor risip[G]i\r\nCăci tot ce este veș[D]nic\r\nE trăirea mea care-a oglindit[A]\r\nAdevărul viu și nemaiîntâlni[G]t\r\nEtern, deplin, putern[D]ic\r\n\r\nP\r\nO[Bm]oooo[G]oooo[D]oooo[F#m]oooo\r\nO[Bm]oooo[G]oooo[D]oooo[F#m]oooo\r\nI[Bm]sus este singur[G]ul\r\nI[D]sus este singur[F#m]ul\r\nI[Bm]sus este singur[G]ul ce rămâne[D] oooo [F#m]oooo\r\nI[Bm]sus este singur[G]ul\r\nI[D]sus este singur[F#m]ul\r\nIsus este singurul ce rămâne\r\n\r\nO\r\nȘ[D]i vreau tot ce voi lăsa în u[A]rma mea\r\nS-amintească lumii-n[G]tregi cândva\r\nDoar de I[D]sus",
             "extraData": {
                 "link": "https://youtu.be/4ZDthue6C0E",
@@ -3013,7 +3013,7 @@
             "artist": "Matt Redman",
             "cover": null,
             "initialChord": "D",
-            "order": "V1 C V2 C Bx2 Rx2",
+            "order": "V1 C V2 C Bx2 Cx2",
             "lyrics": "V1\r\n[D]Stau din [A/C#]nou gân[Bm7]dindu-mă la [D/A]jerfta Ta\r\n[G]Sângele [D/F#]scurs, [G]trupul stră[A]puns\r\n[D]În locul [A/C#]meu pe[Bm7]deapsa morții [D/A]ai luat\r\n[G]Ce dar neme[A]ri[Bm7]tat[D/F#],\r\n[G]Doamne Tu m-[A]ai sal[D]vat.\r\n\r\nC\r\nPri[D/F#]vesc către cr[G]ucea unde [D/A]ai sufe[A]rit\r\nSme[D/F#]rit de-ndur[G]area ce mi-[D/A]ai ofer[A]it\r\n[Bm]Mulțumesc, I[G]suse, [D]viață nouă [A]mi-ai dăru[G]it!\r\n\r\nV2\r\n[D]Acum [A/C#]ești [Bm7]înălțat în [D/A]slavă\r\n[G]În fața [D/F#]Ta toți [G]se vor ple[A]ca\r\n[D]Până a[A/C#]tunci, ui[Bm7]it fiind de [D/A]harul Tău,\r\n[G]Inima-mi [A]va c[Bm7]ânta[D/F#]\r\n[G]Pe veci drag[A]ostea [D]Ta.\r\n\r\nB\r\n[G]Doamne-Ți mulțum[A]esc [D/F#]pentru Golgo[Bm]ta\r\n[Em]Viața-Ți dăru[A]iesc, e-a [D]Ta.\r\n[G]Doamne-Ți mulțum[A]esc [D/F#]pentru Golgo[Bm]ta\r\n[Em]Viața-Ți dăru[A]iesc, e-a [D]Ta.",
             "extraData": {
                 "link": "https://www.youtube.com/watch?v=kNPxhgAC8TU",
@@ -3061,7 +3061,7 @@
             "artist": "Sunny Tranca",
             "cover": null,
             "initialChord": "D",
-            "order": "V1 V2 Rx2 V2 Rx2 B Rx2",
+            "order": "V1 V2 Cx2 V2 Cx2 B Cx2",
             "lyrics": "V1\r\nTu ești sc[Bm]utul și tăr[F#m]ia mea,\r\nÎn [G]Tine mă încr[D]ed[A].\r\nÎn Tine [Bm]mi se-ncrede [F#m]inima,\r\nDe-ac[G]eea nu mă t[F#]em!\r\n\r\nV2\r\nTu ești sc[Bm]utul și tăr[F#m]ia mea,\r\nÎn [G]Tine mă încr[D]ed[A].\r\nÎn Tine [Bm]mi se-ncrede [F#m]inima,\r\nDe-ac[G]eea nu mă t[F#]em!\r\n\r\nC\r\nD[D]oamne, Tu ești b[A]un\r\nCăci în v[G]eac ține îndur[A]area\r\nȘi cre[Bm]dinciosia T[G]a\r\nNu [A]mă va părăs[D]i!\r\n\r\nB\r\nAle[G]luia, Dumne[D]zeu e dragost[A]e!\r\nAle[G]luia, în mine f[D]rică nu mai e[A]!\r\nAle[G]luia, Dumne[D]zeu e dragost[A]e!\r\nAle[G]luia, în mine f[D]rică nu mai e[F#]!",
             "extraData": {
                 "link": "https://youtu.be/YZ3yqs7S9DM",
@@ -3166,7 +3166,7 @@
             "artist": "BBSO",
             "cover": null,
             "initialChord": "G",
-            "order": "V1 C V2 C V3 Rx2",
+            "order": "V1 C V2 C V3 Cx2",
             "lyrics": "V1\r\nAm a[G]uzit o veste, că I[F]sus ven[C]i din sla[G]vă\r\nȘi la G[Em7]olgota în locul meu, a f[D]ost crucificat,\r\nEl m[G]i-a luat povara și mi-a d[F]at în d[C]ar iertar[G]ea,\r\nPrin j[Em]ertfa Lui, vict[G]oria, de-ac[F]um am c[C]âștig[G]at.\r\n\r\nC\r\nVict[G]oria în Isus mi-a d[F]at a[C]zi salv[G]area,\r\nPrin s[Em]fântul Său sânge, El m[D]-a răscumpărat,\r\nÎntre[G]aga mea iubire, doar L[F]ui I s[C]e cuvin[G]e,\r\nPrin E[Em]l am victori[G]a, spăl[F]at sunt d[C]e păc[G]at!\r\n\r\nV2\r\nAm auzit de Domnul, de puterea Lui cea mare,\r\nCum pe cei bolnavi i-a vindecat, pe morți i-a înviat,\r\nEu am strigat: O, Doamne, Te-ndură și de mine!\r\nȘi-n viața mea victoria, Isus a câștigat!\r\n\r\nV3\r\nAm auz[G]it că Domnul, mi-a zid[C]it o casă-n Ceruri\r\nȘi-n ac[G]el locaș de s[Em]trăluciri, la m[G]asa Lui voi st[D]a,\r\nCu îngerii în coruri, în măr[C]ire-I vom da s[G]lavă\r\nȘi cântecul vict[Em]oriei, at[F]unci îl v[C]om cânt[G]a!",
             "extraData": {
                 "link": "https://youtu.be/XHgOywRt1kw",
@@ -3182,7 +3182,7 @@
             "artist": "Adi Hentea",
             "cover": null,
             "initialChord": "F",
-            "order": "V1 P C V2 P C P Rx2",
+            "order": "V1 P C V2 P C P Cx2",
             "lyrics": "[F]Îți mulțumesc că nu mai [Dm]sunt\r\nO frunză clătinată-n [Bb]vânt\r\nMi-ai dat un [Csus4]rost pe-acest [F]pământ\r\n[F]Ai pus cântări în gura [Dm]mea\r\nSă pot din toată [Bb]inima\r\nSă cânt doar [Csus4]despre lauda [F]Ta!\r\n\r\nȘi [Dm]sufletul [C]meu este [Bb]mângâiat de Tine\r\nTrăiesc prin harul Tău\r\nȘi [Dm]dragostea [C]Ta o simt in viața [Bb]mea\r\n\r\n[F]Vin acum să-Ți [C]mulțumesc\r\nPentru [Gm]ce-ai făcut în viața mea,\r\nPentru [Bb]tot ce Tu mi-ai [Csus4]dat din mâna [F]Ta\r\nȘi pentru tot ceea ce [C]sunt\r\nCât voi trăi pe-a[Gm]cest pământ,\r\nSă Te [Bb]laud [C]eu do[F]resc!\r\n\r\n[F]Îți mulțumesc că Tu mi-ai [Dm]dat\r\nUn dar atât de minu[Bb]nat:\r\nIertarea [Csus4]de al meu pă[F]cat\r\n[F]Și-n lume cât am să tră[Dm]iesc\r\nCu drag doar Ție-am să-ți slu[Bb]jesc\r\nCăci Tu-mi ești [C]Domn și Te iu[F]besc!",
             "extraData": {
                 "link": null,
@@ -3230,7 +3230,7 @@
             "artist": "Don Moen",
             "cover": null,
             "initialChord": "C",
-            "order": "V1 B C V2 B Rx2",
+            "order": "V1 B C V2 B Cx2",
             "lyrics": "[Am]Doamne-mi pari îndepărtat\r\nChiar [F]ani lumină [C]sau un mai lung [G]drum.\r\nDe[Am]și credința mi-am păstrat\r\nMăr[F]turisesc a[C]cum nu mă mai [G]simt ascultat[C/E],Dar nu [F]știu ce să mai spun\r\nȘi nu [C/E]știu a-nainta,\r\nÎnsă [F]Harul ce-l primesc\r\nÎmi [G]schimbă inima\r\n\r\nVoi cân[C]ta, Te voi lău[F]da\r\nChiar în [Am]ceasul cel mai [C/E]rău,\r\nPrin [F]durere și prin [G]greu,\r\nVoi cân[C]ta, Te voi lău[F]da,\r\nMâini[Am]le le-am ridi[C/E]cat,\r\nFiindcă [F]ești adevă[G]rat,\r\nVoi cân[C]ta!\r\n\r\nNu pot să întrezăresc\r\nGândul Tău și-al Tău plan ceresc.\r\nDoar în Tine-am să mă-ncred\r\nȘtiind că ai murit să mă salvezi,",
             "extraData": {
                 "link": null,
@@ -3331,7 +3331,7 @@
             "artist": "Dennis Jernigan",
             "cover": null,
             "initialChord": "D",
-            "order": "V1x2 C V2 Rx2 O",
+            "order": "V1x2 C V2 Cx2 O",
             "lyrics": "[D]Voi slăvi pe [A]Mielul gloriei\r\n[D]Regelui regi[A]lor mă-nchin\r\n[Bm]Voi slăvi pe [E]Mielul gloriei\r\n[G]Regelui eu [A]mă-n[D]chin\r\n\r\nȘi mâinile mi le-[A]nalț\r\nȘi-na[G]intea Ta [D]vin\r\nMâinile mi le-[A]nalț\r\nȘi mă [G]bucur în [D]Tin'\r\nÎmi înalț mâini[G]le către [F#m]cer\r\nLumea-n[Em]treabă: „De [Bm]ce?”\r\nEu le [G]spun că-mi iu[A]besc Rege[D]le\r\n\r\n[D]Voi slăvi pe [A]Mielul gloriei\r\n[D]Regelui regi[A]lor mă-nchin\r\n[Bm]Voi slăvi pe [E]Mielul gloriei\r\n[G]Regelui eu [A]mă-n[D]chin\r\n\r\nEu le [G]spun că-mi [A]besc Rege[Bm]le\r\nEu le [G]spun că-mi iu[A]besc Rege[D]le",
             "extraData": {
                 "link": null,
@@ -3370,7 +3370,7 @@
             "artist": "Leona Von Brethorst",
             "cover": null,
             "initialChord": "E",
-            "order": "V Rx2 V Rx2",
+            "order": "V Cx2 V Cx2",
             "lyrics": "Voi veni cu bucurie înaintea Domnului\r\nVoi veni cu mulțumire-n Casa Lui!\r\nAceastă zi e-a Domnului,\r\nDeci să ne bucurăm în ea\r\nCântându-I glorie, Aleluia!\r\n\r\nEu sunt fericit, eu sunt fericit!\r\nSunt fericit că El m-a mântuit!",
             "extraData": {
                 "link": null,
@@ -3411,7 +3411,7 @@
             "artist": "Jenn Johnson, Jason Ingram, Ben Fielding, Ed Cash, B",
             "cover": null,
             "initialChord": "A",
-            "order": "V1 C V2 C B Rx2 O",
+            "order": "V1 C V2 C B Cx2 O",
             "lyrics": "Eu Te iu[A]besc, mila [D]Ta e nesfâr[A]șită\r\nZi de z[F#m]i Tu mă [D]ții în mâna [Esus4]Ta. -[E]\r\nDin zorii dimi[F#m]neții [D]și până când [A]ad[E/G#]orm[F#m]\r\nVreau să [D]cânt bună[Esus4]ta[E]tea [A]Ta.\r\n[D]Căci Tu mereu ai fost cu [A]mine\r\n[D]Tu mereu ai fost a[A]tât de [E]bun!\r\n[D]Și cât eu voi avea [A]suf[E/G#]lare[F#m]\r\nVreau să [D]cânt bună[Esus4]ta[E]tea [A]Ta.\r\n\r\nCu vocea Ta m-ai condus prin încercare\r\nȘi-n noaptea grea lângă mine Tu ai fost\r\nNoi Te avem ca Tată te știm ca Prieten bun\r\nAm trăit în bunătatea Ta.\r\n\r\n[A/C#]Isus, mă [D]copleșești cu [Esus4]bunăta[E]tea [A]Ta\r\n[A/C#]Isus, mă [D]copleșești cu [Esus4]bunăta[E]tea [A]Ta\r\nMă aplec[A/C#] acum, Ție [D]mă închin cu to[Esus4]tul [E]mă pre[F#m]dau\r\n[A/C#]Isus, mă [D]copleșești cu [Esus4]bunăta[E]tea [A]Ta!\r\n\r\nVreau să cânt bunătatea Ta\r\nVreau să cânt bunătatea Ta.",
             "extraData": {
                 "link": null,
@@ -3523,7 +3523,7 @@
             "artist": "Joel Houston",
             "cover": null,
             "initialChord": "G",
-            "order": "V C V C Bx2 Rx2",
+            "order": "V C V C Bx2 Cx2",
             "lyrics": "[C]Zi de [G]zi eu vreau,\r\n[Em]Să res[D]pir Cuvântul [C]Tău.\r\nȘi mă [G]rog Doamne,\r\n[Em]Tot mai [D]mult să Te cu[C]nosc.\r\nCondu-mă [G]în fie[Em]care\r\nClipa [D]ce-o trăiesc.\r\n[C]Zi de [G]zi Doamne\r\n[Em]Vreau să [D]luminez mereu!\r\n\r\n[G]Zi de [C]zi în [Em]Tine [D]eu tră[G]iesc.\r\nZi de [C]zi pe [Em]Tine [D]te ur[G]mez.\r\nZi de [C]zi cu [Em]Tine [D]eu pă[G]șesc.\r\n\r\nEu [G]vreau cu [C]Tine [Em]să tră[D]iesc.\r\nEu [G]vreau cu [C]Tine [Em]să tră[D]iesc.\r\nEu [G]vreau cu [C]Tine [Em]să tră[D]iesc.",
             "extraData": {
                 "link": null,

@@ -9,7 +9,12 @@ import { t } from "@lingui/macro";
 import Constants from "expo-constants";
 import React, { useContext, useEffect, useState } from "react";
 import { Image, Share, StyleSheet, TouchableOpacity, View } from "react-native";
-import { ActivityIndicator, RadioButton } from "react-native-paper";
+import {
+    ActivityIndicator,
+    RadioButton,
+    Switch,
+    ToggleButton,
+} from "react-native-paper";
 import BottomSheetModal from "../components/wrapers/bottomSheetModal";
 import Button from "../components/wrapers/button";
 import Input from "../components/wrapers/input";
@@ -38,6 +43,8 @@ const Settings = ({ navigation }: { navigation: any }) => {
         setChords,
         showSections,
         setShowSections,
+        allowRepetition,
+        setAllowRepetition,
     } = useContext(ConstantsContext);
     const { user } = useContext(UserContext);
     const { logout, exitGuest, deleteAccount, deleteGoogleAccount } =
@@ -46,7 +53,13 @@ const Settings = ({ navigation }: { navigation: any }) => {
     const { fullyUpdateRecent } = useContext(RecentContext);
 
     const [settings, setSettings] = useState<
-        "theme" | "language" | "zoom" | "chords" | "sections" | null
+        | "theme"
+        | "language"
+        | "zoom"
+        | "chords"
+        | "sections"
+        | "repetition"
+        | null
     >(null);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
@@ -192,6 +205,27 @@ const Settings = ({ navigation }: { navigation: any }) => {
                             size={28}
                             color={theme.colors.text}
                             style={{ margin: -2 }}
+                        />
+                    }
+                />
+                <Button
+                    mode="contained"
+                    fullWidth
+                    bold
+                    backgroundColor={theme.colors.paper}
+                    text={t`Allow repetition`}
+                    onPress={() => {
+                        setSettings("repetition"), setIsSettingsOpen(true);
+                    }}
+                    color={theme.colors.text}
+                    center={false}
+                    fontSize={15}
+                    style={{ marginBottom: 10 }}
+                    icon={
+                        <FAIcons
+                            name="repeat"
+                            size={22}
+                            color={theme.colors.text}
                         />
                     }
                 />
@@ -869,7 +903,35 @@ Chasing gold.`}
                             </TouchableOpacity>
                         </View>
                     ) : (
-                        <></>
+                        <View style={styles.repetitionSection}>
+                            <Text
+                                style={{
+                                    maxWidth: "55%",
+                                }}>{t`Allow repetition of verses and choruses in the slideshows?`}</Text>
+                            <View style={styles.switchButton}>
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    style={{
+                                        width: 60,
+                                        height: 50,
+                                        borderRadius: 10,
+                                        zIndex: 10,
+                                    }}
+                                    onPress={() => {
+                                        setAllowRepetition(!allowRepetition);
+                                    }}
+                                />
+                                <Switch
+                                    value={allowRepetition}
+                                    style={{
+                                        pointerEvents: "none",
+                                        position: "absolute",
+                                        top: 10,
+                                        left: 10,
+                                    }}
+                                />
+                            </View>
+                        </View>
                     )}
                 </View>
             </BottomSheetModal>
@@ -1451,5 +1513,18 @@ const styles = StyleSheet.create({
     radioButton: {
         marginTop: 10,
         marginLeft: -20,
+    },
+    switchButton: {
+        position: "relative",
+        marginRight: 20,
+    },
+    repetitionSection: {
+        height: 120,
+        display: "flex",
+        flexDirection: "row",
+        marginHorizontal: 10,
+        marginTop: -20,
+        alignItems: "center",
+        justifyContent: "space-between",
     },
 });

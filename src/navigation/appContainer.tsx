@@ -1,6 +1,6 @@
 import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useState } from "react";
-import { View } from "react-native";
+import { Appearance, View } from "react-native";
 import { DataContext } from "../context/data";
 import { HistoryContext } from "../context/history";
 import { LoadingContext } from "../context/loading";
@@ -17,7 +17,8 @@ const AppContainer = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [video, setVideo] = useState<boolean>(false);
 
-    const { theme, loadTheme, themeType, systemTheme } = useContext(ThemeContext);
+    const { theme, loadTheme, themeType, systemTheme } =
+        useContext(ThemeContext);
     const { updateRefresh } = useContext(RefreshContext);
     const { user } = useContext(UserContext);
     const { loadingData, loadData } = useContext(DataContext);
@@ -29,8 +30,6 @@ const AppContainer = () => {
         const load = async () => {
             setLoading(true);
             await loadTheme();
-
-            SplashScreenExpo.hideAsync();
         };
 
         load();
@@ -68,22 +67,42 @@ const AppContainer = () => {
         <View
             style={{
                 flex: 1,
+                backgroundColor:
+                    themeType === null
+                        ? Appearance.getColorScheme() === "light"
+                            ? "#f4f4f4"
+                            : "#1a1a1a"
+                        : themeType === "light"
+                          ? "#f4f4f4"
+                          : "#1a1a1a",
             }}>
-                {themeType !== null && (
-            (user !== null &&
-                (theme === null ||
-                    loading === null ||
-                    history === null ||
-                    recent === null)) ||
-            syncLoading ? (
-                !video ? 
-                <SplashScreen dark={!((themeType === "system" && systemTheme === "light") ||
-                    themeType === "light")} setFinish={setVideo}/>
-                    : <></>
-            ) : (
-                <AppNavigation />
-            )
-        )}
+            {themeType !== null &&
+                ((user !== null &&
+                    (theme === null ||
+                        loading === null ||
+                        history === null ||
+                        recent === null)) ||
+                syncLoading ? (
+                    !video ? (
+                        <SplashScreen
+                            dark={
+                                !(
+                                    (themeType === "system" &&
+                                        systemTheme === "light") ||
+                                    themeType === "light"
+                                )
+                            }
+                            onFinish={setVideo}
+                            onStart={() => {
+                                SplashScreenExpo.hideAsync();
+                            }}
+                        />
+                    ) : (
+                        <></>
+                    )
+                ) : (
+                    <AppNavigation />
+                ))}
         </View>
     );
 };
