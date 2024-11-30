@@ -213,7 +213,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     fullWidth
                     bold
                     backgroundColor={theme.colors.paper}
-                    text={t`Allow repetition`}
+                    text={t`Allow repetitions`}
                     onPress={() => {
                         setSettings("repetition"), setIsSettingsOpen(true);
                     }}
@@ -907,7 +907,7 @@ Chasing gold.`}
                             <Text
                                 style={{
                                     maxWidth: "55%",
-                                }}>{t`Allow repetition of verses and choruses in the slideshows?`}</Text>
+                                }}>{t`Allow repetitions of verses and choruses in the slideshows?`}</Text>
                             <View style={styles.switchButton}>
                                 <TouchableOpacity
                                     activeOpacity={1}
