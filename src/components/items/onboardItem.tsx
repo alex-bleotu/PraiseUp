@@ -44,10 +44,9 @@ const styles = StyleSheet.create({
         marginTop: -75,
     },
     image: {
-        height: 250,
+        height: 300,
         resizeMode: "contain",
         justifyContent: "center",
-        marginBottom: 50,
     },
 });
 

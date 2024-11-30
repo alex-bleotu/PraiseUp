@@ -26,7 +26,7 @@ export const RecentProvider = ({
             const storedRecent = await AsyncStorage.getItem("recent");
             let recent;
 
-            if (storedRecent !== null) {
+            if (storedRecent !== null && storedRecent !== undefined) {
                 recent = JSON.parse(storedRecent);
                 await fullyUpdateRecent(recent);
             } else setRecent(await getRandom(6));

@@ -613,12 +613,19 @@ const DataBottomSheet = ({
                             {t`Edit your album`}
                         </Text>
                         <Input
+                            key={editAlbum ? "open" : "close"}
                             placeholder={t`Album Name`}
                             value={name}
                             onChange={setName}
                             style={{ marginTop: 20 }}
                             maxLength={32}
                             autoCapitalize
+                            onFocused={async () => {
+                                const text = name;
+                                setName("");
+                                await new Promise((r) => setTimeout(r, 1));
+                                setName(text);
+                            }}
                         />
                         <View style={styles.buttonContainer}>
                             <View style={{ width: "47%" }}>

@@ -1,5 +1,4 @@
 import { t } from "@lingui/macro";
-import * as SplashScreen from "expo-splash-screen";
 import React, { useContext, useEffect, useState } from "react";
 import { View } from "react-native";
 import { DataContext } from "../context/data";
@@ -11,11 +10,14 @@ import { ThemeContext } from "../context/theme";
 import { UserContext } from "../context/user";
 import Loading from "../pages/loading";
 import AppNavigation from "./appNavigation";
+import SplashScreen from "../pages/splashScreen";
+import * as SplashScreenExpo from "expo-splash-screen";
 
 const AppContainer = () => {
     const [loading, setLoading] = useState<boolean>(false);
-    const [loadingText, setLoadingText] = useState<string>("");
-    const { theme, loadTheme } = useContext(ThemeContext);
+    const [video, setVideo] = useState<boolean>(false);
+
+    const { theme, loadTheme, themeType, systemTheme } = useContext(ThemeContext);
     const { updateRefresh } = useContext(RefreshContext);
     const { user } = useContext(UserContext);
     const { loadingData, loadData } = useContext(DataContext);
@@ -27,7 +29,8 @@ const AppContainer = () => {
         const load = async () => {
             setLoading(true);
             await loadTheme();
-            setLoadingText(t`App is loading`);
+
+            SplashScreenExpo.hideAsync();
         };
 
         load();
@@ -56,8 +59,6 @@ const AppContainer = () => {
             updateRefresh();
 
             setLoading(false);
-
-            SplashScreen.hideAsync();
         };
 
         load();
@@ -68,16 +69,21 @@ const AppContainer = () => {
             style={{
                 flex: 1,
             }}>
-            {(user !== null &&
+                {themeType !== null && (
+            (user !== null &&
                 (theme === null ||
                     loading === null ||
                     history === null ||
                     recent === null)) ||
             syncLoading ? (
-                <Loading text={syncLoading ? t`Syncing data` : loadingText} />
+                !video ? 
+                <SplashScreen dark={!((themeType === "system" && systemTheme === "light") ||
+                    themeType === "light")} setFinish={setVideo}/>
+                    : <></>
             ) : (
                 <AppNavigation />
-            )}
+            )
+        )}
         </View>
     );
 };

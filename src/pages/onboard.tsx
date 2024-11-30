@@ -6,37 +6,91 @@ import Background from "../components/wrapers/background";
 import Button from "../components/wrapers/button";
 import Paginator from "../components/wrapers/paginator";
 import { ThemeContext } from "../context/theme";
+import { LanguageContext } from "../context/language";
 
 function Onboard({ navigation }: { navigation: any }) {
-    const { theme } = useContext(ThemeContext);
+    const { theme, themeType, systemTheme } = useContext(ThemeContext);
+    const { language } = useContext(LanguageContext);
+
     const scrollX = useRef(new Animated.Value(0)).current;
     const slidesRef = useRef(null);
 
     const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
 
-    // Memoized slides data
+    type ImageType = {
+        [key: string]: {
+            light: {
+                en: any;
+                ro: any;
+            };
+            dark: {
+                en: any;
+                ro: any;
+            };
+        };
+    };
+
+    const getImage = (themeType: string, language: 'en' | 'ro', imageName: keyof ImageType) => {
+        const images: ImageType = {
+            home: {
+                light: {
+                    en: require("../../assets/images/onboard/homeLightEn.png"),
+                    ro: require("../../assets/images/onboard/homeLightRo.png"),
+                },
+                dark: {
+                    en: require("../../assets/images/onboard/homeDarkEn.png"),
+                    ro: require("../../assets/images/onboard/homeDarkRo.png"),
+                },
+            },
+            album: {
+                light: {
+                    en: require("../../assets/images/onboard/albumLightEn.png"),
+                    ro: require("../../assets/images/onboard/albumLightRo.png"),
+                },
+                dark: {
+                    en: require("../../assets/images/onboard/albumDarkEn.png"),
+                    ro: require("../../assets/images/onboard/albumDarkRo.png"),
+                },
+            },
+            slideshow: {
+                light: {
+                    en: require("../../assets/images/onboard/slideshowEn.png"),
+                    ro: require("../../assets/images/onboard/slideshowRo.png"),
+                },
+                dark: {
+                    en: require("../../assets/images/onboard/slideshowEn.png"),
+                    ro: require("../../assets/images/onboard/slideshowRo.png"),
+                },
+            },
+        };
+    
+        const selectedTheme = themeType === "light" || (themeType === "system" && systemTheme === "light") ? "light" : "dark";
+    
+        return images[imageName]?.[selectedTheme]?.[language] || images[imageName]?.[selectedTheme]?.en;
+    };
+
     const slides = useMemo(
         () => [
             {
                 id: 1,
                 title: t`Worship Made Easy`,
                 description: t`Access lyrics and chords with ease, bringing your worship moments to life.`,
-                image: require("../../assets/images/onboard/image.png"),
+                image: getImage(themeType, language, "home"),
             },
             {
                 id: 2,
                 title: t`Your Music, His Glory`,
                 description: t`Organize and share your favorite worship songs with your friends.`,
-                image: require("../../assets/images/onboard/image2.png"),
+                image: getImage(themeType, language, "album"),
             },
             {
                 id: 3,
                 title: t`Prepare, Play, Praise`,
                 description: t`Make your worship sessions with quick access to slideshows and more.`,
-                image: require("../../assets/images/onboard/image3.png"),
+                image: getImage(themeType, language, "slideshow"),
             },
         ],
-        []
+        [themeType, language]
     );
 
     return (

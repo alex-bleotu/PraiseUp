@@ -1213,9 +1213,7 @@ export const DataProvider = ({
         searchQuery: string
     ) => {
         if (!songIds) return [];
-
-        let filtered: any[] = [];
-
+    
         const normalizeString = (str: string) => {
             return str
                 .toLowerCase()
@@ -1225,35 +1223,55 @@ export const DataProvider = ({
                 .replace(/ș/g, "s")
                 .replace(/ț/g, "t");
         };
-
+    
         const query = normalizeString(searchQuery);
-
+    
         const stripChords = (lyrics: string) => {
             return normalizeString(lyrics.replace(/\[[^\]]+\]/g, ""));
         };
-
-        for (let i = 0; i < songIds.length && filtered.length < 30; i++) {
-            const song = await readSong(songIds[i]);
-            if (!song) continue;
-
+    
+        const titleMatches: any[] = [];
+        const artistMatches: any[] = [];
+        const lyricsMatches: any[] = [];
+    
+        const maxResults = 30;
+    
+        const songPromises = songIds.map(async (id) => {
+            const song = await readSong(id);
+            if (!song || titleMatches.length + artistMatches.length + lyricsMatches.length >= maxResults) {
+                return null;
+            }
+    
             const songNameMatches = normalizeString(song.title).includes(query);
-            const artistMatches = song.artist
+            const artistMatchesQuery = song.artist
                 ? normalizeString(song.artist).includes(query)
                 : false;
-            const lyricsMatches = song.lyrics
+            const lyricsMatchesQuery = song.lyrics
                 ? stripChords(song.lyrics).includes(query)
                 : false;
-
+    
             if (
-                (songNameMatches || artistMatches || lyricsMatches) &&
+                (songNameMatches || artistMatchesQuery || lyricsMatchesQuery) &&
                 !album.songs.includes(song.id)
             ) {
-                filtered.push(song);
+                if (songNameMatches && titleMatches.length < maxResults) {
+                    titleMatches.push(song);
+                } else if (artistMatchesQuery && artistMatches.length < maxResults) {
+                    artistMatches.push(song);
+                } else if (lyricsMatchesQuery && lyricsMatches.length < maxResults) {
+                    lyricsMatches.push(song);
+                }
             }
-        }
-
+        });
+    
+        await Promise.all(songPromises);
+    
+        const filtered = [...titleMatches, ...artistMatches, ...lyricsMatches].slice(0, maxResults);
+    
         return filtered;
     };
+    
+    
 
     const addSongToPersonalAlbum = async (album: AlbumType, song: SongType) => {
         return new Promise<AlbumType>(async (resolve) => {

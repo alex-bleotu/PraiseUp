@@ -292,7 +292,7 @@ msgstr "Intră în contact"
 
 #: src/pages/library.tsx:408
 msgid "Give your album a name"
-msgstr "Dă un nume albumului tău"
+msgstr "Pune un nume albumului tău"
 
 #: src/pages/settings.tsx:60
 msgid "glo[F#m][E]ri[D]fy"

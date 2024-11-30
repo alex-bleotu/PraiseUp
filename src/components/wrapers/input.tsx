@@ -21,6 +21,7 @@ interface InputProps {
     maxLength?: number;
     multiline?: boolean;
     lines?: number;
+    onFocused?: () => void;
 }
 
 const Input = ({
@@ -40,6 +41,7 @@ const Input = ({
     maxLength,
     multiline = false,
     lines,
+    onFocused,
 }: InputProps) => {
     const { theme } = useContext(ThemeContext);
 
@@ -82,14 +84,15 @@ const Input = ({
                     value={value}
                     placeholder={placeholder}
                     placeholderTextColor={theme.colors.grey}
-                    onFocus={() => setIsFocused(true)}
+                    onFocus={() => {setIsFocused(true), onFocused && onFocused()}}
                     onBlur={() => setIsFocused(false)}
                     selectionColor={theme.colors.grey}
                     editable={editable}
-                    autoCapitalize={autoCapitalize ? "words" : "none"}
+                    autoCapitalize={autoCapitalize ? "sentences" : "none"}
                     maxLength={maxLength}
                     multiline={multiline}
                     numberOfLines={lines}
+                    scrollEnabled={true}
                 />
                 {hidden && (
                     <View style={styles.eyeIconContainer}>

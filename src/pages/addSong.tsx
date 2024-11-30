@@ -10,6 +10,7 @@ import { AlbumType, DataContext, SongType } from "../context/data";
 import { RecentContext } from "../context/recent";
 import { RefreshContext } from "../context/refresh";
 import { ThemeContext } from "../context/theme";
+import SkeletonCover from "../components/items/skeletonCover";
 
 const AddSong = ({ navigation, route }: { navigation: any; route: any }) => {
     const { album: a } = route.params;
@@ -128,20 +129,15 @@ const AddSong = ({ navigation, route }: { navigation: any; route: any }) => {
                             </View>
                         )
                     ) : (
-                        <View
-                            style={{
-                                marginTop: -50,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                flex: 1,
-                            }}>
-                            <ActivityIndicator
-                                size="large"
-                                color={theme.colors.primary}
-                            />
-                        </View>
-                    )}
+                            <ScrollView bottom={10}>
+                                {Array.from({ length: 30 }).map((_, index) => (
+                                    <View key={index} style={styles.songs}>
+                                        <SkeletonCover fullWidth key={index} />
+                                    </View>
+                                ))}
+                            </ScrollView>
+                        )
+    }
                 </View>
             </View>
         </StackPage>
