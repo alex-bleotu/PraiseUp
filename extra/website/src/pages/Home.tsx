@@ -1,4 +1,4 @@
-import { Download, Music, Heart, Share2 } from "lucide-react";
+import { Music, Heart, Share2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { ThemeToggle } from "../components/ThemeToggle";
 import { FeatureCard } from "../components/FeatureCard";

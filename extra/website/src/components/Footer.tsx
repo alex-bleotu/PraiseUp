@@ -1,4 +1,4 @@
-import { Facebook, Twitter, Instagram, Music, Globe } from "lucide-react";
+import { Instagram, Globe } from "lucide-react";
 import { motion } from "framer-motion";
 
 export function Footer() {
