@@ -584,11 +584,11 @@ msgstr "Distribuie"
 
 #: src/pages/settings.tsx:194
 msgid "Show labels"
-msgstr "Arată etichetele"
+msgstr "Afișează etichete"
 
 #: src/pages/settings.tsx:830
 msgid "Show labels for sections of the song as \"Verse\", \"Chorus\", \"Bridge\" etc."
-msgstr "Arată etichetele pentru secțiunile melodiei ca „Strofa”, „Refren”, „Bridge” etc."
+msgstr "Afișează etichete pentru secțiuni ale melodiei precum „Strofa”, „Refren”, „Bridge” etc."
 
 #: src/pages/login.tsx:49
 msgid "Sign In"
