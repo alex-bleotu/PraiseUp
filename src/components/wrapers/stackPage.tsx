@@ -84,6 +84,7 @@ const StackPage = ({
                 style={[
                     styles.topBar,
                     {
+                        backgroundColor: theme.colors.background,
                         transform: variant
                             ? [
                                   {
@@ -226,6 +227,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingHorizontal: 10,
         paddingBottom: 20,
+        zIndex: 10,
     },
     textContainer: {
         flex: 1,

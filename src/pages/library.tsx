@@ -1,7 +1,8 @@
 import { FontAwesome6 as FAIcons } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
+    Animated,
     Dimensions,
     StyleSheet,
     ScrollView as SV,
@@ -22,6 +23,7 @@ import { AlbumType, DataContext, SongType } from "../context/data";
 import { RecentContext } from "../context/recent";
 import { RefreshContext } from "../context/refresh";
 import { ThemeContext } from "../context/theme";
+import { Searchbar as SearchBar } from "react-native-paper";
 
 const Library = ({ navigation }: { navigation: any }) => {
     const { theme } = useContext(ThemeContext);
@@ -46,6 +48,10 @@ const Library = ({ navigation }: { navigation: any }) => {
     const [isCreateBottomSheetOpen, setIsCreateBottomSheetOpen] =
         useState(false);
     const [name, setName] = useState("");
+
+    const [searchVisible, setSearchVisible] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
+    const slideAnim = useRef(new Animated.Value(0)).current;
 
     const buttonWidth = useMemo(() => {
         return Math.min((Dimensions.get("screen").width - 55) / 3, 160);
@@ -97,14 +103,37 @@ const Library = ({ navigation }: { navigation: any }) => {
             (album) => album?.type !== "favorite" && album?.type !== "extra"
         );
 
+        const normalizeString = (str: string) =>
+            str
+                .toLowerCase()
+                .replace(/ă/g, "a")
+                .replace(/â/g, "a")
+                .replace(/î/g, "i")
+                .replace(/ș/g, "s")
+                .replace(/ț/g, "t");
+
+        const filtered = searchQuery
+            ? rest.filter((album) =>
+                  normalizeString(album.title).includes(
+                      normalizeString(searchQuery)
+                  )
+              )
+            : rest;
+
         if (sortBy === "date") {
-            rest.sort(
+            filtered.sort(
                 (a, b) =>
                     new Date(b.date).getTime() - new Date(a.date).getTime()
             );
-        } else rest.sort((a, b) => a.title.localeCompare(b.title));
+        } else {
+            filtered.sort((a, b) =>
+                normalizeString(a.title).localeCompare(normalizeString(b.title))
+            );
+        }
 
-        return favorite ? [favorite, ...rest, button] : [...rest, button];
+        return favorite
+            ? [favorite, ...filtered, button]
+            : [...filtered, button];
     };
 
     const sortedAlbums = useMemo(() => {
@@ -112,7 +141,7 @@ const Library = ({ navigation }: { navigation: any }) => {
             return sortAlbums(albums);
         }
         return albums;
-    }, [albums, sortBy]);
+    }, [albums, sortBy, searchQuery]);
 
     return (
         <StackPage
@@ -123,48 +152,323 @@ const Library = ({ navigation }: { navigation: any }) => {
                 navigation.navigate("Settings");
             }}>
             <View style={styles.container}>
-                <View style={styles.top}>
-                    <AnimatedTouchable
-                        onPress={() => {
-                            setSortBy(sortBy === "date" ? "name" : "date");
-                        }}
-                        style={styles.sortButton}>
-                        <View style={styles.row}>
-                            <FAIcons
-                                name="sort"
-                                size={20}
-                                color={theme.colors.text}
-                                style={{ marginRight: 10 }}
-                            />
-                            <Text bold>
-                                {sortBy === "date"
-                                    ? t`Recent`
-                                    : t`Alphabetical`}
-                            </Text>
+                {searchVisible && (
+                    <Animated.View
+                        style={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            zIndex: 1,
+                            marginHorizontal: 15,
+                            transform: [
+                                {
+                                    translateY: slideAnim.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [-50, 0],
+                                    }),
+                                },
+                            ],
+                            opacity: slideAnim,
+                        }}>
+                        <SearchBar
+                            style={{
+                                backgroundColor: theme.colors.paper,
+                                borderRadius: 12,
+                            }}
+                            placeholderTextColor={theme.colors.text}
+                            iconColor={theme.colors.text}
+                            inputStyle={{ color: theme.colors.text }}
+                            placeholder={t`Search`}
+                            onChangeText={(query) => setSearchQuery(query)}
+                            value={searchQuery}
+                        />
+                    </Animated.View>
+                )}
+                <Animated.View
+                    style={{
+                        flex: 1,
+                        transform: [
+                            {
+                                translateY: slideAnim.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [0, 50],
+                                }),
+                            },
+                        ],
+                    }}>
+                    <View style={styles.top}>
+                        <AnimatedTouchable
+                            onPress={() => {
+                                setSortBy(sortBy === "date" ? "name" : "date");
+                            }}
+                            style={styles.sortButton}>
+                            <View style={styles.row}>
+                                <FAIcons
+                                    name="sort"
+                                    size={20}
+                                    color={theme.colors.text}
+                                    style={{ marginRight: 10 }}
+                                />
+                                <Text bold>
+                                    {sortBy === "date"
+                                        ? t`Recent`
+                                        : t`Alphabetical`}
+                                </Text>
+                            </View>
+                        </AnimatedTouchable>
+                        <View
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                marginRight: 10,
+                            }}>
+                            <AnimatedTouchable
+                                onPress={() => {
+                                    setDisplay(
+                                        display === "grid" ? "list" : "grid"
+                                    );
+                                }}
+                                style={{ marginRight: 20 }}>
+                                {display === "grid" ? (
+                                    <FAIcons
+                                        name="border-all"
+                                        size={20}
+                                        color={theme.colors.text}
+                                    />
+                                ) : (
+                                    <FAIcons
+                                        name="list"
+                                        size={20}
+                                        color={theme.colors.text}
+                                    />
+                                )}
+                            </AnimatedTouchable>
+                            <AnimatedTouchable
+                                style={{ marginRight: 5 }}
+                                onPress={() => {
+                                    if (!searchVisible) {
+                                        setSearchVisible(true);
+                                        Animated.timing(slideAnim, {
+                                            toValue: 1,
+                                            duration: 300,
+                                            useNativeDriver: true,
+                                        }).start();
+                                    } else {
+                                        Animated.timing(slideAnim, {
+                                            toValue: 0,
+                                            duration: 300,
+                                            useNativeDriver: true,
+                                        }).start(() => setSearchVisible(false));
+                                        setSearchQuery("");
+                                    }
+                                }}>
+                                <FAIcons
+                                    name={
+                                        searchVisible ? "x" : "magnifying-glass"
+                                    }
+                                    size={20}
+                                    color={theme.colors.text}
+                                    style={{
+                                        marginHorizontal: searchVisible
+                                            ? 2.5
+                                            : 0,
+                                    }}
+                                />
+                            </AnimatedTouchable>
                         </View>
-                    </AnimatedTouchable>
-                    <AnimatedTouchable
-                        onPress={() => {
-                            setDisplay(display === "grid" ? "list" : "grid");
-                        }}
-                        style={styles.sortButton}>
-                        {display === "grid" ? (
-                            <FAIcons
-                                name="border-all"
-                                size={20}
-                                color={theme.colors.text}
-                            />
+                    </View>
+                    {sortedAlbums !== null ? (
+                        display === "grid" ? (
+                            <View
+                                style={[
+                                    styles.scrollContainer,
+                                    {
+                                        marginLeft:
+                                            Dimensions.get("screen").width > 400
+                                                ? 15
+                                                : 0,
+                                    },
+                                ]}>
+                                <SV
+                                    contentContainerStyle={styles.grid}
+                                    showsVerticalScrollIndicator={false}>
+                                    <View style={styles.gridContent}>
+                                        {sortedAlbums.map(
+                                            (
+                                                data: AlbumType,
+                                                index: number
+                                            ) => {
+                                                return (
+                                                    <View
+                                                        key={data.id}
+                                                        style={[
+                                                            styles.item,
+                                                            {
+                                                                marginHorizontal:
+                                                                    (index -
+                                                                        1) %
+                                                                        3 ==
+                                                                    0
+                                                                        ? horizontalMargin
+                                                                        : 0,
+                                                            },
+                                                        ]}>
+                                                        {data?.type ===
+                                                        "extra" ? (
+                                                            <AnimatedTouchable
+                                                                onPress={() => {
+                                                                    setIsCreateBottomSheetOpen(
+                                                                        true
+                                                                    );
+                                                                }}
+                                                                style={[
+                                                                    styles.addGrid,
+                                                                    {
+                                                                        width: buttonWidth,
+                                                                        height: buttonWidth,
+                                                                        backgroundColor:
+                                                                            theme
+                                                                                .colors
+                                                                                .paper,
+                                                                    },
+                                                                ]}>
+                                                                <FAIcons
+                                                                    name="plus"
+                                                                    size={30}
+                                                                    color={
+                                                                        theme
+                                                                            .colors
+                                                                            .text
+                                                                    }
+                                                                />
+                                                            </AnimatedTouchable>
+                                                        ) : (
+                                                            <AlbumCover
+                                                                key={data.id}
+                                                                album={data}
+                                                                navigation={
+                                                                    navigation
+                                                                }
+                                                                vertical
+                                                                onLongPress={() => {
+                                                                    if (
+                                                                        data.id ===
+                                                                        "F"
+                                                                    )
+                                                                        return;
+
+                                                                    setCurrentData(
+                                                                        data
+                                                                    );
+                                                                    setBottomSheetOpen(
+                                                                        true
+                                                                    );
+                                                                }}
+                                                            />
+                                                        )}
+                                                    </View>
+                                                );
+                                            }
+                                        )}
+                                    </View>
+                                </SV>
+                            </View>
                         ) : (
-                            <FAIcons
-                                name="list"
-                                size={20}
-                                color={theme.colors.text}
-                            />
-                        )}
-                    </AnimatedTouchable>
-                </View>
-                {sortedAlbums !== null ? (
-                    display === "grid" ? (
+                            <View style={styles.container}>
+                                <ScrollView bottom={5} showScroll={false}>
+                                    {sortedAlbums.map((data: AlbumType) => {
+                                        return (
+                                            <View
+                                                key={data.id}
+                                                style={{ marginBottom: 10 }}>
+                                                {data?.type === "extra" ? (
+                                                    <AnimatedTouchable
+                                                        onPress={() => {
+                                                            setIsCreateBottomSheetOpen(
+                                                                true
+                                                            );
+                                                        }}>
+                                                        <View
+                                                            style={[
+                                                                styles.addList,
+                                                                {
+                                                                    backgroundColor:
+                                                                        theme
+                                                                            .colors
+                                                                            .paper,
+                                                                },
+                                                            ]}>
+                                                            <View
+                                                                style={
+                                                                    styles.textContainer
+                                                                }>
+                                                                <FAIcons
+                                                                    name="plus"
+                                                                    size={30}
+                                                                    color={
+                                                                        theme
+                                                                            .colors
+                                                                            .text
+                                                                    }
+                                                                />
+                                                                <Text
+                                                                    fontSize={
+                                                                        14
+                                                                    }
+                                                                    bold
+                                                                    style={{
+                                                                        marginLeft: 28,
+                                                                    }}>
+                                                                    {t`Create album`}
+                                                                </Text>
+                                                            </View>
+                                                        </View>
+                                                    </AnimatedTouchable>
+                                                ) : (
+                                                    <AlbumCover
+                                                        key={data.id}
+                                                        album={data}
+                                                        navigation={navigation}
+                                                        fullWidth
+                                                        icon={
+                                                            data.id === "F"
+                                                                ? "pin"
+                                                                : "dots-vertical"
+                                                        }
+                                                        onLongPress={() => {
+                                                            if (
+                                                                data.id !== "F"
+                                                            ) {
+                                                                setCurrentData(
+                                                                    data
+                                                                );
+                                                                setBottomSheetOpen(
+                                                                    true
+                                                                );
+                                                            }
+                                                        }}
+                                                        action={() => {
+                                                            if (
+                                                                data.id !== "F"
+                                                            ) {
+                                                                setCurrentData(
+                                                                    data
+                                                                );
+                                                                setBottomSheetOpen(
+                                                                    true
+                                                                );
+                                                            }
+                                                        }}
+                                                    />
+                                                )}
+                                            </View>
+                                        );
+                                    })}
+                                </ScrollView>
+                            </View>
+                        )
+                    ) : display === "grid" ? (
                         <View
                             style={[
                                 styles.scrollContainer,
@@ -179,76 +483,22 @@ const Library = ({ navigation }: { navigation: any }) => {
                                 contentContainerStyle={styles.grid}
                                 showsVerticalScrollIndicator={false}>
                                 <View style={styles.gridContent}>
-                                    {sortedAlbums.map(
-                                        (data: AlbumType, index: number) => {
-                                            return (
-                                                <View
-                                                    key={data.id}
-                                                    style={[
-                                                        styles.item,
-                                                        {
-                                                            marginHorizontal:
-                                                                (index - 1) %
-                                                                    3 ==
-                                                                0
-                                                                    ? horizontalMargin
-                                                                    : 0,
-                                                        },
-                                                    ]}>
-                                                    {data?.type === "extra" ? (
-                                                        <AnimatedTouchable
-                                                            onPress={() => {
-                                                                setIsCreateBottomSheetOpen(
-                                                                    true
-                                                                );
-                                                            }}
-                                                            style={[
-                                                                styles.addGrid,
-                                                                {
-                                                                    width: buttonWidth,
-                                                                    height: buttonWidth,
-                                                                    backgroundColor:
-                                                                        theme
-                                                                            .colors
-                                                                            .paper,
-                                                                },
-                                                            ]}>
-                                                            <FAIcons
-                                                                name="plus"
-                                                                size={30}
-                                                                color={
-                                                                    theme.colors
-                                                                        .text
-                                                                }
-                                                            />
-                                                        </AnimatedTouchable>
-                                                    ) : (
-                                                        <AlbumCover
-                                                            key={data.id}
-                                                            album={data}
-                                                            navigation={
-                                                                navigation
-                                                            }
-                                                            vertical
-                                                            onLongPress={() => {
-                                                                if (
-                                                                    data.id ===
-                                                                    "F"
-                                                                )
-                                                                    return;
-
-                                                                setCurrentData(
-                                                                    data
-                                                                );
-                                                                setBottomSheetOpen(
-                                                                    true
-                                                                );
-                                                            }}
-                                                        />
-                                                    )}
-                                                </View>
-                                            );
-                                        }
+                                    {Array.from({ length: 4 }).map(
+                                        (_, index) => (
+                                            <View
+                                                key={`skeleton-grid-${index}`}
+                                                style={[
+                                                    styles.item,
+                                                    {
+                                                        marginHorizontal:
+                                                            (index - 1) % 3 == 0
+                                                                ? horizontalMargin
+                                                                : 0,
+                                                    },
+                                                ]}>
+                                                <SkeletonCover vertical />
+                                            </View>
+                                        )
                                     )}
                                 </View>
                             </SV>
@@ -256,135 +506,17 @@ const Library = ({ navigation }: { navigation: any }) => {
                     ) : (
                         <View style={styles.container}>
                             <ScrollView bottom={5} showScroll={false}>
-                                {sortedAlbums.map((data: AlbumType) => {
-                                    return (
-                                        <View
-                                            key={data.id}
-                                            style={{ marginBottom: 10 }}>
-                                            {data?.type === "extra" ? (
-                                                <AnimatedTouchable
-                                                    onPress={() => {
-                                                        setIsCreateBottomSheetOpen(
-                                                            true
-                                                        );
-                                                    }}>
-                                                    <View
-                                                        style={[
-                                                            styles.addList,
-                                                            {
-                                                                backgroundColor:
-                                                                    theme.colors
-                                                                        .paper,
-                                                            },
-                                                        ]}>
-                                                        <View
-                                                            style={
-                                                                styles.textContainer
-                                                            }>
-                                                            <FAIcons
-                                                                name="plus"
-                                                                size={30}
-                                                                color={
-                                                                    theme.colors
-                                                                        .text
-                                                                }
-                                                            />
-                                                            <Text
-                                                                fontSize={14}
-                                                                bold
-                                                                style={{
-                                                                    marginLeft: 28,
-                                                                }}>
-                                                                {t`Create album`}
-                                                            </Text>
-                                                        </View>
-                                                    </View>
-                                                </AnimatedTouchable>
-                                            ) : (
-                                                <AlbumCover
-                                                    key={data.id}
-                                                    album={data}
-                                                    navigation={navigation}
-                                                    fullWidth
-                                                    icon={
-                                                        data.id === "F"
-                                                            ? "pin"
-                                                            : "dots-vertical"
-                                                    }
-                                                    onLongPress={() => {
-                                                        if (data.id !== "F") {
-                                                            setCurrentData(
-                                                                data
-                                                            );
-                                                            setBottomSheetOpen(
-                                                                true
-                                                            );
-                                                        }
-                                                    }}
-                                                    action={() => {
-                                                        if (data.id !== "F") {
-                                                            setCurrentData(
-                                                                data
-                                                            );
-                                                            setBottomSheetOpen(
-                                                                true
-                                                            );
-                                                        }
-                                                    }}
-                                                />
-                                            )}
-                                        </View>
-                                    );
-                                })}
-                            </ScrollView>
-                        </View>
-                    )
-                ) : display === "grid" ? (
-                    <View
-                        style={[
-                            styles.scrollContainer,
-                            {
-                                marginLeft:
-                                    Dimensions.get("screen").width > 400
-                                        ? 15
-                                        : 0,
-                            },
-                        ]}>
-                        <SV
-                            contentContainerStyle={styles.grid}
-                            showsVerticalScrollIndicator={false}>
-                            <View style={styles.gridContent}>
-                                {Array.from({ length: 4 }).map((_, index) => (
+                                {Array.from({ length: 10 }).map((_, index) => (
                                     <View
-                                        key={`skeleton-grid-${index}`}
-                                        style={[
-                                            styles.item,
-                                            {
-                                                marginHorizontal:
-                                                    (index - 1) % 3 == 0
-                                                        ? horizontalMargin
-                                                        : 0,
-                                            },
-                                        ]}>
-                                        <SkeletonCover vertical />
+                                        key={`skeleton-list-${index}`}
+                                        style={{ marginBottom: 10 }}>
+                                        <SkeletonCover fullWidth />
                                     </View>
                                 ))}
-                            </View>
-                        </SV>
-                    </View>
-                ) : (
-                    <View style={styles.container}>
-                        <ScrollView bottom={5} showScroll={false}>
-                            {Array.from({ length: 10 }).map((_, index) => (
-                                <View
-                                    key={`skeleton-list-${index}`}
-                                    style={{ marginBottom: 10 }}>
-                                    <SkeletonCover fullWidth />
-                                </View>
-                            ))}
-                        </ScrollView>
-                    </View>
-                )}
+                            </ScrollView>
+                        </View>
+                    )}
+                </Animated.View>
             </View>
             <DataBottomSheet
                 data={currentData}
@@ -484,7 +616,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
         padding: 10,
-        margin: 10,
+        marginVertical: 10,
+        marginHorizontal: 5,
         borderRadius: 10,
     },
     row: {
@@ -497,6 +630,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
+        marginBottom: 10,
     },
     container: {
         flex: 1,

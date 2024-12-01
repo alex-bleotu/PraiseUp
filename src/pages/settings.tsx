@@ -191,7 +191,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
                     fullWidth
                     bold
                     backgroundColor={theme.colors.paper}
-                    text={t`Show sections`}
+                    text={t`Show labels`}
                     onPress={() => {
                         setSettings("sections"), setIsSettingsOpen(true);
                     }}
@@ -310,7 +310,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
 
                                 await Share.share({
                                     message: `${
-                                        t`Check this out on PraiseUp!` + "\n\n"
+                                        t`Check this out on PraiseUp!` + "\n"
                                     }${url}`,
                                 });
                             }}
@@ -820,87 +820,96 @@ Seeking stories yet untold.`}
                             </TouchableOpacity>
                         </View>
                     ) : settings === "sections" ? (
-                        <View style={styles.sections}>
-                            <TouchableOpacity
-                                activeOpacity={1}
-                                style={styles.section}
-                                onPress={() => setShowSections(true)}>
-                                <View>
-                                    <Text
-                                        style={{
-                                            marginBottom: 5,
-                                        }}
-                                        fontSize={18}
-                                        bold
-                                        color={theme.colors.grey}>
-                                        {t`Verse`}
-                                    </Text>
-                                    <Text
-                                        fontSize={16}
-                                        color={theme.colors.text}
-                                        style={{}}>
-                                        {t`A step at night,
+                        <View
+                            style={{
+                                marginHorizontal: 10,
+                            }}>
+                            <Text
+                                style={
+                                    styles.sectionText
+                                }>{t`Show labels for sections of the song as "Verse", "Chorus", "Bridge" etc.`}</Text>
+                            <View style={styles.sections}>
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    style={styles.section}
+                                    onPress={() => setShowSections(true)}>
+                                    <View>
+                                        <Text
+                                            style={{
+                                                marginBottom: 5,
+                                            }}
+                                            fontSize={18}
+                                            bold
+                                            color={theme.colors.grey}>
+                                            {t`Verse`}
+                                        </Text>
+                                        <Text
+                                            fontSize={16}
+                                            color={theme.colors.text}
+                                            style={{}}>
+                                            {t`A step at night,
 Dreams so bright.
 A heart so bold,
 Chasing gold.`}
-                                    </Text>
-                                </View>
-                                <View style={styles.radioButton}>
-                                    <RadioButton
-                                        value="showSections"
-                                        color={theme.colors.primary}
-                                        uncheckedColor={theme.colors.grey}
-                                        status={
-                                            showSections
-                                                ? "checked"
-                                                : "unchecked"
-                                        }
-                                        onPress={() => {
-                                            setShowSections(true);
-                                        }}
-                                    />
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                activeOpacity={1}
-                                style={styles.section}
-                                onPress={() => setShowSections(false)}>
-                                <View>
-                                    <Text
-                                        style={{
-                                            marginBottom: 5,
-                                        }}
-                                        fontSize={18}
-                                        bold
-                                        color={theme.colors.grey}>
-                                        {" "}
-                                    </Text>
-                                    <Text
-                                        fontSize={16}
-                                        color={theme.colors.text}
-                                        style={{}}>
-                                        {t`A step at night,
+                                        </Text>
+                                    </View>
+                                    <View style={styles.radioButton}>
+                                        <RadioButton
+                                            value="showSections"
+                                            color={theme.colors.primary}
+                                            uncheckedColor={theme.colors.grey}
+                                            status={
+                                                showSections
+                                                    ? "checked"
+                                                    : "unchecked"
+                                            }
+                                            onPress={() => {
+                                                setShowSections(true);
+                                            }}
+                                        />
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    style={styles.section}
+                                    onPress={() => setShowSections(false)}>
+                                    <View>
+                                        <Text
+                                            style={{
+                                                marginBottom: 5,
+                                            }}
+                                            fontSize={18}
+                                            bold
+                                            color={theme.colors.grey}>
+                                            {" "}
+                                        </Text>
+                                        <Text
+                                            fontSize={16}
+                                            color={theme.colors.text}
+                                            style={{}}>
+                                            {t`A step at night,
 Dreams so bright.
 A heart so bold,
 Chasing gold.`}
-                                    </Text>
-                                </View>
-                                <View style={styles.radioButton}>
-                                    <RadioButton
-                                        value="showSections"
-                                        color={theme.colors.primary}
-                                        uncheckedColor={theme.colors.grey}
-                                        status={
-                                            !showSections
-                                                ? "checked"
-                                                : "unchecked"
-                                        }
-                                        onPress={() => {
-                                            setShowSections(false);
-                                        }}
-                                    />
-                                </View>
-                            </TouchableOpacity>
+                                        </Text>
+                                    </View>
+                                    <View style={styles.radioButton}>
+                                        <RadioButton
+                                            value="showSections"
+                                            color={theme.colors.primary}
+                                            uncheckedColor={theme.colors.grey}
+                                            status={
+                                                !showSections
+                                                    ? "checked"
+                                                    : "unchecked"
+                                            }
+                                            onPress={() => {
+                                                setShowSections(false);
+                                            }}
+                                        />
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     ) : (
                         <View style={styles.repetitionSection}>
@@ -1502,7 +1511,6 @@ const styles = StyleSheet.create({
         height: 160,
         display: "flex",
         flexDirection: "row",
-        marginHorizontal: 10,
     },
     section: {
         width: "50%",
@@ -1526,5 +1534,9 @@ const styles = StyleSheet.create({
         marginTop: -20,
         alignItems: "center",
         justifyContent: "space-between",
+    },
+    sectionText: {
+        marginHorizontal: 10,
+        marginBottom: 25,
     },
 });

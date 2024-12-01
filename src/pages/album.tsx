@@ -1,11 +1,16 @@
-import { FontAwesome6 as FAIcons } from "@expo/vector-icons";
+import {
+    FontAwesome6 as FAIcons,
+    MaterialCommunityIcons as MCIcons,
+} from "@expo/vector-icons";
 import { t } from "@lingui/macro";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
     ActivityIndicator,
+    Animated,
     Dimensions,
     StyleSheet,
     ScrollView as SV,
+    TextInput,
     View,
 } from "react-native";
 import SongCover from "../components/items/songCover";
@@ -21,6 +26,7 @@ import { LanguageContext } from "../context/language";
 import { RefreshContext } from "../context/refresh";
 import { ThemeContext } from "../context/theme";
 import Loading from "./loading";
+import { Searchbar as SearchBar } from "react-native-paper";
 
 interface AlbumProps {
     route: any;
@@ -49,6 +55,10 @@ const Album = ({ route, navigation }: AlbumProps) => {
         null
     );
     const [album, setAlbum] = useState<AlbumType | null>(a);
+
+    const [searchVisible, setSearchVisible] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
+    const slideAnim = useRef(new Animated.Value(0)).current;
 
     const buttonWidth = Math.min(
         (Dimensions.get("screen").width - 55) / 3,
@@ -133,20 +143,40 @@ const Album = ({ route, navigation }: AlbumProps) => {
         load();
     }, [refresh]);
 
+    const normalizeString = (str: string) => {
+        return str
+            .toLowerCase()
+            .replace(/ă/g, "a")
+            .replace(/â/g, "a")
+            .replace(/î/g, "i")
+            .replace(/ș/g, "s")
+            .replace(/ț/g, "t");
+    };
+
     const sortSongs = (songsList: SongType[]) => {
         const button = songsList.find((song) => song?.type === "extra");
         const rest = songsList.filter((song) => song?.type !== "extra");
 
+        const filtered = searchQuery
+            ? rest.filter((song) =>
+                  normalizeString(song.title).includes(
+                      normalizeString(searchQuery)
+                  )
+              )
+            : rest;
+
         if (sortBy === "date") {
-            rest.sort(
+            filtered.sort(
                 (a, b) =>
                     new Date(b.date).getTime() - new Date(a.date).getTime()
             );
         } else {
-            rest.sort((a, b) => a.title.localeCompare(b.title));
+            filtered.sort((a, b) =>
+                normalizeString(a.title).localeCompare(normalizeString(b.title))
+            );
         }
 
-        return [...rest, button];
+        return [...filtered, button];
     };
 
     const sortedSongs = useMemo(() => {
@@ -154,7 +184,7 @@ const Album = ({ route, navigation }: AlbumProps) => {
             return sortSongs(songs);
         }
         return [];
-    }, [songs, sortBy]);
+    }, [songs, sortBy, searchQuery]);
 
     if (album === null || album === undefined)
         return <Loading text={t`Loading the album`} />;
@@ -173,118 +203,310 @@ const Album = ({ route, navigation }: AlbumProps) => {
                 setBottomSheetOpen(true);
             }}>
             <View style={styles.container}>
-                <View style={styles.top}>
-                    <AnimatedTouchable
-                        onPress={() => {
-                            setSortBy(sortBy === "date" ? "name" : "date");
-                        }}
-                        style={styles.sortButton}>
-                        <View style={styles.row}>
-                            <FAIcons
-                                name="sort"
-                                size={20}
-                                color={theme.colors.text}
-                                style={{ marginRight: 10 }}
-                            />
-                            <Text bold>
-                                {sortBy === "date"
-                                    ? t`Recent`
-                                    : t`Alphabetical`}
-                            </Text>
-                        </View>
-                    </AnimatedTouchable>
-                    <AnimatedTouchable
-                        onPress={() => {
-                            setDisplay(display === "grid" ? "list" : "grid");
-                        }}
-                        style={styles.sortButton}>
-                        {display === "grid" ? (
-                            <FAIcons
-                                name="border-all"
-                                size={20}
-                                color={theme.colors.text}
-                            />
-                        ) : (
-                            <FAIcons
-                                name="list"
-                                size={20}
-                                color={theme.colors.text}
-                            />
-                        )}
-                    </AnimatedTouchable>
-                </View>
-                {songs ? (
-                    sortedSongs.length > 1 ? (
-                        display === "grid" ? (
-                            <View style={styles.scrollContainer}>
-                                <SV
-                                    contentContainerStyle={styles.grid}
-                                    showsVerticalScrollIndicator={false}>
-                                    <View style={styles.gridContent}>
-                                        {sortedSongs.map(
-                                            (data: any, index: number) => {
-                                                if (
-                                                    data.type === "extra" &&
-                                                    album.type === "favorite"
-                                                )
-                                                    return null;
+                {searchVisible && (
+                    <Animated.View
+                        style={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            zIndex: 1,
+                            marginHorizontal: 15,
+                            transform: [
+                                {
+                                    translateY: slideAnim.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [-50, 0],
+                                    }),
+                                },
+                            ],
+                            opacity: slideAnim,
+                        }}>
+                        <SearchBar
+                            style={{
+                                backgroundColor: theme.colors.paper,
+                                borderRadius: 12,
+                            }}
+                            placeholderTextColor={theme.colors.text}
+                            iconColor={theme.colors.text}
+                            inputStyle={{ color: theme.colors.text }}
+                            placeholder={t`Search`}
+                            onChangeText={(query) => setSearchQuery(query)}
+                            value={searchQuery}
+                        />
+                    </Animated.View>
+                )}
 
-                                                return (
-                                                    <View
-                                                        key={data.id}
-                                                        style={[
-                                                            styles.item,
-                                                            {
-                                                                marginHorizontal:
-                                                                    (index -
-                                                                        1) %
-                                                                        3 ==
-                                                                    0
-                                                                        ? horizontalMargin
-                                                                        : 0,
-                                                            },
-                                                        ]}>
-                                                        {data.type ===
-                                                        "extra" ? (
-                                                            <AnimatedTouchable
-                                                                onPress={() => {
-                                                                    navigation.navigate(
-                                                                        "AddSong",
+                <Animated.View
+                    style={{
+                        flex: 1,
+                        transform: [
+                            {
+                                translateY: slideAnim.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [0, 50],
+                                }),
+                            },
+                        ],
+                    }}>
+                    <View style={styles.top}>
+                        <AnimatedTouchable
+                            onPress={() => {
+                                setSortBy(sortBy === "date" ? "name" : "date");
+                            }}
+                            style={styles.sortButton}>
+                            <View style={styles.row}>
+                                <FAIcons
+                                    name="sort"
+                                    size={20}
+                                    color={theme.colors.text}
+                                    style={{ marginRight: 10 }}
+                                />
+                                <Text bold>
+                                    {sortBy === "date"
+                                        ? t`Recent`
+                                        : t`Alphabetical`}
+                                </Text>
+                            </View>
+                        </AnimatedTouchable>
+                        <View
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                marginRight: 10,
+                            }}>
+                            <AnimatedTouchable
+                                onPress={() => {
+                                    setDisplay(
+                                        display === "grid" ? "list" : "grid"
+                                    );
+                                }}
+                                style={{ marginRight: 20 }}>
+                                {display === "grid" ? (
+                                    <FAIcons
+                                        name="border-all"
+                                        size={20}
+                                        color={theme.colors.text}
+                                    />
+                                ) : (
+                                    <FAIcons
+                                        name="list"
+                                        size={20}
+                                        color={theme.colors.text}
+                                    />
+                                )}
+                            </AnimatedTouchable>
+                            <AnimatedTouchable
+                                style={{ marginRight: 5 }}
+                                onPress={() => {
+                                    if (!searchVisible) {
+                                        setSearchVisible(true);
+                                        Animated.timing(slideAnim, {
+                                            toValue: 1,
+                                            duration: 300,
+                                            useNativeDriver: true,
+                                        }).start();
+                                    } else {
+                                        Animated.timing(slideAnim, {
+                                            toValue: 0,
+                                            duration: 300,
+                                            useNativeDriver: true,
+                                        }).start(() => setSearchVisible(false));
+                                        setSearchQuery("");
+                                    }
+                                }}>
+                                <FAIcons
+                                    name={
+                                        searchVisible ? "x" : "magnifying-glass"
+                                    }
+                                    size={20}
+                                    color={theme.colors.text}
+                                    style={{
+                                        marginHorizontal: searchVisible
+                                            ? 2.5
+                                            : 0,
+                                    }}
+                                />
+                            </AnimatedTouchable>
+                        </View>
+                    </View>
+                    {songs ? (
+                        sortedSongs.length > 1 ? (
+                            display === "grid" ? (
+                                <View style={styles.scrollContainer}>
+                                    <SV
+                                        contentContainerStyle={styles.grid}
+                                        showsVerticalScrollIndicator={false}>
+                                        <View style={styles.gridContent}>
+                                            {sortedSongs.map(
+                                                (data: any, index: number) => {
+                                                    if (
+                                                        data.type === "extra" &&
+                                                        album.type ===
+                                                            "favorite"
+                                                    )
+                                                        return null;
+
+                                                    return (
+                                                        <View
+                                                            key={data.id}
+                                                            style={[
+                                                                styles.item,
+                                                                {
+                                                                    marginHorizontal:
+                                                                        (index -
+                                                                            1) %
+                                                                            3 ==
+                                                                        0
+                                                                            ? horizontalMargin
+                                                                            : 0,
+                                                                },
+                                                            ]}>
+                                                            {data.type ===
+                                                            "extra" ? (
+                                                                <AnimatedTouchable
+                                                                    onPress={() => {
+                                                                        navigation.navigate(
+                                                                            "AddSong",
+                                                                            {
+                                                                                album,
+                                                                            }
+                                                                        );
+                                                                    }}
+                                                                    style={[
+                                                                        styles.addGrid,
                                                                         {
-                                                                            album,
+                                                                            width: buttonWidth,
+                                                                            height: buttonWidth,
+                                                                            backgroundColor:
+                                                                                theme
+                                                                                    .colors
+                                                                                    .paper,
+                                                                        },
+                                                                    ]}>
+                                                                    <FAIcons
+                                                                        name="plus"
+                                                                        size={
+                                                                            30
                                                                         }
-                                                                    );
-                                                                }}
-                                                                style={[
-                                                                    styles.addGrid,
+                                                                        color={
+                                                                            theme
+                                                                                .colors
+                                                                                .text
+                                                                        }
+                                                                    />
+                                                                </AnimatedTouchable>
+                                                            ) : (
+                                                                <SongCover
+                                                                    key={
+                                                                        data.id
+                                                                    }
+                                                                    song={data}
+                                                                    navigation={
+                                                                        navigation
+                                                                    }
+                                                                    vertical
+                                                                    artist={
+                                                                        false
+                                                                    }
+                                                                    onLongPress={() => {
+                                                                        setCurrentData(
+                                                                            data
+                                                                        );
+                                                                        setBottomSheetOpen(
+                                                                            true
+                                                                        );
+                                                                    }}
+                                                                />
+                                                            )}
+                                                        </View>
+                                                    );
+                                                }
+                                            )}
+                                        </View>
+                                    </SV>
+                                </View>
+                            ) : (
+                                <View style={styles.container}>
+                                    <ScrollView bottom={5} showScroll={false}>
+                                        {sortedSongs.map((data: any) => {
+                                            if (
+                                                data.type === "extra" &&
+                                                album.type === "favorite"
+                                            )
+                                                return null;
+
+                                            return (
+                                                <View
+                                                    key={data.id}
+                                                    style={{
+                                                        marginBottom: 10,
+                                                    }}>
+                                                    {data.type === "extra" ? (
+                                                        <AnimatedTouchable
+                                                            onPress={() => {
+                                                                navigation.navigate(
+                                                                    "AddSong",
                                                                     {
-                                                                        width: buttonWidth,
-                                                                        height: buttonWidth,
+                                                                        album,
+                                                                    }
+                                                                );
+                                                            }}>
+                                                            <View
+                                                                style={[
+                                                                    styles.addList,
+                                                                    {
                                                                         backgroundColor:
                                                                             theme
                                                                                 .colors
                                                                                 .paper,
                                                                     },
                                                                 ]}>
-                                                                <FAIcons
-                                                                    name="plus"
-                                                                    size={30}
-                                                                    color={
-                                                                        theme
-                                                                            .colors
-                                                                            .text
-                                                                    }
-                                                                />
-                                                            </AnimatedTouchable>
-                                                        ) : (
+                                                                <View
+                                                                    style={
+                                                                        styles.textContainer
+                                                                    }>
+                                                                    <FAIcons
+                                                                        name="plus"
+                                                                        size={
+                                                                            30
+                                                                        }
+                                                                        color={
+                                                                            theme
+                                                                                .colors
+                                                                                .text
+                                                                        }
+                                                                    />
+                                                                    <Text
+                                                                        fontSize={
+                                                                            15
+                                                                        }
+                                                                        color={
+                                                                            theme
+                                                                                .colors
+                                                                                .text
+                                                                        }
+                                                                        bold
+                                                                        style={{
+                                                                            marginLeft: 28,
+                                                                        }}>
+                                                                        {t`Add songs`}
+                                                                    </Text>
+                                                                </View>
+                                                            </View>
+                                                        </AnimatedTouchable>
+                                                    ) : (
+                                                        <View key={data.id}>
                                                             <SongCover
                                                                 key={data.id}
                                                                 song={data}
                                                                 navigation={
                                                                     navigation
                                                                 }
-                                                                vertical
-                                                                artist={false}
+                                                                fullWidth
+                                                                icon={
+                                                                    "dots-vertical"
+                                                                }
                                                                 onLongPress={() => {
                                                                     setCurrentData(
                                                                         data
@@ -293,166 +515,81 @@ const Album = ({ route, navigation }: AlbumProps) => {
                                                                         true
                                                                     );
                                                                 }}
+                                                                action={() => {
+                                                                    setCurrentData(
+                                                                        data
+                                                                    );
+                                                                    setBottomSheetOpen(
+                                                                        true
+                                                                    );
+                                                                }}
                                                             />
-                                                        )}
-                                                    </View>
-                                                );
+                                                        </View>
+                                                    )}
+                                                </View>
+                                            );
+                                        })}
+                                    </ScrollView>
+                                </View>
+                            )
+                        ) : searchQuery === "" ? (
+                            <View style={styles.noSongs}>
+                                {album.type === "personal" ? (
+                                    <>
+                                        <Text
+                                            bold
+                                            center>{t`Let's start building this ablum`}</Text>
+                                        <Button
+                                            mode="contained"
+                                            fullWidth
+                                            bold
+                                            backgroundColor={
+                                                theme.colors.primary
                                             }
-                                        )}
-                                    </View>
-                                </SV>
+                                            upper
+                                            text={t`Add songs`}
+                                            onPress={() => {
+                                                navigation.navigate("AddSong", {
+                                                    album,
+                                                });
+                                            }}
+                                            color={theme.colors.textOnPrimary}
+                                            fontSize={14}
+                                            style={{
+                                                marginBottom: 10,
+                                                marginTop: 20,
+                                            }}
+                                        />
+                                    </>
+                                ) : (
+                                    <Text
+                                        bold
+                                        center>{t`There are no songs in this album.`}</Text>
+                                )}
                             </View>
                         ) : (
-                            <View style={styles.container}>
-                                <ScrollView bottom={5} showScroll={false}>
-                                    {sortedSongs.map((data: any) => {
-                                        if (
-                                            data.type === "extra" &&
-                                            album.type === "favorite"
-                                        )
-                                            return null;
-
-                                        return (
-                                            <View
-                                                key={data.id}
-                                                style={{ marginBottom: 10 }}>
-                                                {data.type === "extra" ? (
-                                                    <AnimatedTouchable
-                                                        onPress={() => {
-                                                            navigation.navigate(
-                                                                "AddSong",
-                                                                {
-                                                                    album,
-                                                                }
-                                                            );
-                                                        }}>
-                                                        <View
-                                                            style={[
-                                                                styles.addList,
-                                                                {
-                                                                    backgroundColor:
-                                                                        theme
-                                                                            .colors
-                                                                            .paper,
-                                                                },
-                                                            ]}>
-                                                            <View
-                                                                style={
-                                                                    styles.textContainer
-                                                                }>
-                                                                <FAIcons
-                                                                    name="plus"
-                                                                    size={30}
-                                                                    color={
-                                                                        theme
-                                                                            .colors
-                                                                            .text
-                                                                    }
-                                                                />
-                                                                <Text
-                                                                    fontSize={
-                                                                        15
-                                                                    }
-                                                                    color={
-                                                                        theme
-                                                                            .colors
-                                                                            .text
-                                                                    }
-                                                                    bold
-                                                                    style={{
-                                                                        marginLeft: 28,
-                                                                    }}>
-                                                                    {t`Add songs`}
-                                                                </Text>
-                                                            </View>
-                                                        </View>
-                                                    </AnimatedTouchable>
-                                                ) : (
-                                                    <View key={data.id}>
-                                                        <SongCover
-                                                            key={data.id}
-                                                            song={data}
-                                                            navigation={
-                                                                navigation
-                                                            }
-                                                            fullWidth
-                                                            icon={
-                                                                "dots-vertical"
-                                                            }
-                                                            onLongPress={() => {
-                                                                setCurrentData(
-                                                                    data
-                                                                );
-                                                                setBottomSheetOpen(
-                                                                    true
-                                                                );
-                                                            }}
-                                                            action={() => {
-                                                                setCurrentData(
-                                                                    data
-                                                                );
-                                                                setBottomSheetOpen(
-                                                                    true
-                                                                );
-                                                            }}
-                                                        />
-                                                    </View>
-                                                )}
-                                            </View>
-                                        );
-                                    })}
-                                </ScrollView>
+                            <View style={[styles.noSongs, { marginTop: -120 }]}>
+                                <Text
+                                    bold
+                                    center>{t`No songs match your search.`}</Text>
                             </View>
                         )
                     ) : (
-                        <View style={styles.noSongs}>
-                            {album.type === "personal" ? (
-                                <>
-                                    <Text
-                                        bold
-                                        center>{t`Let's start building this ablum`}</Text>
-                                    <Button
-                                        mode="contained"
-                                        fullWidth
-                                        bold
-                                        backgroundColor={theme.colors.primary}
-                                        upper
-                                        text={t`Add songs`}
-                                        onPress={() => {
-                                            navigation.navigate("AddSong", {
-                                                album,
-                                            });
-                                        }}
-                                        color={theme.colors.textOnPrimary}
-                                        fontSize={14}
-                                        style={{
-                                            marginBottom: 10,
-                                            marginTop: 20,
-                                        }}
-                                    />
-                                </>
-                            ) : (
-                                <Text
-                                    bold
-                                    center>{t`There are no songs in this album.`}</Text>
-                            )}
+                        <View
+                            style={{
+                                marginTop: -50,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                flex: 1,
+                            }}>
+                            <ActivityIndicator
+                                size="large"
+                                color={theme.colors.primary}
+                            />
                         </View>
-                    )
-                ) : (
-                    <View
-                        style={{
-                            marginTop: -50,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            flex: 1,
-                        }}>
-                        <ActivityIndicator
-                            size="large"
-                            color={theme.colors.primary}
-                        />
-                    </View>
-                )}
+                    )}
+                </Animated.View>
             </View>
             <DataBottomSheet
                 data={currentData}
@@ -520,8 +657,9 @@ const styles = StyleSheet.create({
     top: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between",
         alignItems: "center",
+        justifyContent: "space-between",
+        marginBottom: 10,
     },
     scrollContainer: {
         flex: 1,
@@ -573,5 +711,29 @@ const styles = StyleSheet.create({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+    },
+    searchContainer: {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1,
+        backgroundColor: "white",
+        padding: 10,
+        elevation: 5,
+    },
+    searchBar: {
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#f1f1f1",
+        borderRadius: 12,
+        paddingHorizontal: 10,
+    },
+    searchIcon: {
+        marginRight: 10,
+    },
+    input: {
+        flex: 1,
+        fontSize: 16,
     },
 });
