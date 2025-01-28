@@ -15,6 +15,7 @@ import Button from "../components/wrapers/button";
 import DataBottomSheet from "../components/wrapers/dataBottomSheet";
 import Modal from "../components/wrapers/modal";
 import ScrollView from "../components/wrapers/scrollView";
+import SkeletonText from "../components/wrapers/skeletonText";
 import Text from "../components/wrapers/text";
 import { AlbumType, DataContext, SongType, UpdateType } from "../context/data";
 import { RecentContext } from "../context/recent";
@@ -31,6 +32,7 @@ const Home = ({ navigation }: { navigation: any }) => {
         getAlbumById,
         getSongById,
         updates,
+        getFirstThreeAlbums,
     } = useContext(DataContext);
     const { refresh } = useContext(RefreshContext);
     const { user } = useContext(UserContext);
@@ -46,11 +48,10 @@ const Home = ({ navigation }: { navigation: any }) => {
         null
     );
 
-    const [bbsoSongs, setBbsoSongs] = useState<SongType[] | null>(null);
-    const [tabaraSongs, setTabaraSongs] = useState<SongType[] | null>(null);
-
     const [expended, setExpended] = useState(false);
     const [color, setColor] = useState(false);
+
+    const [albumsList, setAlbumsList] = useState<AlbumType[]>([]);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -69,29 +70,22 @@ const Home = ({ navigation }: { navigation: any }) => {
             if (songs) setRandomSongs(songs);
             else setRandomSongs([]);
 
-            const bbso = await getAlbumById(
-                "A5e7720ae-ccfe-4188-9820-e3290075bd2b"
-            );
-            if (bbso) {
-                let songsList: SongType[] = [];
-                for (let i = 0; i < bbso.songs.length; i++) {
-                    const songData = await getSongById(bbso.songs[i]);
-                    if (songData) songsList = [...songsList, songData];
+            const albumsList = await getFirstThreeAlbums();
+
+            for (let i = 0; i < albumsList.length; i++) {
+                if (albumsList[i].songs.length > 0) {
+                    let songsList: SongType[] = [];
+                    for (let j = 0; j < albumsList[i].songs.length; j++) {
+                        const songData = await getSongById(
+                            albumsList[i].songs[j]
+                        );
+                        if (songData) songsList = [...songsList, songData];
+                    }
+                    albumsList[i].songs = songsList;
                 }
-                setBbsoSongs(songsList);
             }
 
-            const tabara = await getAlbumById(
-                "A6d43abad-ae19-466a-aa76-003a77e92590"
-            );
-            if (tabara) {
-                let songsList: SongType[] = [];
-                for (let i = 0; i < tabara.songs.length; i++) {
-                    const songData = await getSongById(tabara.songs[i]);
-                    if (songData) songsList = [...songsList, songData];
-                }
-                setTabaraSongs(songsList);
-            }
+            setAlbumsList(albumsList);
         };
 
         load();
@@ -389,107 +383,105 @@ const Home = ({ navigation }: { navigation: any }) => {
                     </View>
                 )}
 
-                {bbsoSongs && bbsoSongs.length !== 0 ? (
+                {albumsList && albumsList.length !== 0 ? (
                     <View style={styles.container}>
-                        <Text fontSize={20} bold style={{ marginLeft: 20 }}>
-                            BBSO
-                        </Text>
-                        <View style={styles.songsContainer}>
-                            <ScrollView
-                                horizontal
-                                showScroll={false}
-                                top={10}
-                                bottom={10}>
-                                {bbsoSongs.map((song: SongType) => (
-                                    <View
-                                        key={song.id + "B"}
-                                        style={{ marginHorizontal: 5 }}>
-                                        <SongCover
-                                            song={song}
-                                            navigation={navigation}
-                                            vertical
-                                            onLongPress={() => {
-                                                setCurrentData(song);
-                                                setBottomSheetOpen(true);
-                                            }}
-                                        />
-                                    </View>
-                                ))}
-                            </ScrollView>
-                        </View>
+                        {albumsList.map((album: any) => (
+                            <>
+                                <Text
+                                    fontSize={20}
+                                    bold
+                                    style={{ marginLeft: 20 }}>
+                                    {album.title}
+                                </Text>
+                                <View style={styles.songsContainer}>
+                                    {album.songs &&
+                                    album.songs.length > 0 &&
+                                    typeof album.songs[0] !== "string" ? (
+                                        <ScrollView
+                                            horizontal
+                                            showScroll={false}
+                                            top={10}
+                                            bottom={10}>
+                                            {album.songs.map(
+                                                (
+                                                    song: SongType,
+                                                    index: any
+                                                ) => (
+                                                    <View
+                                                        key={song.id + "index"}
+                                                        style={{
+                                                            marginHorizontal: 5,
+                                                        }}>
+                                                        <SongCover
+                                                            song={song}
+                                                            navigation={
+                                                                navigation
+                                                            }
+                                                            vertical
+                                                            onLongPress={() => {
+                                                                setCurrentData(
+                                                                    song
+                                                                );
+                                                                setBottomSheetOpen(
+                                                                    true
+                                                                );
+                                                            }}
+                                                        />
+                                                    </View>
+                                                )
+                                            )}
+                                        </ScrollView>
+                                    ) : (
+                                        <ScrollView
+                                            horizontal
+                                            showScroll={false}
+                                            top={10}
+                                            bottom={10}>
+                                            {Array.from({ length: 10 }).map(
+                                                (_, index) => (
+                                                    <View
+                                                        key={`tabara-skeleton-${index}`}
+                                                        style={{
+                                                            marginHorizontal: 5,
+                                                        }}>
+                                                        <SkeletonCover
+                                                            vertical
+                                                        />
+                                                    </View>
+                                                )
+                                            )}
+                                        </ScrollView>
+                                    )}
+                                </View>
+                            </>
+                        ))}
                     </View>
                 ) : (
                     <View style={styles.container}>
-                        <Text fontSize={20} bold style={{ marginLeft: 20 }}>
-                            BBSO
-                        </Text>
-                        <View style={styles.songsContainer}>
-                            <ScrollView
-                                horizontal
-                                showScroll={false}
-                                top={10}
-                                bottom={10}>
-                                {Array.from({ length: 10 }).map((_, index) => (
-                                    <View
-                                        key={`bbso-skeleton-${index}`}
-                                        style={{ marginHorizontal: 5 }}>
-                                        <SkeletonCover vertical />
-                                    </View>
-                                ))}
-                            </ScrollView>
-                        </View>
-                    </View>
-                )}
-
-                {tabaraSongs && tabaraSongs.length !== 0 ? (
-                    <View style={styles.container}>
-                        <Text fontSize={20} bold style={{ marginLeft: 20 }}>
-                            Tabăra 447
-                        </Text>
-                        <View style={styles.songsContainer}>
-                            <ScrollView
-                                horizontal
-                                showScroll={false}
-                                top={10}
-                                bottom={10}>
-                                {tabaraSongs.map((song: SongType) => (
-                                    <View
-                                        key={song.id + "T"}
-                                        style={{ marginHorizontal: 5 }}>
-                                        <SongCover
-                                            song={song}
-                                            navigation={navigation}
-                                            vertical
-                                            onLongPress={() => {
-                                                setCurrentData(song);
-                                                setBottomSheetOpen(true);
-                                            }}
-                                        />
-                                    </View>
-                                ))}
-                            </ScrollView>
-                        </View>
-                    </View>
-                ) : (
-                    <View style={styles.container}>
-                        <Text fontSize={20} bold style={{ marginLeft: 20 }}>
-                            Tabăra 447
-                        </Text>
-                        <View style={styles.songsContainer}>
-                            <ScrollView
-                                horizontal
-                                showScroll={false}
-                                top={10}
-                                bottom={10}>
-                                {Array.from({ length: 10 }).map((_, index) => (
-                                    <View
-                                        key={`tabara-skeleton-${index}`}
-                                        style={{ marginHorizontal: 5 }}>
-                                        <SkeletonCover vertical />
-                                    </View>
-                                ))}
-                            </ScrollView>
-                        </View>
+                        {Array.from({ length: 3 }).map((_, index) => (
+                            <View key={index}>
+                                <SkeletonText width={150} />
+                                <View style={styles.songsContainer}>
+                                    <ScrollView
+                                        horizontal
+                                        showScroll={false}
+                                        top={10}
+                                        bottom={10}>
+                                        {Array.from({ length: 10 }).map(
+                                            (_, index) => (
+                                                <View
+                                                    key={`tabara-skeleton-${index}`}
+                                                    style={{
+                                                        marginHorizontal: 5,
+                                                    }}>
+                                                    <SkeletonCover vertical />
+                                                </View>
+                                            )
+                                        )}
+                                    </ScrollView>
+                                </View>
+                            </View>
+                        ))}
                     </View>
                 )}
             </ScrollView>

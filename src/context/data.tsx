@@ -1641,6 +1641,22 @@ export const DataProvider = ({
         setLoadingData(false);
     };
 
+    const getFirstThreeAlbums = async () => {
+        if (!albumIds) return [];
+
+        const normalAlbums: AlbumType[] = [];
+
+        for (let i = 0; i < albumIds.length; i++) {
+            const album = await getAlbumById(albumIds[i]);
+            if (album && album.type === "album") {
+                normalAlbums.push(album);
+            }
+            if (normalAlbums.length === 3) break;
+        }
+
+        return normalAlbums;
+    };
+
     return (
         <DataContext.Provider
             value={{
@@ -1687,6 +1703,7 @@ export const DataProvider = ({
                 getAllSongsOrdered,
                 reloadAllData,
                 getAllAlbumsOrdered,
+                getFirstThreeAlbums,
             }}>
             {children}
         </DataContext.Provider>
