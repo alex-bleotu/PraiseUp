@@ -1,5 +1,5 @@
 import { t } from "@lingui/macro";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import AlbumCover from "../components/items/albumCover";

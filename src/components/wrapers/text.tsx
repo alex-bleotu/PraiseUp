@@ -1,6 +1,6 @@
 import { useFonts } from "expo-font";
 import React, { ReactNode, useContext } from "react";
-import { StyleSheet, Text as Ts } from "react-native";
+import { StyleSheet, TextStyle, Text as Ts } from "react-native";
 import { ThemeContext } from "../../context/theme";
 
 interface TextProps {
@@ -8,7 +8,7 @@ interface TextProps {
     fontSize?: number;
     bold?: boolean;
     color?: string;
-    style?: any;
+    style?: TextStyle;
     center?: boolean;
     upper?: boolean;
     fontFamily?: "PatrickHand" | "monospace" | "Roboto";

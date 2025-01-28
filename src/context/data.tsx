@@ -54,6 +54,15 @@ export interface SongType {
     } | null;
 }
 
+export interface UpdateType {
+    id: string;
+    title: string;
+    cover: string | null;
+    artist: string | null;
+    type: "song" | "album";
+    updateType: "new" | "update" | "delete";
+}
+
 export const DataProvider = ({
     children,
 }: {
@@ -92,6 +101,7 @@ export const DataProvider = ({
     );
     const [favoriteIds, setFavoriteIds] = useState<string[] | null>(null);
     const [loadingData, setLoadingData] = useState<boolean>(true);
+    const [updates, setUpdates] = useState<string[] | null>(null);
 
     const loadData = async () => {
         const clear = async () => {
@@ -131,8 +141,9 @@ export const DataProvider = ({
         const readLists = async () => {
             const storedSongs = await AsyncStorage.getItem("songIds");
             const storedAlbums = await AsyncStorage.getItem("albumIds");
-            const storedPersonalAlbums =
-                await AsyncStorage.getItem("personalAlbumsIds");
+            const storedPersonalAlbums = await AsyncStorage.getItem(
+                "personalAlbumsIds"
+            );
             const storedFavorites = await AsyncStorage.getItem("favoriteIds");
 
             let sortedSongs: string[] | null = [];
@@ -461,6 +472,7 @@ export const DataProvider = ({
 
         let extraSongs = [];
         let extraAlbums = [];
+        const newUpdates: UpdateType[] = [];
 
         if (data) {
             for (let i = 0; i < data.songs.length; i++) {
@@ -469,7 +481,6 @@ export const DataProvider = ({
 
                     if (cover && !coversList.includes(cover)) {
                         const uri = await saveCover(cover);
-
                         await writeSong(
                             {
                                 ...data.songs[i],
@@ -480,7 +491,7 @@ export const DataProvider = ({
                             },
                             false
                         );
-                    } else
+                    } else {
                         await writeSong(
                             {
                                 ...data.songs[i],
@@ -490,8 +501,17 @@ export const DataProvider = ({
                             },
                             false
                         );
-
+                    }
                     extraSongs.push(data.songs[i].id);
+
+                    newUpdates.push({
+                        id: data.songs[i].id,
+                        title: data.songs[i].title,
+                        cover: data.songs[i].cover || null,
+                        type: "song",
+                        artist: data.songs[i].artist || null,
+                        updateType: "new",
+                    });
                 }
             }
 
@@ -501,7 +521,6 @@ export const DataProvider = ({
 
                     if (cover && !coversList.includes(cover)) {
                         const uri = await saveCover(cover);
-
                         await writeAlbum(
                             {
                                 ...data.albums[i],
@@ -517,7 +536,7 @@ export const DataProvider = ({
                             },
                             false
                         );
-                    } else
+                    } else {
                         await writeAlbum(
                             {
                                 ...data.albums[i],
@@ -532,81 +551,134 @@ export const DataProvider = ({
                             },
                             false
                         );
-
+                    }
                     extraAlbums.push(data.albums[i].id);
+
+                    newUpdates.push({
+                        id: data.albums[i].id,
+                        title: data.albums[i].title,
+                        cover: data.albums[i].cover || null,
+                        type: "album",
+                        artist: null,
+                        updateType: "new",
+                    });
                 }
             }
 
             for (let i = 0; i < data.updated.length; i++) {
                 if (data.updated[i].startsWith("S")) {
                     const song = await getSongById(data.updated[i]);
-
                     const newSong = data.songs.find(
                         (s: SongType) => s.id === data.updated[i]
                     );
 
-                    if (newSong.cover && !coversList.includes(newSong.cover)) {
-                        const uri = await saveCover(newSong.cover);
+                    if (
+                        newSong &&
+                        JSON.stringify(song) !== JSON.stringify(newSong)
+                    ) {
+                        if (
+                            newSong.cover &&
+                            !coversList.includes(newSong.cover)
+                        ) {
+                            const uri = await saveCover(newSong.cover);
+                            await writeSong(
+                                {
+                                    ...song,
+                                    ...newSong,
+                                    date: new Date().toISOString(),
+                                    cover: uri,
+                                },
+                                false
+                            );
+                        } else {
+                            await writeSong(
+                                {
+                                    ...song,
+                                    ...newSong,
+                                    date: new Date().toISOString(),
+                                },
+                                false
+                            );
+                        }
 
-                        await writeSong(
-                            {
-                                ...song,
-                                ...newSong,
-                                date: new Date().toISOString(),
-                                cover: uri,
-                            },
-                            false
-                        );
-                    } else
-                        await writeSong(
-                            {
-                                ...song,
-                                ...newSong,
-                                date: new Date().toISOString(),
-                            },
-                            false
-                        );
+                        newUpdates.push({
+                            id: data.updated[i],
+                            title: newSong.title,
+                            cover: newSong.cover || null,
+                            type: "song",
+                            artist: newSong.artist || null,
+                            updateType: "update",
+                        });
+                    }
                 } else if (data.updated[i].startsWith("A")) {
                     const album = await getAlbumById(data.updated[i]);
-
                     const newAlbum = data.albums.find(
                         (a: AlbumType) => a.id === data.updated[i]
                     );
 
                     if (
-                        newAlbum.cover &&
-                        !coversList.includes(newAlbum.cover)
+                        newAlbum &&
+                        JSON.stringify(album) !== JSON.stringify(newAlbum)
                     ) {
-                        const uri = await saveCover(newAlbum.cover);
+                        if (
+                            newAlbum.cover &&
+                            !coversList.includes(newAlbum.cover)
+                        ) {
+                            const uri = await saveCover(newAlbum.cover);
+                            await writeAlbum(
+                                {
+                                    ...album,
+                                    ...newAlbum,
+                                    date: new Date().toISOString(),
+                                    cover: uri,
+                                },
+                                false
+                            );
+                        } else {
+                            await writeAlbum(
+                                {
+                                    ...album,
+                                    ...newAlbum,
+                                    date: new Date().toISOString(),
+                                },
+                                false
+                            );
+                        }
 
-                        await writeAlbum(
-                            {
-                                ...album,
-                                ...newAlbum,
-                                date: new Date().toISOString(),
-                                cover: uri,
-                            },
-                            false
-                        );
-                    } else
-                        await writeAlbum(
-                            {
-                                ...album,
-                                ...newAlbum,
-                                date: new Date().toISOString(),
-                            },
-                            false
-                        );
+                        newUpdates.push({
+                            id: data.updated[i],
+                            title: newAlbum.title,
+                            cover: newAlbum.cover || null,
+                            type: "album",
+                            artist: null,
+                            updateType: "update",
+                        });
+                    }
                 }
             }
 
             for (let i = 0; i < data.deleted.length; i++) {
+                let object;
                 if (data.deleted[i].startsWith("S"))
-                    await removeId(data.deleted[i]);
+                    object = await getSongById(data.deleted[i]);
                 else if (data.deleted[i].startsWith("A"))
-                    await removeId(data.deleted[i]);
+                    object = await getAlbumById(data.deleted[i]);
 
+                if (data.deleted[i].startsWith("S")) {
+                    await removeId(data.deleted[i]);
+                } else if (data.deleted[i].startsWith("A")) {
+                    await removeId(data.deleted[i]);
+                }
                 await removeFromHistory(data.deleted[i].id);
+
+                newUpdates.push({
+                    id: data.deleted[i],
+                    title: object.title,
+                    cover: object.cover || null,
+                    type: object.type,
+                    artist: object.artist || null,
+                    updateType: "delete",
+                });
             }
 
             updateRefresh();
@@ -628,6 +700,13 @@ export const DataProvider = ({
             return prevArray;
         });
 
+        setUpdates((prevUpdates: any) => {
+            if (prevUpdates) {
+                return [...prevUpdates, ...newUpdates];
+            }
+            return newUpdates;
+        });
+
         setVersion(newVersion);
     };
 
@@ -645,8 +724,6 @@ export const DataProvider = ({
                     return prevArray;
                 });
             }
-
-            // console.log("Wrote song file", song.id);
         } catch (error) {
             console.error("Error writing song file:", error);
         }
@@ -696,8 +773,6 @@ export const DataProvider = ({
                     return prevArray;
                 });
             }
-
-            // console.log("Wrote album file", album.id);
         } catch (error) {
             console.error("Error writing album file:", error);
         }
@@ -1213,7 +1288,7 @@ export const DataProvider = ({
         searchQuery: string
     ) => {
         if (!songIds) return [];
-    
+
         const normalizeString = (str: string) => {
             return str
                 .toLowerCase()
@@ -1223,25 +1298,31 @@ export const DataProvider = ({
                 .replace(/ș/g, "s")
                 .replace(/ț/g, "t");
         };
-    
+
         const query = normalizeString(searchQuery);
-    
+
         const stripChords = (lyrics: string) => {
             return normalizeString(lyrics.replace(/\[[^\]]+\]/g, ""));
         };
-    
+
         const titleMatches: any[] = [];
         const artistMatches: any[] = [];
         const lyricsMatches: any[] = [];
-    
+
         const maxResults = 30;
-    
+
         const songPromises = songIds.map(async (id) => {
             const song = await readSong(id);
-            if (!song || titleMatches.length + artistMatches.length + lyricsMatches.length >= maxResults) {
+            if (
+                !song ||
+                titleMatches.length +
+                    artistMatches.length +
+                    lyricsMatches.length >=
+                    maxResults
+            ) {
                 return null;
             }
-    
+
             const songNameMatches = normalizeString(song.title).includes(query);
             const artistMatchesQuery = song.artist
                 ? normalizeString(song.artist).includes(query)
@@ -1249,29 +1330,37 @@ export const DataProvider = ({
             const lyricsMatchesQuery = song.lyrics
                 ? stripChords(song.lyrics).includes(query)
                 : false;
-    
+
             if (
                 (songNameMatches || artistMatchesQuery || lyricsMatchesQuery) &&
                 !album.songs.includes(song.id)
             ) {
                 if (songNameMatches && titleMatches.length < maxResults) {
                     titleMatches.push(song);
-                } else if (artistMatchesQuery && artistMatches.length < maxResults) {
+                } else if (
+                    artistMatchesQuery &&
+                    artistMatches.length < maxResults
+                ) {
                     artistMatches.push(song);
-                } else if (lyricsMatchesQuery && lyricsMatches.length < maxResults) {
+                } else if (
+                    lyricsMatchesQuery &&
+                    lyricsMatches.length < maxResults
+                ) {
                     lyricsMatches.push(song);
                 }
             }
         });
-    
+
         await Promise.all(songPromises);
-    
-        const filtered = [...titleMatches, ...artistMatches, ...lyricsMatches].slice(0, maxResults);
-    
+
+        const filtered = [
+            ...titleMatches,
+            ...artistMatches,
+            ...lyricsMatches,
+        ].slice(0, maxResults);
+
         return filtered;
     };
-    
-    
 
     const addSongToPersonalAlbum = async (album: AlbumType, song: SongType) => {
         return new Promise<AlbumType>(async (resolve) => {

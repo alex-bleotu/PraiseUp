@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Animated, {
     useAnimatedStyle,
     withTiming,
@@ -13,9 +13,10 @@ import AnimatedTouchable from "../components/wrapers/animatedTouchable";
 import Background from "../components/wrapers/background";
 import Button from "../components/wrapers/button";
 import DataBottomSheet from "../components/wrapers/dataBottomSheet";
+import Modal from "../components/wrapers/modal";
 import ScrollView from "../components/wrapers/scrollView";
 import Text from "../components/wrapers/text";
-import { AlbumType, DataContext, SongType } from "../context/data";
+import { AlbumType, DataContext, SongType, UpdateType } from "../context/data";
 import { RecentContext } from "../context/recent";
 import { RefreshContext } from "../context/refresh";
 import { ThemeContext } from "../context/theme";
@@ -29,6 +30,7 @@ const Home = ({ navigation }: { navigation: any }) => {
         getFavoriteAlbums,
         getAlbumById,
         getSongById,
+        updates,
     } = useContext(DataContext);
     const { refresh } = useContext(RefreshContext);
     const { user } = useContext(UserContext);
@@ -49,6 +51,8 @@ const Home = ({ navigation }: { navigation: any }) => {
 
     const [expended, setExpended] = useState(false);
     const [color, setColor] = useState(false);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const load = async () => {
@@ -106,6 +110,10 @@ const Home = ({ navigation }: { navigation: any }) => {
 
         load();
     }, [refresh]);
+
+    useEffect(() => {
+        if (updates) setIsModalOpen(true);
+    }, [updates]);
 
     const animatedStyle = useAnimatedStyle(() => {
         const animatedHeight = expended
@@ -496,6 +504,119 @@ const Home = ({ navigation }: { navigation: any }) => {
                     navigation.navigate("AddToAlbum", { currentData });
                 }}
             />
+
+            <Modal visible={isModalOpen} setVisible={setIsModalOpen}>
+                <View>
+                    <View
+                        style={{
+                            width: "100%",
+                            alignItems: "center",
+                            paddingHorizontal: 20,
+                            paddingVertical: 10,
+                        }}>
+                        <Text
+                            fontSize={18}
+                            color={theme.colors.textVariant}
+                            center
+                            style={{
+                                width: 220,
+                                textAlign: "center",
+                            }}>{t`Updates`}</Text>
+                    </View>
+                </View>
+                <View>
+                    <ScrollView bottom={15} showScroll={false}>
+                        {updates && updates.length > 0 ? (
+                            updates.map((update: UpdateType, index: any) => (
+                                <View
+                                    key={`update-${index}`}
+                                    style={{
+                                        flexDirection: "row",
+                                        alignItems: "center",
+                                        marginVertical: 5,
+                                        paddingHorizontal: 10,
+                                    }}>
+                                    {update.type === "song" ? (
+                                        <SongCover
+                                            song={
+                                                {
+                                                    id: update.id,
+                                                    type: update.type,
+                                                    title: update.title,
+                                                    artist: update.artist,
+                                                    cover: update.cover,
+                                                } as SongType
+                                            }
+                                            navigation={navigation}
+                                            fullWidth={true}
+                                        />
+                                    ) : (
+                                        <AlbumCover
+                                            album={{
+                                                id: update.id,
+                                                type: update.type,
+                                                title: update.title,
+                                                cover: update.cover,
+                                            }}
+                                            navigation={navigation}
+                                            fullWidth={true}
+                                        />
+                                    )}
+                                    <Text
+                                        style={{
+                                            fontSize: 12,
+                                            color: theme.colors.primary,
+                                            marginLeft: 5,
+                                        }}>
+                                        {update.updateType === "new"
+                                            ? t`New`
+                                            : update.updateType === "update"
+                                            ? t`Updated`
+                                            : t`Deleted`}
+                                    </Text>
+                                </View>
+                            ))
+                        ) : (
+                            <Text
+                                fontSize={16}
+                                center
+                                style={{
+                                    color: theme.colors.textVariant,
+                                    marginVertical: 10,
+                                }}>
+                                {t`No updates available`}
+                            </Text>
+                        )}
+                    </ScrollView>
+                </View>
+
+                <View
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginTop: 30,
+                    }}>
+                    <View>
+                        <TouchableOpacity
+                            onPress={() => {
+                                setIsModalOpen(false);
+                            }}
+                            activeOpacity={theme.activeOpacity}
+                            style={[
+                                styles.button,
+                                {
+                                    backgroundColor: theme.colors.darkPaper,
+                                },
+                            ]}>
+                            <Text fontSize={14} bold upper center>
+                                {t`Ok`}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
         </Background>
     );
 };
@@ -529,5 +650,11 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
+    },
+    button: {
+        paddingHorizontal: 20,
+        paddingVertical: 15,
+        borderRadius: 12,
+        justifyContent: "center",
     },
 });
