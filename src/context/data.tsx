@@ -141,9 +141,8 @@ export const DataProvider = ({
         const readLists = async () => {
             const storedSongs = await AsyncStorage.getItem("songIds");
             const storedAlbums = await AsyncStorage.getItem("albumIds");
-            const storedPersonalAlbums = await AsyncStorage.getItem(
-                "personalAlbumsIds"
-            );
+            const storedPersonalAlbums =
+                await AsyncStorage.getItem("personalAlbumsIds");
             const storedFavorites = await AsyncStorage.getItem("favoriteIds");
 
             let sortedSongs: string[] | null = [];
@@ -724,6 +723,8 @@ export const DataProvider = ({
                     return prevArray;
                 });
             }
+
+            console.log("Wrote song file", song.id);
         } catch (error) {
             console.error("Error writing song file:", error);
         }
@@ -773,6 +774,8 @@ export const DataProvider = ({
                     return prevArray;
                 });
             }
+
+            console.log("Wrote album file", album.id);
         } catch (error) {
             console.error("Error writing album file:", error);
         }
@@ -1665,6 +1668,7 @@ export const DataProvider = ({
                 personalAlbumsIds,
                 favoriteIds,
                 loadingData,
+                updates,
                 updateDate,
                 readSong,
                 readAlbum,

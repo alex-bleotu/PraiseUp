@@ -29,7 +29,6 @@ const Home = ({ navigation }: { navigation: any }) => {
         getRandomSongs,
         getFavoriteSongsAlbum,
         getFavoriteAlbums,
-        getAlbumById,
         getSongById,
         updates,
         getFirstThreeAlbums,
@@ -54,6 +53,7 @@ const Home = ({ navigation }: { navigation: any }) => {
     const [albumsList, setAlbumsList] = useState<AlbumType[]>([]);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalOpened, setModalOpened] = useState(false);
 
     useEffect(() => {
         const load = async () => {
@@ -71,6 +71,8 @@ const Home = ({ navigation }: { navigation: any }) => {
             else setRandomSongs([]);
 
             const albumsList = await getFirstThreeAlbums();
+
+            if (albumsList.length === 0) return;
 
             for (let i = 0; i < albumsList.length; i++) {
                 if (albumsList[i].songs.length > 0) {
@@ -106,7 +108,9 @@ const Home = ({ navigation }: { navigation: any }) => {
     }, [refresh]);
 
     useEffect(() => {
-        if (updates) setIsModalOpen(true);
+        if (updates && updates.length > 0 && !modalOpened) {
+            setIsModalOpen(true), setModalOpened(true);
+        }
     }, [updates]);
 
     const animatedStyle = useAnimatedStyle(() => {
@@ -161,13 +165,13 @@ const Home = ({ navigation }: { navigation: any }) => {
                 </AnimatedTouchable>
             </View>
             <ScrollView
-                bottom={15}
+                bottom={5}
                 showScroll={false}
                 onScroll={() => {
                     setExpended(false);
                 }}>
                 <View style={styles.recent}>
-                    {recent.length > 0
+                    {recent && recent.length > 0
                         ? recent.map(
                               (data: SongType | AlbumType, index: number) => {
                                   if (index > 2) return null;
@@ -385,8 +389,8 @@ const Home = ({ navigation }: { navigation: any }) => {
 
                 {albumsList && albumsList.length !== 0 ? (
                     <View style={styles.container}>
-                        {albumsList.map((album: any) => (
-                            <>
+                        {albumsList.map((album: any, index: any) => (
+                            <View key={index} style={{ marginBottom: 20 }}>
                                 <Text
                                     fontSize={20}
                                     bold
@@ -453,14 +457,16 @@ const Home = ({ navigation }: { navigation: any }) => {
                                         </ScrollView>
                                     )}
                                 </View>
-                            </>
+                            </View>
                         ))}
                     </View>
                 ) : (
                     <View style={styles.container}>
                         {Array.from({ length: 3 }).map((_, index) => (
-                            <View key={index}>
-                                <SkeletonText width={150} />
+                            <View key={index} style={{ marginBottom: 20 }}>
+                                <View style={{ marginLeft: 15 }}>
+                                    <SkeletonText width={150} />
+                                </View>
                                 <View style={styles.songsContainer}>
                                     <ScrollView
                                         horizontal
@@ -498,114 +504,124 @@ const Home = ({ navigation }: { navigation: any }) => {
             />
 
             <Modal visible={isModalOpen} setVisible={setIsModalOpen}>
-                <View>
-                    <View
-                        style={{
-                            width: "100%",
-                            alignItems: "center",
-                            paddingHorizontal: 20,
-                            paddingVertical: 10,
-                        }}>
-                        <Text
-                            fontSize={18}
-                            color={theme.colors.textVariant}
-                            center
-                            style={{
-                                width: 220,
-                                textAlign: "center",
-                            }}>{t`Updates`}</Text>
-                    </View>
-                </View>
-                <View>
-                    <ScrollView bottom={15} showScroll={false}>
-                        {updates && updates.length > 0 ? (
-                            updates.map((update: UpdateType, index: any) => (
-                                <View
-                                    key={`update-${index}`}
-                                    style={{
-                                        flexDirection: "row",
-                                        alignItems: "center",
-                                        marginVertical: 5,
-                                        paddingHorizontal: 10,
-                                    }}>
-                                    {update.type === "song" ? (
-                                        <SongCover
-                                            song={
-                                                {
-                                                    id: update.id,
-                                                    type: update.type,
-                                                    title: update.title,
-                                                    artist: update.artist,
-                                                    cover: update.cover,
-                                                } as SongType
-                                            }
-                                            navigation={navigation}
-                                            fullWidth={true}
-                                        />
-                                    ) : (
-                                        <AlbumCover
-                                            album={{
-                                                id: update.id,
-                                                type: update.type,
-                                                title: update.title,
-                                                cover: update.cover,
-                                            }}
-                                            navigation={navigation}
-                                            fullWidth={true}
-                                        />
-                                    )}
-                                    <Text
-                                        style={{
-                                            fontSize: 12,
-                                            color: theme.colors.primary,
-                                            marginLeft: 5,
-                                        }}>
-                                        {update.updateType === "new"
-                                            ? t`New`
-                                            : update.updateType === "update"
-                                            ? t`Updated`
-                                            : t`Deleted`}
-                                    </Text>
-                                </View>
-                            ))
-                        ) : (
-                            <Text
-                                fontSize={16}
-                                center
-                                style={{
-                                    color: theme.colors.textVariant,
-                                    marginVertical: 10,
-                                }}>
-                                {t`No updates available`}
-                            </Text>
-                        )}
-                    </ScrollView>
-                </View>
-
                 <View
                     style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        marginTop: 30,
+                        minHeight: 200,
+                        width: 275,
+                        overflow: "hidden",
+                        position: "relative",
                     }}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            setIsModalOpen(false);
+                        }}
+                        activeOpacity={theme.activeOpacity}
+                        style={{
+                            position: "absolute",
+                            right: 0,
+                            zIndex: 1000,
+                        }}>
+                        <MCIcons
+                            name={"close"}
+                            size={30}
+                            color={theme.colors.textVariant}
+                        />
+                    </TouchableOpacity>
                     <View>
-                        <TouchableOpacity
-                            onPress={() => {
-                                setIsModalOpen(false);
-                            }}
-                            activeOpacity={theme.activeOpacity}
-                            style={[
-                                styles.button,
-                                {
-                                    backgroundColor: theme.colors.darkPaper,
-                                },
-                            ]}>
-                            <Text fontSize={14} bold upper center>
-                                {t`Ok`}
+                        <View
+                            style={{
+                                width: "100%",
+                                alignItems: "center",
+                                paddingHorizontal: 20,
+                                paddingVertical: 10,
+                                marginBottom: 10,
+                            }}>
+                            <Text
+                                fontSize={20}
+                                color={theme.colors.textVariant}
+                                center
+                                bold
+                                style={{
+                                    width: 220,
+                                    textAlign: "center",
+                                }}>{t`Updates`}</Text>
+                        </View>
+                    </View>
+                    <View style={{ marginBottom: 10 }}>
+                        <View>
+                            {updates && updates.length > 0 ? (
+                                updates
+                                    .slice(0, 15)
+                                    .map((update: UpdateType, index: any) => (
+                                        <View
+                                            key={`update-${index}`}
+                                            style={{
+                                                flexDirection: "row",
+                                                alignItems: "center",
+                                                marginVertical: 5,
+                                                paddingHorizontal: 10,
+                                            }}>
+                                            <Text
+                                                bold
+                                                style={{
+                                                    fontSize: 12,
+                                                    color: theme.colors
+                                                        .textVariant,
+                                                }}>
+                                                {update.title.length > 20
+                                                    ? update.title.substring(
+                                                          0,
+                                                          20
+                                                      ) + "..."
+                                                    : update.title}
+                                            </Text>
+                                            <Text
+                                                bold
+                                                style={{
+                                                    fontSize: 12,
+                                                    marginHorizontal: 10,
+                                                }}>
+                                                -
+                                            </Text>
+                                            <Text
+                                                bold
+                                                color={theme.colors.primary}
+                                                style={{
+                                                    fontSize: 12,
+                                                }}>
+                                                {update.updateType === "new"
+                                                    ? t`New`
+                                                    : update.updateType ===
+                                                        "update"
+                                                      ? t`Updated`
+                                                      : t`Deleted`}
+                                            </Text>
+                                        </View>
+                                    ))
+                            ) : (
+                                <Text
+                                    fontSize={16}
+                                    center
+                                    style={{
+                                        color: theme.colors.textVariant,
+                                        marginVertical: 10,
+                                    }}>
+                                    {t`No updates available`}
+                                </Text>
+                            )}
+                        </View>
+                        {updates && updates.length > 15 && (
+                            <Text
+                                bold
+                                color={theme.colors.textVariant}
+                                style={{ marginLeft: 10, marginTop: -5 }}>
+                                {t`And` +
+                                    " " +
+                                    (updates.length - 15) +
+                                    " " +
+                                    t`more`}
                             </Text>
-                        </TouchableOpacity>
+                        )}
                     </View>
                 </View>
             </Modal>
@@ -642,11 +658,5 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-    },
-    button: {
-        paddingHorizontal: 20,
-        paddingVertical: 15,
-        borderRadius: 12,
-        justifyContent: "center",
     },
 });

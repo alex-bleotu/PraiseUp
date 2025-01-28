@@ -1,26 +1,20 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useEffect, useRef } from "react";
-import {
-    Animated,
-    Dimensions,
-    DimensionValue,
-    StyleSheet,
-    View,
-} from "react-native";
+import { Animated, Dimensions, StyleSheet, View } from "react-native";
 import tinycolor from "tinycolor2";
 import { ThemeContext } from "../../context/theme";
 
 interface SkeletonTextProps {
     lines?: number;
     lineHeight?: number;
-    width?: string | number;
+    width?: number;
     verticalSpacing?: number;
 }
 
 const SkeletonText = ({
-    lines = 3,
-    lineHeight = 16,
-    width = "80%",
+    lines = 1,
+    lineHeight = 22,
+    width = 150,
     verticalSpacing = 8,
 }: SkeletonTextProps) => {
     const { theme, themeType, systemTheme } = React.useContext(ThemeContext);
@@ -88,9 +82,7 @@ const SkeletonText = ({
                             marginBottom:
                                 index < lines - 1 ? verticalSpacing : 0,
                             backgroundColor: defaultColor,
-                            width: (typeof width === "number"
-                                ? `${width}%`
-                                : width) as DimensionValue,
+                            width: width,
                         },
                     ]}>
                     <Animated.View

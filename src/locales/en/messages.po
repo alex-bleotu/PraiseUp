@@ -25,6 +25,10 @@ msgstr "(normal)"
 msgid "(Romanian)"
 msgstr "(Romanian)"
 
+#: src/navigation/appContainer.tsx:36
+msgid "A new update is available. The app will reload to apply the update."
+msgstr "A new update is available. The app will reload to apply the update."
+
 #: src/pages/settings.tsx:850
 #: src/pages/settings.tsx:890
 msgid ""
@@ -76,7 +80,7 @@ msgstr "Account details updated successfully!"
 msgid "Add songs"
 msgstr "Add songs"
 
-#: src/pages/addToAlbum.tsx:156
+#: src/pages/addToAlbum.tsx:152
 msgid "Add to"
 msgstr "Add to"
 
@@ -95,7 +99,7 @@ msgid "Album Name"
 msgstr "Album Name"
 
 #: src/pages/allAlbums.tsx:74
-#: src/pages/home.tsx:277
+#: src/pages/home.tsx:283
 msgid "Albums"
 msgstr "Albums"
 
@@ -119,6 +123,10 @@ msgstr "Alphabetical"
 #: src/pages/onboard.tsx:140
 msgid "Already have an account?"
 msgstr "Already have an account?"
+
+#: src/pages/home.tsx:618
+msgid "And"
+msgstr "And"
 
 #: src/components/wrapers/dataBottomSheet.tsx:457
 msgid "Are you sure you want to delete this album?"
@@ -202,7 +210,7 @@ msgstr "Create album"
 msgid "Create an account to save your progress and access your data on multiple devices."
 msgstr "Create an account to save your progress and access your data on multiple devices."
 
-#: src/pages/addToAlbum.tsx:218
+#: src/pages/addToAlbum.tsx:214
 msgid "Create one to add songs to it."
 msgstr "Create one to add songs to it."
 
@@ -226,6 +234,10 @@ msgstr "Delete Account"
 #: src/components/wrapers/dataBottomSheet.tsx:301
 msgid "Delete album"
 msgstr "Delete album"
+
+#: src/pages/home.tsx:597
+msgid "Deleted"
+msgstr "Deleted"
 
 #: src/pages/settings.tsx:1155
 msgid "Deleting your account will lose all your data."
@@ -266,7 +278,7 @@ msgstr "Exit"
 msgid "Exit Guest Mode"
 msgstr "Exit Guest Mode"
 
-#: src/pages/home.tsx:249
+#: src/pages/home.tsx:255
 msgid "Explore everything PraiseUp has to offer!"
 msgstr "Explore everything PraiseUp has to offer!"
 
@@ -274,7 +286,7 @@ msgstr "Explore everything PraiseUp has to offer!"
 msgid "Favorite"
 msgstr "Favorite"
 
-#: src/pages/home.tsx:356
+#: src/pages/home.tsx:362
 msgid "Favorite albums"
 msgstr "Favorite albums"
 
@@ -307,7 +319,7 @@ msgstr "Give your album a name"
 msgid "glo[F#m][E]ri[D]fy"
 msgstr "glo[F#m][E]ri[D]fy"
 
-#: src/pages/home.tsx:152
+#: src/pages/home.tsx:158
 msgid "Guest"
 msgstr "Guest"
 
@@ -394,7 +406,7 @@ msgstr "Log in"
 msgid "Log Out"
 msgstr "Log Out"
 
-#: src/pages/home.tsx:235
+#: src/pages/home.tsx:241
 msgid "Looking for something else?"
 msgstr "Looking for something else?"
 
@@ -418,6 +430,10 @@ msgstr "Message failed to send!"
 msgid "Message sent successfully!"
 msgstr "Message sent successfully!"
 
+#: src/pages/home.tsx:622
+msgid "more"
+msgstr "more"
+
 #: src/components/wrapers/dataBottomSheet.tsx:432
 msgid "More info"
 msgstr "More info"
@@ -435,6 +451,10 @@ msgstr "Name is too short!"
 #: src/pages/register.tsx:224
 msgid "Network error. Please try again later."
 msgstr "Network error. Please try again later."
+
+#: src/pages/home.tsx:593
+msgid "New"
+msgstr "New"
 
 #: src/pages/resetPassword.tsx:70
 msgid "New Password"
@@ -459,6 +479,10 @@ msgstr "No song or album matches your search."
 #: src/pages/album.tsx:574
 msgid "No songs match your search."
 msgstr "No songs match your search."
+
+#: src/pages/home.tsx:609
+msgid "No updates available"
+msgstr "No updates available"
 
 #: src/pages/resetPassword.tsx:61
 msgid "Old Password"
@@ -551,7 +575,7 @@ msgstr "Reset your password"
 msgid "Save"
 msgstr "Save"
 
-#: src/pages/addToAlbum.tsx:100
+#: src/pages/addToAlbum.tsx:96
 msgid "Saved in"
 msgstr "Saved in"
 
@@ -613,7 +637,7 @@ msgid "Something went wrong."
 msgstr "Something went wrong."
 
 #: src/pages/allSongs.tsx:75
-#: src/pages/home.tsx:260
+#: src/pages/home.tsx:266
 msgid "Songs"
 msgstr "Songs"
 
@@ -621,8 +645,8 @@ msgstr "Songs"
 msgid "Start searching for your favorite songs."
 msgstr "Start searching for your favorite songs."
 
-#: src/pages/home.tsx:303
-#: src/pages/home.tsx:333
+#: src/pages/home.tsx:309
+#: src/pages/home.tsx:339
 msgid "Suggested for you"
 msgstr "Suggested for you"
 
@@ -679,6 +703,10 @@ msgstr "Type your"
 msgid "Unknown Artist"
 msgstr "Unknown Artist"
 
+#: src/navigation/appContainer.tsx:35
+msgid "Update Available"
+msgstr "Update Available"
+
 #: src/pages/account.tsx:83
 msgid "Update details"
 msgstr "Update details"
@@ -686,6 +714,14 @@ msgstr "Update details"
 #: src/pages/account.tsx:29
 msgid "Update your account details here."
 msgstr "Update your account details here."
+
+#: src/pages/home.tsx:596
+msgid "Updated"
+msgstr "Updated"
+
+#: src/pages/home.tsx:547
+msgid "Updates"
+msgstr "Updates"
 
 #: src/pages/settings.tsx:844
 #: src/pages/song.tsx:132
@@ -712,7 +748,7 @@ msgstr "Welcome to Praise Up, a platform dedicated to exploring and celebrating 
 msgid "Worship Made Easy"
 msgstr "Worship Made Easy"
 
-#: src/pages/addToAlbum.tsx:212
+#: src/pages/addToAlbum.tsx:208
 msgid "You don't have any albums"
 msgstr "You don't have any albums"
 

@@ -1,6 +1,8 @@
 import { t } from "@lingui/macro";
+import * as SplashScreenExpo from "expo-splash-screen";
+import * as Updates from "expo-updates";
 import React, { useContext, useEffect, useState } from "react";
-import { Appearance, View } from "react-native";
+import { Alert, Appearance, View } from "react-native";
 import { DataContext } from "../context/data";
 import { HistoryContext } from "../context/history";
 import { LoadingContext } from "../context/loading";
@@ -8,10 +10,8 @@ import { RecentContext } from "../context/recent";
 import { RefreshContext } from "../context/refresh";
 import { ThemeContext } from "../context/theme";
 import { UserContext } from "../context/user";
-import Loading from "../pages/loading";
-import AppNavigation from "./appNavigation";
 import SplashScreen from "../pages/splashScreen";
-import * as SplashScreenExpo from "expo-splash-screen";
+import AppNavigation from "./appNavigation";
 
 const AppContainer = () => {
     const [loading, setLoading] = useState<boolean>(false);
@@ -25,6 +25,33 @@ const AppContainer = () => {
     const { recent, loadRecent } = useContext(RecentContext);
     const { history, loadHistory } = useContext(HistoryContext);
     const { syncLoading } = useContext(LoadingContext);
+
+    useEffect(() => {
+        const checkForUpdates = async () => {
+            try {
+                const update = await Updates.checkForUpdateAsync();
+                if (update.isAvailable) {
+                    Alert.alert(
+                        t`Update Available`,
+                        t`A new update is available. The app will reload to apply the update.`,
+                        [
+                            {
+                                text: "OK",
+                                onPress: async () => {
+                                    await Updates.fetchUpdateAsync();
+                                    await Updates.reloadAsync();
+                                },
+                            },
+                        ]
+                    );
+                }
+            } catch (error) {
+                console.error("Error checking for updates:", error);
+            }
+        };
+
+        checkForUpdates();
+    }, []);
 
     useEffect(() => {
         const load = async () => {

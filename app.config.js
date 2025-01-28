@@ -9,6 +9,9 @@ export default ({ config }) => ({
     icon: "./assets/icon.png",
     userInterfaceStyle: "automatic",
     scheme: "praiseup",
+    updates: {
+        fallbackToCacheTimeout: 0,
+    },
     ios: {
         supportsTablet: true,
         bundleIdentifier: "com.praiseup.app",
