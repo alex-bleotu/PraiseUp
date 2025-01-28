@@ -518,13 +518,14 @@ const Home = ({ navigation }: { navigation: any }) => {
                         activeOpacity={theme.activeOpacity}
                         style={{
                             position: "absolute",
-                            right: 0,
+                            right: -10,
+                            top: -10,
                             zIndex: 1000,
                             padding: 10,
                         }}>
                         <MCIcons
                             name={"close"}
-                            size={30}
+                            size={28}
                             color={theme.colors.textVariant}
                         />
                     </TouchableOpacity>
@@ -538,7 +539,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                                 marginBottom: 10,
                             }}>
                             <Text
-                                fontSize={20}
+                                fontSize={18}
                                 color={theme.colors.textVariant}
                                 center
                                 bold
@@ -569,10 +570,10 @@ const Home = ({ navigation }: { navigation: any }) => {
                                                     color: theme.colors
                                                         .textVariant,
                                                 }}>
-                                                {update.title.length > 20
+                                                {update.title.length > 19
                                                     ? update.title.substring(
                                                           0,
-                                                          20
+                                                          19
                                                       ) + "..."
                                                     : update.title}
                                             </Text>
