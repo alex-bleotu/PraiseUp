@@ -520,6 +520,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                             position: "absolute",
                             right: 0,
                             zIndex: 1000,
+                            padding: 10,
                         }}>
                         <MCIcons
                             name={"close"}
