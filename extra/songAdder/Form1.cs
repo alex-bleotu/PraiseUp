@@ -304,7 +304,7 @@ namespace PraiseUp {
             }
 
             using (var client = new HttpClient()) {
-                client.DefaultRequestHeaders.Add("Authorization", $"token {githubToken}");
+                client.DefaultRequestHeaders.Add("Authorization", $"Bearer {githubToken}");
                 client.DefaultRequestHeaders.Add("User-Agent", "CSharp-GistUploader");
 
                 var response = await client.GetAsync("https://api.github.com/gists");
