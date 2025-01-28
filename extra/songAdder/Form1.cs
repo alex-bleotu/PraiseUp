@@ -680,6 +680,8 @@ namespace PraiseUp {
                 string filePath = "github_oauth_token.txt";
 
                 File.WriteAllText(filePath, textBox12.Text);
+
+                token = textBox12.Text;
             }
         }
     }
