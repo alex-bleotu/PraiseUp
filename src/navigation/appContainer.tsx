@@ -1,6 +1,5 @@
 import { t } from "@lingui/macro";
 import * as SplashScreenExpo from "expo-splash-screen";
-import * as Updates from "expo-updates";
 import React, { useContext, useEffect, useState } from "react";
 import { Alert, Appearance, View } from "react-native";
 import { DataContext } from "../context/data";
@@ -29,7 +28,8 @@ const AppContainer = () => {
     useEffect(() => {
         const checkForUpdates = async () => {
             try {
-                const update = await Updates.checkForUpdateAsync();
+                // const update = await Updates.checkForUpdateAsync();
+                const update = { isAvailable: false };
                 if (update.isAvailable) {
                     Alert.alert(
                         t`Update Available`,
@@ -38,8 +38,8 @@ const AppContainer = () => {
                             {
                                 text: "OK",
                                 onPress: async () => {
-                                    await Updates.fetchUpdateAsync();
-                                    await Updates.reloadAsync();
+                                    // await Updates.fetchUpdateAsync();
+                                    // await Updates.reloadAsync();
                                 },
                             },
                         ]

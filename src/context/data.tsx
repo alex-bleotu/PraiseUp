@@ -131,7 +131,7 @@ export const DataProvider = ({
         };
 
         const firstLoad = async () => {
-            await AsyncStorage.clear();
+            await clear();
 
             await addData();
 
@@ -234,42 +234,33 @@ export const DataProvider = ({
 
             if (user === null) {
                 setLoadingData(false);
+                SplashScreen.hideAsync();
                 return;
             }
-
             setLoadingData(true);
-
             const networkState = await Network.getNetworkStateAsync();
             const hasInternet = networkState.isConnected;
-
             const lists = await readLists();
-
             const loaded = await AsyncStorage.getItem("loaded");
-
             if (hasInternet) {
                 if (!(await checkIfUserExists())) {
                     await auth.signOut();
                     await clearData();
                     setUser(null);
-
                     SplashScreen.hideAsync();
                     return;
                 }
-
                 if (loaded === null) await firstLoad();
                 else await checkForUpdates(lists.songs, lists.albums);
             } else console.warn("No internet connection");
-
             if (user) {
                 filterHistory();
-
                 (async () => {
                     try {
                         if (hasInternet) {
                             await syncFavorites(lists.favorites);
                             await syncPersonalAlbums(lists.personalAlbums);
                         }
-
                         updateRefresh();
                     } catch (error) {
                         console.error("Error syncing data:", error);
@@ -280,6 +271,8 @@ export const DataProvider = ({
             } else {
                 setLoadingData(false);
             }
+
+            SplashScreen.hideAsync();
         };
 
         initialize();

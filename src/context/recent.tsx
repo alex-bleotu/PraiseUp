@@ -46,7 +46,7 @@ export const RecentProvider = ({
 
             const newRecent = await Promise.all(
                 recent.map(async (item) => {
-                    if (item.id.startsWith("P")) {
+                    if (item && item.id.startsWith("P")) {
                         if (
                             personalAlbumsIds.find(
                                 (id: string) => id === item.id
