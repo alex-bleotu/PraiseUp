@@ -5,8 +5,8 @@ import OnboardItem from "../components/items/onboardItem";
 import Background from "../components/wrapers/background";
 import Button from "../components/wrapers/button";
 import Paginator from "../components/wrapers/paginator";
-import { ThemeContext } from "../context/theme";
 import { LanguageContext } from "../context/language";
+import { ThemeContext } from "../context/theme";
 
 function Onboard({ navigation }: { navigation: any }) {
     const { theme, themeType, systemTheme } = useContext(ThemeContext);
@@ -30,7 +30,11 @@ function Onboard({ navigation }: { navigation: any }) {
         };
     };
 
-    const getImage = (themeType: string, language: 'en' | 'ro', imageName: keyof ImageType) => {
+    const getImage = (
+        themeType: string,
+        language: "en" | "ro",
+        imageName: keyof ImageType
+    ) => {
         const images: ImageType = {
             home: {
                 light: {
@@ -63,10 +67,17 @@ function Onboard({ navigation }: { navigation: any }) {
                 },
             },
         };
-    
-        const selectedTheme = themeType === "light" || (themeType === "system" && systemTheme === "light") ? "light" : "dark";
-    
-        return images[imageName]?.[selectedTheme]?.[language] || images[imageName]?.[selectedTheme]?.en;
+
+        const selectedTheme =
+            themeType === "light" ||
+            (themeType === "system" && systemTheme === "light")
+                ? "light"
+                : "dark";
+
+        return (
+            images[imageName]?.[selectedTheme]?.[language] ||
+            images[imageName]?.[selectedTheme]?.en
+        );
     };
 
     const slides = useMemo(

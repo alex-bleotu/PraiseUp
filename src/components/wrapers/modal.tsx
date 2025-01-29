@@ -79,14 +79,14 @@ const Modal = ({
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "rgba(0,0,0,0.65)",
+        backgroundColor: "rgba(0,0,0,0.75)",
         justifyContent: "center",
         alignItems: "center",
         padding: 10,
     },
     modal: {
         borderRadius: 20,
-        padding: 20,
+        padding: 15,
         shadowOffset: {
             width: 0,
             height: 2,

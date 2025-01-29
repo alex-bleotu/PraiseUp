@@ -187,8 +187,8 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                                         ? theme.colors.darkGrey
                                         : theme.colors.white
                                     : themeType === "light"
-                                    ? theme.colors.white
-                                    : theme.colors.darkGrey
+                                      ? theme.colors.white
+                                      : theme.colors.darkGrey
                             }
                             color={
                                 themeType === "system"
@@ -196,8 +196,8 @@ const Login = ({ navigation, route }: { navigation: any; route: any }) => {
                                         ? theme.colors.white
                                         : theme.colors.black
                                     : themeType === "light"
-                                    ? theme.colors.black
-                                    : theme.colors.white
+                                      ? theme.colors.black
+                                      : theme.colors.white
                             }
                             loading={googleLoading}
                             text={t`Continue with Google`}

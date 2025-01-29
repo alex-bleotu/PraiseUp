@@ -93,6 +93,8 @@ export const AuthProvider = ({
                 await syncFavorites(response.user);
                 await syncPersonalAlbums(response.user);
 
+                setSyncLoading(false);
+
                 resolve(response.user);
             } catch (error) {
                 reject(error);
@@ -387,6 +389,7 @@ export const AuthProvider = ({
                 await syncPersonalAlbums(response.user);
 
                 setSyncLoading(false);
+
                 resolve(response.user);
             } catch (error: any) {
                 if (error.code === statusCodes.SIGN_IN_CANCELLED) {

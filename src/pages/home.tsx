@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
 import { t } from "@lingui/macro";
 import React, { useContext, useEffect, useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
 import Animated, {
     useAnimatedStyle,
     withTiming,
@@ -36,6 +36,8 @@ const Home = ({ navigation }: { navigation: any }) => {
     const { refresh } = useContext(RefreshContext);
     const { user } = useContext(UserContext);
     const { theme } = useContext(ThemeContext);
+
+    const screenWidth = Dimensions.get("window").width;
 
     const [randomSongs, setRandomSongs] = useState<SongType[] | null>(null);
     const [favoriteAlbums, setFavoriteAlbums] = useState<AlbumType[] | null>(
@@ -507,7 +509,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                 <View
                     style={{
                         minHeight: 200,
-                        width: 275,
+                        width: screenWidth - 50,
                         overflow: "hidden",
                         position: "relative",
                     }}>
@@ -560,8 +562,8 @@ const Home = ({ navigation }: { navigation: any }) => {
                                             style={{
                                                 flexDirection: "row",
                                                 alignItems: "center",
-                                                marginVertical: 5,
-                                                paddingHorizontal: 10,
+                                                marginVertical: 3,
+                                                paddingHorizontal: 5,
                                             }}>
                                             <Text
                                                 bold
@@ -616,7 +618,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                             <Text
                                 bold
                                 color={theme.colors.textVariant}
-                                style={{ marginLeft: 10, marginTop: -5 }}>
+                                style={{ marginLeft: 10 }}>
                                 {t`And` +
                                     " " +
                                     (updates.length - 15) +

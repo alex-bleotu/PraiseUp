@@ -233,8 +233,9 @@ export const DataProvider = ({
             // await clear();
 
             if (user === null) {
-                setLoadingData(false);
                 SplashScreen.hideAsync();
+                await clear();
+                setLoadingData(false);
                 return;
             }
             setLoadingData(true);
@@ -1401,7 +1402,7 @@ export const DataProvider = ({
     const clearData = async () => {
         if (songIds && albumIds && personalAlbumsIds && favoriteIds)
             for (let i = 0; i < personalAlbumsIds.length; i++)
-                await AsyncStorage.removeItem(personalAlbumsIds[i]);
+                AsyncStorage.removeItem(personalAlbumsIds[i]);
 
         setPersonalAlbumsIds([]);
         setFavoriteIds([]);
@@ -1410,16 +1411,7 @@ export const DataProvider = ({
         resetTutorial();
         resetConstants();
 
-        await AsyncStorage.multiRemove([
-            "version",
-            "recent",
-            "user",
-            "favoriteIds",
-            "personalAlbumsIds",
-        ]);
-
-        await resetData();
-        await updateData();
+        resetData();
 
         updateRefresh();
     };
