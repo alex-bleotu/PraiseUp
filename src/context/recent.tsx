@@ -152,7 +152,6 @@ export const RecentProvider = ({
 
         while (newRecent.length < 6) {
             const newSong = (await getRandom(1))[0];
-            if (newSong === undefined) continue;
             if (newRecent.find((item: any) => item.id === newSong.id)) continue;
             newRecent.push(newSong);
         }

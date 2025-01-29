@@ -234,7 +234,6 @@ export const DataProvider = ({
 
             if (user === null) {
                 SplashScreen.hideAsync();
-                await clear();
                 setLoadingData(false);
                 return;
             }
@@ -1410,6 +1409,14 @@ export const DataProvider = ({
 
         resetTutorial();
         resetConstants();
+
+        await AsyncStorage.multiRemove([
+            "version",
+            "recent",
+            "user",
+            "favoriteIds",
+            "personalAlbumsIds",
+        ]);
 
         resetData();
 

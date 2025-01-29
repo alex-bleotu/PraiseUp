@@ -509,7 +509,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                 <View
                     style={{
                         minHeight: 200,
-                        width: screenWidth - 50,
+                        width: screenWidth - 60,
                         overflow: "hidden",
                         position: "relative",
                     }}>
@@ -537,11 +537,11 @@ const Home = ({ navigation }: { navigation: any }) => {
                                 width: "100%",
                                 alignItems: "center",
                                 paddingHorizontal: 20,
-                                paddingVertical: 10,
+                                paddingVertical: 5,
                                 marginBottom: 10,
                             }}>
                             <Text
-                                fontSize={18}
+                                fontSize={20}
                                 color={theme.colors.textVariant}
                                 center
                                 bold
@@ -565,19 +565,27 @@ const Home = ({ navigation }: { navigation: any }) => {
                                                 marginVertical: 3,
                                                 paddingHorizontal: 5,
                                             }}>
+                                            <View
+                                                style={{
+                                                    width: 5,
+                                                    height: 5,
+                                                    borderRadius: 500,
+                                                    backgroundColor:
+                                                        theme.colors.text,
+                                                    marginRight: 9,
+                                                }}
+                                            />
                                             <Text
                                                 bold
+                                                numberOfLines={1}
+                                                ellipsizeMode="tail"
                                                 style={{
                                                     fontSize: 12,
                                                     color: theme.colors
                                                         .textVariant,
+                                                    flexShrink: 1,
                                                 }}>
-                                                {update.title.length > 19
-                                                    ? update.title.substring(
-                                                          0,
-                                                          19
-                                                      ) + "..."
-                                                    : update.title}
+                                                {update.title}
                                             </Text>
                                             <Text
                                                 bold
@@ -618,7 +626,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                             <Text
                                 bold
                                 color={theme.colors.textVariant}
-                                style={{ marginLeft: 10 }}>
+                                style={{ marginLeft: 5, marginTop: 15 }}>
                                 {t`And` +
                                     " " +
                                     (updates.length - 15) +
