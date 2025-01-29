@@ -46,10 +46,10 @@ export const RecentProvider = ({
 
             const newRecent = await Promise.all(
                 recent.map(async (item) => {
-                    if (item && item.id.startsWith("P")) {
+                    if (item && item?.id.startsWith("P")) {
                         if (
                             personalAlbumsIds.find(
-                                (id: string) => id === item.id
+                                (id: string) => id === item?.id
                             ) === undefined
                         )
                             return null;
@@ -63,7 +63,8 @@ export const RecentProvider = ({
 
             while (newRecent.length < 6) {
                 const newSong = (await getRandom(1))[0];
-                if (newRecent.find((item) => item.id === newSong.id)) continue;
+                if (newRecent.find((item) => item?.id === newSong?.id))
+                    continue;
                 newRecent.push(newSong);
             }
 
@@ -76,7 +77,7 @@ export const RecentProvider = ({
     const addToRecent = (data: SongType | AlbumType) => {
         if (recent === null) return;
 
-        const newRecent = recent.filter((value) => value.id !== data.id);
+        const newRecent = recent.filter((value) => value?.id !== data?.id);
 
         newRecent.unshift(data);
 
@@ -100,8 +101,8 @@ export const RecentProvider = ({
 
         const newRecent = await Promise.all(
             recent.map(async (item) => {
-                if (item.id.startsWith("P")) {
-                    const album = await getPersonalAlbumById(item.id);
+                if (item?.id.startsWith("P")) {
+                    const album = await getPersonalAlbumById(item?.id);
 
                     if (album === null) return null;
 
@@ -114,7 +115,7 @@ export const RecentProvider = ({
 
         while (newRecent.length < 6) {
             const newSong = (await getRandom(1))[0];
-            if (newRecent.find((item) => item.id === newSong.id)) continue;
+            if (newRecent.find((item) => item?.id === newSong?.id)) continue;
             newRecent.push(newSong);
         }
 
@@ -126,20 +127,20 @@ export const RecentProvider = ({
 
         const newRecent = await Promise.all(
             recent.map(async (item) => {
-                if (item.id.startsWith("P")) {
-                    const album = await getPersonalAlbumById(item.id);
+                if (item?.id.startsWith("P")) {
+                    const album = await getPersonalAlbumById(item?.id);
 
                     if (album === null) return null;
 
                     return album;
-                } else if (item.id.startsWith("S")) {
-                    const song = await getSongById(item.id);
+                } else if (item?.id.startsWith("S")) {
+                    const song = await getSongById(item?.id);
 
                     if (song === null) return null;
 
                     return song;
-                } else if (item.id.startsWith("A")) {
-                    const album = await getAlbumById(item.id);
+                } else if (item?.id.startsWith("A")) {
+                    const album = await getAlbumById(item?.id);
 
                     if (album === null) return null;
 
@@ -152,7 +153,8 @@ export const RecentProvider = ({
 
         while (newRecent.length < 6) {
             const newSong = (await getRandom(1))[0];
-            if (newRecent.find((item: any) => item.id === newSong.id)) continue;
+            if (newRecent.find((item: any) => item?.id === newSong?.id))
+                continue;
             newRecent.push(newSong);
         }
 
