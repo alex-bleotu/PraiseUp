@@ -43,6 +43,7 @@ const Home = ({ navigation }: { navigation: any }) => {
     const [favoriteAlbums, setFavoriteAlbums] = useState<AlbumType[] | null>(
         null
     );
+    const [canRefresh, setCanRefresh] = useState(true);
 
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
     const [currentData, setCurrentData] = useState<SongType | AlbumType | null>(
@@ -69,8 +70,10 @@ const Home = ({ navigation }: { navigation: any }) => {
 
             const songs = await getRandomSongs(10);
 
-            if (songs) setRandomSongs(songs);
-            else setRandomSongs([]);
+            if (songs) {
+                setRandomSongs(songs);
+                if (songs.length > 0) setCanRefresh(false);
+            } else setRandomSongs([]);
 
             const albumsList = await getFirstThreeAlbums();
 
@@ -92,8 +95,10 @@ const Home = ({ navigation }: { navigation: any }) => {
             setAlbumsList(albumsList);
         };
 
-        load();
-    }, []);
+        if (canRefresh) {
+            load();
+        }
+    }, [refresh]);
 
     useEffect(() => {
         const load = async () => {
@@ -173,7 +178,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                     setExpended(false);
                 }}>
                 <View style={styles.recent}>
-                    {recent && recent.length > 0
+                    {recent && recent.length > 0 && recent[0] !== undefined
                         ? recent.map(
                               (data: SongType | AlbumType, index: number) => {
                                   if (index > 2) return null;
@@ -183,7 +188,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                                           key={index + "R"}
                                           style={styles.row}>
                                           <View>
-                                              {data.type === "song" ? (
+                                              {data?.type === "song" ? (
                                                   <SongCover
                                                       song={data}
                                                       fullWidth

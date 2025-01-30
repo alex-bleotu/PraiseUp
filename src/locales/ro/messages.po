@@ -47,7 +47,7 @@ msgstr ""
 msgid "About Us"
 msgstr "Despre noi"
 
-#: src/pages/onboard.tsx:77
+#: src/pages/onboard.tsx:88
 msgid "Access lyrics and chords with ease, bringing your worship moments to life."
 msgstr "Accesează cu ușurință versurile și acordurile, aducând la viață momentele tale de închinare."
 
@@ -99,7 +99,7 @@ msgid "Album Name"
 msgstr "Numele albumului"
 
 #: src/pages/allAlbums.tsx:74
-#: src/pages/home.tsx:283
+#: src/pages/home.tsx:290
 msgid "Albums"
 msgstr "Albume"
 
@@ -120,11 +120,11 @@ msgstr "Permite repetiții ale strofelor și refrenurilor în prezentări?"
 msgid "Alphabetical"
 msgstr "Alfabetic"
 
-#: src/pages/onboard.tsx:140
+#: src/pages/onboard.tsx:151
 msgid "Already have an account?"
 msgstr "Ai deja un cont?"
 
-#: src/pages/home.tsx:618
+#: src/pages/home.tsx:635
 msgid "And"
 msgstr "Și încă"
 
@@ -235,7 +235,7 @@ msgstr "Șterge contul"
 msgid "Delete album"
 msgstr "Șterge albumul"
 
-#: src/pages/home.tsx:597
+#: src/pages/home.tsx:614
 msgid "Deleted"
 msgstr "Șters"
 
@@ -278,7 +278,7 @@ msgstr "Ieși"
 msgid "Exit Guest Mode"
 msgstr "Ieșire din modul oaspete"
 
-#: src/pages/home.tsx:255
+#: src/pages/home.tsx:262
 msgid "Explore everything PraiseUp has to offer!"
 msgstr "Explorează tot ce îți oferă PraiseUp!"
 
@@ -286,7 +286,7 @@ msgstr "Explorează tot ce îți oferă PraiseUp!"
 msgid "Favorite"
 msgstr "Favorite"
 
-#: src/pages/home.tsx:362
+#: src/pages/home.tsx:369
 msgid "Favorite albums"
 msgstr "Albume favorite"
 
@@ -319,7 +319,7 @@ msgstr "Pune un nume albumului tău"
 msgid "glo[F#m][E]ri[D]fy"
 msgstr "drep[F#m][E]ta[D]te"
 
-#: src/pages/home.tsx:158
+#: src/pages/home.tsx:165
 msgid "Guest"
 msgstr "Oaspete"
 
@@ -359,7 +359,7 @@ msgstr "Invită prietenii"
 msgid "Join"
 msgstr "Alătură-te"
 
-#: src/pages/onboard.tsx:128
+#: src/pages/onboard.tsx:139
 msgid "Join PraiseUp"
 msgstr "Alătură-te PraiseUp"
 
@@ -406,7 +406,7 @@ msgstr "Conectare"
 msgid "Log Out"
 msgstr "Deconectare"
 
-#: src/pages/home.tsx:241
+#: src/pages/home.tsx:248
 msgid "Looking for something else?"
 msgstr "Cauți altceva?"
 
@@ -414,7 +414,7 @@ msgstr "Cauți altceva?"
 msgid "Lyrics"
 msgstr "Versuri"
 
-#: src/pages/onboard.tsx:89
+#: src/pages/onboard.tsx:100
 msgid "Make your worship sessions with quick access to slideshows and more."
 msgstr "Transformă sesiunile de închinare cu acces rapid la prezentări și multe altele."
 
@@ -430,7 +430,7 @@ msgstr "Mesajul nu a putut fi trimis!"
 msgid "Message sent successfully!"
 msgstr "Mesajul a fost trimis cu succes!"
 
-#: src/pages/home.tsx:622
+#: src/pages/home.tsx:639
 msgid "more"
 msgstr ""
 
@@ -452,7 +452,7 @@ msgstr "Numele este prea scurt!"
 msgid "Network error. Please try again later."
 msgstr "Eroare de internet. Încearcă din nou mai târziu."
 
-#: src/pages/home.tsx:593
+#: src/pages/home.tsx:610
 msgid "New"
 msgstr "Nou"
 
@@ -480,7 +480,7 @@ msgstr "Nicio melodie sau album nu se potrivește căutării tale."
 msgid "No songs match your search."
 msgstr "Nicio melodie nu se potrivește căutării tale."
 
-#: src/pages/home.tsx:609
+#: src/pages/home.tsx:626
 msgid "No updates available"
 msgstr "Nu sunt actualizări disponibile"
 
@@ -494,7 +494,7 @@ msgstr "Parolă veche"
 msgid "or"
 msgstr "sau"
 
-#: src/pages/onboard.tsx:83
+#: src/pages/onboard.tsx:94
 msgid "Organize and share your favorite worship songs with your friends."
 msgstr "Organizează și distribuie melodiile tale preferate de închinare cu prietenii tăi."
 
@@ -531,7 +531,7 @@ msgstr "Emailul personal"
 msgid "Pre-Chorus"
 msgstr "Pre-Chorus"
 
-#: src/pages/onboard.tsx:88
+#: src/pages/onboard.tsx:99
 msgid "Prepare, Play, Praise"
 msgstr "Pregătește, Cântă, Laudă"
 
@@ -637,7 +637,7 @@ msgid "Something went wrong."
 msgstr "Ceva nu a mers bine."
 
 #: src/pages/allSongs.tsx:75
-#: src/pages/home.tsx:266
+#: src/pages/home.tsx:273
 msgid "Songs"
 msgstr "Melodii"
 
@@ -645,8 +645,8 @@ msgstr "Melodii"
 msgid "Start searching for your favorite songs."
 msgstr "Începe să cauți melodiile tale preferate."
 
-#: src/pages/home.tsx:309
-#: src/pages/home.tsx:339
+#: src/pages/home.tsx:316
+#: src/pages/home.tsx:346
 msgid "Suggested for you"
 msgstr "Recomandat pentru tine"
 
@@ -715,11 +715,11 @@ msgstr "Actualizează detaliile"
 msgid "Update your account details here."
 msgstr "Actualizează-ți detaliile contului aici."
 
-#: src/pages/home.tsx:596
+#: src/pages/home.tsx:613
 msgid "Updated"
 msgstr "Actualizat"
 
-#: src/pages/home.tsx:547
+#: src/pages/home.tsx:556
 msgid "Updates"
 msgstr "Actualizări"
 
@@ -744,7 +744,7 @@ msgstr "Vezi videoclipul"
 msgid "Welcome to Praise Up, a platform dedicated to exploring and celebrating music that glorifies God and uplifts the soul. Whether you're discovering new worship songs or organizing your favorite praise albums, our mission is to inspire, connect, and draw hearts closer to Him through the power of music."
 msgstr "Bine ai venit pe Praise Up, o platformă dedicată explorării muzicii care Îl glorifică pe Dumnezeu. Fie că descoperi cântece noi de închinare sau îți organizezi albumele preferate, misiunea noastră este să inspirăm, să conectăm și să aducem inimile mai aproape de El prin puterea muzicii."
 
-#: src/pages/onboard.tsx:76
+#: src/pages/onboard.tsx:87
 msgid "Worship Made Easy"
 msgstr "Închinarea Simplificată"
 
@@ -760,7 +760,7 @@ msgstr "Ai adăugat toate melodiile disponibile"
 msgid "Your library"
 msgstr "Biblioteca ta"
 
-#: src/pages/onboard.tsx:82
+#: src/pages/onboard.tsx:93
 msgid "Your Music, His Glory"
 msgstr "Muzica Ta, Slava Lui"
 
